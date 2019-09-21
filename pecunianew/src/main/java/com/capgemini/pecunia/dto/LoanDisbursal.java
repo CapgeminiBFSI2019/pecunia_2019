@@ -1,6 +1,6 @@
 package com.capgemini.pecunia.dto;
 
-public class LoanDisbursed {
+public class LoanDisbursal {
 	
 	String requestId;
 	String customerId;
@@ -12,7 +12,7 @@ public class LoanDisbursed {
 	double emi;
 	int creditScore;
 	
-	public LoanDisbursed(String requestId, String customerId, double amount, String type, int tenure, double roi,
+	public LoanDisbursal(String requestId, String customerId, double amount, String type, int tenure, double roi,
 			String status, double emi, int creditScore) {
 		super();
 		this.requestId = requestId;

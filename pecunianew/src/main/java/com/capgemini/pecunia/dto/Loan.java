@@ -4,7 +4,7 @@ package com.capgemini.pecunia.dto;
 	import java.text.SimpleDateFormat;
 	import java.util.Date;
 
-	public class LoanRequest {
+	public class Loan {
 		String requestId;
 		String customerId;
 		double amount;
@@ -81,7 +81,7 @@ package com.capgemini.pecunia.dto;
 			this.creditScore = creditScore;
 		}
 
-		public LoanRequest(String requestId, String customerId, double loanAmount, String loanType, int tenure,
+		public Loan(String requestId, String customerId, double loanAmount, String loanType, int tenure,
 				double loanRoi, String loanStatus, double loanEmi, int creditScore) {
 			super();
 			this.requestId = requestId;
