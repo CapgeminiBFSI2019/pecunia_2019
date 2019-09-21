@@ -2,15 +2,15 @@ package com.capgemini.pecunia.dto;
 
 public class LoanDisbursal {
 	
-	String requestId;
-	String customerId;
-	double amount;
-	String type;
-	int tenure;
-	double roi;
-	String status;
-	double emi;
-	int creditScore;
+	private String requestId;
+	private String customerId;
+	private double amount;
+	private String type;
+	private int tenure;
+	private double roi;
+	private String status;
+	private double emi;
+	private int creditScore;
 	
 	public LoanDisbursal(String requestId, String customerId, double amount, String type, int tenure, double roi,
 			String status, double emi, int creditScore) {
