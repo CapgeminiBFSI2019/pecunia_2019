@@ -5,15 +5,15 @@ package com.capgemini.pecunia.dto;
 	import java.util.Date;
 
 	public class LoanRequest {
-		String requestId;
-		String customerId;
-		double amount;
-		String type;
-		int tenure;
-		double roi;
-		String loanStatus;
-		double emi;
-		int creditScore;
+		private String requestId;
+		private String customerId;
+		private double amount;
+		private String type;
+		private int tenure;
+		private double roi;
+		private String loanStatus;
+		private double emi;
+		private int creditScore;
 
 		
 		
