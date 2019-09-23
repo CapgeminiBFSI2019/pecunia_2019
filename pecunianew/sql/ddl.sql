@@ -164,7 +164,8 @@ CREATE TABLE `transaction` (
   `date` datetime NOT NULL,
   `cheque_id` int(10) NOT NULL,
   `trans_from` int(15) NOT NULL,
-  `trans_to` int(15) NOT NULL
+  `trans_to` int(15) NOT NULL,
+  `trans_closing_balance` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
