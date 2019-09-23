@@ -1,8 +1,5 @@
 package com.capgemini.pecunia.dto;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class Loan {
 	private String requestId;
 	private String customerId;
@@ -10,7 +7,7 @@ public class Loan {
 	private String type;
 	private int tenure;
 	private double roi;
-	private String loanStatus;
+	private String loanStatus;	
 	private double emi;
 	private int creditScore;
 
