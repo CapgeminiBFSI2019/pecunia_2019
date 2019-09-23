@@ -48,8 +48,15 @@ public class AccountManagementDAOImpl implements AccountManagementDAO{
 
 	@Override
 	public String addAccount(Customer cust, Address add, Account acc) {
-		// TODO Auto-generated method stub
-		return null;
+		//gotta add Dbconnection 
+		PreparedStatement preparedStatement=null;		
+		ResultSet resultSet = null;
+		
+		String accountId=null;
+	
+	return accountId;
+		
+		//return null;
 	}
 
 }

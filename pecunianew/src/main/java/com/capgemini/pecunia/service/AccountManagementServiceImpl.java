@@ -1,5 +1,4 @@
 package com.capgemini.pecunia.service;
-
 import com.capgemini.pecunia.dao.AccountManagementDAO;
 import com.capgemini.pecunia.dao.AccountManagementDAOImpl;
 import com.capgemini.pecunia.dto.Account;
@@ -56,8 +55,12 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 
 	@Override
 	public String addAccount(Customer cust, Address add, Account acc) {
-		// TODO Auto-generated method stub
-		return null;
+		
+	String accountId = null;
+		accountDAO = new AccountManagementDAOImpl();
+		accountId= accountDAO.addAccount(cust, add, acc);
+		return accountId;
+
 	}
 	
 	
