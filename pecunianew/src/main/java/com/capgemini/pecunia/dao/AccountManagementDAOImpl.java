@@ -207,7 +207,6 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			//preparedStatement2.setDate(7,acc.getLastUpdated());
 			//dat and timestamp ka isssue has to be sorted, SMH
 			
-
 		
 	}catch(SQLException e) {
 		//throw new MyException(ErrorConstants.techError);
