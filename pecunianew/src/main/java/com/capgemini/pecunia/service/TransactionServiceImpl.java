@@ -67,6 +67,7 @@ public class TransactionServiceImpl implements TransactionService {
         
         	if(amount<=100000.0) {
             newBalance=oldBalance+amount;
+
             transactionDAO.updateBalance(account);
 			Transaction creditTransaction=new Transaction();
 			creditTransaction.setId(accId);
@@ -87,6 +88,21 @@ public class TransactionServiceImpl implements TransactionService {
 			throw new TransactionException(Constants.AMOUNT_LESS_EXCEPTION);
 		}
 	}
+
+
+            transaction.setClosingBalance(newBalance);
+            int transId=transactionDAO.generateTransactionId(transaction);
+        	}
+        	
+        	else{
+        		throw new TransactionException("Amount exceeds the limit");
+        	}
+        }
+        else {
+            throw new TransactionException("Amount is too less");
+        }
+        return 0;
+    }
 
 		 
 
