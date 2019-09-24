@@ -37,7 +37,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			}
 		} catch (Exception e) {
 			// logger.error(sqlException.getMessage());
-			throw new PassbookException(ErrorConstants.techError);
+			throw new PassbookException(ErrorConstants.TECH_ERROR);
 		} finally {
 
 			// logger.error(sqlException.getMessage());
@@ -47,7 +47,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 				ps.close();
 				connection.close();
 			} catch (Exception e) {
-				throw new MyException(ErrorConstants.dbConnectionError);
+				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
 
@@ -82,7 +82,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			}
 		} catch (Exception e) {
 			// logger.error(sqlException.getMessage());
-			throw new PassbookException(ErrorConstants.techError);
+			throw new PassbookException(ErrorConstants.TECH_ERROR);
 		} finally {
 
 			// logger.error(sqlException.getMessage());
@@ -92,7 +92,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 				ps.close();
 				connection.close();
 			} catch (Exception e) {
-				throw new MyException(ErrorConstants.dbConnectionError);
+				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
 

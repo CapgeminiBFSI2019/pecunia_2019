@@ -21,46 +21,70 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	public boolean deleteAccount(Account acc) throws MyException, AccountException {
 		
 		boolean updated = false;
+		boolean validated = validateAccountId(acc);
+		if(validated) {
 		accountDAO = new AccountManagementDAOImpl();
 		updated = accountDAO.deleteAccount(acc);
+		}
+		else {
+			throw new AccountException("Account ID doesn't exist");
+		}
 		return updated;
 	}
 
 	@Override
-	public boolean updateCustomerName(String accountId, Customer cust) throws MyException, AccountException {
+	public boolean updateCustomerName(Account acc, Customer cust) throws MyException, AccountException {
 		
 		/*
 		 * Function takes the accountID and the customer object(which contains the updated name)
 		 * as arguments, updates the database, and returns a boolean value
 		 */
 		boolean updated = false;
-		accountDAO = new AccountManagementDAOImpl();
-		updated = accountDAO.updateCustomerName(accountId, cust);
+		boolean validated = validateAccountId(acc);
+		if(validated) {
+			accountDAO = new AccountManagementDAOImpl();
+			updated = accountDAO.updateCustomerName(acc, cust);
+		}
+		else {
+			throw new AccountException("Account ID doesn't exist");
+		}
 		return updated;
 		
 	}
 
 	@Override
-	public boolean updateCustomerContact(String accountId, Customer cust) throws MyException, AccountException {
+	public boolean updateCustomerContact(Account acc, Customer cust) throws MyException, AccountException {
 		/*
 		 * Function takes the accountID and the customer object(which contains the updated name)
 		 * as arguments, updates the database, and returns a boolean value
 		 */
 		boolean updated = false;
+		boolean validated = validateAccountId(acc);
+		if(validated) {
 		accountDAO = new AccountManagementDAOImpl();
-		updated = accountDAO.updateCustomerContact(accountId, cust);
+		updated = accountDAO.updateCustomerContact(acc, cust);
+		}
+		else {
+			throw new AccountException("Account ID doesn't exist");
+		}
 		return updated;
 	}
 
 	@Override
-	public boolean updateCustomerAddress(String accountId, Address add) throws MyException, AccountException {
+	public boolean updateCustomerAddress(Account acc, Address add) throws MyException, AccountException {
 		/*
 		 * Function takes the accountID and the customer object(which contains the updated name)
 		 * as arguments, updates the database, and returns a boolean value
 		 */
 		boolean updated = false;
+		boolean validated = validateAccountId(acc);
+		if(validated) {
 		accountDAO = new AccountManagementDAOImpl();
-		updated = accountDAO.updateCustomerAddress(accountId, add);
+		updated = accountDAO.updateCustomerAddress(acc, add);
+		}
+		else {
+		throw new AccountException("Account ID doesn't exist");
+		}
 		return updated;
 	}
 
@@ -97,6 +121,13 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 		accountDAO = new AccountManagementDAOImpl();
 		id = accountDAO.calculateAccountId(id);
 		return id;
+	}
+
+	@Override
+	public boolean validateAccountId(Account acc) throws MyException, AccountException {
+		boolean validated=false;
+		validated = accountDAO.validateAccountId(acc);
+		return validated;
 	}
 	
 	

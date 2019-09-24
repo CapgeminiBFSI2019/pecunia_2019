@@ -37,12 +37,12 @@ public class LoanDAOImpl implements LoanDAO {
 
 			if (queryResult == 0) {
 				// logger.error(sqlException.getMessage());
-				throw new LoanException(ErrorConstants.LoanAddError);
+				throw new LoanException(ErrorConstants.LOAN_ADD_ERROR);
 			}
 
 		} catch (SQLException sqlException) {
 			// logger.error(sqlException.getMessage());
-			throw new MyException(ErrorConstants.dbConnectionError);
+			throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
 		}
 
 		finally {
@@ -51,7 +51,7 @@ public class LoanDAOImpl implements LoanDAO {
 				connection.close();
 			} catch (SQLException sqlException) {
 				// logger.error(sqlException.getMessage());
-				throw new MyException(ErrorConstants.dbConnectionError);
+				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
 
