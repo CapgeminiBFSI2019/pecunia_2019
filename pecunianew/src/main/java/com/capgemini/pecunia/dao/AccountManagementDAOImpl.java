@@ -233,7 +233,6 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				}
 			}
 			
-
 		
 	}catch(SQLException e) {
 		throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);

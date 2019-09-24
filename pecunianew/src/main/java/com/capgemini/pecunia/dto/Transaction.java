@@ -14,7 +14,7 @@ public class Transaction {
 	private Double amount;
 	private String option;
 	private Date transDate;
-	private String chequeId;
+	private int chequeId;
 	private String transFrom;
 	private String transTo;
 	private Double closingBalance;
@@ -68,11 +68,11 @@ public void setTransDate(Date transDate) {
 	this.transDate = transDate;
 }
 
-public String getChequeId() {
+public int getChequeId() {
 	return chequeId;
 }
 
-public void setChequeId(String chequeId) {
+public void setChequeId(int chequeId) {
 	this.chequeId = chequeId;
 }
 
@@ -101,7 +101,7 @@ public void setClosingBalance(Double closingBalance) {
 }
 
 public Transaction(String id, String accountId, String type, Double amount, String option, Date transDate,
-		String chequeId, String transFrom, String transTo, Double closingBalance) {
+		int chequeId, String transFrom, String transTo, Double closingBalance) {
 	super();
 	this.id = id;
 	this.accountId = accountId;

@@ -4,16 +4,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.capgemini.pecunia.dto.Loan;
+import com.capgemini.pecunia.dto.LoanDisbursal;
 import com.capgemini.pecunia.exception.LoanDisbursalException;
 import com.capgemini.pecunia.exception.MyException;
 
 public interface LoanDisbursalDAO {
 	public ArrayList<Loan> retrieveLoanList() throws IOException,MyException;
 
-	public ArrayList<Loan> approveLoan(ArrayList<Loan> loanList);
+
 	public void releaseLoanSheet(ArrayList<Loan> loanList) throws IOException,MyException;
 
-	//public ArrayList<LoanRequest> checkCreditScore(ArrayList<LoanRequest> loanList);
+	public ArrayList<LoanDisbursal> loanApprovedList() throws IOException,MyException;
 
 
 
