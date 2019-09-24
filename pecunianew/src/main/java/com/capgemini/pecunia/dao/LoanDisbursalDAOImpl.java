@@ -1,7 +1,6 @@
 package com.capgemini.pecunia.dao;
 
-//loan_id	account_id	amount	type	tenure	roi	loan_status	emi	credit_score
-//loan_id	account_id	disbursed_amount	due_amount	emi_to_be_paid
+
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.capgemini.pecunia.dto.Loan;
+import com.capgemini.pecunia.dto.LoanDisbursal;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.util.DBConnection;
 
@@ -29,7 +29,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 		List<Loan> requestList = new ArrayList<Loan>();
 
 		try {
-			preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.RETRIVE_ALL_QUERY);
+			preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.RETRIVE_ALL_QUERY_FROM_LOAN);
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
@@ -69,11 +69,6 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 	}
 
-	@Override
-	public ArrayList<Loan> approveLoan(ArrayList<Loan> loanList) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public void releaseLoanSheet(ArrayList<Loan> loanList) throws IOException, MyException {
 		Connection connection = DBConnection.getInstance().getConnection();
@@ -95,7 +90,6 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				throw new MyException("Tehnical problem occured. Refer log");
 			} finally {
 				try {
-					// resultSet.close();
 					preparedStatement.close();
 					connection.close();
 				} catch (SQLException sqlException) {
@@ -107,5 +101,44 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 		}
 	}
+	
+	public ArrayList<LoanDisbursal> loanApprovedList() throws IOException,MyException{
+		Connection connection = DBConnection.getInstance().getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		ArrayList<LoanDisbursal> approvedLoanList = new ArrayList<LoanDisbursal>();
+		try {
+			preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.RETRIVE_ALL_QUERY_FROM_APPROVED_LOAN);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				LoanDisbursal loanDisbursal = new LoanDisbursal();
+				loanDisbursal.setLoanDisbursalId(resultSet.getInt(1));
+				loanDisbursal.setLoanId(resultSet.getInt(2));
+				loanDisbursal.setAccountId(resultSet.getString(3));
+				loanDisbursal.setDisbursedAmount(resultSet.getDouble(4));
+				loanDisbursal.setDueAmount(resultSet.getDouble(5));
+				loanDisbursal.setNumberOfEmiToBePaid(resultSet.getDouble(6));
+				approvedLoanList.add(loanDisbursal);
+
+			}
+		}
+		catch(SQLException sqlException) {
+			throw new MyException("Tehnical problem occured. Refer log");
+		}
+		finally {
+			try {
+				preparedStatement.close();
+				connection.close();
+			} catch (SQLException sqlException) {
+
+				throw new MyException("Files cannot be closed");
+
+			}
+		}
+		
+		return 
+	}
 
 }
+//loan_disbursal_id	loan_id	account_id	disbursed_amount	due_amount	emi_to_be_paid
+

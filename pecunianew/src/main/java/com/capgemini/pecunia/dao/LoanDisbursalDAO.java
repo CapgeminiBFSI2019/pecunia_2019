@@ -10,7 +10,7 @@ import com.capgemini.pecunia.exception.MyException;
 public interface LoanDisbursalDAO {
 	public ArrayList<Loan> retrieveLoanList() throws IOException,MyException;
 
-	public ArrayList<Loan> approveLoan(ArrayList<Loan> loanList);
+
 	public void releaseLoanSheet(ArrayList<Loan> loanList) throws IOException,MyException;
 
 	//public ArrayList<LoanRequest> checkCreditScore(ArrayList<LoanRequest> loanList);
