@@ -103,9 +103,15 @@ public class TransactionServiceImpl implements TransactionService {
         }
         return 0;
     }
-
-		 
-
+    /*******************************************************************************************************
+	 * Function Name : debitUsingSlip(Transaction transaction) - Input Parameters : Transaction
+	 * Return Type : int - Throws : TransactionException,MyException - Author :
+	 * Anwesha Das - Creation Date : 24/09/2019 - Description : Debit using Slip
+	 * 
+	 * 
+	 * @throws TransactionException,MyException
+	 ********************************************************************************************************/
+    
 	@Override
 	public int debitUsingSlip(Transaction transaction) throws TransactionException, MyException {
 		transactionDAO = new TransactionDAOImpl();
@@ -142,9 +148,7 @@ public class TransactionServiceImpl implements TransactionService {
         }
        
 	
-		/*
-		 * validate existence get balance cal bal update bal create transac
-		 */
+		
 
 	@Override
 	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException {
