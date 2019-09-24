@@ -17,5 +17,6 @@ public class ErrorConstants {
 	public static final String LoginError = "Either Password or Email is incorrect";
 
 	public static final String LoanAddError = "Error in performing operation.";
+ 
 
 }
