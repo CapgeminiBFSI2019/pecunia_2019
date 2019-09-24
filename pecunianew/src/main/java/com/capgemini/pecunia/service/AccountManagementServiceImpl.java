@@ -37,7 +37,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	}
 
 	@Override
-	public boolean updateCustomerContact(String accountId, Customer cust) {
+	public boolean updateCustomerContact(String accountId, Customer cust) throws MyException {
 		/*
 		 * Function takes the accountID and the customer object(which contains the updated name)
 		 * as arguments, updates the database, and returns a boolean value
@@ -49,7 +49,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	}
 
 	@Override
-	public boolean updateCustomerAddress(String accountId, Address add) {
+	public boolean updateCustomerAddress(String accountId, Address add) throws MyException {
 		/*
 		 * Function takes the accountID and the customer object(which contains the updated name)
 		 * as arguments, updates the database, and returns a boolean value
@@ -61,7 +61,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	}
 
 	@Override
-	public String addAccount(Customer cust, Address add, Account acc) {
+	public String addAccount(Customer cust, Address add, Account acc) throws MyException {
 		
 		String accountId = null;
 		accountDAO = new AccountManagementDAOImpl();

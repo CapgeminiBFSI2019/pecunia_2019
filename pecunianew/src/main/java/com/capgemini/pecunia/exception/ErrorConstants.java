@@ -9,7 +9,7 @@ package com.capgemini.pecunia.exception;
  */
 public class ErrorConstants {
 	
-	public static final String techError= "Tehnical problem occured. Refer log";
+	public static final String techError= "Technical problem occured. Refer log";
 	//TODO
 
 }
