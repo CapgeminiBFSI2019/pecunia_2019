@@ -43,11 +43,29 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	public int debitUsingSlip(Transaction transaction) throws TransactionException {
+		transactionDAO = new TransactionDAOImpl();
+        String accId=transaction.getAccountId();
+        String transType=transaction.getType();
+        double amount=transaction.getAmount();
+        Date transDate=transaction.getTransDate();
+        Account account=new Account(accId);
+        double oldBalance=getBalance(account);
+        double newBalance=0.0;
+      {
+                if(oldBalance>amount) {
+            newBalance=oldBalance-amount;
+            transaction.setClosingBalance(newBalance);
+            int transId=transactionDAO.debitUsingSlip(transaction);
+            
+        }
+        else {
+            throw new TransactionException("Insufficient balance in Account");
+        }
+        }
+ 
 		/*
 		 * validate existence get balance cal bal update bal create transac
 		 */
-		return 0;
-	}
 
 	@Override
 	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException {
