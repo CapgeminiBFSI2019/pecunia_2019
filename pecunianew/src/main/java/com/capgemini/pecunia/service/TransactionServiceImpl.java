@@ -9,6 +9,7 @@ import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.TransactionException;
+import com.capgemini.pecunia.util.Values;
 
 public class TransactionServiceImpl implements TransactionService {
 
@@ -127,8 +128,21 @@ public class TransactionServiceImpl implements TransactionService {
 		return 0;
 	}
 
+	
+	
+	
+	
+	/*******************************************************************************************************
+	 * Function Name : debitUsingCheque(Transaction transaction,Cheque cheque) - Input Parameters : Transaction, Cheque
+	 * Return Type : int - Throws : TransactionException,MyException - Author :
+	 * Anish Basu - Creation Date : 24/09/2019 - Description : Debiting using cheque
+	 * 
+	 * 
+	 * @throws TransactionException,MyException
+	 ********************************************************************************************************/
+		
 	@Override
-	public int debitusingCheque(Transaction transaction, Cheque cheque) throws TransactionException {
+	public int debitusingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
 		transactionDAO = new TransactionDAOImpl();
 		String accId=transaction.getAccountId();
 		String transType=transaction.getType();
@@ -139,30 +153,38 @@ public class TransactionServiceImpl implements TransactionService {
 		String holderName=cheque.getHolderName();
 		String bankName=cheque.getBankName();
 		String ifsc=cheque.getIfsc();
-		//String status=cheque.getStatus();
-		Account account=new Account(accId,Values.NA,Values.NA,Values.NA,Values.NA,Values.NA,Values.NA,Values.NA);
+		Account account=new Account();
+		account.setId(accId);
 		double oldBalance=getBalance(account);
 		double newBalance=0.0;
 		//in milliseconds
 		long diff = chequeissueDate.getTime() - transDate.getTime();
 		long diffDays = diff / (24 * 60 * 60 * 1000);
 		
-		if(diffDays>90) {
+		if(diffDays>90 || amount>1000000.00 || amount<100.00) {
 				if(oldBalance>amount) {
 			newBalance=oldBalance-amount;
-			//transaction.setChequeId(chequeId);
-			transaction.setClosingBalance(newBalance);
-			int transId=transactionDAO.debitusingCheque(transaction, cheque);
+			transactionDAO.updateBalance(account);
+			int chequeId=transactionDAO.generateChequeId(cheque);
+			Transaction debitTransaction=new Transaction();
+			debitTransaction.setId(accId);
+			debitTransaction.setAmount(amount);
+			debitTransaction.setChequeId(chequeId);
+			debitTransaction.setOption(Values.TRANSACTION_OPTION_CHEQUE);
+			debitTransaction.setType(Values.TRANSACTION_DEBIT);
+			debitTransaction.setTransDate(transDate);
+			debitTransaction.setClosingBalance(newBalance);
+			int transId=transactionDAO.generateTransactionId(debitTransaction);
+			return transId;
 			
 		}
 		else {
-			throw new TransactionException("Insufficient balance in Account");
+			throw new TransactionException(Values.CHEQUE_BOUNCE_EXCEPTION);
 		}
 		}
 		else {
 			throw new TransactionException("Cheque is Invalid");
 		}
-		return 0;
 	}
 
 	@Override
