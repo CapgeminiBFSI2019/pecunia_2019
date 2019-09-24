@@ -9,6 +9,7 @@ import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.TransactionException;
+import com.capgemini.pecunia.util.Constants;
 import com.capgemini.pecunia.util.Values;
 
 public class TransactionServiceImpl implements TransactionService {
@@ -145,20 +146,21 @@ public class TransactionServiceImpl implements TransactionService {
 			debitTransaction.setId(accId);
 			debitTransaction.setAmount(amount);
 			debitTransaction.setChequeId(chequeId);
-			debitTransaction.setOption(Values.TRANSACTION_OPTION_CHEQUE);
-			debitTransaction.setType(Values.TRANSACTION_DEBIT);
+			debitTransaction.setOption(Constants.TRANSACTION_OPTION_CHEQUE);
+			debitTransaction.setType(Constants.TRANSACTION_DEBIT);
 			debitTransaction.setTransDate(transDate);
+			debitTransaction.setTransTo("Self");
 			debitTransaction.setClosingBalance(newBalance);
 			int transId=transactionDAO.generateTransactionId(debitTransaction);
 			return transId;
 			
 		}
 		else {
-			throw new TransactionException(Values.CHEQUE_BOUNCE_EXCEPTION);
+			throw new TransactionException(Constants.CHEQUE_BOUNCE_EXCEPTION);
 		}
 		}
 		else {
-			throw new TransactionException("Cheque is Invalid");
+			throw new TransactionException(Constants.INVALID_CHEQUE_EXCEPTION);
 		}
 	}
 
