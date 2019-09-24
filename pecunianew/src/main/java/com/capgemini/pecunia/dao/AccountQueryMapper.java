@@ -16,5 +16,5 @@ public interface AccountQueryMapper {
 	public static final String GET_CUSTOMER_ID = "SELECT customer_id FROM customer WHERE customer_id=(SELECT account.customer_id "
 											+ "FROM account WHERE account.account_id=?)";
 	
-	public static final String GET_RECENT_ID = "SELECT TOP 1 * FROM account WHERE account_id LIKE '?' ORDER BY account_id DESC";
+	public static final String GET_RECENT_ID = "SELECT TOP 1 account_id FROM account WHERE account_id LIKE '?' ORDER BY account_id DESC";
 }
