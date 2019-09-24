@@ -9,9 +9,10 @@ import com.capgemini.pecunia.exception.MyException;
 
 public interface AccountManagementService {
 	public boolean deleteAccount(Account acc) throws MyException, AccountException;
-	public boolean updateCustomerName(String accountId, Customer cust) throws MyException, AccountException;
-	public boolean updateCustomerContact(String accountId, Customer cust) throws MyException, AccountException;
-	public boolean updateCustomerAddress(String accountId, Address add) throws MyException,AccountException;
+	public boolean updateCustomerName(Account acc, Customer cust) throws MyException, AccountException;
+	public boolean updateCustomerContact(Account acc, Customer cust) throws MyException, AccountException;
+	public boolean updateCustomerAddress(Account acc, Address add) throws MyException,AccountException;
 	public String addAccount(Customer cust, Address add, Account acc) throws MyException,AccountException;
 	public String calculateAccountId(Account acc) throws MyException,AccountException;
+	public boolean validateAccountId(Account acc) throws MyException,AccountException;
 }
