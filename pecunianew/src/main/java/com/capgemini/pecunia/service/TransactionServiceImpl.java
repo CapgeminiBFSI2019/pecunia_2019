@@ -88,7 +88,7 @@ public class TransactionServiceImpl implements TransactionService {
         String transType=transaction.getType();
         double amount=transaction.getAmount();
         Date transDate=transaction.getTransDate();
-        Account account=new Account(accId);
+        Account account=new Account();
         double oldBalance=getBalance(account);
         double newBalance=0.0;
       {
@@ -100,7 +100,8 @@ public class TransactionServiceImpl implements TransactionService {
         }
         else {
             throw new TransactionException("Insufficient balance in Account");
-        }
+        } 
+                return 0;
         }
  
 		/*
