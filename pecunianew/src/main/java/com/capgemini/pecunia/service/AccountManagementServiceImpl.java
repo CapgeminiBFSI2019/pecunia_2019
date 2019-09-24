@@ -23,7 +23,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	}
 
 	@Override
-	public boolean updateCustomerName(String accountId, Customer cust) {
+	public boolean updateCustomerName(String accountId, Customer cust) throws MyException {
 		
 		/*
 		 * Function takes the accountID and the customer object(which contains the updated name)
@@ -71,22 +71,22 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	}
 
 	@Override
-	public String calculateAccountId(Account acc){
+	public String calculateAccountId(Account acc) throws MyException{
 		String id="";
-		id.concat(acc.getBranchId());
+		id = id.concat(acc.getBranchId());
 		String type=acc.getAccountType();
 		switch(type) {
 		case "Savings":
-			id.concat("01");
+			id = id.concat("01");
 			break;
 		case "Current":
-			id.concat("02");
+			id = id.concat("02");
 			break;
 		case "FD": 
-			id.concat("03");
+			id = id.concat("03");
 			break;
 		case "Loan":
-			id.concat("04");
+			id = id.concat("04");
 			break;
 		}
 		

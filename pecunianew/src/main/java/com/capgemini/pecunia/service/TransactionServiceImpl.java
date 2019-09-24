@@ -1,26 +1,32 @@
 package com.capgemini.pecunia.service;
 
+import com.capgemini.pecunia.dao.TransactionDAO;
+import com.capgemini.pecunia.dao.TransactionDAOImpl;
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
+import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.TransactionException;
 
+public class TransactionServiceImpl implements TransactionService {
 
-public class TransactionServiceImpl implements TransactionService{
+	TransactionDAO transactionDAO;
 
 	/*******************************************************************************************************
-	 - Function Name	:	getBalance(Account account)
-	 - Input Parameters	:	Account account
-	 - Return Type		:	double
-	 - Throws			:  	TransactionException
-	 - Author			:	Rohan Patil
-	 - Creation Date	:	23/09/2019
-	 - Description		:	Getting balance of the specified account
+	 * - Function Name : getBalance(Account account) - Input Parameters : Account
+	 * account - Return Type : double - Throws : TransactionException - Author :
+	 * Rohan Patil - Creation Date : 23/09/2019 - Description : Getting balance of
+	 * the specified account
+	 * 
+	 * @throws MyException
 	 ********************************************************************************************************/
-	
+
 	@Override
-	public double getBalance(Account account) throws TransactionException {
-		return 0;
+	public double getBalance(Account account) throws TransactionException, MyException {
+		transactionDAO = new TransactionDAOImpl();
+		double balance;
+		balance = transactionDAO.getbalance(account);
+		return balance;
 	}
 
 	@Override
@@ -38,12 +44,7 @@ public class TransactionServiceImpl implements TransactionService{
 	@Override
 	public int debitUsingSlip(Transaction transaction) throws TransactionException {
 		/*
-		 * validate
-		 * existence
-		 * get balance
-		 * cal bal
-		 * update bal
-		 * create transac
+		 * validate existence get balance cal bal update bal create transac
 		 */
 		return 0;
 	}
@@ -67,9 +68,5 @@ public class TransactionServiceImpl implements TransactionService{
 	public double updateInterest() throws TransactionException {
 		return 0;
 	}
-	
-	
-	
-	
 
 }
