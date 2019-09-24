@@ -18,9 +18,12 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	
 	AccountManagementDAO accountDAO;
 	@Override
-	public boolean deleteAccount(String accountId) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteAccount(Account acc) throws MyException, AccountException {
+		
+		boolean updated = false;
+		accountDAO = new AccountManagementDAOImpl();
+		updated = accountDAO.deleteAccount(acc);
+		return updated;
 	}
 
 	@Override
