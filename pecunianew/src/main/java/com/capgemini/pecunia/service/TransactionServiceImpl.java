@@ -89,21 +89,34 @@ public class TransactionServiceImpl implements TransactionService {
         double amount=transaction.getAmount();
         Date transDate=transaction.getTransDate();
         Account account=new Account();
+        account.setId(accId);
         double oldBalance=getBalance(account);
         double newBalance=0.0;
-      {
-                if(oldBalance>amount) {
-            newBalance=oldBalance-amount;
-            transaction.setClosingBalance(newBalance);
-            int transId=transactionDAO.debitUsingSlip(transaction);
-            
-        }
+        
+       
+         
+                if(oldBalance>amount) 
+                {
+                	newBalance=oldBalance-amount;
+                	transactionDAO.updateBalance(account);
+		            
+		            Transaction debitTransaction=new Transaction();
+		            debitTransaction.setId(accId);
+		            debitTransaction.setAmount(amount);
+		            debitTransaction.setOption(Values.TRANSACTION_OPTION_CHEQUE);
+		            debitTransaction.setType(Values.TRANSACTION_DEBIT);
+		            debitTransaction.setTransDate(transDate);
+		            debitTransaction.setClosingBalance(newBalance);
+		            int transId=transactionDAO.generateTransactionId(debitTransaction);
+		            return transId;
+           
+                }
         else {
-            throw new TransactionException("Insufficient balance in Account");
-        } 
-                return 0;
+            throw new TransactionException("Insufficient Balance:Transaction failed");
+        	}
         }
- 
+       
+	
 		/*
 		 * validate existence get balance cal bal update bal create transac
 		 */
