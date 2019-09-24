@@ -16,8 +16,8 @@ public class TransactionServiceImpl implements TransactionService {
 
 	/*******************************************************************************************************
 	 * - Function Name : getBalance(Account account) - Input Parameters : Account
-	 * account - Return Type : double - Throws : TransactionException - Author :
-	 * Rohan Patil - Creation Date : 23/09/2019 - Description : Getting balance of
+	 * account - Return Type : double - Throws : TransactionException - 
+	 * Author : Rohan Patil - Creation Date : 23/09/2019 - Description : Getting balance of
 	 * the specified account
 	 * 
 	 * @throws MyException
@@ -32,8 +32,11 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public boolean updateBalance(Account account) throws TransactionException {
-		return false;
+	public boolean updateBalance(Account account) throws TransactionException, MyException {
+		transactionDAO = new TransactionDAOImpl();
+		boolean success;
+		success = transactionDAO.updateBalance(account);
+		return success;
 	}
 
 	@Override
@@ -53,6 +56,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException {
+		
 		return 0;
 	}
 
