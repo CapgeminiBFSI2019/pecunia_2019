@@ -10,7 +10,7 @@ import com.capgemini.pecunia.exception.MyException;
 
 public interface PassbookMaintenanceService {
 
-	public List<Transaction> updatePassbook(String accountId);
-	public List<Transaction> accountSummary(String accountId, Date startDate, Date endDate);
+	public List<Transaction> updatePassbook(String accountId) throws MyException;
+	public List<Transaction> accountSummary(String accountId, Date startDate, Date endDate) throws MyException;
 
 }

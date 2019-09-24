@@ -32,7 +32,7 @@ public class PassbookMaintenanceServiceImpl implements PassbookMaintenanceServic
 	
 	
 	@Override
-	public List<Transaction> accountSummary(String accountId, Date startDate, Date endDate){
+	public List<Transaction> accountSummary(String accountId, Date startDate, Date endDate) throws MyException{
 		List transactionList = new ArrayList<Transaction>();
 		PassbookMaintenanceDAO pdao= new PassbookMaintenanceDAOImpl();
 		transactionList=pdao.accountSummary(accountId ,startDate, endDate);
