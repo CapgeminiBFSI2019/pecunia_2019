@@ -134,8 +134,8 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 		acc.setHolderId(custId);
 		String accountId = calculateAccountId(acc);
 		acc.setId(accountId);
-		boolean created = accountDAO.addAccount(acc);
-		if(!created) {
+		String createdId = accountDAO.addAccount(acc);
+		if(createdId==null) {
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		}
 		return accountId;
