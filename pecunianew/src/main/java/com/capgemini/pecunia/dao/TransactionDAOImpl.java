@@ -1,11 +1,14 @@
 package com.capgemini.pecunia.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.capgemini.pecunia.dto.Account;
+import com.capgemini.pecunia.dto.Cheque;
+import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.DBConnection;
@@ -89,6 +92,101 @@ public class TransactionDAOImpl implements TransactionDAO {
 			}
 		}
 		return flag;
+	}
+
+	@Override
+	public int generateChequeId(Cheque cheque) throws MyException, TransactionException {
+		Connection connection = DBConnection.getInstance().getConnection();
+
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		int chequeId = 0;
+		try {
+			preparedStatement = connection.prepareStatement(TransactionQueryMapper.INSERT_CHEQUE_QUERY);
+
+			preparedStatement.setInt(1, cheque.getNum());
+			preparedStatement.setString(2, cheque.getAccountNo());
+			preparedStatement.setString(3, cheque.getHolderName());
+			preparedStatement.setString(4, cheque.getBankName());
+			preparedStatement.setString(5, cheque.getIfsc());
+			preparedStatement.setDate(6, (Date) cheque.getIssueDate());
+			preparedStatement.setString(7, cheque.getStatus());
+
+			preparedStatement.executeUpdate();
+
+			resultSet = preparedStatement.getGeneratedKeys();
+
+			if (resultSet.next()) {
+				chequeId = resultSet.getInt(1);
+			} else {
+				throw new TransactionException("Error occured during cheque insertion");
+			}
+		} catch (TransactionException e) {
+			// TODO logger here
+			throw new TransactionException(e.getMessage());
+		} catch (Exception e) {
+			throw new MyException(e.getMessage());
+		} finally {
+			try {
+				resultSet.close();
+				preparedStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				// TODO logger here
+				throw new MyException(e.getMessage());
+			}
+
+		}
+		return chequeId;
+	}
+
+	@Override
+	public int generateTransactionId(Transaction transaction) throws MyException, TransactionException {
+		Connection connection = DBConnection.getInstance().getConnection();
+
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		int transId = 0;
+
+		try {
+			preparedStatement = connection.prepareStatement(TransactionQueryMapper.INSERT_TRANSACTION_QUERY);
+
+			preparedStatement.setString(1, transaction.getAccountId());
+			preparedStatement.setString(2, transaction.getType());
+			preparedStatement.setDouble(3, transaction.getAmount());
+			preparedStatement.setString(4, transaction.getOption());
+			preparedStatement.setInt(5, transaction.getChequeId());
+			preparedStatement.setString(6, transaction.getTransFrom());
+			preparedStatement.setString(7, transaction.getTransTo());
+			preparedStatement.setDouble(8, transaction.getClosingBalance());
+
+			resultSet = preparedStatement.getGeneratedKeys();
+
+			if (resultSet.next()) {
+				transId = resultSet.getInt(1);
+			} else {
+				throw new TransactionException("Error occured during transaction insertion");
+			}
+		} catch (TransactionException e) {
+			// TODO logger here
+			throw new TransactionException(e.getMessage());
+		} catch (Exception e) {
+			throw new MyException(e.getMessage());
+		} finally {
+			try {
+				resultSet.close();
+				preparedStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				// TODO logger here
+				throw new MyException(e.getMessage());
+			}
+
+		}
+
+		return transId;
 	}
 
 }

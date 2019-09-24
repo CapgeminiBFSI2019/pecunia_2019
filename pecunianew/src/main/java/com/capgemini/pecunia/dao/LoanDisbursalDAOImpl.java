@@ -136,9 +136,9 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 			}
 		}
 		
-		return 
+		return approvedLoanList;
 	}
 
 }
-//loan_disbursal_id	loan_id	account_id	disbursed_amount	due_amount	emi_to_be_paid
+
 
