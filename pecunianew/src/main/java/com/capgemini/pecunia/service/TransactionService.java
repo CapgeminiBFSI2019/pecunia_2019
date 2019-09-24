@@ -3,10 +3,11 @@ package com.capgemini.pecunia.service;
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
+import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.TransactionException;
 
 public interface TransactionService {
-	public double getBalance(Account account) throws TransactionException;
+	public double getBalance(Account account) throws TransactionException, MyException;
 	public boolean updateBalance(Account account) throws TransactionException;
 	public int creditUsingSlip(Transaction transaction) throws TransactionException;
 	public int debitUsingSlip(Transaction transaction) throws TransactionException;

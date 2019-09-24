@@ -6,12 +6,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.security.InvalidParameterException;
 
- 
-
 import com.capgemini.pecunia.dto.Loan;
 
  
-
 public class LoanServiceImpl {
     /*
      * Method to calculate EMI
@@ -43,42 +40,45 @@ public class LoanServiceImpl {
             br.close();
             return false;
         } catch (Exception e) {
+	
+	
 
+        }
+		return false;
+    }
  
-
-            return false;
-        }
-    }
-    public String createLoanRequest(Loan loan) {
-        try {
-        if (!validateAccountId(loan.getAccountId())) {
-            throw new InvalidParameterException();
-        }
-        if (loan.getType().equals(null) ||loan.getLoanStatus().equals(null)) {
-            return null;
-        }
-        if (loan.getType() != "Home Loan" || loan.getType() != "Vehicle Loan" || loan.getType() != "Jewel Loan"
-                || loan.getType() != "Personal Loan") {
-            throw new InvalidParameterException();
-        }
-        if (loan.getAmount() < 0 || loan.getTenure() < 0 || loan.getRoi() < 0) {
-            throw new InvalidParameterException();
-        }
-        if (loan.getLoanStatus() != "Pending") {
-            throw new InvalidParameterException();
-        }
-        if (loan.getCreditScore() <= 0) {
-            throw new InvalidParameterException();
-        }
-        }catch (InvalidParameterException e) {
-            throw new InvalidParameterException("Some input mismatch found.");
-        } 
-        catch (Exception e) {
-            return null;
-        }
-        // Getting EMI using calculateEMI method for given values of loan amount,tenure
-        // and rate of interest
-        double emi = calculateEMI(loan.getAmount(), loan.getTenure(), loan.getRoi());
-        return null;
-    }
+	public String createLoanRequest(Loan loan) {
+		try {
+		if (!validateAccountId(loan.getAccountId())) {
+			throw new InvalidParameterException();
+		}
+		if (loan.getType().equals(null) ||loan.getLoanStatus().equals(null)) {
+			return null;
+		}
+		if (loan.getType() != "Home Loan" || loan.getType() != "Vehicle Loan" || loan.getType() != "Jewel Loan"
+				|| loan.getType() != "Personal Loan") {
+			throw new InvalidParameterException();
+		}
+		if (loan.getAmount() < 0 || loan.getTenure() < 0 || loan.getRoi() < 0) {
+			throw new InvalidParameterException();
+		}
+		if (loan.getLoanStatus() != "Pending") {
+			throw new InvalidParameterException();
+		}
+		if (loan.getCreditScore() <= 0) {
+			throw new InvalidParameterException();
+		}
+		}catch (InvalidParameterException e) {
+			throw new InvalidParameterException("Some input mismatch found.");
+		} 
+		catch (Exception e) {
+			return null;
+		}
+		// Getting EMI using calculateEMI method for given values of loan amount,tenure
+		// and rate of interest
+		double emi = calculateEMI(loan.getAmount(), loan.getTenure(), loan.getRoi());
+		return null;
+	}
 }
+
+
