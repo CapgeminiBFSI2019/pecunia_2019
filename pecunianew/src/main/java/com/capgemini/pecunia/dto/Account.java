@@ -41,6 +41,9 @@ public class Account {
 	public String getHolderId() {
 		return holderId;
 	}
+	public void setHolderId(String holderId) {
+		this.holderId = holderId;
+	}
 	
 	public String getBranchId() {
 		return branchId;
