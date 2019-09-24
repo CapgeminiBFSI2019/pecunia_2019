@@ -77,7 +77,7 @@ public class LoanDAOImpl implements LoanDAO {
 
 		} catch (SQLException sqlException) {
 			// logger.error(sqlException.getMessage());
-			//throw new MyException(ErrorConstants.);
+			throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
 		}
 
 		finally {
