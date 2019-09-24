@@ -1,15 +1,10 @@
 package com.capgemini.pecunia.service;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.security.InvalidParameterException;
 
-import com.capgemini.pecunia.Values;
 import com.capgemini.pecunia.dto.Loan;
-import com.capgemini.pecunia.model.LoanRequest;
 
 public class LoanServiceImpl {
 	/*
@@ -27,14 +22,14 @@ public class LoanServiceImpl {
 	}
 	
 	//Read through Database instead of file 
-	public boolean validateCustomerId(String customerId) {
+	public boolean validateAccountId(int accountId) {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(
 					"C:\\Users\\risrai\\git\\capgemini_pecunia_2019\\Pecunia\\src\\main\\java\\com\\capgemini\\pecunia\\dao\\DbFiles\\Customer.csv"));
 			String line;
 			while ((line = br.readLine()) != null) {
 				String arr[] = line.split(",");
-				if (arr[0].equals(customerId)) {
+				if (arr[0].equals(accountId)) {
 					br.close();
 					return true;
 				}
@@ -47,61 +42,47 @@ public class LoanServiceImpl {
 		}
 	}
 	public String createLoanRequest(Loan loan) {
-		String customerId=loan.getCustomerId();
-		String loanType=loan.getType();
-		String loanStatus= loan.getLoanStatus();
-		double amount=loan.getAmount();
-		int tenure=loan.getTenure();
-		double roi=loan.getRoi();
-		int creditScore=loan.getCreditScore();
-
 		try {
-		if (!validateCustomerId(customerId)) {
+		if (!validateAccountId(loan.getAccountId())) {
 			throw new InvalidParameterException();
 		}
-		if (customerId.equals(null) || loanType.equals(null) ||loanStatus.equals(null)) {
+		if (loan.getType().equals(null) ||loan.getLoanStatus().equals(null)) {
 			return null;
 		}
-		if (loanType != "Home Loan" || loanType != "Vehicle Loan" || loanType != "Jewel Loan"
-				|| loanType != "Personal Loan") {
+		if (loan.getType() != "Home Loan" || loan.getType() != "Vehicle Loan" || loan.getType() != "Jewel Loan"
+				|| loan.getType() != "Personal Loan") {
 			throw new InvalidParameterException();
 		}
-		if (amount < 0 || tenure < 0 || roi < 0) {
+		if (loan.getAmount() < 0 || loan.getTenure() < 0 || loan.getRoi() < 0) {
 			throw new InvalidParameterException();
 		}
-		if (loanStatus != "Pending") {
+		if (loan.getLoanStatus() != "Pending") {
 			throw new InvalidParameterException();
 		}
-		if (creditScore <= 0) {
+		if (loan.getCreditScore() <= 0) {
 			throw new InvalidParameterException();
 		}
-
-		// Getting EMI using calculateEMI method for given values of loan amount,tenure
-		// and rate of interest
-		double emi = calculateEMI(amount, tenure, roi);
-
- 		    //Getting loan request ID generated using Utility function	
-			//String loanRequestId = Utility.getAlphaNumericString(20);
-
-
-		// Creating object of loanRequest and passing values to it
-		Loan loan = new Loan(customerId, amount, loanType, tenure,roi,
-				loanStatus, emi, creditScore);
-
-		// Writing loan applicant's loan Data to file
-			String loanRequestData = loanreq.getLoanRequestData();
-			File loancustomerFile = new File(Values.LOAN_REQUEST_CSV_FILE1);
-			FileWriter fr = new FileWriter(loancustomerFile, true);
-			BufferedWriter br = new BufferedWriter(fr);
-			br.write(loanRequestData);
-			br.newLine(); 
-			br.close();
-			return loanRequestId;
 		}catch (InvalidParameterException e) {
 			throw new InvalidParameterException("Some input mismatch found.");
 		} 
 		catch (Exception e) {
 			return null;
 		}
-	}	
+		// Getting EMI using calculateEMI method for given values of loan amount,tenure
+		// and rate of interest
+		double emi = calculateEMI(loan.getAmount(), loan.getTenure(), loan.getRoi());
+		return null;
+	}
 }
+
+ 		    //Getting loan request ID generated using Utility function	
+			//String loanRequestId = Utility.getAlphaNumericString(20);
+
+		// Writing loan applicant's loan Data to file
+			/*
+			 * String loanRequestData = loanreq.getLoanRequestData(); File loancustomerFile
+			 * = new File(Values.LOAN_REQUEST_CSV_FILE1); FileWriter fr = new
+			 * FileWriter(loancustomerFile, true); BufferedWriter br = new
+			 * BufferedWriter(fr); br.write(loanRequestData); br.newLine(); br.close();
+			 * return loanRequestId;
+			 */
