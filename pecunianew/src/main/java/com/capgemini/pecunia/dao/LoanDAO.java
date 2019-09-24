@@ -1,5 +1,10 @@
 package com.capgemini.pecunia.dao;
 
-public class LoanDAO {
+import com.capgemini.pecunia.dto.Loan;
+
+public interface LoanDAO {
+	public void addLoanDetails(Loan loan) ;//throws LoanException;
+	public void viewLoanDetails(Loan loan) ;//throws LoanException;
 
 }
+   
