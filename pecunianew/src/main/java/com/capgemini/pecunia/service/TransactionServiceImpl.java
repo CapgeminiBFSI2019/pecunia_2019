@@ -63,9 +63,9 @@ public class TransactionServiceImpl implements TransactionService {
 		double oldBalance = transactionDAO.getBalance(account);
 		double newBalance = 0.0;
 		int transId = 0;
-		if (amount >= 100.0) {
+		if (amount >= Constants.MINIMUM_CREDIT_SLIP_AMOUNT) {
 
-			if (amount <= 100000.0) {
+			if (amount <= Constants.MAXIMUM_CREDIT_SLIP_AMOUNT) {
 				newBalance = oldBalance + amount;
 
 				transactionDAO.updateBalance(account);

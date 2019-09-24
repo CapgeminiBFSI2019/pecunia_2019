@@ -44,4 +44,6 @@ public class Constants {
 	public static final String AMOUNT_EXCEEDS_EXCEPTION = "Credit amount exceeds the maximum amount";
 	public static final String AMOUNT_LESS_EXCEPTION = "Credit amount is less than the minimum amount";
 
+	public static final double MINIMUM_CREDIT_SLIP_AMOUNT = 100.00;
+	public static final double MAXIMUM_CREDIT_SLIP_AMOUNT = 100000.00;
 }
