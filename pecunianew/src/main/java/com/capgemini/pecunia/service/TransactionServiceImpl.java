@@ -1,5 +1,7 @@
 package com.capgemini.pecunia.service;
 
+import java.util.Date;
+
 import com.capgemini.pecunia.dao.TransactionDAO;
 import com.capgemini.pecunia.dao.TransactionDAOImpl;
 import com.capgemini.pecunia.dto.Account;
@@ -56,6 +58,39 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	public int debitusingCheque(Transaction transaction, Cheque cheque) throws TransactionException {
+		transactionDAO = new TransactionDAOImpl();
+		String accId=transaction.getAccountId();
+		String transType=transaction.getType();
+		double amount=transaction.getAmount();
+		Date transDate=transaction.getTransDate();
+		Date chequeissueDate=cheque.getIssueDate();
+		int chequeNum=cheque.getNum();
+		String holderName=cheque.getHolderName();
+		String bankName=cheque.getBankName();
+		String ifsc=cheque.getIfsc();
+		//String status=cheque.getStatus();
+		Account account=new Account(accId,Values.NA,Values.NA,Values.NA,Values.NA,Values.NA,Values.NA,Values.NA);
+		double oldBalance=getBalance(account);
+		double newBalance=0.0;
+		//in milliseconds
+		long diff = chequeissueDate.getTime() - transDate.getTime();
+		long diffDays = diff / (24 * 60 * 60 * 1000);
+		
+		if(diffDays>90) {
+				if(oldBalance>amount) {
+			newBalance=oldBalance-amount;
+			//transaction.setChequeId(chequeId);
+			transaction.setClosingBalance(newBalance);
+			int transId=transactionDAO.debitusingCheque(transaction, cheque);
+			
+		}
+		else {
+			throw new TransactionException("Insufficient balance in Account");
+		}
+		}
+		else {
+			throw new TransactionException("Cheque is Invalid");
+		}
 		return 0;
 	}
 
