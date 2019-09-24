@@ -19,8 +19,15 @@ public class Transaction {
 	private String transTo;
 	private Double closingBalance;
 
+	
+	 
 public String getId() {
 	return id;
+}
+
+
+public void setId(String id) {
+	this.id = id;
 }
 
 
@@ -106,5 +113,10 @@ public Transaction(String id, String accountId, String type, Double amount, Stri
 	this.transFrom = transFrom;
 	this.transTo = transTo;
 	this.closingBalance = closingBalance;
+}
+
+
+public Transaction() {
+	// TODO Auto-generated constructor stub
 }
 }
