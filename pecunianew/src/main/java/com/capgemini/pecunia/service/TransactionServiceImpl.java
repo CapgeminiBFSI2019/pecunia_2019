@@ -10,7 +10,7 @@ import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.Constants;
-import com.capgemini.pecunia.util.Values;
+
 
 public class TransactionServiceImpl implements TransactionService {
 
@@ -107,12 +107,44 @@ public class TransactionServiceImpl implements TransactionService {
 		 
 
 	@Override
-	public int debitUsingSlip(Transaction transaction) throws TransactionException {
+	public int debitUsingSlip(Transaction transaction) throws TransactionException, MyException {
+		transactionDAO = new TransactionDAOImpl();
+        String accId=transaction.getAccountId();
+        String transType=transaction.getType();
+        double amount=transaction.getAmount();
+        Date transDate=transaction.getTransDate();
+        Account account=new Account();
+        account.setId(accId);
+        double oldBalance=transactionDAO.getBalance(account);
+        double newBalance=0.0;
+        
+       
+         
+                if(oldBalance>amount) 
+                {
+                	newBalance=oldBalance-amount;
+                	transactionDAO.updateBalance(account);
+		            
+		            Transaction debitTransaction=new Transaction();
+		            debitTransaction.setId(accId);
+		            debitTransaction.setAmount(amount);
+		            debitTransaction.setOption(Constants.TRANSACTION_OPTION_SLIP);
+		            debitTransaction.setType(Constants.TRANSACTION_DEBIT);
+		            debitTransaction.setTransDate(transDate);
+		            debitTransaction.setClosingBalance(newBalance);
+		            int transId=transactionDAO.generateTransactionId(debitTransaction);
+		            return transId;
+           
+                }
+        else {
+            throw new TransactionException("Insufficient Balance:Transaction failed");
+        	}
+        }
+       
+	
 		/*
 		 * validate existence get balance cal bal update bal create transac
 		 */
-		return 0;
-	}
 
 	@Override
 	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException {
