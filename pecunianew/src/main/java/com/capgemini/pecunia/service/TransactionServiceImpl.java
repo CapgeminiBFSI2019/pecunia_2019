@@ -90,19 +90,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 
 
-            transaction.setClosingBalance(newBalance);
-            int transId=transactionDAO.generateTransactionId(transaction);
-        	}
-        	
-        	else{
-        		throw new TransactionException("Amount exceeds the limit");
-        	}
-        }
-        else {
-            throw new TransactionException("Amount is too less");
-        }
-        return 0;
-    }
+            
     /*******************************************************************************************************
 	 * Function Name : debitUsingSlip(Transaction transaction) - Input Parameters : Transaction
 	 * Return Type : int - Throws : TransactionException,MyException - Author :
@@ -214,6 +202,12 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	public double updateInterest() throws TransactionException {
+		return 0;
+	}
+
+	@Override
+	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 
