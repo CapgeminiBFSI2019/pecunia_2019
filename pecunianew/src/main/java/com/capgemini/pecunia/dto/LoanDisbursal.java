@@ -1,82 +1,76 @@
 package com.capgemini.pecunia.dto;
 
+
 public class LoanDisbursal {
-	
-	private String requestId;
-	private String customerId;
-	private double amount;
-	private String type;
-	private int tenure;
-	private double roi;
-	private String status;
-	private double emi;
-	private int creditScore;
-	
-	public LoanDisbursal(String requestId, String customerId, double amount, String type, int tenure, double roi,
-			String status, double emi, int creditScore) {
-		super();
-		this.requestId = requestId;
-		this.customerId = customerId;
-		this.amount = amount;
-		this.type = type;
-		this.tenure = tenure;
-		this.roi = roi;
-		this.status = status;
-		this.emi = emi;
-		this.creditScore = creditScore;
-	}
-	
-	
-	public String getRequestId() {
-		return requestId;
+
+	private int loanDisbursalId;
+	private int loanId;
+	private String accountId;
+	private double disbursedAmount;
+	private double dueAmount;
+	private double numberOfEmiToBePaid;
+
+	public int getLoanDisbursalId() {
+		return loanDisbursalId;
 	}
 
-	public String getCustomerId() {
-		return customerId;
+	public void setLoanDisbursalId(int loanDisbursalId) {
+		this.loanDisbursalId = loanDisbursalId;
 	}
-	
-	public double getAmount() {
-		return amount;
+
+	public int getLoanId() {
+		return loanId;
 	}
-	public void setAmount(double amount) {
-		this.amount = amount;
+
+	public void setLoanId(int loanId) {
+		this.loanId = loanId;
 	}
-	public String getType() {
-		return type;
+
+	public String getAccountId() {
+		return accountId;
 	}
-	public void setType(String type) {
-		this.type = type;
+
+	public void setAccountId(String accountId) {
+		this.accountId = accountId;
 	}
-	public int getTenure() {
-		return tenure;
+
+	public double getDisbursedAmount() {
+		return disbursedAmount;
 	}
-	public void setTenure(int tenure) {
-		this.tenure = tenure;
+
+	public void setDisbursedAmount(double disbursedAmount) {
+		this.disbursedAmount = disbursedAmount;
 	}
-	public double getRoi() {
-		return roi;
+
+	public double getDueAmount() {
+		return dueAmount;
 	}
-	public void setRoi(double roi) {
-		this.roi = roi;
+
+	public void setDueAmount(double dueAmount) {
+		this.dueAmount = dueAmount;
 	}
-	public String getStatus() {
-		return status;
+
+	public double getNumberOfEmiToBePaid() {
+		return numberOfEmiToBePaid;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+
+	public void setNumberOfEmiToBePaid(double numberOfEmiToBePaid) {
+		this.numberOfEmiToBePaid = numberOfEmiToBePaid;
 	}
-	public double getEmi() {
-		return emi;
+
+	public LoanDisbursal(int loanDisbursalId, int loanId, String accountId, double disbursedAmount, double dueAmount,
+			double numberOfEmiToBePaid) {
+		super();
+		this.loanDisbursalId = loanDisbursalId;
+		this.loanId = loanId;
+		this.accountId = accountId;
+		this.disbursedAmount = disbursedAmount;
+		this.dueAmount = dueAmount;
+		this.numberOfEmiToBePaid = numberOfEmiToBePaid;
 	}
-	public void setEmi(double emi) {
-		this.emi = emi;
+
+	public LoanDisbursal() {
+
 	}
-	public int getCreditScore() {
-		return creditScore;
-	}
-	public void setCreditScore(int creditScore) {
-		this.creditScore = creditScore;
-	}
-	
 
 }
