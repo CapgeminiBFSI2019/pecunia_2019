@@ -1,7 +1,6 @@
 package com.capgemini.pecunia.exception;
 
 
-
 public class ErrorConstants {
 
 	public static final String TECH_ERROR = "Technical problem occured. Refer log";
@@ -20,6 +19,5 @@ public class ErrorConstants {
 
  
 }
-
 
 
