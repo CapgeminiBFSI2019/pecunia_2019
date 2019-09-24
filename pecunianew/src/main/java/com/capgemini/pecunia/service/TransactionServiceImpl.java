@@ -10,7 +10,7 @@ import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.Constants;
-import com.capgemini.pecunia.util.Values;
+
 
 public class TransactionServiceImpl implements TransactionService {
 
@@ -69,7 +69,7 @@ public class TransactionServiceImpl implements TransactionService {
         	
             newBalance=oldBalance+amount;
             transaction.setClosingBalance(newBalance);
-            int transId=transactionDAO.creditUsingSlip(transaction);
+            int transId=transactionDAO.generateTransactionId(transaction);
         	}
         	
         	else{
@@ -84,7 +84,7 @@ public class TransactionServiceImpl implements TransactionService {
 		 
 
 	@Override
-	public int debitUsingSlip(Transaction transaction) throws TransactionException {
+	public int debitUsingSlip(Transaction transaction) throws TransactionException, MyException {
 		transactionDAO = new TransactionDAOImpl();
         String accId=transaction.getAccountId();
         String transType=transaction.getType();
@@ -92,7 +92,7 @@ public class TransactionServiceImpl implements TransactionService {
         Date transDate=transaction.getTransDate();
         Account account=new Account();
         account.setId(accId);
-        double oldBalance=getBalance(account);
+        double oldBalance=transactionDAO.getBalance(account);
         double newBalance=0.0;
         
        
@@ -105,8 +105,8 @@ public class TransactionServiceImpl implements TransactionService {
 		            Transaction debitTransaction=new Transaction();
 		            debitTransaction.setId(accId);
 		            debitTransaction.setAmount(amount);
-		            debitTransaction.setOption(Values.TRANSACTION_OPTION_CHEQUE);
-		            debitTransaction.setType(Values.TRANSACTION_DEBIT);
+		            debitTransaction.setOption(Constants.TRANSACTION_OPTION_SLIP);
+		            debitTransaction.setType(Constants.TRANSACTION_DEBIT);
 		            debitTransaction.setTransDate(transDate);
 		            debitTransaction.setClosingBalance(newBalance);
 		            int transId=transactionDAO.generateTransactionId(debitTransaction);
