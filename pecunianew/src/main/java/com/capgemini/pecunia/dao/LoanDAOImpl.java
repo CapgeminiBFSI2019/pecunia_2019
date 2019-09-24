@@ -24,7 +24,7 @@ public class LoanDAOImpl implements LoanDAO {
 		{		
 			preparedStatement=connection.prepareStatement(LoanQuerryMapper.Add_Loan);
 			
-			preparedStatement.setDouble(1,loan.getAccountId());
+			preparedStatement.setString(1,loan.getAccountId());
 			preparedStatement.setDouble(2,loan.getAmount());			
 			preparedStatement.setInt(3,loan.getCreditScore());
 			preparedStatement.setDouble(4,loan.getEmi());
