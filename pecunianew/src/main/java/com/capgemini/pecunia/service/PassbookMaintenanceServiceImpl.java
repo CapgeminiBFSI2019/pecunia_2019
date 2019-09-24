@@ -1,6 +1,7 @@
 package com.capgemini.pecunia.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.capgemini.pecunia.dao.PassbookMaintenanceDAO;
@@ -18,6 +19,16 @@ public class PassbookMaintenanceServiceImpl implements PassbookMaintenanceServic
 		List transactionList = new ArrayList<Transaction>();
 		PassbookMaintenanceDAO pdao= new PassbookMaintenanceDAOImpl();
 		transactionList=pdao.updatePassbook(accountId);
+		return transactionList;
+	}
+	
+	
+	
+	@Override
+	public List<Transaction> accountSummary(String accountId, Date startDate, Date endDate){
+		List transactionList = new ArrayList<Transaction>();
+		PassbookMaintenanceDAO pdao= new PassbookMaintenanceDAOImpl();
+		transactionList=pdao.accountSummary(accountId ,startDate, endDate);
 		return transactionList;
 	}
 }
