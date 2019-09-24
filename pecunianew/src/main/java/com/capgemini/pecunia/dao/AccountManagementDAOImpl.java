@@ -20,12 +20,27 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	}
 
 	@Override
-	public boolean updateCustomerName(String accountId, Customer cust) {
+	public boolean updateCustomerName(String accountId, Customer cust) throws MyException {
 		boolean updated = false;
+
+		Connection connection = null;
+		connection = DBConnection.getInstance().getConnection();	
+		PreparedStatement preparedStatement=null;		
+
 		// Connection connection = DBConnection.getInstance().getConnection();
 
 		PreparedStatement preparedStatement = null;
+
 		ResultSet resultSet = null;
+		try {
+			preparedStatement=connection.prepareStatement(AccountQueryMapper.UPDATE_NAME);
+			preparedStatement.setString(1,cust.getName());
+			preparedStatement.setString(1,accountId);
+			resultSet = preparedStatement.executeQuery();
+		}catch(SQLException e) {
+			//handle
+		}
+		
 		return updated;
 	}
 
@@ -67,8 +82,14 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		Connection connection = null;
 
 		connection = DBConnection.getInstance().getConnection();
+		
+		PreparedStatement preparedStatement=null;		
+
+
+		connection = DBConnection.getInstance().getConnection();
 
 		PreparedStatement preparedStatement = null;
+
 		ResultSet resultSet = null;
 		long oldId = 0;
 		try {
