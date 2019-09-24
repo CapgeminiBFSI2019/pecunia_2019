@@ -68,7 +68,7 @@ public class TransactionServiceImpl implements TransactionService {
         	
             newBalance=oldBalance+amount;
             transaction.setClosingBalance(newBalance);
-            int transId=transactionDAO.creditUsingSlip(transaction);
+            int transId=transactionDAO.generateTransactionId(transaction);
         	}
         	
         	else{
