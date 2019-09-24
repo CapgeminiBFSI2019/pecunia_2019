@@ -4,6 +4,7 @@
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Address;
 import com.capgemini.pecunia.dto.Customer;
+import com.capgemini.pecunia.exception.MyException;
 
 public interface AccountManagementService {
 	public boolean deleteAccount(String accountId);
