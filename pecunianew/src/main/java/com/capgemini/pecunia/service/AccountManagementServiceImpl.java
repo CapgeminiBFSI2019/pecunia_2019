@@ -62,6 +62,30 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 		return accountId;
 
 	}
+
+	@Override
+	public String calculateAccountId(Account acc) {
+		String id="";
+		id.concat(acc.getBranchId());
+		String type=acc.getAccountType();
+		switch(type) {
+		case "Savings":
+			id.concat("01");
+			break;
+		case "Current":
+			id.concat("02");
+			break;
+		case "FD": 
+			id.concat("03");
+			break;
+		case "Loan":
+			id.concat("04");
+			break;
+		}
+		
+		
+		return id;
+	}
 	
 	
 }
