@@ -6,6 +6,8 @@ import com.capgemini.pecunia.exception.MyException;
 
 public interface LoanDAO {
 	public void addLoanDetails(Loan loan) throws MyException, LoanException ;
+    
+	public String fetchAccountId(String accountId) throws MyException, LoanException;
 	
 
 }

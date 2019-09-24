@@ -7,7 +7,7 @@ public interface AccountQueryMapper {
 	public static final String UPDATE_CONTACT = "UPDATE customer SET contact=? WHERE customer_id=?";
 	public static final String ADD_ADDRESS = "INSERT INTO address(address_line1, address_line2, city, state,country, zipcode) VALUES (?,?,?,?,?,?)";
 	public static final String ADD_CUSTOMER = "INSERT INTO customer(name, address_id,aadhar,pan,contact,gender,dob) VALUES (?,?,?,?,?,?,?)";
-	public static final String ADD_ACCOUNT = "INSERT INTO account(customer_id,branch_id,type,status,balance,interest,last_updated) VALUES (?,?,?,?,?,?,?)";
+	public static final String ADD_ACCOUNT = "INSERT INTO account(account_id,customer_id,branch_id,type,status,balance,interest,last_updated) VALUES (?,?,?,?,?,?,?,?)";
 	public static final String DELETE_ACCOUNT = "UPDATE account SET status='Closed' WHERE account_id=?";
 	public static final String GET_RECENT_ADDRESS_ID = "SELECT MAX(address_id) FROM address";
 	public static final String GET_RECENT_CUSTOMER_ID = "SELECT MAX(customer_id) FROM customer";
@@ -17,4 +17,5 @@ public interface AccountQueryMapper {
 											+ "FROM account WHERE account.account_id=?)";
 	
 	public static final String GET_RECENT_ID = "SELECT TOP 1 account_id FROM account WHERE account_id LIKE '?' ORDER BY account_id DESC";
+	public static final String VALIDATE_ID = "SELECT account_id FROM account WHERE account_id=?";
 }
