@@ -10,5 +10,6 @@ public interface AccountManagementDAO {
 	public boolean updateCustomerContact(String accountId, Customer cust);
 	public boolean updateCustomerAddress(String accountId, Address add);
 	public String addAccount(Customer cust, Address add, Account acc);
+	public String calculateAccountId(String id);
 
 }

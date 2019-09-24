@@ -63,7 +63,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	@Override
 	public String addAccount(Customer cust, Address add, Account acc) {
 		
-	String accountId = null;
+		String accountId = null;
 		accountDAO = new AccountManagementDAOImpl();
 		accountId= accountDAO.addAccount(cust, add, acc);
 		return accountId;
@@ -90,36 +90,8 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 			break;
 		}
 		
-		Connection connection = null;
-		try {
-			connection = DBConnection.getInstance().getConnection();
-		} catch (MyException e) {
-			//HANDLE EXCEPTION
-		}	
-		
-		PreparedStatement preparedStatement=null;		
-		ResultSet resultSet = null;
-		long oldId = 0;
-		try
-		{		
-			preparedStatement=connection.prepareStatement(AccountQueryMapper.GET_RECENT_ID);
-			preparedStatement.setString(1,id);
-			resultSet = preparedStatement.executeQuery();
-			oldId = Long.parseLong(resultSet.getString(1));
-			id = Long.toString(oldId+1);
-		}
-		catch(SQLException sqlException)
-		{//CATCH EXCEPTION
-			
-		}
-		finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				// HANDLE EXCEPTION
-			}
-		}
-		
+		accountDAO = new AccountManagementDAOImpl();
+		id = accountDAO.calculateAccountId(id);
 		return id;
 	}
 	
