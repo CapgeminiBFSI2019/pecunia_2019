@@ -1,46 +1,52 @@
 package com.capgemini.pecunia.service;
 
+ 
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.security.InvalidParameterException;
 
 import com.capgemini.pecunia.dto.Loan;
 
+ 
 public class LoanServiceImpl {
-	/*
-	 * Method to calculate EMI
-	 */
-	public double calculateEMI(double amount, int tenure, double roi) {
-		if (amount < 0 || tenure < 0 || roi < 0) {
-			throw new InvalidParameterException("Amount, tenure and rate of interest cannot be negative.");
-		}
-		double p = amount;
-		double r = roi / 1200;
-		double a = Math.pow(1 + r, tenure);
-		double emi = (p * r * a) / (a-1);
-		return Math.round(emi);
-	}
+    /*
+     * Method to calculate EMI
+     */
+    public double calculateEMI(double amount, int tenure, double roi) {
+        if (amount < 0 || tenure < 0 || roi < 0) {
+            throw new InvalidParameterException("Amount, tenure and rate of interest cannot be negative.");
+        }
+        double p = amount;
+        double r = roi / 1200;
+        double a = Math.pow(1 + r, tenure);
+        double emi = (p * r * a) / (a-1);
+        return Math.round(emi);
+    }
+    
+    //Read through Database instead of file 
+    public boolean validateAccountId(String string) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(
+                    "C:\\Users\\risrai\\git\\capgemini_pecunia_2019\\Pecunia\\src\\main\\java\\com\\capgemini\\pecunia\\dao\\DbFiles\\Customer.csv"));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String arr[] = line.split(",");
+                if (arr[0].equals(string)) {
+                    br.close();
+                    return true;
+                }
+            }
+            br.close();
+            return false;
+        } catch (Exception e) {
 	
-	//Read through Database instead of file 
-	public boolean validateAccountId(int accountId) {
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(
-					"C:\\Users\\risrai\\git\\capgemini_pecunia_2019\\Pecunia\\src\\main\\java\\com\\capgemini\\pecunia\\dao\\DbFiles\\Customer.csv"));
-			String line;
-			while ((line = br.readLine()) != null) {
-				String arr[] = line.split(",");
-				if (arr[0].equals(accountId)) {
-					br.close();
-					return true;
-				}
-			}
-			br.close();
-			return false;
-		} catch (Exception e) {
+	
 
-			return false;
-		}
-	}
+        }
+		return false;
+    }
+ 
 	public String createLoanRequest(Loan loan) {
 		try {
 		if (!validateAccountId(loan.getAccountId())) {
@@ -75,14 +81,4 @@ public class LoanServiceImpl {
 	}
 }
 
- 		    //Getting loan request ID generated using Utility function	
-			//String loanRequestId = Utility.getAlphaNumericString(20);
 
-		// Writing loan applicant's loan Data to file
-			/*
-			 * String loanRequestData = loanreq.getLoanRequestData(); File loancustomerFile
-			 * = new File(Values.LOAN_REQUEST_CSV_FILE1); FileWriter fr = new
-			 * FileWriter(loancustomerFile, true); BufferedWriter br = new
-			 * BufferedWriter(fr); br.write(loanRequestData); br.newLine(); br.close();
-			 * return loanRequestId;
-			 */
