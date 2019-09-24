@@ -13,6 +13,11 @@ public class Account {
 	private double interest;
 	private Date lastUpdated;
 	
+	public Account()
+	{
+		
+	}
+	
 	public Account(String id, String holderId, String branchId, String accountType, String status, double balance,
 			double interest, Date lastUpdated) {
 		super();
@@ -27,6 +32,10 @@ public class Account {
 	}
 	public String getId() {
 		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	public String getHolderId() {
