@@ -4,7 +4,7 @@ package com.capgemini.pecunia.dto;
 
 public class Loan {
     private int loanId;
-    private int accountId;
+    private String accountId;
     private double amount;
     private String type;
     private int tenure;
@@ -27,13 +27,13 @@ public class Loan {
 	/**
 	 * @return the accountId
 	 */
-	public int getAccountId() {
+	public String getAccountId() {
 		return accountId;
 	}
 	/**
 	 * @param accountId the accountId to set
 	 */
-	public void setAccountId(int accountId) {
+	public void setAccountId(String accountId) {
 		this.accountId = accountId;
 	}
 	/**
@@ -120,7 +120,7 @@ public class Loan {
 	public void setCreditScore(int creditScore) {
 		this.creditScore = creditScore;
 	}
-	public Loan(int loanId, int accountId, double amount, String type, int tenure, double roi, String loanStatus,
+	public Loan(int loanId, String accountId, double amount, String type, int tenure, double roi, String loanStatus,
 			double emi, int creditScore) {
 		super();
 		this.loanId = loanId;
@@ -134,6 +134,9 @@ public class Loan {
 		this.creditScore = creditScore;
 	}
     
+	public Loan() {
+		
+	}
 }
  
 
