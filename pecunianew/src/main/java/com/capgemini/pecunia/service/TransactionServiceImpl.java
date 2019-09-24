@@ -27,7 +27,7 @@ public class TransactionServiceImpl implements TransactionService {
 	public double getBalance(Account account) throws TransactionException, MyException {
 		transactionDAO = new TransactionDAOImpl();
 		double balance;
-		balance = transactionDAO.getbalance(account);
+		balance = transactionDAO.getBalance(account);
 		return balance;
 	}
 
@@ -39,12 +39,47 @@ public class TransactionServiceImpl implements TransactionService {
 		return success;
 	}
 
+	/*******************************************************************************************************
+	 * Function Name : creditUsingSlip(Transaction transaction) - Input Parameters : AccountId,amount,date
+	 * account - Return Type : int - Throws : TransactionException - Author :
+	 * Arpan Mondal - Creation Date : 23/09/2019 - Description : Crediting using slip
+	 * 
+	 * 
+	 * @throws MyException
+	 ********************************************************************************************************/
+	
 	@Override
-	public int creditUsingSlip(Transaction transaction) throws TransactionException {
-		/*
-		 */
-		return 0;
-	}
+	public int creditUsingSlip(Transaction transaction) throws TransactionException, MyException {
+		
+		
+		transactionDAO = new TransactionDAOImpl();
+        String accId=transaction.getAccountId();
+        String transType=transaction.getType();
+        double amount=transaction.getAmount();
+        Date transDate=transaction.getTransDate();
+        Account acc=new Account();
+        acc.setId(accId);
+        double oldBalance=transactionDAO.getBalance(acc);
+        double newBalance=0.0;
+        if(amount>=100.0) {
+        
+        	if(amount<=100000.0) {
+        	
+            newBalance=oldBalance+amount;
+            transaction.setClosingBalance(newBalance);
+            int transId=transactionDAO.creditUsingSlip(transaction);
+        	}
+        	
+        	else{
+        		throw new TransactionException("Amount exceeds the limit");
+        	}
+        }
+        else {
+            throw new TransactionException("Amount is too less");
+        }
+        return 0;
+    }
+		 
 
 	@Override
 	public int debitUsingSlip(Transaction transaction) throws TransactionException {
