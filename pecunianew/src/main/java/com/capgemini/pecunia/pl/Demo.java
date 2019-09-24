@@ -1,5 +1,9 @@
 package com.capgemini.pecunia.pl;
 
-public interface Demo {
 
+
+public class Demo {
+	public static void main(String[] args) {
+		
+	}
 }

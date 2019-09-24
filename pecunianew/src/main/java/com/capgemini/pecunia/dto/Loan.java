@@ -1,91 +1,153 @@
 package com.capgemini.pecunia.dto;
-
 public class Loan {
-	private String requestId;
-	private String customerId;
-	private double amount;
-	private String type;
-	private int tenure;
-	private double roi;
-	private String loanStatus;	
-	private double emi;
-	private int creditScore;
-
-	public String getRequestId() {
-		return requestId;
+    private int loanId;
+    private int accountId;
+    private double amount;
+    private String type;
+    private int tenure;
+    private double roi;
+    private String loanStatus;
+    private double emi;
+    private int creditScore;
+	/**
+	 * @return the loanId
+	 */
+	public int getLoanId() {
+		return loanId;
 	}
-
-	public String getCustomerId() {
-		return customerId;
+	/**
+	 * @param loanId the loanId to set
+	 */
+	public void setLoanId(int loanId) {
+		this.loanId = loanId;
 	}
-
+	/**
+	 * @return the accountId
+	 */
+	public int getAccountId() {
+		return accountId;
+	}
+	/**
+	 * @param accountId the accountId to set
+	 */
+	public void setAccountId(int accountId) {
+		this.accountId = accountId;
+	}
+	/**
+	 * @return the amount
+	 */
 	public double getAmount() {
 		return amount;
 	}
-
-	public void setAmount(double loanAmount) {
-		this.amount = loanAmount;
+	/**
+	 * @param amount the amount to set
+	 */
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
-
+	/**
+	 * @return the type
+	 */
 	public String getType() {
 		return type;
 	}
-
-	public void setType(String loanType) {
-		this.type = loanType;
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
 	}
-
+	/**
+	 * @return the tenure
+	 */
 	public int getTenure() {
 		return tenure;
 	}
-
+	/**
+	 * @param tenure the tenure to set
+	 */
 	public void setTenure(int tenure) {
 		this.tenure = tenure;
 	}
-
+	/**
+	 * @return the roi
+	 */
 	public double getRoi() {
 		return roi;
 	}
-
-	public void setRoi(double loanRoi) {
-		this.roi = loanRoi;
+	/**
+	 * @param roi the roi to set
+	 */
+	public void setRoi(double roi) {
+		this.roi = roi;
 	}
-
+	/**
+	 * @return the loanStatus
+	 */
 	public String getLoanStatus() {
 		return loanStatus;
 	}
-
+	/**
+	 * @param loanStatus the loanStatus to set
+	 */
 	public void setLoanStatus(String loanStatus) {
 		this.loanStatus = loanStatus;
 	}
-
+	/**
+	 * @return the emi
+	 */
 	public double getEmi() {
 		return emi;
 	}
-
-	public void setEmi(double loanEmi) {
-		this.emi = loanEmi;
+	/**
+	 * @param emi the emi to set
+	 */
+	public void setEmi(double emi) {
+		this.emi = emi;
 	}
-
+	/**
+	 * @return the creditScore
+	 */
 	public int getCreditScore() {
 		return creditScore;
 	}
-
+	/**
+	 * @param creditScore the creditScore to set
+	 */
 	public void setCreditScore(int creditScore) {
 		this.creditScore = creditScore;
 	}
-
-	public Loan(String requestId, String customerId, double loanAmount, String loanType, int tenure, double loanRoi,
-			String loanStatus, double loanEmi, int creditScore) {
+	public Loan(int loanId, int accountId, double amount, String type, int tenure, double roi, String loanStatus,
+			double emi, int creditScore) {
 		super();
-		this.requestId = requestId;
-		this.customerId = customerId;
-		this.amount = loanAmount;
-		this.type = loanType;
+		this.loanId = loanId;
+		this.accountId = accountId;
+		this.amount = amount;
+		this.type = type;
 		this.tenure = tenure;
-		this.roi = loanRoi;
+		this.roi = roi;
 		this.loanStatus = loanStatus;
-		this.emi = loanEmi;
+		this.emi = emi;
 		this.creditScore = creditScore;
 	}
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("Printing Loan Details \n");
+		sb.append("Loan Id: " + loanId +"\n");
+		sb.append("Account Id: "+ accountId +"\n");
+		sb.append("Amount: "+ amount +"\n");
+		sb.append("Type : "+ type +"\n");
+		sb.append("Tenure : "+ tenure +"\n");
+		sb.append("Rate of Interest : "+ roi +"\n");
+		sb.append("Loan Status: "+ loanStatus +"\n");
+		sb.append("Emi : "+ emi +"\n");
+		sb.append("Credit Score : "+ creditScore +"\n");
+		return sb.toString();
+	}
+	
+    
 }
+ 
+
+       
