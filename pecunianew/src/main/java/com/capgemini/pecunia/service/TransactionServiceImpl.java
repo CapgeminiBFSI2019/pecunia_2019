@@ -41,8 +41,8 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	/*******************************************************************************************************
-	 * Function Name : creditUsingSlip(Transaction transaction) - Input Parameters : AccountId,amount,date
-	 * account - Return Type : int - Throws : TransactionException - Author :
+	 * Function Name : creditUsingSlip(Transaction transaction) - Input Parameters : Transaction
+	 * account - Return Type : int - Throws : MyException,TransactionException - Author :
 	 * Arpan Mondal - Creation Date : 23/09/2019 - Description : Crediting using slip
 	 * 
 	 * 
@@ -58,28 +58,35 @@ public class TransactionServiceImpl implements TransactionService {
         String transType=transaction.getType();
         double amount=transaction.getAmount();
         Date transDate=transaction.getTransDate();
-        Account acc=new Account();
-        acc.setId(accId);
-        double oldBalance=transactionDAO.getBalance(acc);
+        Account account = new Account();
+        account.setId(accId);
+        double oldBalance=transactionDAO.getBalance(account);
         double newBalance=0.0;
         if(amount>=100.0) {
         
         	if(amount<=100000.0) {
-        	
             newBalance=oldBalance+amount;
-            transaction.setClosingBalance(newBalance);
-            int transId=transactionDAO.creditUsingSlip(transaction);
-        	}
-        	
-        	else{
-        		throw new TransactionException("Amount exceeds the limit");
-        	}
-        }
-        else {
-            throw new TransactionException("Amount is too less");
-        }
-        return 0;
-    }
+            transactionDAO.updateBalance(account);
+			Transaction creditTransaction=new Transaction();
+			creditTransaction.setId(accId);
+			creditTransaction.setAmount(amount);
+			creditTransaction.setOption(Constants.TRANSACTION_OPTION_SLIP);
+			creditTransaction.setType(Constants.TRANSACTION_CREDIT);
+			creditTransaction.setTransDate(transDate);
+			creditTransaction.setClosingBalance(newBalance);
+			int transId=transactionDAO.generateTransactionId(creditTransaction);
+			return transId;
+			
+		}
+		else {
+			throw new TransactionException(Constants.AMOUNT_EXCEEDS_EXCEPTION);
+		}
+		}
+		else {
+			throw new TransactionException(Constants.AMOUNT_LESS_EXCEPTION);
+		}
+	}
+
 		 
 
 	@Override
