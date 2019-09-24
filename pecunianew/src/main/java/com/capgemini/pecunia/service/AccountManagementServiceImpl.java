@@ -10,6 +10,7 @@ import com.capgemini.pecunia.dao.AccountQueryMapper;
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Address;
 import com.capgemini.pecunia.dto.Customer;
+import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.util.DBConnection;
 
@@ -17,13 +18,16 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	
 	AccountManagementDAO accountDAO;
 	@Override
-	public boolean deleteAccount(String accountId) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteAccount(Account acc) throws MyException, AccountException {
+		
+		boolean updated = false;
+		accountDAO = new AccountManagementDAOImpl();
+		updated = accountDAO.deleteAccount(acc);
+		return updated;
 	}
 
 	@Override
-	public boolean updateCustomerName(String accountId, Customer cust) throws MyException {
+	public boolean updateCustomerName(String accountId, Customer cust) throws MyException, AccountException {
 		
 		/*
 		 * Function takes the accountID and the customer object(which contains the updated name)
@@ -37,7 +41,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	}
 
 	@Override
-	public boolean updateCustomerContact(String accountId, Customer cust) throws MyException {
+	public boolean updateCustomerContact(String accountId, Customer cust) throws MyException, AccountException {
 		/*
 		 * Function takes the accountID and the customer object(which contains the updated name)
 		 * as arguments, updates the database, and returns a boolean value
@@ -49,7 +53,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	}
 
 	@Override
-	public boolean updateCustomerAddress(String accountId, Address add) throws MyException {
+	public boolean updateCustomerAddress(String accountId, Address add) throws MyException, AccountException {
 		/*
 		 * Function takes the accountID and the customer object(which contains the updated name)
 		 * as arguments, updates the database, and returns a boolean value
@@ -61,7 +65,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	}
 
 	@Override
-	public String addAccount(Customer cust, Address add, Account acc) throws MyException {
+	public String addAccount(Customer cust, Address add, Account acc) throws MyException, AccountException {
 		
 		String accountId = null;
 		accountDAO = new AccountManagementDAOImpl();
@@ -71,7 +75,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	}
 
 	@Override
-	public String calculateAccountId(Account acc) throws MyException{
+	public String calculateAccountId(Account acc) throws MyException, AccountException{
 		String id="";
 		id = id.concat(acc.getBranchId());
 		String type=acc.getAccountType();
