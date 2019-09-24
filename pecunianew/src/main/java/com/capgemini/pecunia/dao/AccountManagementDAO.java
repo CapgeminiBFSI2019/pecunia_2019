@@ -7,7 +7,7 @@ import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.MyException;
 
 public interface AccountManagementDAO {
-	public boolean deleteAccount(String accountId);
+	public boolean deleteAccount(Account acc)throws MyException, AccountException ;
 	public boolean updateCustomerName(String accountId, Customer cust) throws MyException, AccountException;
 	public boolean updateCustomerContact(String accountId, Customer cust) throws MyException,AccountException;
 	public boolean updateCustomerAddress(String accountId, Address add) throws MyException,AccountException;

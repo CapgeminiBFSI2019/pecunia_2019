@@ -16,9 +16,39 @@ import com.capgemini.pecunia.util.DBConnection;
 public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	@Override
-	public boolean deleteAccount(String accountId) {
+	public boolean deleteAccount(Account acc) throws MyException {
+		boolean updated = false;
+		Connection connection = null;
+		connection = DBConnection.getInstance().getConnection();	
+		PreparedStatement preparedStatement=null;
 	
-		return false;
+		try
+		{
+			preparedStatement=connection.prepareStatement(AccountQueryMapper.DELETE_ACCOUNT);
+			preparedStatement.setString(1,acc.getId());
+			int result = preparedStatement.executeUpdate();
+			
+			if(result!=0)
+			{
+				updated = true;
+			}
+		}
+		catch(SQLException e)
+		{
+			throw new MyException(ErrorConstants.deletAccountError);
+		}
+		finally
+		{
+			try
+			{
+				preparedStatement.close();
+			}
+			catch(Exception e)
+			{
+				throw new MyException(ErrorConstants.deletAccountError);
+			}
+		}
+		return updated;
 	}
 
 	@Override
