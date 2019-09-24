@@ -20,5 +20,6 @@ public class ErrorConstants {
 	
 	public static final String LoanAddError= "Error in performing operation.";
 
+	public static final String FetchError= "Error fetching details.";
 
 }
