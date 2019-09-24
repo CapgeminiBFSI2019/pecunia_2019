@@ -20,7 +20,8 @@ public class Constants {
 	public static final String CHEQUE_STATUS_CLEARED = "CLEARED";
 	public static final String CHEQUE_STATUS_BOUNCED = "BOUNCED";
 	public static final String NA = "-";
-	public static final String DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
+	public static final String DATE_FORMAT = "YYYY-MM-DD HH:mm:ss";
+	public static final String DATE_FORMAT_1 = "YYYY-MM-DD";
 	public static final String ACCOUNT_CSV_FILE = "src/main/java/com/capgemini/pecunia/dao/DbFiles/Account.csv";
 	public static final String ADDRESS_CSV_FILE = "src/main/java/com/capgemini/pecunia/dao/DbFiles/Address.csv";
 	public static final String BRANCH_CSV_FILE = "src/main/java/com/capgemini/pecunia/dao/DbFiles/Branch.csv";
