@@ -9,14 +9,6 @@ import com.capgemini.pecunia.exception.TransactionException;
 public interface TransactionDAO {
 	public double getBalance(Account account) throws MyException, TransactionException;
 	public boolean updateBalance(Account account) throws MyException, TransactionException;
-
-
-	public int debitusingCheque(Transaction transaction, Cheque cheque);
-	
-
-	public int creditUsingSlip(Transaction transaction) throws TransactionException, MyException;
-
-
 	public int generateChequeId(Cheque cheque) throws MyException, TransactionException;
 	public int generateTransactionId(Transaction transaction) throws MyException, TransactionException;
 
