@@ -6,85 +6,91 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.capgemini.pecunia.dto.Loan;
+import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.LoanException;
+import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.util.DBConnection;	
 public class LoanDAOImpl implements LoanDAO {
 
-	public void addLoanDetails(Loan loan) 
-	{
-		Connection connection = DBConnection.getInstance().getConnection();	
+	@Override
+	public String fetchAccountId(String accountId) throws MyException, LoanException {
 		
-		PreparedStatement preparedStatement=null;		
-		ResultSet resultSet = null;
-		
-		//String donorId=null;
-		
-		int queryResult=0;
-		try
-		{		
-			preparedStatement=connection.prepareStatement(LoanQuerryMapper.Add_Loan);
+		Connection connection = DBConnection.getInstance().getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		String Id = null;
+		try {
+			preparedStatement = connection.prepareStatement(LoanQuerryMapper.FETCH_ACCOUNT_ID);
+			preparedStatement.setString(1, accountId);
+			rs = preparedStatement.executeQuery();
 			
-			preparedStatement.setString(1,loan.getAccountId());
-			preparedStatement.setDouble(2,loan.getAmount());			
-			preparedStatement.setInt(3,loan.getCreditScore());
-			preparedStatement.setDouble(4,loan.getEmi());
-			preparedStatement.setInt(5,loan.getLoanId());	
-			preparedStatement.setString(6,loan.getLoanStatus());	
-			preparedStatement.setDouble(7,loan.getRoi());	
-			preparedStatement.setDouble(8,loan.getTenure());	
-			preparedStatement.setString(9,loan.getType());	
+			while(rs.next()) {
+				Id=rs.getString(1);
+			}
 			
-			queryResult=preparedStatement.executeUpdate();
-		
-		//	preparedStatement = connection.prepareStatement(LoanQuerryMapper.DONARID_QUERY_SEQUENCE);
-		//	resultSet=preparedStatement.executeQuery();
-
-			if(resultSet.next())
-			{
-				accountId=resultSet.getString(1);
-						
-			}
-	
-			if(queryResult==0)
-			{
-				logger.error("Insertion failed ");
-				throw new LoanException();
-
-			}
-			else
-			{
-				logger.info("Loan details added successfully:");
-				return loan_Id;
-			}
-
+			
+		} catch (SQLException e) {
+			throw new LoanException(ErrorConstants.FETCH_ERROR);
 		}
-		catch(SQLException sqlException)
-		{
-			logger.error(sqlException.getMessage());
-			throw new LoanException();
-		}
-
-		finally
-		{
-			try 
-			{
-				//resultSet.close();
+		finally {
+			try {
+				rs.close();
 				preparedStatement.close();
 				connection.close();
-			}
-			catch (SQLException sqlException) 
-			{
-				logger.error(sqlException.getMessage());
-				throw new LoanException();
-
+				
+			} catch (SQLException sqlException) {
+				// logger.error(sqlException.getMessage());
+				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
+		return Id;
 		
-		
+	}
+	
+	
+	
+	
+	public void addLoanDetails(Loan loan) throws MyException, LoanException {
+		Connection connection = DBConnection.getInstance().getConnection();
+
+		PreparedStatement preparedStatement = null;
+
+		int queryResult = 0;
+		try {
+			preparedStatement = connection.prepareStatement(LoanQuerryMapper.ADD_LOAN_DETAILS);
+
+			preparedStatement.setInt(1, loan.getLoanId());
+			preparedStatement.setString(2, loan.getAccountId());
+			preparedStatement.setDouble(3, loan.getAmount());
+			preparedStatement.setString(4, loan.getType());
+			preparedStatement.setDouble(5, loan.getTenure());
+			preparedStatement.setDouble(6, loan.getRoi());
+			preparedStatement.setString(7, loan.getLoanStatus());
+			preparedStatement.setDouble(8, loan.getEmi());
+			preparedStatement.setInt(9, loan.getCreditScore());
+			queryResult = preparedStatement.executeUpdate();
+
+			if (queryResult == 0) {
+				// logger.error(sqlException.getMessage());
+				throw new LoanException(ErrorConstants.LOAN_ADD_ERROR);
+			}
+
+		} catch (SQLException sqlException) {
+			// logger.error(sqlException.getMessage());
+			throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
+		}
+
+		finally {
+			try {
+				preparedStatement.close();
+				connection.close();
+			} catch (SQLException sqlException) {
+				// logger.error(sqlException.getMessage());
+				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
+			}
+		}
+
 	}
 
-	@Override
-	public void viewLoanDetails(Loan loan) {
-		// TODO Auto-generated method stub
-	}
-	}
+
+}

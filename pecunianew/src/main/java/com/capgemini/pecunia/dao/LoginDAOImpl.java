@@ -13,14 +13,14 @@ public class LoginDAOImpl implements LoginDAO{
 
 
 	@Override
-	public String validateEmail(Login log) throws MyException {
+	public String validateEmail(Login login) throws MyException {
 		String salt=null;
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement=null;	
 		try {
 			preparedStatement = connection.prepareStatement(LoginQueryMapper.GET_SALT);
-			preparedStatement.setString(1,log.getUsername());
+			preparedStatement.setString(1,login.getUsername());
 			ResultSet resultSet = preparedStatement.executeQuery();
 			salt = resultSet.getString(3);
 		}catch(SQLException e) {
@@ -38,16 +38,16 @@ public class LoginDAOImpl implements LoginDAO{
 	}
 
 	@Override
-	public boolean validatePassword(Login log) throws MyException {
+	public boolean validatePassword(Login login) throws MyException {
 		boolean flag=false;
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement=null;	
 		try {
 			preparedStatement = connection.prepareStatement(LoginQueryMapper.GET_PASSWORD);
-			preparedStatement.setString(1,log.getUsername());
+			preparedStatement.setString(1,login.getUsername());
 			ResultSet resultSet = preparedStatement.executeQuery();
-			if(log.getPassword()==resultSet.getString(2)) {
+			if(login.getPassword()==resultSet.getString(2)) {
 				flag=true;
 			}
 			else {

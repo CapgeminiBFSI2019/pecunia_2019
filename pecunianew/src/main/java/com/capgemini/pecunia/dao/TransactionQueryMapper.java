@@ -7,4 +7,5 @@ public interface TransactionQueryMapper {
 	public static final String INSERT_CHEQUE_QUERY = "INSERT INTO cheque (cheque_num,account_num,cheque_holder_name,bank_name,IFSC,issue_date,status) values (?,?,?,?,?,?,?)";
 	public static final String DEPOSIT_INTEREST_QUERY = "UPDATE account SET balance = ? AND interest = 0.0 WHERE account_id = ?";
 	public static final String Get_INTEREST_QUERY = "SELECT interest FROM account WHERE account_id = ?";
+	public static final String GET_CHEQUE_ID_QUERY ="SELECT cheque_id FROM cheque WHERE account_num=?";
 }
