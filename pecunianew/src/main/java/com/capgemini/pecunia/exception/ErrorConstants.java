@@ -9,7 +9,7 @@ public class ErrorConstants {
 
 
 	public static final String techError= "Technical problem occured. Refer log";
-
+	public static final String loginError= "Error in login";
 	
 
 
