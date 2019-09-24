@@ -20,7 +20,8 @@ public class Constants {
 	public static final String CHEQUE_STATUS_CLEARED = "CLEARED";
 	public static final String CHEQUE_STATUS_BOUNCED = "BOUNCED";
 	public static final String NA = "-";
-	public static final String DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
+	public static final String DATE_FORMAT = "YYYY-MM-DD HH:mm:ss";
+	public static final String DATE_FORMAT_1 = "YYYY-MM-DD";
 	public static final String ACCOUNT_CSV_FILE = "src/main/java/com/capgemini/pecunia/dao/DbFiles/Account.csv";
 	public static final String ADDRESS_CSV_FILE = "src/main/java/com/capgemini/pecunia/dao/DbFiles/Address.csv";
 	public static final String BRANCH_CSV_FILE = "src/main/java/com/capgemini/pecunia/dao/DbFiles/Branch.csv";
@@ -40,5 +41,10 @@ public class Constants {
 //	public static final String LOGIN_SUCCESS = "Login succesful";
 	public static final String LOGIN_FAILURE = "Login unsuccesful";
 	public static final String LOGIN_NO_USER_FOUND = "No user found";
+	
+	public static final String AMOUNT_EXCEEDS_EXCEPTION = "Credit amount exceeds the maximum amount";
+	public static final String AMOUNT_LESS_EXCEPTION = "Credit amount is less than the minimum amount";
 
+	public static final double MINIMUM_CREDIT_SLIP_AMOUNT = 100.00;
+	public static final double MAXIMUM_CREDIT_SLIP_AMOUNT = 100000.00;
 }
