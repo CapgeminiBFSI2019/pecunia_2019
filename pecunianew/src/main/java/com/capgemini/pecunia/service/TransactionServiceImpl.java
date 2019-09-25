@@ -1,5 +1,9 @@
 package com.capgemini.pecunia.service;
 
+import java.util.Arrays;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.Date;
 
 import com.capgemini.pecunia.dao.TransactionDAO;
@@ -10,6 +14,10 @@ import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.Constants;
+
+import com.capgemini.pecunia.util.Constants;
+
+
 
 public class TransactionServiceImpl implements TransactionService {
 
@@ -41,54 +49,47 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	/*******************************************************************************************************
-	 * Function Name : creditUsingSlip(Transaction transaction) - Input Parameters :
-	 * Transaction account - Return Type : int - Throws :
-	 * MyException,TransactionException - Author : Arpan Mondal - Creation Date :
-	 * 23/09/2019 - Description : Crediting using slip
+	 * Function Name : creditUsingSlip(Transaction transaction) - Input Parameters : Transaction
+	 * Return Type : int - Throws : TransactionException,MyException - Author :
+	 * Arpan Mondal - Creation Date : 24/09/2019 - Description : Crediting using Slip
 	 * 
 	 * 
-	 * @throws MyException
+	 * @throws TransactionException,MyException
 	 ********************************************************************************************************/
 
 	@Override
 	public int creditUsingSlip(Transaction transaction) throws TransactionException, MyException {
 
+
 		transactionDAO = new TransactionDAOImpl();
-		String accId = transaction.getAccountId();
-		String transType = transaction.getType();
-		double amount = transaction.getAmount();
-		Date transDate = transaction.getTransDate();
-		Account account = new Account();
-		account.setId(accId);
-		double oldBalance = transactionDAO.getBalance(account);
-		double newBalance = 0.0;
-		int transId = 0;
-		if (amount >= Constants.MINIMUM_CREDIT_SLIP_AMOUNT) {
+        String accId = transaction.getAccountId();
+        String transType = transaction.getType();
+        double amount = transaction.getAmount();
+        LocalDate transDate = transaction.getTransDate();
+        Account account = new Account();
+        account.setId(accId);
+        double oldBalance = transactionDAO.getBalance(account);
+        double newBalance = 0.0;
+        int transId=0;
+        if (amount >= Constants.MINIMUM_CREDIT_SLIP_AMOUNT) {
 
-			if (amount <= Constants.MAXIMUM_CREDIT_SLIP_AMOUNT) {
-				newBalance = oldBalance + amount;
+            if (amount <= Constants.MAXIMUM_CREDIT_SLIP_AMOUNT) {
+            	
+                newBalance = oldBalance + amount;
+                transaction.setClosingBalance(newBalance);
+                transId = transactionDAO.generateTransactionId(transaction);
+            }
 
-				transactionDAO.updateBalance(account);
-				Transaction creditTransaction = new Transaction();
-				creditTransaction.setId(accId);
-				creditTransaction.setAmount(amount);
-				creditTransaction.setOption(Constants.TRANSACTION_OPTION_SLIP);
-				creditTransaction.setType(Constants.TRANSACTION_CREDIT);
-				creditTransaction.setTransDate(transDate);
-				creditTransaction.setClosingBalance(newBalance);
-				transId = transactionDAO.generateTransactionId(creditTransaction);
-				
-
-			} else {
-				throw new TransactionException(Constants.AMOUNT_EXCEEDS_EXCEPTION);
-			}
-		} else {
-			throw new TransactionException(Constants.AMOUNT_LESS_EXCEPTION);
-		}
-		return transId;
+            else {
+                throw new TransactionException(Constants.AMOUNT_EXCEEDS_EXCEPTION);
+            }
+        } else {
+            throw new TransactionException(Constants.AMOUNT_LESS_EXCEPTION);
+        }
+        return transId;
 	}
 
-
+	
 
             
     /*******************************************************************************************************
@@ -106,7 +107,7 @@ public class TransactionServiceImpl implements TransactionService {
         String accId=transaction.getAccountId();
         String transType=transaction.getType();
         double amount=transaction.getAmount();
-        Date transDate=transaction.getTransDate();
+        LocalDate transDate=transaction.getTransDate();
         Account account=new Account();
         account.setId(accId);
         double oldBalance=transactionDAO.getBalance(account);
@@ -140,6 +141,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 	
 
+
 	/*******************************************************************************************************
 	 * Function Name : debitUsingCheque(Transaction transaction,Cheque cheque) -
 	 * Input Parameters : Transaction, Cheque Return Type : int - Throws :
@@ -151,13 +153,13 @@ public class TransactionServiceImpl implements TransactionService {
 	 ********************************************************************************************************/
 
 	@Override
-	public int debitusingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
+	public int debitUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
 		transactionDAO = new TransactionDAOImpl();
 		String accId = transaction.getAccountId();
 		String transType = transaction.getType();
 		double amount = transaction.getAmount();
-		Date transDate = transaction.getTransDate();
-		Date chequeissueDate = cheque.getIssueDate();
+		LocalDate transDate = transaction.getTransDate();
+		LocalDate chequeissueDate = cheque.getIssueDate();
 		int chequeNum = cheque.getNum();
 		String holderName = cheque.getHolderName();
 		String bankName = cheque.getBankName();
@@ -165,12 +167,10 @@ public class TransactionServiceImpl implements TransactionService {
 		Account account = new Account();
 		account.setId(accId);
 		double oldBalance = getBalance(account);
+		System.out.println("balanceis: "+oldBalance);
 		double newBalance = 0.0;
-		// in milliseconds
-		long diff = chequeissueDate.getTime() - transDate.getTime();
-		long diffDays = diff / (24 * 60 * 60 * 1000);
-
-		if (diffDays > 90 || amount > 1000000.00 || amount < 100.00) {
+		Period period = Period.between(chequeissueDate, transDate);
+		if (period.getDays() < 90 && amount < 1000000.00 && amount > 100.00) {
 			if (oldBalance > amount) {
 				newBalance = oldBalance - amount;
 				transactionDAO.updateBalance(account);
@@ -195,20 +195,63 @@ public class TransactionServiceImpl implements TransactionService {
 		}
 	}
 
+
 	@Override
 	public double depositInterest(Account account) throws TransactionException {
-		return 0;
-	}
-
-	@Override
-	public double updateInterest() throws TransactionException {
-		return 0;
-	}
-
-	@Override
-	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+
+	public double updateInterest() throws TransactionException, MyException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
+		double beneficiaryBalance = 0;
+		double payeeBalance = 0;
+		
+		String bankName = cheque.getBankName();
+		
+		Transaction creditTransaction,debitTransaction;
+		Cheque chequeDetail;
+		
+		TransactionDAO transactionDAO = new TransactionDAOImpl();
+		
+		int transId = 0;
+		
+		if((bankName != Constants.BANK_NAME) && (Arrays.asList(Constants.OTHER_BANK_NAME).contains(bankName)))
+		{
+			//other banks cheque
+			chequeDetail = new Cheque();
+			chequeDetail.setNum(cheque.getNum());
+			chequeDetail.setAccountNo(cheque.getAccountNo());
+			chequeDetail.setBankName(cheque.getBankName());
+			chequeDetail.setHolderName(cheque.getHolderName());
+			chequeDetail.setIfsc(cheque.getIfsc());
+			chequeDetail.setStatus(Constants.CHEQUE_STATUS_PENDING);
+			chequeDetail.setIssueDate(cheque.getIssueDate());
+			
+			transId = transactionDAO.generateChequeId(chequeDetail);
+			
+		}
+		else
+		{
+			if(bankName != Constants.BANK_NAME)
+			{
+				//invalid bank cheque
+				throw new TransactionException(Constants.INVALID_BANK_EXCEPTION);
+			}
+			else
+			{
+				//pecunia cheque
+				
+			}
+		}
+		return transId;
+
 	}
 
 }
