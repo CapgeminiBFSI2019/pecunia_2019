@@ -68,83 +68,39 @@ public class TransactionServiceImpl implements TransactionService {
 
 
 		transactionDAO = new TransactionDAOImpl();
-		String accId = transaction.getAccountId();
-		String transType = transaction.getType();
-		double amount = transaction.getAmount();
-		LocalDateTime transDate = transaction.getTransDate();
-		Account acc = new Account();
-		acc.setId(accId);
-		double oldBalance = transactionDAO.getBalance(acc);
-		double newBalance = 0.0;
-		if (amount >= 100.0) {
+        String accId = transaction.getAccountId();
+        String transType = transaction.getType();
+        double amount = transaction.getAmount();
+        LocalDate transDate = transaction.getTransDate();
+        Account acc = new Account();
+        acc.setId(accId);
+        double oldBalance = transactionDAO.getBalance(acc);
+        double newBalance = 0.0;
+        if (amount >= 100.0) {
 
-			if (amount <= 100000.0) {
+ 
 
-				newBalance = oldBalance + amount;
-				transaction.setClosingBalance(newBalance);
-				int transId = transactionDAO.creditUsingSlip(transaction);
-			}
+            if (amount <= 100000.0) {
 
-			else {
-				throw new TransactionException("Amount exceeds the limit");
-			}
-		} else {
-			throw new TransactionException("Amount is too less");
-		}
-		return 0;
+ 
+
+                newBalance = oldBalance + amount;
+                transaction.setClosingBalance(newBalance);
+                int transId = transactionDAO.generateTransactionId(transaction);
+            }
+
+ 
+
+            else {
+                throw new TransactionException("Amount exceeds the limit");
+            }
+        } else {
+            throw new TransactionException("Amount is too less");
+        }
+        return 0;
 	}
 
-	@Override
-	public int debitUsingSlip(Transaction transaction) throws TransactionException {
-		/*
-		 * validate existence get balance cal bal update bal create transac
-		 */
-		return 0;
-	}
-
-	@Override
-	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException {
-
-		return 0;
-	}
-
-
-		transactionDAO = new TransactionDAOImpl();
-		String accId = transaction.getAccountId();
-		String transType = transaction.getType();
-		double amount = transaction.getAmount();
-		Date transDate = transaction.getTransDate();
-		Account account = new Account();
-		account.setId(accId);
-		double oldBalance = transactionDAO.getBalance(account);
-		double newBalance = 0.0;
-		int transId = 0;
-		if (amount >= Constants.MINIMUM_CREDIT_SLIP_AMOUNT) {
-
-			if (amount <= Constants.MAXIMUM_CREDIT_SLIP_AMOUNT) {
-				newBalance = oldBalance + amount;
-
-				transactionDAO.updateBalance(account);
-				Transaction creditTransaction = new Transaction();
-				creditTransaction.setId(accId);
-				creditTransaction.setAmount(amount);
-				creditTransaction.setOption(Constants.TRANSACTION_OPTION_SLIP);
-				creditTransaction.setType(Constants.TRANSACTION_CREDIT);
-				creditTransaction.setTransDate(transDate);
-				creditTransaction.setClosingBalance(newBalance);
-				transId = transactionDAO.generateTransactionId(creditTransaction);
-				
-
-			} else {
-				throw new TransactionException(Constants.AMOUNT_EXCEEDS_EXCEPTION);
-			}
-		} else {
-			throw new TransactionException(Constants.AMOUNT_LESS_EXCEPTION);
-		}
-		return transId;
-	}
-
-
+	
 
             
     /*******************************************************************************************************
@@ -162,7 +118,7 @@ public class TransactionServiceImpl implements TransactionService {
         String accId=transaction.getAccountId();
         String transType=transaction.getType();
         double amount=transaction.getAmount();
-        Date transDate=transaction.getTransDate();
+        LocalDate transDate=transaction.getTransDate();
         Account account=new Account();
         account.setId(accId);
         double oldBalance=transactionDAO.getBalance(account);
@@ -213,13 +169,8 @@ public class TransactionServiceImpl implements TransactionService {
 		String accId = transaction.getAccountId();
 		String transType = transaction.getType();
 		double amount = transaction.getAmount();
-
 		LocalDate transDate = transaction.getTransDate();
 		LocalDate chequeissueDate = cheque.getIssueDate();
-
-		Date transDate = transaction.getTransDate();
-		Date chequeissueDate = cheque.getIssueDate();
-
 		int chequeNum = cheque.getNum();
 		String holderName = cheque.getHolderName();
 		String bankName = cheque.getBankName();
@@ -227,23 +178,10 @@ public class TransactionServiceImpl implements TransactionService {
 		Account account = new Account();
 		account.setId(accId);
 		double oldBalance = getBalance(account);
-
 		System.out.println("balanceis: "+oldBalance);
 		double newBalance = 0.0;
 		Period period = Period.between(chequeissueDate, transDate);
-		// in milliseconds
-//		long diff = chequeissueDate.getTime() - transDate.getTime();
-//		long diffDays = diff / (24 * 60 * 60 * 1000);
-
 		if (period.getDays() < 90 && amount < 1000000.00 && amount > 100.00) {
-
-		double newBalance = 0.0;
-		// in milliseconds
-		long diff = chequeissueDate.getTime() - transDate.getTime();
-		long diffDays = diff / (24 * 60 * 60 * 1000);
-
-		if (diffDays > 90 || amount > 1000000.00 || amount < 100.00) {
-
 			if (oldBalance > amount) {
 				newBalance = oldBalance - amount;
 				transactionDAO.updateBalance(account);
@@ -269,17 +207,19 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public double depositInterest(Account account) throws TransactionException {
-		return 0;
-	}
-
-	@Override
-	public double updateInterest() throws TransactionException {
-		return 0;
-	}
-
-	@Override
 	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double depositInterest(Account account) throws TransactionException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double updateInterest() throws TransactionException, MyException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
