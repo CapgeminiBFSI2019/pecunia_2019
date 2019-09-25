@@ -41,14 +41,17 @@ import com.capgemini.pecunia.exception.MyException;
 public class Demo {
 	public static void main(String[] args) throws MyException, LoginException {
 		
-		String name = "saurabh5881@gmail.com";
-		String pwd = "12345";
 		
-		Login login = new Login(name, pwd, null);
-		LoginService loginService = new LoginServiceImpl();
-		boolean vali = loginService.validateEmail(login);
-		System.out.println(vali);
+//		Account acc = new Accoun);
 		
+//		String name = "saurabh5881@gmail.com";
+//		String pwd = "12345";
+//		
+//		Login login = new Login(name, pwd, null);
+//		LoginService loginService = new LoginServiceImpl();
+//		boolean vali = loginService.validateEmail(login);
+//		System.out.println(vali);
+//		
 		
 //		String accountId="100202000001";
 //		String type="Debit";

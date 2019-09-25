@@ -57,6 +57,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	public boolean updateCustomerName(Account acc, Customer cust) throws MyException, AccountException {
 		
 		boolean updated = false;
+		System.out.println("Hi1");
 		boolean validated = validateAccountId(acc);
 		if(validated) {
 			accountDAO = new AccountManagementDAOImpl();
@@ -163,7 +164,13 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	@Override
 	public boolean validateAccountId(Account acc) throws MyException, AccountException {
 		boolean validated=false;
-		validated = accountDAO.validateAccountId(acc);
+		System.out.println("hi2");
+		
+			System.out.println(acc.getId());
+			accountDAO = new AccountManagementDAOImpl();
+			validated = accountDAO.validateAccountId(acc);
+
+		
 		return validated;
 	}
 
