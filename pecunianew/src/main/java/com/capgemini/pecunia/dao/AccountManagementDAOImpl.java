@@ -287,7 +287,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				validated=true;
 			}
 		}catch(SQLException e) {
-			throw new AccountException("Error in validating account ID");
+			throw new AccountException(ErrorConstants.ERROR_VALIDATION);
 		} finally {
 			try {
 				connection.close();
@@ -344,7 +344,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				if(queryResult==0)
 				{
 					logger.error("Error in adding customer details.");
-					throw new AccountException("Error adding new customer details");
+					throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 				}
 				else
 				{
@@ -394,7 +394,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			queryResult = preparedStatement.executeUpdate();
 			if(queryResult==0) {
 				logger.error("Error in adding customer details.");
-				throw new AccountException("Error adding new account details");
+				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
 			else
 			{
