@@ -8,14 +8,14 @@ import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
 import com.capgemini.pecunia.exception.MyException;
 
-public class LoanDisburdalServiceImpl {
+public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	private ArrayList<Loan> rejectedLoanList = new ArrayList<Loan>();
 
 	public ArrayList<Loan> RetrieveAll() throws MyException, IOException {
 
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		ArrayList<Loan> retrievedLoanRequests = new ArrayList<Loan>();
-		retrievedLoanRequests = loanDisbursedDAO.retrieveLoanList();
+		retrievedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveLoanList();
 		return retrievedLoanRequests;
 	}
 

@@ -7,5 +7,9 @@ import com.capgemini.pecunia.exception.LoginException;
 import com.capgemini.pecunia.exception.MyException;
 
 public interface LoginService {
+
 	public boolean validateEmail(Login log) throws MyException,LoginException;
+
+	public boolean validateEmail(Login log) throws MyException, LoginException;
+
 }
