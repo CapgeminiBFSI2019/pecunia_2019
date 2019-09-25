@@ -15,7 +15,7 @@ public class LoanDisburdalServiceImpl {
 
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		ArrayList<Loan> retrievedLoanRequests = new ArrayList<Loan>();
-		retrievedLoanRequests = loanDisbursedDAO.retrieveLoanList();
+		retrievedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveLoanList();
 		return retrievedLoanRequests;
 	}
 
