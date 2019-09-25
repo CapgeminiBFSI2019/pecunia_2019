@@ -88,7 +88,7 @@ PassbookMaintenanceServiceImpl pbm;
 		String sDate2="2013-10-10";
 		Date date1=new SimpleDateFormat("yyyy-mm-dd").parse(sDate1);
 		Date date2=new SimpleDateFormat("yyyy-mm-dd").parse(sDate2);
-		assertThrows(MyException.class, ()-> {pbm.accountSummary("123456789101",date2 ,date1 );});
+		assertThrows(MyException.class, ()-> {pbm.accountSummary("123456789101",date1 ,date2 );});
 	}
 	
 	
