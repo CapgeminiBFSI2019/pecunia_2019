@@ -33,10 +33,16 @@ public class LoginDAOImpl implements LoginDAO {
 			preparedStatement = connection.prepareStatement(LoginQueryMapper.GET_SALT);
 			preparedStatement.setString(1, login.getUsername());
 			ResultSet resultSet = preparedStatement.executeQuery();
-			salt = resultSet.getString(3);
+			if(resultSet.next())
+			{
+				salt = resultSet.getString("salt");
+			}
 
 		} catch (SQLException e) {
 			logger.error("login failed ");
+
+
+
 
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
 		} finally {
@@ -54,13 +60,17 @@ public class LoginDAOImpl implements LoginDAO {
 	@Override
 	public String fetchPassword(Login login) throws MyException, LoginException {
 		Connection connection = null;
+		String pwd=null;
 		connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(LoginQueryMapper.GET_PASSWORD);
 			preparedStatement.setString(1, login.getUsername());
 			ResultSet resultSet = preparedStatement.executeQuery();
-			return resultSet.getString(2);
+			if(resultSet.next()) {
+				pwd = resultSet.getString("password");
+			}
+			return pwd;
 		} catch (SQLException e) {
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
 		} finally {
@@ -74,4 +84,4 @@ public class LoginDAOImpl implements LoginDAO {
 		}
 	}
 
-}
+}	

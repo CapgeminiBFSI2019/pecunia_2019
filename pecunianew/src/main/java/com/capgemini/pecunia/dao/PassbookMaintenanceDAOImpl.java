@@ -49,6 +49,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			ps = connection.prepareStatement(PassbookMaintenanceQueryMapper.QUERY_TRANS_DETAILS);
 			ps.setString(1, accountId);
 			resultSet = ps.executeQuery();
+			queryResult=ps.executeUpdate();
 
 			while (resultSet.next()) {
 				Transaction details = new Transaction();
@@ -71,7 +72,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 			}
 		} catch (Exception e) {
-
+			System.out.println(e.getMessage());
 			logger.error(e.getMessage());
 			throw new PassbookException(ErrorConstants.TECH_ERROR);
 
@@ -94,6 +95,20 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 	}
 
+	/*******************************************************************************************************
+	 * - Function Name : accountSummary(String accountId, Date startDate, Date endDate) 
+	 * - Input Parameters : String accountId, Date startDate, Date endDate
+	 * - Return Type : List 
+	 * - Throws : PassbookException, MyException 
+	 * - Author : Rishav Dev
+	 * - Creation Date : 24/09/2019 
+	 * - Description : Stores the account summary in the list and returns it to service layer
+	 ********************************************************************************************************/
+	
+	
+	
+	
+	
 	@Override
 	public List<Transaction> accountSummary(String accountId, Date startDate, Date endDate)
 			throws PassbookException, MyException {
@@ -111,6 +126,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			ps.setDate(2, (java.sql.Date) startDate);
 			ps.setDate(3, (java.sql.Date) endDate);
 			resultSet = ps.executeQuery();
+			queryResult=ps.executeUpdate();
 			while (resultSet.next()) {
 				Transaction details = new Transaction();
 				details.setId(resultSet.getString(1));

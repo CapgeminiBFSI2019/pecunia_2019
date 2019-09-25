@@ -52,7 +52,7 @@ public class LoginServiceImpl implements LoginService{
 			Login loginNew = new Login(login.getUsername(),null);
 			try {
 				pwd = loginDAO.fetchPassword(loginNew);
-				if(pwd==hashPassword) {
+				if(pwd.equals(hashPassword)) {
 					flag=true;
 					logger.info("Login successful");
 				}
