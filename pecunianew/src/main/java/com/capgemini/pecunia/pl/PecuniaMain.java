@@ -85,14 +85,19 @@ public class PecuniaMain {
 						}
 					}
 					}
-				while(flag=="y" || flag=="n" || flag=="///") {
+				while(true) {
 					System.out.println("Do you want to perform another operation (y/n)?");
-					flag=scanner.nextLine();
-					if(flag!="y" || flag!="n") {
-						System.out.println("Invalid character. Please enter again.");
-						flag = "///";
+					String temp=scanner.nextLine();
+					if(temp=="y" || temp=="n") {
+						flag=temp;
+						break;
 					}
-					
+					else {
+						System.out.println("Invalid Character Entered. Please enter again.");
+					}
+					if(flag=="y" || flag=="n") {
+						break;
+					}
 				}
 				
 			}
