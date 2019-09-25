@@ -24,6 +24,8 @@ import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.LoanDisbursalException;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.TransactionException;
+import com.capgemini.pecunia.service.PassbookMaintenanceService;
+import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
 import com.capgemini.pecunia.service.TransactionService;
 import com.capgemini.pecunia.service.TransactionServiceImpl;
 import com.capgemini.pecunia.util.Constants;
@@ -52,6 +54,9 @@ public class Demo {
 	public static void main(String[] args) throws TransactionException, MyException, LoanDisbursalException {
 
 
+	public static void main(String[] args) throws TransactionException, MyException, ParseException {
+
+
 		
 		String accountId="100202000001";
 		String type="Debit";
@@ -69,23 +74,33 @@ public class Demo {
 		issueDate = LocalDate.parse(dateString);;
 		
 		
-		Transaction trans = new Transaction();
-		Cheque cheque = new Cheque();
-		trans.setAccountId(accountId);
-		trans.setAmount(amount);
-		trans.setOption(option);
-		trans.setType(type);
-		trans.setTransDate(transDate);
+
+//		Transaction trans = new Transaction();
+//		Cheque cheque = new Cheque();
+//		trans.setAccountId(accountId);
+//		trans.setAmount(amount);
+//		trans.setOption(option);
+//		trans.setType(type);
+//		//trans.setTransDate(transDate);
+//		
+//		cheque.setAccountNo(accountId);
+//		cheque.setBankName(bankName);
+//		cheque.setHolderName(holderName);
+//		cheque.setIfsc(ifsc);
+//		cheque.setIssueDate(issueDate);
 		
-		cheque.setAccountNo(accountId);
-		cheque.setBankName(bankName);
-		cheque.setHolderName(holderName);
-		cheque.setIfsc(ifsc);
-		cheque.setIssueDate(issueDate);
-//		cheque.setStatus(Constants.CHEQUE_STATUS_CLEARED);
-		TransactionService transactionService=new TransactionServiceImpl();
-		int transId=transactionService.debitUsingCheque(trans, cheque);
-		System.out.println(transId);
+//		TransactionService transactionService=new TransactionServiceImpl();
+//		int transId=transactionService.debitUsingCheque(trans, cheque);
+//		System.out.println(transId);
+		
+		PassbookMaintenanceService transactionService=new PassbookMaintenanceServiceImpl();
+		String sDate1="2019-08-04";
+		String sDate2="2019-11-26";
+		Date date1=new SimpleDateFormat("yyyy-mm-dd").parse(sDate1);
+		Date date2=new SimpleDateFormat("yyyy-mm-dd").parse(sDate2);
+		List<Transaction> transaction = transactionService.accountSummary("100101000001",date1, date2);
+		System.out.println(transaction);
+
 		
 		LoanDisbursalService loanDisbursalDAO = new LoanDisbursalServiceImpl();
 		ArrayList<Loan> l = new ArrayList<Loan>();
