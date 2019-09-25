@@ -1,7 +1,5 @@
 package com.capgemini.pecunia.dao;
 
-
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,48 +19,41 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 		return emi * tenure;
 	}
 
-	
-
 	public List<Loan> retrieveLoanList() throws IOException, MyException {
-	
+
 		Connection connection = DBConnection.getInstance().getConnection();
 		int loanRequests = 0;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		List<Loan> requestList = new ArrayList<Loan>();
-		
 
 		try {
 			preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.RETRIVE_ALL_QUERY_FROM_LOAN);
-			
+
 			resultSet = preparedStatement.executeQuery();
-			System.out.println(resultSet);
 
 			while (resultSet.next()) {
-				
-				
-				int loanId=resultSet.getInt("loan_id");
-				
-				String account_id=resultSet.getString("account_id");
-				
+
+				int loanId = resultSet.getInt("loan_id");
+
+				String account_id = resultSet.getString("account_id");
+
 				Double amount = resultSet.getDouble("amount");
-			
+
 				String type = resultSet.getString("type");
-				
+
 				int tenure = resultSet.getInt("tenure");
-				
+
 				int roi = resultSet.getInt("roi");
-				
+
 				String status = resultSet.getString("loan_status");
-				
+
 				Double emi = resultSet.getDouble("emi");
-				
+
 				int creditScore = resultSet.getInt("credit_score");
-				
-				Loan loan = new Loan(loanId,account_id,amount,type,tenure,roi,status,emi,creditScore);
+
+				Loan loan = new Loan(loanId, account_id, amount, type, tenure, roi, status, emi, creditScore);
 				requestList.add(loan);
-				
-				
 
 			}
 		}
@@ -82,53 +73,50 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 			}
 		}
 
-			return  requestList;
+		return requestList;
 
 	}
-
 
 	public void releaseLoanSheet(List<Loan> loanList) throws IOException, MyException {
 		Connection connection = DBConnection.getInstance().getConnection();
 
 		PreparedStatement preparedStatement = null;
-		
-		
-			try {for (int i = 0; i < loanList.size(); i++) {
+
+		try {
+			for (int i = 0; i < loanList.size(); i++) {
 				double amountDue = amountToBePaid(loanList.get(i).getEmi(), loanList.get(i).getTenure());
 				preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.INSERT_QUERY);
-				
+
 				preparedStatement.setInt(1, loanList.get(i).getLoanId());
-				System.out.println(loanList.get(i).getLoanId());
 				preparedStatement.setString(2, loanList.get(i).getAccountId());
 				preparedStatement.setDouble(3, loanList.get(i).getAmount());
-				
 				preparedStatement.setDouble(4, amountDue);
 				preparedStatement.setInt(5, loanList.get(i).getTenure());
 			}
-			} catch (SQLException sqlException) {
-				throw new MyException(sqlException.getMessage());
+		} catch (SQLException sqlException) {
+			throw new MyException(sqlException.getMessage());
 //				throw new MyException("Tehnical problem occured. Refer log");
-			} finally {
-				try {
-					preparedStatement.close();
-					connection.close();
-				} catch (SQLException sqlException) {
+		} finally {
+			try {
+				preparedStatement.close();
+				connection.close();
+			} catch (SQLException sqlException) {
 
-					throw new MyException("Files cannot be closed");
+				throw new MyException("Files cannot be closed");
 
-				}
 			}
+		}
 
-		
 	}
-	
-	public ArrayList<LoanDisbursal> loanApprovedList() throws IOException,MyException{
+
+	public ArrayList<LoanDisbursal> loanApprovedList() throws IOException, MyException {
 		Connection connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		ArrayList<LoanDisbursal> approvedLoanList = new ArrayList<LoanDisbursal>();
 		try {
-			preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.RETRIVE_ALL_QUERY_FROM_APPROVED_LOAN);
+			preparedStatement = connection
+					.prepareStatement(LoanDisbursalQuerryMapper.RETRIVE_ALL_QUERY_FROM_APPROVED_LOAN);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				LoanDisbursal loanDisbursal = new LoanDisbursal();
@@ -141,11 +129,9 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				approvedLoanList.add(loanDisbursal);
 
 			}
-		}
-		catch(SQLException sqlException) {
+		} catch (SQLException sqlException) {
 			throw new MyException("Tehnical problem occured. Refer log");
-		}
-		finally {
+		} finally {
 			try {
 				preparedStatement.close();
 				connection.close();
@@ -155,10 +141,8 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 			}
 		}
-		
+
 		return approvedLoanList;
 	}
 
 }
-
-

@@ -8,7 +8,7 @@ import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
 import com.capgemini.pecunia.exception.MyException;
 
-public class LoanDisburdalServiceImpl {
+public class LoanDisbursalServiceImpl {
 	private ArrayList<Loan> rejectedLoanList = new ArrayList<Loan>();
 
 	public ArrayList<Loan> RetrieveAll() throws MyException, IOException {
