@@ -39,8 +39,7 @@ public class LoginDAOImpl implements LoginDAO {
 	}
 
 	@Override
-	public boolean validatePassword(Login login) throws MyException, LoginException {
-		boolean flag = false;
+	public String fetchPassword(Login login) throws MyException, LoginException {
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
@@ -48,11 +47,7 @@ public class LoginDAOImpl implements LoginDAO {
 			preparedStatement = connection.prepareStatement(LoginQueryMapper.GET_PASSWORD);
 			preparedStatement.setString(1, login.getUsername());
 			ResultSet resultSet = preparedStatement.executeQuery();
-			if (login.getPassword() == resultSet.getString(2)) {
-				flag = true;
-			} else {
-				throw new LoginException(ErrorConstants.LOGIN_ERROR);
-			}
+			return resultSet.getString(2);
 		} catch (SQLException e) {
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
 		} finally {
@@ -63,7 +58,6 @@ public class LoginDAOImpl implements LoginDAO {
 				throw new LoginException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
-		return flag;
 	}
 
 }
