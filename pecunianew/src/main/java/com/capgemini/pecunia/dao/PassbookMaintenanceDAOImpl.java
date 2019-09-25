@@ -47,12 +47,14 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 		try {
 			ps = connection.prepareStatement(PassbookMaintenanceQueryMapper.QUERY_TRANS_DETAILS);
+			ps.setString(1, accountId);
 			resultSet = ps.executeQuery();
+			queryResult=ps.executeUpdate();
 
 			while (resultSet.next()) {
 				Transaction details = new Transaction();
 				details.setId(resultSet.getString(1));
-				details.setTransDate(resultSet.getDate(2));
+				details.setTransDate((resultSet.getDate(2)).toLocalDate());
 				details.setAmount(resultSet.getDouble(3));
 				details.setTransFrom(resultSet.getString(4));
 				details.setTransTo(resultSet.getString(5));
@@ -70,7 +72,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 			}
 		} catch (Exception e) {
-
+			System.out.println(e.getMessage());
 			logger.error(e.getMessage());
 			throw new PassbookException(ErrorConstants.TECH_ERROR);
 
@@ -93,6 +95,20 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 	}
 
+	/*******************************************************************************************************
+	 * - Function Name : accountSummary(String accountId, Date startDate, Date endDate) 
+	 * - Input Parameters : String accountId, Date startDate, Date endDate
+	 * - Return Type : List 
+	 * - Throws : PassbookException, MyException 
+	 * - Author : Rishav Dev
+	 * - Creation Date : 24/09/2019 
+	 * - Description : Stores the account summary in the list and returns it to service layer
+	 ********************************************************************************************************/
+	
+	
+	
+	
+	
 	@Override
 	public List<Transaction> accountSummary(String accountId, Date startDate, Date endDate)
 			throws PassbookException, MyException {
@@ -106,11 +122,15 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 		try {
 			ps = connection.prepareStatement(PassbookMaintenanceQueryMapper.QUERY_SUMMARY);
+			ps.setString(1, accountId);
+			ps.setDate(2, (java.sql.Date) startDate);
+			ps.setDate(3, (java.sql.Date) endDate);
 			resultSet = ps.executeQuery();
+			queryResult=ps.executeUpdate();
 			while (resultSet.next()) {
 				Transaction details = new Transaction();
 				details.setId(resultSet.getString(1));
-				details.setTransDate(resultSet.getDate(2));
+				details.setTransDate((resultSet.getDate(2)).toLocalDate());
 				details.setAmount(resultSet.getDouble(3));
 				details.setTransFrom(resultSet.getString(4));
 				details.setTransTo(resultSet.getString(5));

@@ -1,9 +1,6 @@
 package com.capgemini.pecunia.dto;
 
-
-import java.time.*; 
-
-
+import java.time.*;
 
 public class Transaction {
 	private String id;
@@ -17,110 +14,102 @@ public class Transaction {
 	private String transTo;
 	private Double closingBalance;
 
-	
-	 
-	
-public void setAccountId(String accountId) {
+	public void setAccountId(String accountId) {
 		this.accountId = accountId;
 	}
 
+	public String getId() {
+		return id;
+	}
 
-public String getId() {
-	return id;
-}
+	public void setId(String id) {
+		this.id = id;
+	}
 
+	public String getAccountId() {
+		return accountId;
+	}
 
-public void setId(String id) {
-	this.id = id;
-}
+	public String getType() {
+		return type;
+	}
 
+	public void setType(String type) {
+		this.type = type;
+	}
 
-public String getAccountId() {
-	return accountId;
-}
+	public Double getAmount() {
+		return amount;
+	}
 
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
 
-public String getType() {
-	return type;
-}
+	public String getOption() {
+		return option;
+	}
 
-public void setType(String type) {
-	this.type = type;
-}
+	public void setOption(String option) {
+		this.option = option;
+	}
 
-public Double getAmount() {
-	return amount;
-}
+	public LocalDate getTransDate() {
+		return transDate;
+	}
 
-public void setAmount(Double amount) {
-	this.amount = amount;
-}
+	public void setTransDate(LocalDate transDate) {
+		this.transDate = transDate;
+	}
 
-public String getOption() {
-	return option;
-}
+	public int getChequeId() {
+		return chequeId;
+	}
 
-public void setOption(String option) {
-	this.option = option;
-}
+	public void setChequeId(int chequeId) {
+		this.chequeId = chequeId;
+	}
 
-public LocalDate getTransDate() {
-	return transDate;
-}
+	public String getTransFrom() {
+		return transFrom;
+	}
 
-public void setTransDate(LocalDate transDate) {
-	this.transDate = transDate;
-}
+	public void setTransFrom(String transFrom) {
+		this.transFrom = transFrom;
+	}
 
-public int getChequeId() {
-	return chequeId;
-}
+	public String getTransTo() {
+		return transTo;
+	}
 
-public void setChequeId(int chequeId) {
-	this.chequeId = chequeId;
-}
+	public void setTransTo(String transTo) {
+		this.transTo = transTo;
+	}
 
-public String getTransFrom() {
-	return transFrom;
-}
+	public Double getClosingBalance() {
+		return closingBalance;
+	}
 
-public void setTransFrom(String transFrom) {
-	this.transFrom = transFrom;
-}
+	public void setClosingBalance(Double closingBalance) {
+		this.closingBalance = closingBalance;
+	}
 
-public String getTransTo() {
-	return transTo;
-}
+	public Transaction(String id, String accountId, String type, Double amount, String option, LocalDate transDate,
+			int chequeId, String transFrom, String transTo, Double closingBalance) {
+		super();
+		this.id = id;
+		this.accountId = accountId;
+		this.type = type;
+		this.amount = amount;
+		this.option = option;
+		this.transDate = transDate;
+		this.chequeId = chequeId;
+		this.transFrom = transFrom;
+		this.transTo = transTo;
+		this.closingBalance = closingBalance;
+	}
 
-public void setTransTo(String transTo) {
-	this.transTo = transTo;
-}
+	public Transaction() {
 
-public Double getClosingBalance() {
-	return closingBalance;
-}
-
-public void setClosingBalance(Double closingBalance) {
-	this.closingBalance = closingBalance;
-}
-
-public Transaction(String id, String accountId, String type, Double amount, String option, LocalDate transDate,
-		int chequeId, String transFrom, String transTo, Double closingBalance) {
-	super();
-	this.id = id;
-	this.accountId = accountId;
-	this.type = type;
-	this.amount = amount;
-	this.option = option;
-	this.transDate = transDate;
-	this.chequeId = chequeId;
-	this.transFrom = transFrom;
-	this.transTo = transTo;
-	this.closingBalance = closingBalance;
-}
-
-
-public Transaction() {
-	
-}
+	}
 }

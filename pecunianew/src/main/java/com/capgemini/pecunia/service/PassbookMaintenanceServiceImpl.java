@@ -31,11 +31,25 @@ public class PassbookMaintenanceServiceImpl implements PassbookMaintenanceServic
 		try {
 			transactionList = pdao.updatePassbook(accountId);
 		} catch (PassbookException | MyException e) {
+			System.out.print(e.getMessage());
 			throw new MyException(ErrorConstants.UPDATE_PASSBOOK_ERROR);
 		}
 		return transactionList;
 	}
 
+	/*******************************************************************************************************
+	 * - Function Name : accountSummary(String accountId, Date startDate, Date endDate) 
+	 * - Input Parameters : String accountId, Date startDate, Date endDate
+	 * - Return Type : List 
+	 * - Throws : MyException 
+	 * - Author : Rishav Dev
+	 * - Creation Date : 24/09/2019 
+	 * - Description : Provides the account summary
+	 ********************************************************************************************************/
+	
+	
+	
+	
 	@Override
 	public List<Transaction> accountSummary(String accountId, Date startDate, Date endDate) throws MyException {
 		List<Transaction> transactionList = new ArrayList<Transaction>();

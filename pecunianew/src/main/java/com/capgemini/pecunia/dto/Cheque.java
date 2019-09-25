@@ -19,9 +19,7 @@ public class Cheque {
 	}
 	
 	
-	public Cheque() {
-		
-	}
+	
 
 
 	public Cheque(String id, int num, String accountNo, String holderName, String bankName, String ifsc, LocalDate issueDate,

@@ -35,4 +35,7 @@ public class Utility {
 		return hexString.toString(); 
 	}
 	
+//	public static void main(String[] args) throws NoSuchAlgorithmException {
+//		System.out.println(toHexString(getSHA("12345JVAbtY04yg")));
+//	}
 }
