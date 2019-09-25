@@ -49,19 +49,12 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	/*******************************************************************************************************
-	 * Function Name : creditUsingSlip(Transaction transaction) - Input Parameters :
-
-	 * AccountId,amount,date account - Return Type : int - Throws :
-	 * TransactionException - Author : Arpan Mondal - Creation Date : 23/09/2019 -
-	 * Description : Crediting using slip
-
-	 * Transaction account - Return Type : int - Throws :
-	 * MyException,TransactionException - Author : Arpan Mondal - Creation Date :
-	 * 23/09/2019 - Description : Crediting using slip
-
+	 * Function Name : creditUsingSlip(Transaction transaction) - Input Parameters : Transaction
+	 * Return Type : int - Throws : TransactionException,MyException - Author :
+	 * Arpan Mondal - Creation Date : 24/09/2019 - Description : Crediting using Slip
 	 * 
 	 * 
-	 * @throws MyException
+	 * @throws TransactionException,MyException
 	 ********************************************************************************************************/
 
 	@Override
@@ -73,32 +66,27 @@ public class TransactionServiceImpl implements TransactionService {
         String transType = transaction.getType();
         double amount = transaction.getAmount();
         LocalDate transDate = transaction.getTransDate();
-        Account acc = new Account();
-        acc.setId(accId);
-        double oldBalance = transactionDAO.getBalance(acc);
+        Account account = new Account();
+        account.setId(accId);
+        double oldBalance = transactionDAO.getBalance(account);
         double newBalance = 0.0;
-        if (amount >= 100.0) {
+        int transId=0;
+        if (amount >= Constants.MINIMUM_CREDIT_SLIP_AMOUNT) {
 
- 
-
-            if (amount <= 100000.0) {
-
- 
-
+            if (amount <= Constants.MAXIMUM_CREDIT_SLIP_AMOUNT) {
+            	
                 newBalance = oldBalance + amount;
                 transaction.setClosingBalance(newBalance);
-                int transId = transactionDAO.generateTransactionId(transaction);
+                transId = transactionDAO.generateTransactionId(transaction);
             }
-
- 
 
             else {
-                throw new TransactionException("Amount exceeds the limit");
+                throw new TransactionException(Constants.AMOUNT_EXCEEDS_EXCEPTION);
             }
         } else {
-            throw new TransactionException("Amount is too less");
+            throw new TransactionException(Constants.AMOUNT_LESS_EXCEPTION);
         }
-        return 0;
+        return transId;
 	}
 
 	
@@ -207,11 +195,6 @@ public class TransactionServiceImpl implements TransactionService {
 		}
 	}
 
-	@Override
-	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public double depositInterest(Account account) throws TransactionException {
@@ -224,6 +207,7 @@ public class TransactionServiceImpl implements TransactionService {
 	public double updateInterest() throws TransactionException, MyException {
 		// TODO Auto-generated method stub
 		return 0;
+	}
 
 	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
 		double beneficiaryBalance = 0;
