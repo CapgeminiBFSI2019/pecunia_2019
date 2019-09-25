@@ -10,6 +10,5 @@ public interface LoginService {
 
 	public boolean validateEmail(Login log) throws MyException,LoginException;
 
-	public boolean validateEmail(Login log) throws MyException, LoginException;
 
 }

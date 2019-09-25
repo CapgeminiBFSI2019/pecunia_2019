@@ -85,7 +85,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 		int rowsAffected = 0;
 		try {
 			preparedStatement = connection.prepareStatement(TransactionQueryMapper.UPDATE_ACOCUNT_BALANCE_QUERY);
-			preparedStatement.setString(1, accountId);
+			preparedStatement.setDouble(1, account.getBalance());
+			preparedStatement.setString(2, accountId);
 			rowsAffected = preparedStatement.executeUpdate();
 			if (rowsAffected != 0) {
 				flag = true;
@@ -177,13 +178,13 @@ public class TransactionDAOImpl implements TransactionDAO {
 			preparedStatement.setString(3, cheque.getHolderName());
 			preparedStatement.setString(4, cheque.getBankName());
 			preparedStatement.setString(5, cheque.getIfsc());
-			preparedStatement.setDate(6, (Date) cheque.getIssueDate());
+			preparedStatement.setDate(6,  java.sql.Date.valueOf(cheque.getIssueDate()));
 			preparedStatement.setString(7, cheque.getStatus());
 
 			preparedStatement.executeUpdate();
 
 			resultSet = preparedStatement.getGeneratedKeys();
-
+			System.out.println("I am here");
 			if (resultSet.next()) {
 				chequeId = resultSet.getInt(1);
 			} else {

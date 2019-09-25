@@ -15,15 +15,15 @@ import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.util.DBConnection;
 
-
-public class LoginDAOImpl implements LoginDAO{
+public class LoginDAOImpl implements LoginDAO {
 
 	Logger logger = Logger.getRootLogger();
+
 	public LoginDAOImpl() {
 		PropertyConfigurator.configure("resources//log4j.properties");
 
-
 	}
+
 	@Override
 	public String validateEmail(Login login) throws MyException, LoginException {
 		String salt = null;
@@ -37,25 +37,14 @@ public class LoginDAOImpl implements LoginDAO{
 			salt = resultSet.getString(3);
 
 		} catch (SQLException e) {
+			
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
 		} finally {
 			try {
 				connection.close();
 				preparedStatement.close();
 			} catch (Exception e) {
-
-		}catch(SQLException e) {
-		logger.error("login failed ");
-		{throw new LoginException(ErrorConstants.LOGIN_ERROR);
-			
-		}
-		}
-		finally {
-			try {
-				connection.close();
-				preparedStatement.close();
-			}catch(Exception e){
-				logger.error("Connection Error ");
+				logger.error("login failed ");
 				throw new LoginException(ErrorConstants.LOGIN_ERROR);
 			}
 		}
@@ -71,7 +60,6 @@ public class LoginDAOImpl implements LoginDAO{
 			preparedStatement = connection.prepareStatement(LoginQueryMapper.GET_PASSWORD);
 			preparedStatement.setString(1, login.getUsername());
 			ResultSet resultSet = preparedStatement.executeQuery();
-
 			return resultSet.getString(2);
 		} catch (SQLException e) {
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
@@ -80,24 +68,8 @@ public class LoginDAOImpl implements LoginDAO{
 				connection.close();
 				preparedStatement.close();
 			} catch (Exception e) {
-				throw new LoginException(ErrorConstants.DB_CONNECTION_ERROR);
-			if(login.getPassword()==resultSet.getString(2)) {
-				flag=true;
-				logger.info("login successful:");
-			}
-			else {
-				logger.error("login failed ");
-				throw new LoginException(ErrorConstants.LOGIN_ERROR);			}
-		}catch(SQLException e) {throw new LoginException(ErrorConstants.LOGIN_ERROR);
-		
-		}
-		finally {
-			try {
-				connection.close();
-				preparedStatement.close();
-			}catch(Exception e){
 				logger.error("connection error ");
-				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
+				throw new LoginException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
 	}

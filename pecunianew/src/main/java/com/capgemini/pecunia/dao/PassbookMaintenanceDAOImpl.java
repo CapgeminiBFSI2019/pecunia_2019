@@ -61,7 +61,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 				if (queryResult == 0) {
 					logger.error("updation failed ");
-					throw new PassbookException("updation failed ");
+					throw new PassbookException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 
 				} else {
 					logger.info("updation successful:");
@@ -120,7 +120,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 			if (queryResult == 0) {
 				logger.error("updation failed ");
-				throw new PassbookException("updation failed ");
+				throw new PassbookException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 
 			} else {
 				logger.info("updation successful:");
