@@ -22,7 +22,6 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 	public List<Loan> retrieveLoanList() throws IOException, MyException {
 
 		Connection connection = DBConnection.getInstance().getConnection();
-		int loanRequests = 0;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		List<Loan> requestList = new ArrayList<Loan>();
@@ -68,6 +67,8 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 	}
 
+
+
 	public void releaseLoanSheet(List<Loan> loanList) throws IOException, MyException {
 		Connection connection = DBConnection.getInstance().getConnection();
 
@@ -77,7 +78,6 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 			for (int i = 0; i < loanList.size(); i++) {
 				double amountDue = amountToBePaid(loanList.get(1).getEmi(), loanList.get(1).getTenure());
 				preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.INSERT_QUERY);
-
 				preparedStatement.setInt(1, loanList.get(i).getLoanId());
 				preparedStatement.setString(2, loanList.get(i).getAccountId());
 				preparedStatement.setDouble(3, loanList.get(i).getAmount());
@@ -140,4 +140,31 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 		return approvedLoanList;
 	}
 
+	@Override
+	public void updateLoanAccount(ArrayList<LoanDisbursal> loanApprovals) throws IOException, MyException {
+		Connection connection = DBConnection.getInstance().getConnection();
+		PreparedStatement preparedStatement = null;
+		try {
+			for (int i = 0; i < loanApprovals.size(); i++) {
+			
+				preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.UPDATE_LOAN_ACCOUNT);
+				
+				
+			}
+
+		} catch (SQLException sqlException) {
+			throw new MyException(sqlException.getMessage());
+
+		} finally {
+			try {
+				preparedStatement.close();
+				connection.close();
+			} catch (SQLException sqlException) {
+
+				throw new MyException("Files cannot be closed");
+
+			}
+		}
+
+}
 }
