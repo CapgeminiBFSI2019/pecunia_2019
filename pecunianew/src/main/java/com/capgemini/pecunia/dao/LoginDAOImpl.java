@@ -12,7 +12,6 @@ import com.capgemini.pecunia.dto.Login;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.LoginException;
 import com.capgemini.pecunia.exception.MyException;
-import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.util.DBConnection;
 
 public class LoginDAOImpl implements LoginDAO {

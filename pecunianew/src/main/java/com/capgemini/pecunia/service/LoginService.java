@@ -1,6 +1,5 @@
 package com.capgemini.pecunia.service;
 
-import java.security.NoSuchAlgorithmException;
 
 import com.capgemini.pecunia.dto.Login;
 import com.capgemini.pecunia.exception.LoginException;
