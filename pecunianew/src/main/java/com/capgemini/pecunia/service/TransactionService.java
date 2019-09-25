@@ -10,7 +10,6 @@ public interface TransactionService {
 	public double getBalance(Account account) throws TransactionException, MyException;
 	public boolean updateBalance(Account account) throws TransactionException, MyException;
 	public int creditUsingSlip(Transaction transaction) throws TransactionException, MyException;
-
 	public int debitUsingSlip(Transaction transaction) throws TransactionException, MyException;
 	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException;
 	public int debitUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException;

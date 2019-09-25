@@ -3,35 +3,59 @@ package com.capgemini.pecunia.service;
 
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import com.capgemini.pecunia.dao.LoginDAO;
 import com.capgemini.pecunia.dao.LoginDAOImpl;
 import com.capgemini.pecunia.dto.Login;
+
+import com.capgemini.pecunia.exception.ErrorConstants;
+
+import com.capgemini.pecunia.exception.LoginException;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.util.Utility;
 
 public class LoginServiceImpl implements LoginService{
-
+	Logger logger = Logger.getRootLogger();
+	public LoginServiceImpl() {
+		PropertyConfigurator.configure("resources//log4j.properties");
+	}
 	LoginDAO loginDAO = new LoginDAOImpl();
 	@Override
-	public boolean validateEmail(Login log) throws MyException {
+	public boolean validateEmail(Login login) throws MyException, LoginException {
 		boolean flag=false;
-		String salt = loginDAO.validateEmail(log);
+		String pwd=null;
+		String salt = loginDAO.validateEmail(login);
 		if(salt==null) {
-			//Account not found (exception)
+			logger.error("validation failed ");
+			throw new LoginException(ErrorConstants.LOGIN_ERROR);
 		}
 		else {
 			byte arr[] = null;
 			try {
-				arr = Utility.getSHA(log.getPassword() + "" + salt);
+				arr = Utility.getSHA(login.getPassword() + "" + salt);
 			} catch (NoSuchAlgorithmException e) {
-				//technical error
+				logger.error("validation failed ");
+				throw new LoginException(ErrorConstants.LOGIN_ERROR);
 			}
 			String hashPassword = Utility.toHexString(arr);
-			Login logNew = new Login(log.getUsername(),hashPassword,"");
-			flag = loginDAO.validatePassword(logNew);
+			Login loginNew = new Login(login.getUsername(),"","");
+			try {
+				pwd = loginDAO.fetchPassword(loginNew);
+				if(pwd==hashPassword) {
+					flag=true;
+				}
+			} catch (LoginException e) {
+				logger.error("Validation failed ");
+				throw new LoginException(ErrorConstants.LOGIN_ERROR);
+			}
 		}
 		return flag;
 	}
+	
+	
+	
 	
 
 }

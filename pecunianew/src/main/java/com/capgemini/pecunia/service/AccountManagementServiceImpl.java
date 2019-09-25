@@ -11,12 +11,23 @@ import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Address;
 import com.capgemini.pecunia.dto.Customer;
 import com.capgemini.pecunia.exception.AccountException;
+import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.util.Constants;
 import com.capgemini.pecunia.util.DBConnection;
 
 public class AccountManagementServiceImpl implements AccountManagementService{
 	
 	AccountManagementDAO accountDAO;
+	
+	/*******************************************************************************************************
+	 * - Function Name : deleteAccount(Account acc) - Input Parameters : Account
+	 * account - Return Type : boolean - Throws : AccountException - Author :
+	 * Rohit Kumar - Creation Date : 24/09/2019 - Description : Deleting an account
+	 * by setting account status "Closed" 
+	 * @throws MyException
+	 ********************************************************************************************************/
+	
 	@Override
 	public boolean deleteAccount(Account acc) throws MyException, AccountException {
 		
@@ -27,18 +38,24 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 		updated = accountDAO.deleteAccount(acc);
 		}
 		else {
-			throw new AccountException("Account ID doesn't exist");
+			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 		}
 		return updated;
 	}
 
+	
+	
+	/*******************************************************************************************************
+	 * - Function Name : updateCustomerName(Account acc, Customer cust) - Input Parameters : Account acc, Customer cust
+	 * Return Type : boolean - Throws : AccountException - 
+	 * Author : Aditi Singh - Creation Date : 24/09/2019 - Description : Updating customer name
+	 * 
+	 * @throws MyException
+	 ********************************************************************************************************/
+	
 	@Override
 	public boolean updateCustomerName(Account acc, Customer cust) throws MyException, AccountException {
 		
-		/*
-		 * Function takes the accountID and the customer object(which contains the updated name)
-		 * as arguments, updates the database, and returns a boolean value
-		 */
 		boolean updated = false;
 		boolean validated = validateAccountId(acc);
 		if(validated) {
@@ -46,18 +63,24 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 			updated = accountDAO.updateCustomerName(acc, cust);
 		}
 		else {
-			throw new AccountException("Account ID doesn't exist");
+			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 		}
 		return updated;
 		
 	}
+	
+	
+	/*******************************************************************************************************
+	 * - Function Name : updateCustomerContact(Account acc, Customer cust) - Input Parameters : Account acc, Customer cust
+	 * Return Type : boolean - Throws : AccountException - 
+	 * Author : Aditi Singh - Creation Date : 24/09/2019 - Description : Updating customer contact
+	 * 
+	 * @throws MyException
+	 ********************************************************************************************************/
 
 	@Override
 	public boolean updateCustomerContact(Account acc, Customer cust) throws MyException, AccountException {
-		/*
-		 * Function takes the accountID and the customer object(which contains the updated name)
-		 * as arguments, updates the database, and returns a boolean value
-		 */
+		
 		boolean updated = false;
 		boolean validated = validateAccountId(acc);
 		if(validated) {
@@ -65,17 +88,23 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 		updated = accountDAO.updateCustomerContact(acc, cust);
 		}
 		else {
-			throw new AccountException("Account ID doesn't exist");
+			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 		}
 		return updated;
 	}
+	
+	
+	/*******************************************************************************************************
+	 * - Function Name : updateCustomerName(Account acc, Address add) - Input Parameters : Account acc, Address add
+	 * Return Type : boolean - Throws : AccountException - 
+	 * Author : Aditi Singh - Creation Date : 24/09/2019 - Description : Updating customer address
+	 * 
+	 * @throws MyException
+	 ********************************************************************************************************/
 
 	@Override
 	public boolean updateCustomerAddress(Account acc, Address add) throws MyException, AccountException {
-		/*
-		 * Function takes the accountID and the customer object(which contains the updated name)
-		 * as arguments, updates the database, and returns a boolean value
-		 */
+		
 		boolean updated = false;
 		boolean validated = validateAccountId(acc);
 		if(validated) {
@@ -83,20 +112,19 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 		updated = accountDAO.updateCustomerAddress(acc, add);
 		}
 		else {
-		throw new AccountException("Account ID doesn't exist");
+		throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 		}
 		return updated;
 	}
-
-	@Override
-	public String addAccount(Customer cust, Address add, Account acc) throws MyException, AccountException {
-		
-		String accountId = null;
-		accountDAO = new AccountManagementDAOImpl();
-		accountId= accountDAO.addAccount(cust, add, acc);
-		return accountId;
-
-	}
+	
+	
+	/*******************************************************************************************************
+	 * - Function Name : calculateAccountId(Account acc) - Input Parameters : Account acc 
+	 * Return Type : String - Throws : AccountException - 
+	 * Author : Aditi Singh - Creation Date : 24/09/2019 - Description : Generation of a new account ID 
+	 * with the given branch ID and type of Account 
+	 * @throws MyException
+	 ********************************************************************************************************/
 
 	@Override
 	public String calculateAccountId(Account acc) throws MyException, AccountException{
@@ -104,17 +132,17 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 		id = id.concat(acc.getBranchId());
 		String type=acc.getAccountType();
 		switch(type) {
-		case "Savings":
-			id = id.concat("01");
+		case Constants.SAVINGS:
+			id = id.concat(Constants.CODE_SAVINGS);
 			break;
-		case "Current":
-			id = id.concat("02");
+		case Constants.CURRENT:
+			id = id.concat(Constants.CODE_CURRENT);
 			break;
-		case "FD": 
-			id = id.concat("03");
+		case Constants.FD: 
+			id = id.concat(Constants.CODE_FD);
 			break;
-		case "Loan":
-			id = id.concat("04");
+		case Constants.LOAN:
+			id = id.concat(Constants.CODE_LOAN);
 			break;
 		}
 		
@@ -123,11 +151,45 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 		return id;
 	}
 
+	
+	/*******************************************************************************************************
+	 * - Function Name : validateAccountId(Account acc) - Input Parameters : Account
+	 * account - Return Type : double - Throws : AccountException - 
+	 * Author : Aditi Singh - Creation Date : 24/09/2019 - Description : Validation of Account ID
+	 * 
+	 * @throws MyException
+	 ********************************************************************************************************/
+	
 	@Override
 	public boolean validateAccountId(Account acc) throws MyException, AccountException {
 		boolean validated=false;
 		validated = accountDAO.validateAccountId(acc);
 		return validated;
+	}
+
+	
+
+	/*******************************************************************************************************
+	 * - Function Name : addAccount(Customer cust, Address add,Account acc) - Input Parameters : Customer cust, Address add,Account acc -
+	 * Return Type : String - Throws : AccountException - 
+	 * Author : Vidushi Razdan - Creation Date : 24/09/2019 - Description : Addition of new Account
+	 * 
+	 * @throws MyException
+	 ********************************************************************************************************/	
+	
+	
+	@Override
+	public String addAccount(Customer cust, Address add,Account acc) throws MyException, AccountException {
+		accountDAO = new AccountManagementDAOImpl();
+		String custId= accountDAO.addCustomerDetails(cust, add);
+		acc.setHolderId(custId);
+		String accountId = calculateAccountId(acc);
+		acc.setId(accountId);
+		String createdId = accountDAO.addAccount(acc);
+		if(createdId==null) {
+			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
+		}
+		return accountId;
 	}
 	
 	
