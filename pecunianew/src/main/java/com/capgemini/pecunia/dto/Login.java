@@ -2,6 +2,10 @@ package com.capgemini.pecunia.dto;
 
 public class Login {
 
+	public Login() {
+		
+	}
+	
 	public Login(String username, String password, String salt) {
 		super();
 		this.username = username;
