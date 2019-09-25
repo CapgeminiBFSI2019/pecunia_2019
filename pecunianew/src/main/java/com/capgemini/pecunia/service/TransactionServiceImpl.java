@@ -151,6 +151,15 @@ public class TransactionServiceImpl implements TransactionService {
 		String holderName = cheque.getHolderName();
 		String bankName = cheque.getBankName();
 		String ifsc = cheque.getIfsc();
+//		Cheque chequeDetail;
+//		chequeDetail = new Cheque();
+//		chequeDetail.setNum(chequeNum);
+//		chequeDetail.setAccountNo(accId);
+//		chequeDetail.setBankName(bankName);
+//		chequeDetail.setHolderName(holderName);
+//		chequeDetail.setIfsc(ifsc);
+//		chequeDetail.setIssueDate(chequeissueDate);
+
 		Account account = new Account();
 		account.setId(accId);
 		double oldBalance = getBalance(account);
@@ -162,15 +171,16 @@ public class TransactionServiceImpl implements TransactionService {
 				newBalance = oldBalance - amount;
 				account.setBalance(newBalance);
 				transactionDAO.updateBalance(account);
+				cheque.setStatus(Constants.CHEQUE_STATUS_CLEARED);
 				int chequeId = transactionDAO.generateChequeId(cheque);
 				Transaction debitTransaction = new Transaction();
-				debitTransaction.setId(accId);
+				debitTransaction.setAccountId(accId);
 				debitTransaction.setAmount(amount);
 				debitTransaction.setChequeId(chequeId);
 				debitTransaction.setOption(Constants.TRANSACTION_OPTION_CHEQUE);
 				debitTransaction.setType(Constants.TRANSACTION_DEBIT);
 				debitTransaction.setTransDate(transDate);
-				debitTransaction.setTransTo("Self");
+				debitTransaction.setTransTo(Constants.SELF_CHEQUE);
 				debitTransaction.setClosingBalance(newBalance);
 				int transId = transactionDAO.generateTransactionId(debitTransaction);
 				return transId;

@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -166,8 +167,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 		int chequeId = 0;
 		try {
-			preparedStatement = connection.prepareStatement(TransactionQueryMapper.INSERT_CHEQUE_QUERY);
-
+			preparedStatement = connection.prepareStatement(TransactionQueryMapper.INSERT_CHEQUE_QUERY,Statement.RETURN_GENERATED_KEYS);
+			
 			preparedStatement.setInt(1, cheque.getNum());
 			preparedStatement.setString(2, cheque.getAccountNo());
 			preparedStatement.setString(3, cheque.getHolderName());
@@ -175,11 +176,16 @@ public class TransactionDAOImpl implements TransactionDAO {
 			preparedStatement.setString(5, cheque.getIfsc());
 			preparedStatement.setDate(6, java.sql.Date.valueOf(cheque.getIssueDate()));
 			preparedStatement.setString(7, cheque.getStatus());
-
-			preparedStatement.executeUpdate();
-
-			resultSet = preparedStatement.getGeneratedKeys();
-			System.out.println("I am here");
+			
+			try
+			{
+				preparedStatement.executeUpdate();
+			}
+			catch(SQLException e)
+			{
+				System.out.println(e.getMessage());
+			}
+			 resultSet = preparedStatement.getGeneratedKeys();
 			if (resultSet.next()) {
 				chequeId = resultSet.getInt(1);
 			} else {
@@ -216,7 +222,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 		int transId = 0;
 
 		try {
-			preparedStatement = connection.prepareStatement(TransactionQueryMapper.INSERT_TRANSACTION_QUERY);
+			preparedStatement = connection.prepareStatement(TransactionQueryMapper.INSERT_TRANSACTION_QUERY,Statement.RETURN_GENERATED_KEYS);
 
 			preparedStatement.setString(1, transaction.getAccountId());
 			preparedStatement.setString(2, transaction.getType());
@@ -226,9 +232,16 @@ public class TransactionDAOImpl implements TransactionDAO {
 			preparedStatement.setString(6, transaction.getTransFrom());
 			preparedStatement.setString(7, transaction.getTransTo());
 			preparedStatement.setDouble(8, transaction.getClosingBalance());
-
+			try
+			{
+				preparedStatement.executeUpdate();
+			}
+			catch(Exception e)
+			{
+				System.out.println(e.getMessage());
+			}
+			
 			resultSet = preparedStatement.getGeneratedKeys();
-
 			if (resultSet.next()) {
 				transId = resultSet.getInt(1);
 			} else {

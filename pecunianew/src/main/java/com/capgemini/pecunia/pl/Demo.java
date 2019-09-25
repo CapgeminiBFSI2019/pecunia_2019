@@ -21,6 +21,7 @@ import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.service.TransactionService;
 import com.capgemini.pecunia.service.TransactionServiceImpl;
+import com.capgemini.pecunia.util.Constants;
 import com.capgemini.pecunia.util.DBConnection;
 
 
@@ -48,7 +49,7 @@ public class Demo {
 		String ifsc="PBIN0000004";
 		String dateString="2019-09-24";
 		 LocalDate issueDate;
-		// LocalDate transDate=LocalDate.now();
+		 LocalDate transDate=LocalDate.now();
 		// String datePattern="yyyy-mm-dd";
 		// DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
 		
@@ -61,14 +62,14 @@ public class Demo {
 		trans.setAmount(amount);
 		trans.setOption(option);
 		trans.setType(type);
-		//trans.setTransDate(transDate);
+		trans.setTransDate(transDate);
 		
 		cheque.setAccountNo(accountId);
 		cheque.setBankName(bankName);
 		cheque.setHolderName(holderName);
 		cheque.setIfsc(ifsc);
 		cheque.setIssueDate(issueDate);
-		
+//		cheque.setStatus(Constants.CHEQUE_STATUS_CLEARED);
 		TransactionService transactionService=new TransactionServiceImpl();
 		int transId=transactionService.debitUsingCheque(trans, cheque);
 		System.out.println(transId);
