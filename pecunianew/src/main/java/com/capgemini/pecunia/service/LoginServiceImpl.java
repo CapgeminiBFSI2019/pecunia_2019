@@ -45,6 +45,7 @@ public class LoginServiceImpl implements LoginService{
 				pwd = loginDAO.fetchPassword(loginNew);
 				if(pwd==hashPassword) {
 					flag=true;
+					logger.info("Login successful");
 				}
 			} catch (LoginException e) {
 				logger.error("Validation failed ");
