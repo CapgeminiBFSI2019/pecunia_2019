@@ -39,44 +39,79 @@ public class Demo {
 	public static void main(String[] args) throws TransactionException, MyException {
 
 		
-		LoanDisbursalDAO loanDisbursalDAO = new LoanDisbursalDAOImpl();
-		List<Loan> l = new ArrayList<Loan>();
-		try {
-			l = loanDisbursalDAO.retrieveLoanList();
-			loanDisbursalDAO.releaseLoanSheet(l);
-		} catch (IOException | MyException e) {
-			e.printStackTrace();
-		}
-
-
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("-------------Welcome to Pecunia----------------");
-		System.out.println("1. Login");
-		System.out.println("2. Exit");
-		int choice = scanner.nextInt();
-		do
-		{
-			switch(choice)
-			{
-			case 1:
-				//login function
-				break;
-			case 2:
-				System.exit(1);
-				break;
-			default:
-				System.out.println("Incorrect option");
-			}
-		}
-		while(choice != 2);
+		String accountId="100202000001";
+		String type="Debit";
+		String option="Cheque";
+		double amount=200.00;
+		String bankName="Pecunia";
+		String holderName="Anaisha Arora";
+		String ifsc="PBIN0000004";
+		String dateString="2019-09-24";
+		 LocalDate issueDate;
+		// LocalDate transDate=LocalDate.now();
+		// String datePattern="yyyy-mm-dd";
+		// DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
 		
-	}
-	
-	public boolean login(String email,String password) throws MyException
-	{
-		boolean flag=false,loginSuccess=false;
+		issueDate = LocalDate.parse(dateString);;
 		
-		return flag;
+		
+		Transaction trans = new Transaction();
+		Cheque cheque = new Cheque();
+		trans.setAccountId(accountId);
+		trans.setAmount(amount);
+		trans.setOption(option);
+		trans.setType(type);
+		//trans.setTransDate(transDate);
+		
+		cheque.setAccountNo(accountId);
+		cheque.setBankName(bankName);
+		cheque.setHolderName(holderName);
+		cheque.setIfsc(ifsc);
+		cheque.setIssueDate(issueDate);
+		
+		TransactionService transactionService=new TransactionServiceImpl();
+		int transId=transactionService.debitUsingCheque(trans, cheque);
+		System.out.println(transId);
+		
+		
+//		LoanDisbursalDAO loanDisbursalDAO = new LoanDisbursalDAOImpl();
+//		List<Loan> l = new ArrayList<Loan>();
+//		try {
+//			l = loanDisbursalDAO.retrieveLoanList();
+//			loanDisbursalDAO.releaseLoanSheet(l);
+//		} catch (IOException | MyException e) {
+//			e.printStackTrace();
+//		}
+//
+//
+//		Scanner scanner = new Scanner(System.in);
+//		System.out.println("-------------Welcome to Pecunia----------------");
+//		System.out.println("1. Login");
+//		System.out.println("2. Exit");
+//		int choice = scanner.nextInt();
+//		do
+//		{
+//			switch(choice)
+//			{
+//			case 1:
+//				//login function
+//				break;
+//			case 2:
+//				System.exit(1);
+//				break;
+//			default:
+//				System.out.println("Incorrect option");
+//			}
+//		}
+//		while(choice != 2);
+//		
+//	}
+//	
+//	public boolean login(String email,String password) throws MyException
+//	{
+//		boolean flag=false,loginSuccess=false;
+//		
+//		return flag;
 
 	}
 }
