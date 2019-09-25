@@ -1,11 +1,6 @@
 package com.capgemini.pecunia.dto;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-
+import java.time.*;
 
 public class Transaction {
 	private String id;
@@ -13,110 +8,108 @@ public class Transaction {
 	private String type;
 	private Double amount;
 	private String option;
-	private Date transDate;
+	private LocalDate transDate;
 	private int chequeId;
 	private String transFrom;
 	private String transTo;
 	private Double closingBalance;
 
-	
-	 
-public String getId() {
-	return id;
-}
+	public void setAccountId(String accountId) {
+		this.accountId = accountId;
+	}
 
+	public String getId() {
+		return id;
+	}
 
-public void setId(String id) {
-	this.id = id;
-}
+	public void setId(String id) {
+		this.id = id;
+	}
 
+	public String getAccountId() {
+		return accountId;
+	}
 
-public String getAccountId() {
-	return accountId;
-}
+	public String getType() {
+		return type;
+	}
 
+	public void setType(String type) {
+		this.type = type;
+	}
 
-public String getType() {
-	return type;
-}
+	public Double getAmount() {
+		return amount;
+	}
 
-public void setType(String type) {
-	this.type = type;
-}
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
 
-public Double getAmount() {
-	return amount;
-}
+	public String getOption() {
+		return option;
+	}
 
-public void setAmount(Double amount) {
-	this.amount = amount;
-}
+	public void setOption(String option) {
+		this.option = option;
+	}
 
-public String getOption() {
-	return option;
-}
+	public LocalDate getTransDate() {
+		return transDate;
+	}
 
-public void setOption(String option) {
-	this.option = option;
-}
+	public void setTransDate(LocalDate transDate) {
+		this.transDate = transDate;
+	}
 
-public Date getTransDate() {
-	return transDate;
-}
+	public int getChequeId() {
+		return chequeId;
+	}
 
-public void setTransDate(Date transDate) {
-	this.transDate = transDate;
-}
+	public void setChequeId(int chequeId) {
+		this.chequeId = chequeId;
+	}
 
-public int getChequeId() {
-	return chequeId;
-}
+	public String getTransFrom() {
+		return transFrom;
+	}
 
-public void setChequeId(int chequeId) {
-	this.chequeId = chequeId;
-}
+	public void setTransFrom(String transFrom) {
+		this.transFrom = transFrom;
+	}
 
-public String getTransFrom() {
-	return transFrom;
-}
+	public String getTransTo() {
+		return transTo;
+	}
 
-public void setTransFrom(String transFrom) {
-	this.transFrom = transFrom;
-}
+	public void setTransTo(String transTo) {
+		this.transTo = transTo;
+	}
 
-public String getTransTo() {
-	return transTo;
-}
+	public Double getClosingBalance() {
+		return closingBalance;
+	}
 
-public void setTransTo(String transTo) {
-	this.transTo = transTo;
-}
+	public void setClosingBalance(Double closingBalance) {
+		this.closingBalance = closingBalance;
+	}
 
-public Double getClosingBalance() {
-	return closingBalance;
-}
+	public Transaction(String id, String accountId, String type, Double amount, String option, LocalDate transDate,
+			int chequeId, String transFrom, String transTo, Double closingBalance) {
+		super();
+		this.id = id;
+		this.accountId = accountId;
+		this.type = type;
+		this.amount = amount;
+		this.option = option;
+		this.transDate = transDate;
+		this.chequeId = chequeId;
+		this.transFrom = transFrom;
+		this.transTo = transTo;
+		this.closingBalance = closingBalance;
+	}
 
-public void setClosingBalance(Double closingBalance) {
-	this.closingBalance = closingBalance;
-}
+	public Transaction() {
 
-public Transaction(String id, String accountId, String type, Double amount, String option, Date transDate,
-		int chequeId, String transFrom, String transTo, Double closingBalance) {
-	super();
-	this.id = id;
-	this.accountId = accountId;
-	this.type = type;
-	this.amount = amount;
-	this.option = option;
-	this.transDate = transDate;
-	this.chequeId = chequeId;
-	this.transFrom = transFrom;
-	this.transTo = transTo;
-	this.closingBalance = closingBalance;
-}
-
-
-public Transaction() {
-	// TODO Auto-generated constructor stub
-}
+	}
 }

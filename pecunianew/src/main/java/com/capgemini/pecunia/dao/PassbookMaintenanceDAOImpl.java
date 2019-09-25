@@ -25,6 +25,16 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 	}
 
+	/*******************************************************************************************************
+	 * - Function Name : updatePassbook(String accountId) 
+	 * - Input Parameters : String accountId
+	 * - Return Type : List 
+	 * - Throws : PassbookException, MyException 
+	 * - Author : Mansi Agarwal
+	 * - Creation Date : 24/09/2019 
+	 * - Description : Stores the transaction details in the list and returns it to service layer
+	 ********************************************************************************************************/
+	
 	@Override
 	public List<Transaction> updatePassbook(String accountId) throws PassbookException, MyException {
 
@@ -37,12 +47,13 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 		try {
 			ps = connection.prepareStatement(PassbookMaintenanceQueryMapper.QUERY_TRANS_DETAILS);
+			ps.setString(1, accountId);
 			resultSet = ps.executeQuery();
 
 			while (resultSet.next()) {
 				Transaction details = new Transaction();
 				details.setId(resultSet.getString(1));
-				details.setTransDate(resultSet.getDate(2));
+				details.setTransDate((resultSet.getDate(2)).toLocalDate());
 				details.setAmount(resultSet.getDouble(3));
 				details.setTransFrom(resultSet.getString(4));
 				details.setTransTo(resultSet.getString(5));
@@ -51,7 +62,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 				if (queryResult == 0) {
 					logger.error("updation failed ");
-					throw new PassbookException("updation failed ");
+					throw new PassbookException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 
 				} else {
 					logger.info("updation successful:");
@@ -61,12 +72,11 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			}
 		} catch (Exception e) {
 
-		       logger.error(e.getMessage());
+			logger.error(e.getMessage());
 			throw new PassbookException(ErrorConstants.TECH_ERROR);
 
 		} finally {
 
-			
 			try {
 
 				resultSet.close();
@@ -74,9 +84,8 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 				connection.close();
 			} catch (Exception e) {
 
-				 logger.error(e.getMessage());
+				logger.error(e.getMessage());
 				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
-		
 
 			}
 		}
@@ -93,42 +102,42 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 		PreparedStatement ps = null;
 		ResultSet resultSet = null;
 		List<Transaction> transactionList = new ArrayList<Transaction>();
-		
+
 		int queryResult = 0;
-		
+
 		try {
 			ps = connection.prepareStatement(PassbookMaintenanceQueryMapper.QUERY_SUMMARY);
+			ps.setString(1, accountId);
+			ps.setDate(2, (java.sql.Date) startDate);
+			ps.setDate(3, (java.sql.Date) endDate);
 			resultSet = ps.executeQuery();
 			while (resultSet.next()) {
 				Transaction details = new Transaction();
 				details.setId(resultSet.getString(1));
-				details.setTransDate(resultSet.getDate(2));
+				details.setTransDate((resultSet.getDate(2)).toLocalDate());
 				details.setAmount(resultSet.getDouble(3));
 				details.setTransFrom(resultSet.getString(4));
 				details.setTransTo(resultSet.getString(5));
 				details.setClosingBalance(resultSet.getDouble(6));
 				transactionList.add(details);
 			}
-			
+
 			if (queryResult == 0) {
 				logger.error("updation failed ");
-				throw new PassbookException("updation failed ");
+				throw new PassbookException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 
 			} else {
 				logger.info("updation successful:");
 				return transactionList;
 			}
-			
+
 		} catch (Exception e) {
 
 			logger.error(e.getMessage());
 			throw new PassbookException(ErrorConstants.TECH_ERROR);
 
-			
-
 		} finally {
 
-			
 			try {
 
 				resultSet.close();
@@ -138,7 +147,6 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 				logger.error(e.getMessage());
 				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
-			
 
 			}
 		}

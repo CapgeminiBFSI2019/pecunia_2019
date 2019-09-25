@@ -1,12 +1,8 @@
 package com.capgemini.pecunia.service;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 
 import com.capgemini.pecunia.dao.AccountManagementDAO;
 import com.capgemini.pecunia.dao.AccountManagementDAOImpl;
-import com.capgemini.pecunia.dao.AccountQueryMapper;
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Address;
 import com.capgemini.pecunia.dto.Customer;
@@ -14,7 +10,7 @@ import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.util.Constants;
-import com.capgemini.pecunia.util.DBConnection;
+
 
 public class AccountManagementServiceImpl implements AccountManagementService{
 	
@@ -30,14 +26,18 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	
 	@Override
 	public boolean deleteAccount(Account acc) throws MyException, AccountException {
-		
 		boolean updated = false;
+		try {
+		
 		boolean validated = validateAccountId(acc);
 		if(validated) {
 		accountDAO = new AccountManagementDAOImpl();
 		updated = accountDAO.deleteAccount(acc);
 		}
 		else {
+			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
+		}
+		}catch (Exception e) {
 			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 		}
 		return updated;

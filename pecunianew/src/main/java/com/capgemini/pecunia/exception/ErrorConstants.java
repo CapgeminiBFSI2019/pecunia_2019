@@ -3,7 +3,8 @@ package com.capgemini.pecunia.exception;
 
 public class ErrorConstants {
 
-	public static final String TECH_ERROR = "Technical problem occured. Refer log";
+	
+    public static final String TECH_ERROR = "Technical problem occured. Refer log";
 
 	public static final String UPDATE_PASSBOOK_ERROR = "Passbook not updated. There is some technical error.";
 
@@ -20,6 +21,7 @@ public class ErrorConstants {
 	public static final String NO_SUCH_ACCOUNT = "Account doesn't exist.";
 	public static final String ERROR_VALIDATION = "Error in validating account";
 	public static final String ADD_DETAILS_ERROR = "Addition unsuccessful.";
+
  
 }
 
