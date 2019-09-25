@@ -23,6 +23,7 @@ import com.capgemini.pecunia.service.PassbookMaintenanceService;
 import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
 import com.capgemini.pecunia.service.TransactionService;
 import com.capgemini.pecunia.service.TransactionServiceImpl;
+import com.capgemini.pecunia.util.Constants;
 import com.capgemini.pecunia.util.DBConnection;
 
 
@@ -50,13 +51,14 @@ public class Demo {
 		String ifsc="PBIN0000004";
 		String dateString="2019-09-24";
 		 LocalDate issueDate;
-		// LocalDate transDate=LocalDate.now();
+		 LocalDate transDate=LocalDate.now();
 		// String datePattern="yyyy-mm-dd";
 		// DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
 		
 		issueDate = LocalDate.parse(dateString);;
 		
 		
+
 //		Transaction trans = new Transaction();
 //		Cheque cheque = new Cheque();
 //		trans.setAccountId(accountId);
@@ -82,6 +84,7 @@ public class Demo {
 		Date date2=new SimpleDateFormat("yyyy-mm-dd").parse(sDate2);
 		List<Transaction> transaction = transactionService.accountSummary("100101000001",date1, date2);
 		System.out.println(transaction);
+
 		
 		
 //		LoanDisbursalDAO loanDisbursalDAO = new LoanDisbursalDAOImpl();

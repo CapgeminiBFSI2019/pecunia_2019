@@ -95,25 +95,12 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			
 			preparedStatement2.setString(1,cust.getName());
 			preparedStatement2.setString(1,accId);
-			queryResult = preparedStatement2.executeUpdate();			
-			if(queryResult!=0)
-			{
-				updated = true;
-			}
-			
+			queryResult = preparedStatement2.executeUpdate();						
 			if(queryResult==0)
 			{
 				logger.error("Error in updating customer details ");
 				throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
-
 			}
-			else
-			{
-				logger.info("Customer Details added");
-				return updated;
-			}
-			
-			
 		}catch(SQLException e) {
 			throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 		}
@@ -126,6 +113,9 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
+		updated = true;
+		logger.info("Customer Details added");
+		return updated;
 		
 	}
 
@@ -149,21 +139,10 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement2.setString(1,cust.getContact());
 			preparedStatement2.setString(1,accId);
 			queryResult = preparedStatement2.executeUpdate();			
-			if(queryResult!=0)
-			{
-				updated = true;
-			}
-			
 			if(queryResult==0)
 			{
 				logger.error("Error in updating customer contact.");
 				throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
-
-			}
-			else
-			{
-				logger.info("Customer Contact updated.");
-				return updated;
 			}
 		}catch(SQLException e) {
 			throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
@@ -177,6 +156,9 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
+		updated = true;
+		logger.info("Customer Contact updated.");
+		return updated;
 	}
 
 	@Override
@@ -204,21 +186,10 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement2.setString(6,add.getZipcode());
 			preparedStatement2.setString(7,accId);
 			queryResult = preparedStatement2.executeUpdate();
-			if(queryResult!=0)
-			{
-				updated = true;
-			}
-			
 			if(queryResult==0)
 			{
 				logger.error("Error in updating customer address.");
 				throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
-
-			}
-			else
-			{
-				logger.info("Customer Address Details updated.");
-				return updated;
 			}
 			
 		}catch(SQLException e) {
@@ -233,6 +204,9 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
+		updated = true;
+		logger.info("Customer Address Details updated.");
+		return updated;
 		
 	}
 
