@@ -13,6 +13,9 @@ public class Address {
 		return id;
 	}
 
+	public void setId(String id) {
+		this.id=id;
+	}
 
 	public String getLine1() {
 		return line1;
