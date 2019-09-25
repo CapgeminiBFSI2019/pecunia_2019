@@ -95,56 +95,9 @@ public class TransactionServiceImpl implements TransactionService {
 		return 0;
 	}
 
-	@Override
-	public int debitUsingSlip(Transaction transaction) throws TransactionException {
-		/*
-		 * validate existence get balance cal bal update bal create transac
-		 */
-		return 0;
-	}
-
-	@Override
-	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException {
-
-		return 0;
-	}
 
 
-		transactionDAO = new TransactionDAOImpl();
-		String accId = transaction.getAccountId();
-		String transType = transaction.getType();
-		double amount = transaction.getAmount();
-		Date transDate = transaction.getTransDate();
-		Account account = new Account();
-		account.setId(accId);
-		double oldBalance = transactionDAO.getBalance(account);
-		double newBalance = 0.0;
-		int transId = 0;
-		if (amount >= Constants.MINIMUM_CREDIT_SLIP_AMOUNT) {
-
-			if (amount <= Constants.MAXIMUM_CREDIT_SLIP_AMOUNT) {
-				newBalance = oldBalance + amount;
-
-				transactionDAO.updateBalance(account);
-				Transaction creditTransaction = new Transaction();
-				creditTransaction.setId(accId);
-				creditTransaction.setAmount(amount);
-				creditTransaction.setOption(Constants.TRANSACTION_OPTION_SLIP);
-				creditTransaction.setType(Constants.TRANSACTION_CREDIT);
-				creditTransaction.setTransDate(transDate);
-				creditTransaction.setClosingBalance(newBalance);
-				transId = transactionDAO.generateTransactionId(creditTransaction);
-				
-
-			} else {
-				throw new TransactionException(Constants.AMOUNT_EXCEEDS_EXCEPTION);
-			}
-		} else {
-			throw new TransactionException(Constants.AMOUNT_LESS_EXCEPTION);
-		}
-		return transId;
-	}
-
+	
 
 
             
@@ -281,13 +234,21 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
-		double beneficiaryBalance = 0;
-		double payeeBalance = 0;
+		double beneficiaryBalance = 0,payeeBalance = 0,newBeneficiaryBalance=0,newPayeeBalance=0;
 		
 		String bankName = cheque.getBankName();
 		
 		Transaction creditTransaction,debitTransaction;
+		
 		Cheque chequeDetail;
+		chequeDetail = new Cheque();
+		chequeDetail.setNum(cheque.getNum());
+		chequeDetail.setAccountNo(cheque.getAccountNo());
+		chequeDetail.setBankName(cheque.getBankName());
+		chequeDetail.setHolderName(cheque.getHolderName());
+		chequeDetail.setIfsc(cheque.getIfsc());
+		chequeDetail.setIssueDate(cheque.getIssueDate());
+		
 		
 		TransactionDAO transactionDAO = new TransactionDAOImpl();
 		
@@ -296,17 +257,8 @@ public class TransactionServiceImpl implements TransactionService {
 		if((bankName != Constants.BANK_NAME) && (Arrays.asList(Constants.OTHER_BANK_NAME).contains(bankName)))
 		{
 			//other banks cheque
-			chequeDetail = new Cheque();
-			chequeDetail.setNum(cheque.getNum());
-			chequeDetail.setAccountNo(cheque.getAccountNo());
-			chequeDetail.setBankName(cheque.getBankName());
-			chequeDetail.setHolderName(cheque.getHolderName());
-			chequeDetail.setIfsc(cheque.getIfsc());
 			chequeDetail.setStatus(Constants.CHEQUE_STATUS_PENDING);
-			chequeDetail.setIssueDate(cheque.getIssueDate());
-			
 			transId = transactionDAO.generateChequeId(chequeDetail);
-			
 		}
 		else
 		{
@@ -318,7 +270,60 @@ public class TransactionServiceImpl implements TransactionService {
 			else
 			{
 				//pecunia cheque
+				Account beneficiaryAccount = new Account();
+				beneficiaryAccount.setId(transaction.getAccountId());
 				
+				Account payeeAccount = new Account();
+				payeeAccount.setId(transaction.getTransFrom());
+				
+				beneficiaryBalance = transactionDAO.getBalance(beneficiaryAccount);
+				payeeBalance = transactionDAO.getBalance(payeeAccount);
+				
+				
+				if(payeeBalance < transaction.getAmount())
+				{
+					//cheque bounce
+					chequeDetail.setStatus(Constants.CHEQUE_STATUS_BOUNCED);
+					transId = transactionDAO.generateChequeId(chequeDetail);
+				}
+				else
+				{
+					chequeDetail.setStatus(Constants.CHEQUE_STATUS_CLEARED);
+					int chequeId = transactionDAO.generateChequeId(chequeDetail);
+					
+					newBeneficiaryBalance = beneficiaryBalance + transaction.getAmount();
+					newPayeeBalance = payeeBalance - transaction.getAmount();
+					
+					beneficiaryAccount.setBalance(newBeneficiaryBalance);
+					payeeAccount.setBalance(newPayeeBalance);
+					
+					creditTransaction = new Transaction();
+					creditTransaction.setAccountId(transaction.getAccountId());
+					creditTransaction.setType(Constants.TRANSACTION_CREDIT);
+					creditTransaction.setAmount(transaction.getAmount());
+					creditTransaction.setOption(Constants.TRANSACTION_OPTION_CHEQUE);
+					creditTransaction.setChequeId(chequeId);
+					creditTransaction.setTransFrom(transaction.getTransFrom());
+					creditTransaction.setTransTo(Constants.NA);
+					creditTransaction.setClosingBalance(newBeneficiaryBalance);
+					
+					debitTransaction = new Transaction();
+					debitTransaction.setAccountId(transaction.getTransFrom());
+					debitTransaction.setType(Constants.TRANSACTION_DEBIT);
+					debitTransaction.setAmount(transaction.getAmount());
+					debitTransaction.setOption(Constants.TRANSACTION_OPTION_CHEQUE);
+					debitTransaction.setChequeId(chequeId);
+					debitTransaction.setTransFrom(Constants.NA);
+					debitTransaction.setTransTo(transaction.getAccountId());
+					debitTransaction.setClosingBalance(newPayeeBalance);
+					
+					transId = transactionDAO.generateTransactionId(debitTransaction);
+					transId = transactionDAO.generateTransactionId(creditTransaction);
+					
+					transactionDAO.updateBalance(payeeAccount);
+					transactionDAO.updateBalance(beneficiaryAccount);
+					
+				}
 			}
 		}
 		return transId;
