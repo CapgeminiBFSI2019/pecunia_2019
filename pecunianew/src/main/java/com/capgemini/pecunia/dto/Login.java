@@ -34,3 +34,4 @@ public class Login {
 		this.salt = salt;
 	}
 }
+	
