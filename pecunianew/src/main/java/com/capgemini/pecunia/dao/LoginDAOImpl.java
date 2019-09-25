@@ -12,28 +12,26 @@ import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.util.DBConnection;
 
-public class LoginDAOImpl implements LoginDAO{
-
+public class LoginDAOImpl implements LoginDAO {
 
 	@Override
 	public String validateEmail(Login login) throws MyException, LoginException {
-		String salt=null;
+		String salt = null;
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
-		PreparedStatement preparedStatement=null;	
+		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(LoginQueryMapper.GET_SALT);
-			preparedStatement.setString(1,login.getUsername());
+			preparedStatement.setString(1, login.getUsername());
 			ResultSet resultSet = preparedStatement.executeQuery();
 			salt = resultSet.getString(3);
-		}catch(SQLException e) {throw new LoginException(ErrorConstants.LOGIN_ERROR);
-			//handle
-		}
-		finally {
+		} catch (SQLException e) {
+			throw new LoginException(ErrorConstants.LOGIN_ERROR);
+		} finally {
 			try {
 				connection.close();
 				preparedStatement.close();
-			}catch(Exception e){
+			} catch (Exception e) {
 				throw new LoginException(ErrorConstants.LOGIN_ERROR);
 			}
 		}
@@ -42,28 +40,27 @@ public class LoginDAOImpl implements LoginDAO{
 
 	@Override
 	public boolean validatePassword(Login login) throws MyException, LoginException {
-		boolean flag=false;
+		boolean flag = false;
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
-		PreparedStatement preparedStatement=null;	
+		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(LoginQueryMapper.GET_PASSWORD);
-			preparedStatement.setString(1,login.getUsername());
+			preparedStatement.setString(1, login.getUsername());
 			ResultSet resultSet = preparedStatement.executeQuery();
-			if(login.getPassword()==resultSet.getString(2)) {
-				flag=true;
+			if (login.getPassword() == resultSet.getString(2)) {
+				flag = true;
+			} else {
+				throw new LoginException(ErrorConstants.LOGIN_ERROR);
 			}
-			else {
-				throw new LoginException(ErrorConstants.LOGIN_ERROR);			}
-		}catch(SQLException e) {throw new LoginException(ErrorConstants.LOGIN_ERROR);
-		
-		}
-		finally {
+		} catch (SQLException e) {
+			throw new LoginException(ErrorConstants.LOGIN_ERROR);
+		} finally {
 			try {
 				connection.close();
 				preparedStatement.close();
-			}catch(Exception e){
-				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
+			} catch (Exception e) {
+				throw new LoginException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
 		return flag;
