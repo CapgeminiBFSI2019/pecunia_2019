@@ -1,9 +1,7 @@
 package com.capgemini.pecunia.dto;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import java.time.*; 
 
 
 
@@ -13,7 +11,7 @@ public class Transaction {
 	private String type;
 	private Double amount;
 	private String option;
-	private Date transDate;
+	private LocalDate transDate;
 	private int chequeId;
 	private String transFrom;
 	private String transTo;
@@ -21,6 +19,12 @@ public class Transaction {
 
 	
 	 
+	
+public void setAccountId(String accountId) {
+		this.accountId = accountId;
+	}
+
+
 public String getId() {
 	return id;
 }
@@ -60,11 +64,11 @@ public void setOption(String option) {
 	this.option = option;
 }
 
-public Date getTransDate() {
+public LocalDate getTransDate() {
 	return transDate;
 }
 
-public void setTransDate(Date transDate) {
+public void setTransDate(LocalDate transDate) {
 	this.transDate = transDate;
 }
 
@@ -100,7 +104,7 @@ public void setClosingBalance(Double closingBalance) {
 	this.closingBalance = closingBalance;
 }
 
-public Transaction(String id, String accountId, String type, Double amount, String option, Date transDate,
+public Transaction(String id, String accountId, String type, Double amount, String option, LocalDate transDate,
 		int chequeId, String transFrom, String transTo, Double closingBalance) {
 	super();
 	this.id = id;
@@ -117,6 +121,6 @@ public Transaction(String id, String accountId, String type, Double amount, Stri
 
 
 public Transaction() {
-	// TODO Auto-generated constructor stub
+	
 }
 }

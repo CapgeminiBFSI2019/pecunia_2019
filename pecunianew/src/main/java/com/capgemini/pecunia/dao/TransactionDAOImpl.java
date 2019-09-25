@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import com.capgemini.pecunia.dto.Account;
 
 import com.capgemini.pecunia.dto.Transaction;
@@ -17,6 +20,14 @@ import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.DBConnection;
 
 public class TransactionDAOImpl implements TransactionDAO {
+	
+	Logger logger = Logger.getRootLogger();
+
+	public TransactionDAOImpl() {
+		PropertyConfigurator.configure("resources//log4j.properties");
+	}
+	
+	
 
 	@Override
 	public double getBalance(Account account) throws MyException, TransactionException {
@@ -44,9 +55,11 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 		} catch (TransactionException me) {
 			// logger here
+			logger.error("");
 			throw new TransactionException(me.getMessage());
 		} catch (Exception e) {
 			// add logger here
+			logger.error("");
 			throw new MyException(e.getMessage());
 		} finally {
 			try {
@@ -54,6 +67,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 				preparedStatement.close();
 				connection.close();
 			} catch (SQLException e) {
+				logger.error("Error in closing db connection");
 				throw new MyException("Error in closing db connection");
 			}
 
@@ -71,12 +85,14 @@ public class TransactionDAOImpl implements TransactionDAO {
 		int rowsAffected = 0;
 		try {
 			preparedStatement = connection.prepareStatement(TransactionQueryMapper.UPDATE_ACOCUNT_BALANCE_QUERY);
-			preparedStatement.setString(1, accountId);
+			preparedStatement.setDouble(1, account.getBalance());
+			preparedStatement.setString(2, accountId);
 			rowsAffected = preparedStatement.executeUpdate();
 			if (rowsAffected != 0) {
 				flag = true;
 			} else {
 				// logger here
+				logger.error("Update balance failed");
 				throw new TransactionException("Update balance failed");
 			}
 		} catch (TransactionException te) {
@@ -91,6 +107,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 				connection.close();
 			} catch (SQLException e) {
 				// logger here
+				logger.error("Error closing db connection");
 				throw new MyException("Error closing db connection");
 			}
 		}
@@ -161,13 +178,13 @@ public class TransactionDAOImpl implements TransactionDAO {
 			preparedStatement.setString(3, cheque.getHolderName());
 			preparedStatement.setString(4, cheque.getBankName());
 			preparedStatement.setString(5, cheque.getIfsc());
-			preparedStatement.setDate(6, (Date) cheque.getIssueDate());
+			preparedStatement.setDate(6,  java.sql.Date.valueOf(cheque.getIssueDate()));
 			preparedStatement.setString(7, cheque.getStatus());
 
 			preparedStatement.executeUpdate();
 
 			resultSet = preparedStatement.getGeneratedKeys();
-
+			System.out.println("I am here");
 			if (resultSet.next()) {
 				chequeId = resultSet.getInt(1);
 			} else {
@@ -175,6 +192,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			}
 		} catch (TransactionException e) {
 			// TODO logger here
+			logger.error("");
 			throw new TransactionException(e.getMessage());
 		} catch (Exception e) {
 			throw new MyException(e.getMessage());
@@ -185,6 +203,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 				connection.close();
 			} catch (SQLException e) {
 				// TODO logger here
+				logger.error("");
 				throw new MyException(e.getMessage());
 			}
 
@@ -218,10 +237,12 @@ public class TransactionDAOImpl implements TransactionDAO {
 			if (resultSet.next()) {
 				transId = resultSet.getInt(1);
 			} else {
+				logger.error("Error occured during transaction insertion");
 				throw new TransactionException("Error occured during transaction insertion");
 			}
 		} catch (TransactionException e) {
 			// TODO logger here
+			logger.error("");
 			throw new TransactionException(e.getMessage());
 		} catch (Exception e) {
 			throw new MyException(e.getMessage());
@@ -232,6 +253,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 				connection.close();
 			} catch (SQLException e) {
 				// TODO logger here
+				logger.error("");
 				throw new MyException(e.getMessage());
 			}
 
