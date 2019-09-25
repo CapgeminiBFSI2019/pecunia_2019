@@ -1,5 +1,6 @@
 package com.capgemini.pecunia.service;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import com.capgemini.pecunia.dao.TransactionDAO;
@@ -151,7 +152,7 @@ public class TransactionServiceImpl implements TransactionService {
 	 ********************************************************************************************************/
 
 	@Override
-	public int debitusingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
+	public int debitUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
 		transactionDAO = new TransactionDAOImpl();
 		String accId = transaction.getAccountId();
 		String transType = transaction.getType();
@@ -206,9 +207,48 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
-	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
+		double beneficiaryBalance = 0;
+		double payeeBalance = 0;
+		
+		String bankName = cheque.getBankName();
+		
+		Transaction creditTransaction,debitTransaction;
+		Cheque chequeDetail;
+		
+		TransactionDAO transactionDAO = new TransactionDAOImpl();
+		
+		int transId = 0;
+		
+		if((bankName != Constants.BANK_NAME) && (Arrays.asList(Constants.OTHER_BANK_NAME).contains(bankName)))
+		{
+			//other banks cheque
+			chequeDetail = new Cheque();
+			chequeDetail.setNum(cheque.getNum());
+			chequeDetail.setAccountNo(cheque.getAccountNo());
+			chequeDetail.setBankName(cheque.getBankName());
+			chequeDetail.setHolderName(cheque.getHolderName());
+			chequeDetail.setIfsc(cheque.getIfsc());
+			chequeDetail.setStatus(Constants.CHEQUE_STATUS_PENDING);
+			chequeDetail.setIssueDate(cheque.getIssueDate());
+			
+			transId = transactionDAO.generateChequeId(chequeDetail);
+			
+		}
+		else
+		{
+			if(bankName != Constants.BANK_NAME)
+			{
+				//invalid bank cheque
+				throw new TransactionException(Constants.INVALID_BANK_EXCEPTION);
+			}
+			else
+			{
+				//pecunia cheque
+				
+			}
+		}
+		return transId;
 	}
 
 }

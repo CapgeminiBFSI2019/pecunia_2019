@@ -13,6 +13,9 @@ public class Cheque {
 	private Date issueDate;
 	private String status;
 	
+	public Cheque() {
+		
+	}
 	
 	public Cheque(String id, int num, String accountNo, String holderName, String bankName, String ifsc, Date issueDate,
 			String status) {
