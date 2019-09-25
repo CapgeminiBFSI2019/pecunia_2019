@@ -29,7 +29,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 		updated = accountDAO.deleteAccount(acc);
 		}
 		else {
-			throw new AccountException("Account ID doesn't exist");
+			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 		}
 		return updated;
 	}
@@ -48,7 +48,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 			updated = accountDAO.updateCustomerName(acc, cust);
 		}
 		else {
-			throw new AccountException("Account ID doesn't exist");
+			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 		}
 		return updated;
 		
@@ -67,7 +67,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 		updated = accountDAO.updateCustomerContact(acc, cust);
 		}
 		else {
-			throw new AccountException("Account ID doesn't exist");
+			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 		}
 		return updated;
 	}
@@ -85,7 +85,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 		updated = accountDAO.updateCustomerAddress(acc, add);
 		}
 		else {
-		throw new AccountException("Account ID doesn't exist");
+		throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 		}
 		return updated;
 	}
