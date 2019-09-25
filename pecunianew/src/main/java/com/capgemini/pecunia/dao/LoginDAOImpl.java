@@ -37,6 +37,7 @@ public class LoginDAOImpl implements LoginDAO {
 			salt = resultSet.getString(3);
 
 		} catch (SQLException e) {
+			
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
 		} finally {
 			try {
