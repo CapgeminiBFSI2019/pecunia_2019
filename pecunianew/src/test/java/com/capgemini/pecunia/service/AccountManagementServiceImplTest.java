@@ -59,6 +59,7 @@ class AccountManagementServiceImplTest {
 		assertThrows(AccountException.class, ()-> { account.addAccount(null, null, null) ;});
 		
 	}
+}
 	
 	
 	
