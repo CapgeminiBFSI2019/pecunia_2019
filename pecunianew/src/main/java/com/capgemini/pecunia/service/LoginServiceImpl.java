@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import com.capgemini.pecunia.dao.LoginDAO;
 import com.capgemini.pecunia.dao.LoginDAOImpl;
 import com.capgemini.pecunia.dto.Login;
+import com.capgemini.pecunia.exception.LoginException;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.util.Utility;
 
@@ -13,7 +14,7 @@ public class LoginServiceImpl implements LoginService{
 
 	LoginDAO loginDAO = new LoginDAOImpl();
 	@Override
-	public boolean validateEmail(Login log) throws MyException {
+	public boolean validateEmail(Login log) throws MyException ,LoginException  {
 		boolean flag=false;
 		String salt = loginDAO.validateEmail(log);
 		if(salt==null) {
