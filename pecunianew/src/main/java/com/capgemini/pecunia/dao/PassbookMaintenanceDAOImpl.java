@@ -49,7 +49,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			ps = connection.prepareStatement(PassbookMaintenanceQueryMapper.QUERY_TRANS_DETAILS);
 			ps.setString(1, accountId);
 			resultSet = ps.executeQuery();
-
+			queryResult=ps.executeUpdate();
 			while (resultSet.next()) {
 				Transaction details = new Transaction();
 				details.setId(resultSet.getString(1));
@@ -71,7 +71,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 			}
 		} catch (Exception e) {
-
+			System.out.println(e.getMessage());
 			logger.error(e.getMessage());
 			throw new PassbookException(ErrorConstants.TECH_ERROR);
 
