@@ -185,6 +185,7 @@ public class TransactionServiceImpl implements TransactionService {
 		if (period.getDays() < 90 && amount < 1000000.00 && amount > 100.00) {
 			if (oldBalance > amount) {
 				newBalance = oldBalance - amount;
+				account.setBalance(newBalance);
 				transactionDAO.updateBalance(account);
 				int chequeId = transactionDAO.generateChequeId(cheque);
 				Transaction debitTransaction = new Transaction();
@@ -207,12 +208,7 @@ public class TransactionServiceImpl implements TransactionService {
 		}
 	}
 
-	@Override
-	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 	@Override
 	public double depositInterest(Account account) throws TransactionException {
 		// TODO Auto-generated method stub
@@ -224,6 +220,7 @@ public class TransactionServiceImpl implements TransactionService {
 	public double updateInterest() throws TransactionException, MyException {
 		// TODO Auto-generated method stub
 		return 0;
+	}
 
 	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
 		double beneficiaryBalance = 0;
