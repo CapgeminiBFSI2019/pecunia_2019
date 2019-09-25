@@ -7,6 +7,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.capgemini.pecunia.dto.Login;
+import com.capgemini.pecunia.exception.LoginException;
+import com.capgemini.pecunia.exception.MyException;
+
 
 class LoginServiceImplTest {
 	
@@ -28,7 +32,15 @@ class LoginServiceImplTest {
 		assertThrows(NullPointerException.class, ()-> { login.validateEmail(null);});
 	}
 
-
+	@Test
+	@DisplayName("Valid Input.Test case passed")
+	void testValidateEmailPass() throws MyException, LoginException {
+		
+		Login loginData= new Login();
+		loginData.setUsername("saurabh5881@gmail.com");
+		loginData.setPassword("12345");
+		assertTrue(login.validateEmail(loginData));
+	}
 	
 	
 }
