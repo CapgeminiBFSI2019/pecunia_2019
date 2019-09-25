@@ -4,9 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -45,10 +42,6 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement.setString(1,acc.getId());
 			queryResult=preparedStatement.executeUpdate();
 			
-			if(queryResult!=0)
-			{
-				updated = true;
-			}
 			
 			if(queryResult==0)
 			{
@@ -56,11 +49,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.DELETE_ACCOUNT_ERROR);
 
 			}
-			else
-			{
-				logger.info("Deletion succesful");
-				return updated;
-			}
+			
 		}
 		catch(SQLException e)
 		{
@@ -71,12 +60,17 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			try
 			{
 				preparedStatement.close();
+				connection.close();
 			}
 			catch(Exception e)
 			{
-				throw new AccountException(ErrorConstants.DELETE_ACCOUNT_ERROR);
+				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
+		updated = true;
+		logger.info("Deletion succesful");
+		return updated;
+		
 	}
 
 	@Override
@@ -101,25 +95,12 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			
 			preparedStatement2.setString(1,cust.getName());
 			preparedStatement2.setString(1,accId);
-			queryResult = preparedStatement2.executeUpdate();			
-			if(queryResult!=0)
-			{
-				updated = true;
-			}
-			
+			queryResult = preparedStatement2.executeUpdate();						
 			if(queryResult==0)
 			{
 				logger.error("Error in updating customer details ");
 				throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
-
 			}
-			else
-			{
-				logger.info("Customer Details added");
-				return updated;
-			}
-			
-			
 		}catch(SQLException e) {
 			throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 		}
@@ -132,6 +113,9 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
+		updated = true;
+		logger.info("Customer Details added");
+		return updated;
 		
 	}
 
@@ -155,21 +139,10 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement2.setString(1,cust.getContact());
 			preparedStatement2.setString(1,accId);
 			queryResult = preparedStatement2.executeUpdate();			
-			if(queryResult!=0)
-			{
-				updated = true;
-			}
-			
 			if(queryResult==0)
 			{
 				logger.error("Error in updating customer contact.");
 				throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
-
-			}
-			else
-			{
-				logger.info("Customer Contact updated.");
-				return updated;
 			}
 		}catch(SQLException e) {
 			throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
@@ -183,6 +156,9 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
+		updated = true;
+		logger.info("Customer Contact updated.");
+		return updated;
 	}
 
 	@Override
@@ -210,21 +186,10 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement2.setString(6,add.getZipcode());
 			preparedStatement2.setString(7,accId);
 			queryResult = preparedStatement2.executeUpdate();
-			if(queryResult!=0)
-			{
-				updated = true;
-			}
-			
 			if(queryResult==0)
 			{
 				logger.error("Error in updating customer address.");
 				throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
-
-			}
-			else
-			{
-				logger.info("Customer Address Details updated.");
-				return updated;
 			}
 			
 		}catch(SQLException e) {
@@ -239,6 +204,9 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
+		updated = true;
+		logger.info("Customer Address Details updated.");
+		return updated;
 		
 	}
 
@@ -307,7 +275,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		connection = DBConnection.getInstance().getConnection();	
 		PreparedStatement preparedStatement = null;
 		PreparedStatement preparedStatement1 = null;
-		
+		PreparedStatement preparedStatement2 = null;
 		int queryResult=0;
 		
 		try {
@@ -320,17 +288,16 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement.setString(5,add.getCountry());
 			preparedStatement.setString(6,add.getZipcode());
 			queryResult = preparedStatement.executeUpdate();
+			
 			if(queryResult==0)
 			{
 				logger.error("Error in adding customer address.");
-				
+				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
-			else
-			{
-				queryResult=0;
-				logger.info("Customer Address Details added.");
-				preparedStatement= connection.prepareStatement(AccountQueryMapper.GET_RECENT_ADDRESS_ID);
-				ResultSet resultSet = preparedStatement.executeQuery();
+
+			    logger.info("Customer Address Details added.");
+				preparedStatement1= connection.prepareStatement(AccountQueryMapper.GET_RECENT_ADDRESS_ID);
+				ResultSet resultSet = preparedStatement1.executeQuery();
 				String addId = resultSet.getString(1);
 				preparedStatement1= connection.prepareStatement(AccountQueryMapper.ADD_CUSTOMER);
 				preparedStatement1.setString(1,cust.getName());
@@ -340,34 +307,30 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				preparedStatement1.setString(5,cust.getContact());
 				preparedStatement1.setString(6,cust.getGender());
 				preparedStatement1.setDate(7,cust.getDob());
-				queryResult = preparedStatement.executeUpdate();
-				if(queryResult==0)
+				queryResult = preparedStatement1.executeUpdate();
+				if(queryResult==1)
 				{
 					logger.error("Error in adding customer details.");
 					throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 				}
-				else
-				{
-					logger.info("Customer Details added.");
-				}
-			}
-			preparedStatement= connection.prepareStatement(AccountQueryMapper.GET_RECENT_CUSTOMER_ID);
-			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			preparedStatement2= connection.prepareStatement(AccountQueryMapper.GET_RECENT_CUSTOMER_ID);
+			resultSet = preparedStatement2.executeQuery();
 			custId = resultSet.getString(1);	
-			return custId;
+			
 				
 	}catch(SQLException e) {
 		throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 	}finally {
-		try {
-			preparedStatement.close();
-			preparedStatement1.close();
+		    try {
 			connection.close();
-		} catch (Exception e) {
+		      } catch (Exception e) {
 			throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
-		}
+		     }
 	}
-
+		logger.info("Customer Details added.");
+		return custId;
+		
 	
 	}
 	

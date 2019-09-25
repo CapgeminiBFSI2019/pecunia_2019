@@ -23,13 +23,10 @@ public class LoginServiceImpl implements LoginService{
 	}
 	LoginDAO loginDAO = new LoginDAOImpl();
 	@Override
-
-	public boolean validateEmail(Login log) throws MyException ,LoginException  {
-
-	public boolean validateEmail(Login log) throws MyException, LoginException {
-
+	public boolean validateEmail(Login login) throws MyException, LoginException {
 		boolean flag=false;
-		String salt = loginDAO.validateEmail(log);
+		String pwd=null;
+		String salt = loginDAO.validateEmail(login);
 		if(salt==null) {
 			logger.error("validation failed ");
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
@@ -37,15 +34,19 @@ public class LoginServiceImpl implements LoginService{
 		else {
 			byte arr[] = null;
 			try {
-				arr = Utility.getSHA(log.getPassword() + "" + salt);
+				arr = Utility.getSHA(login.getPassword() + "" + salt);
 			} catch (NoSuchAlgorithmException e) {
 				logger.error("validation failed ");
 				throw new LoginException(ErrorConstants.LOGIN_ERROR);
 			}
 			String hashPassword = Utility.toHexString(arr);
-			Login logNew = new Login(log.getUsername(),hashPassword,"");
+			Login loginNew = new Login(login.getUsername(),"","");
 			try {
-				flag = loginDAO.validatePassword(logNew);
+				pwd = loginDAO.fetchPassword(loginNew);
+				if(pwd==hashPassword) {
+					flag=true;
+					logger.info("Login successful");
+				}
 			} catch (LoginException e) {
 				logger.error("Validation failed ");
 				throw new LoginException(ErrorConstants.LOGIN_ERROR);
@@ -53,6 +54,9 @@ public class LoginServiceImpl implements LoginService{
 		}
 		return flag;
 	}
+	
+	
+	
 	
 
 }
