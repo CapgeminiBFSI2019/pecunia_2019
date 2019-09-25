@@ -3,7 +3,6 @@ package com.capgemini.pecunia.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,6 +47,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 		try {
 			ps = connection.prepareStatement(PassbookMaintenanceQueryMapper.QUERY_TRANS_DETAILS);
+			ps.setString(1, accountId);
 			resultSet = ps.executeQuery();
 
 			while (resultSet.next()) {
@@ -107,6 +107,9 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 		try {
 			ps = connection.prepareStatement(PassbookMaintenanceQueryMapper.QUERY_SUMMARY);
+			ps.setString(1, accountId);
+			ps.setDate(2, (java.sql.Date) startDate);
+			ps.setDate(3, (java.sql.Date) endDate);
 			resultSet = ps.executeQuery();
 			while (resultSet.next()) {
 				Transaction details = new Transaction();
