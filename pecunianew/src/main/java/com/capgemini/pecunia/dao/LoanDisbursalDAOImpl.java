@@ -35,23 +35,14 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 			while (resultSet.next()) {
 
 				int loanId = resultSet.getInt("loan_id");
-
 				String account_id = resultSet.getString("account_id");
-
 				Double amount = resultSet.getDouble("amount");
-
 				String type = resultSet.getString("type");
-
 				int tenure = resultSet.getInt("tenure");
-
 				int roi = resultSet.getInt("roi");
-
 				String status = resultSet.getString("loan_status");
-
 				Double emi = resultSet.getDouble("emi");
-
 				int creditScore = resultSet.getInt("credit_score");
-
 				Loan loan = new Loan(loanId, account_id, amount, type, tenure, roi, status, emi, creditScore);
 				requestList.add(loan);
 
@@ -84,18 +75,20 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 		try {
 			for (int i = 0; i < loanList.size(); i++) {
-				double amountDue = amountToBePaid(loanList.get(i).getEmi(), loanList.get(i).getTenure());
+				double amountDue = amountToBePaid(loanList.get(1).getEmi(), loanList.get(1).getTenure());
 				preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.INSERT_QUERY);
 
-				preparedStatement.setInt(1, loanList.get(i).getLoanId());
-				preparedStatement.setString(2, loanList.get(i).getAccountId());
-				preparedStatement.setDouble(3, loanList.get(i).getAmount());
+				preparedStatement.setInt(1, loanList.get(1).getLoanId());
+				preparedStatement.setString(2, loanList.get(1).getAccountId());
+				preparedStatement.setDouble(3, loanList.get(1).getAmount());
 				preparedStatement.setDouble(4, amountDue);
-				preparedStatement.setInt(5, loanList.get(i).getTenure());
+				preparedStatement.setInt(5, loanList.get(1).getTenure());
+				preparedStatement.execute();
 			}
+
 		} catch (SQLException sqlException) {
 			throw new MyException(sqlException.getMessage());
-//				throw new MyException("Tehnical problem occured. Refer log");
+
 		} finally {
 			try {
 				preparedStatement.close();
