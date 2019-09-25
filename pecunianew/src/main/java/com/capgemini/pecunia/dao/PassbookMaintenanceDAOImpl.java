@@ -72,7 +72,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 			}
 		} catch (Exception e) {
-
+			System.out.println(e.getMessage());
 			logger.error(e.getMessage());
 			throw new PassbookException(ErrorConstants.TECH_ERROR);
 
