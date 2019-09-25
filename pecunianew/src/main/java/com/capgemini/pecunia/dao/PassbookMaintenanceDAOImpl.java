@@ -47,12 +47,13 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 		try {
 			ps = connection.prepareStatement(PassbookMaintenanceQueryMapper.QUERY_TRANS_DETAILS);
+			ps.setString(1, accountId);
 			resultSet = ps.executeQuery();
 
 			while (resultSet.next()) {
 				Transaction details = new Transaction();
 				details.setId(resultSet.getString(1));
-				details.setTransDate(resultSet.getDate(2));
+				details.setTransDate((resultSet.getDate(2)).toLocalDate());
 				details.setAmount(resultSet.getDouble(3));
 				details.setTransFrom(resultSet.getString(4));
 				details.setTransTo(resultSet.getString(5));
@@ -106,11 +107,14 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 		try {
 			ps = connection.prepareStatement(PassbookMaintenanceQueryMapper.QUERY_SUMMARY);
+			ps.setString(1, accountId);
+			ps.setDate(2, (java.sql.Date) startDate);
+			ps.setDate(3, (java.sql.Date) endDate);
 			resultSet = ps.executeQuery();
 			while (resultSet.next()) {
 				Transaction details = new Transaction();
 				details.setId(resultSet.getString(1));
-				details.setTransDate(resultSet.getDate(2));
+				details.setTransDate((resultSet.getDate(2)).toLocalDate());
 				details.setAmount(resultSet.getDouble(3));
 				details.setTransFrom(resultSet.getString(4));
 				details.setTransTo(resultSet.getString(5));
