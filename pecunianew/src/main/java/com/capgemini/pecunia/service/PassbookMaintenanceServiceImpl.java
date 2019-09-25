@@ -13,6 +13,16 @@ import com.capgemini.pecunia.exception.PassbookException;
 
 public class PassbookMaintenanceServiceImpl implements PassbookMaintenanceService {
 
+	/*******************************************************************************************************
+	 * - Function Name : updatePassbook(String accountId) 
+	 * - Input Parameters : String accountId
+	 * - Return Type : List 
+	 * - Throws : MyException 
+	 * - Author : Mansi Agarwal
+	 * - Creation Date : 24/09/2019 
+	 * - Description : Update transaction details in passbook
+	 ********************************************************************************************************/
+	
 	@Override
 	public List<Transaction> updatePassbook(String accountId) throws MyException {
 
