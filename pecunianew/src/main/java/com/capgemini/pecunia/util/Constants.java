@@ -1,7 +1,7 @@
 package com.capgemini.pecunia.util;
 
 public class Constants {
-	
+
 	public static final String CODE_SAVINGS = "01";
 	public static final String CODE_CURRENT = "02";
 	public static final String CODE_FD = "03";
@@ -15,7 +15,7 @@ public class Constants {
 	public static final String TRANSACTION_CREDIT = "CREDIT";
 	public static final String TRANSACTION_OPTION_SLIP = "SLIP";
 	public static final String TRANSACTION_OPTION_CHEQUE = "CHEQUE";
-	public static final String[] OTHER_BANK_NAME = {"ICICI","SBI","HDFC","KOTAK","AXIS"};
+	public static final String[] OTHER_BANK_NAME = { "ICICI", "SBI", "HDFC", "KOTAK", "AXIS" };
 	public static final String CHEQUE_STATUS_PENDING = "PENDING";
 	public static final String CHEQUE_STATUS_CLEARED = "CLEARED";
 	public static final String CHEQUE_STATUS_BOUNCED = "BOUNCED";
@@ -44,4 +44,5 @@ public class Constants {
 	public static final String AMOUNT_LESS_EXCEPTION = "Credit amount is less than the minimum amount";
 	public static final double MINIMUM_CREDIT_SLIP_AMOUNT = 100.00;
 	public static final double MAXIMUM_CREDIT_SLIP_AMOUNT = 100000.00;
+	public static final String SELF_CHEQUE = "SELF";
 }
