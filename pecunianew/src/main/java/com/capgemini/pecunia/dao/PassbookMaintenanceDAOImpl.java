@@ -32,7 +32,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 	 * - Throws : PassbookException, MyException 
 	 * - Author : Mansi Agarwal
 	 * - Creation Date : 24/09/2019 
-	 * - Description : Stores the transaction details in the list 
+	 * - Description : Stores the transaction details in the list and returns it to service layer
 	 ********************************************************************************************************/
 	
 	@Override
