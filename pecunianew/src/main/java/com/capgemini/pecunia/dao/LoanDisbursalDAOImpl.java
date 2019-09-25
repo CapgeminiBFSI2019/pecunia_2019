@@ -78,11 +78,11 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				double amountDue = amountToBePaid(loanList.get(1).getEmi(), loanList.get(1).getTenure());
 				preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.INSERT_QUERY);
 
-				preparedStatement.setInt(1, loanList.get(1).getLoanId());
-				preparedStatement.setString(2, loanList.get(1).getAccountId());
-				preparedStatement.setDouble(3, loanList.get(1).getAmount());
+				preparedStatement.setInt(1, loanList.get(i).getLoanId());
+				preparedStatement.setString(2, loanList.get(i).getAccountId());
+				preparedStatement.setDouble(3, loanList.get(i).getAmount());
 				preparedStatement.setDouble(4, amountDue);
-				preparedStatement.setInt(5, loanList.get(1).getTenure());
+				preparedStatement.setInt(5, loanList.get(i).getTenure());
 				preparedStatement.execute();
 			}
 
@@ -112,14 +112,16 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 					.prepareStatement(LoanDisbursalQuerryMapper.RETRIVE_ALL_QUERY_FROM_APPROVED_LOAN);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				LoanDisbursal loanDisbursal = new LoanDisbursal();
-				loanDisbursal.setLoanDisbursalId(resultSet.getInt(1));
-				loanDisbursal.setLoanId(resultSet.getInt(2));
-				loanDisbursal.setAccountId(resultSet.getString(3));
-				loanDisbursal.setDisbursedAmount(resultSet.getDouble(4));
-				loanDisbursal.setDueAmount(resultSet.getDouble(5));
-				loanDisbursal.setNumberOfEmiToBePaid(resultSet.getDouble(6));
-				approvedLoanList.add(loanDisbursal);
+
+				int loanDisbursedId = resultSet.getInt("loan_disbursal_id");
+				int loanId = resultSet.getInt("loan_id");
+				String accountId = resultSet.getString("account_id");
+				Double disbursedAmount = resultSet.getDouble("disbursed_amount");
+				double dueAmount = resultSet.getDouble("due_amount");
+				double emiToBePaid = resultSet.getDouble("emi_to_be_paid");
+				LoanDisbursal getDetails = new LoanDisbursal(loanDisbursedId, loanId, accountId, disbursedAmount,
+						dueAmount, emiToBePaid);
+				approvedLoanList.add(getDetails);
 
 			}
 		} catch (SQLException sqlException) {

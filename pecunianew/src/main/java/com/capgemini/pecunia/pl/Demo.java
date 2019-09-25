@@ -1,27 +1,60 @@
 package com.capgemini.pecunia.pl;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
 import com.capgemini.pecunia.dao.LoanDisbursalDAO;
 import com.capgemini.pecunia.dao.LoanDisbursalDAOImpl;
 import com.capgemini.pecunia.dto.Loan;
-
-
+import com.capgemini.pecunia.dto.LoanDisbursal;
 import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.service.LoanDisbursalService;
+import com.capgemini.pecunia.service.LoanDisbursalServiceImpl;
 
 public class Demo {
 	public static void main(String[] args) {
 
 
-		LoanDisbursalDAO loanDisbursalDAO = new LoanDisbursalDAOImpl();
-		List<Loan> l = new ArrayList<Loan>();
-		try {
-			l = loanDisbursalDAO.retrieveLoanList();
-			loanDisbursalDAO.releaseLoanSheet(l);
-		} catch (IOException | MyException e) {
-			e.printStackTrace();
-		}
+		LoanDisbursalService loanDisbursalDAO = new LoanDisbursalServiceImpl();
+		ArrayList<Loan> l = new ArrayList<Loan>();
+		ArrayList<Loan> l1 = new ArrayList<Loan>();	
+		ArrayList<Loan> l3 = new ArrayList<Loan>();	
+		ArrayList<LoanDisbursal> l2 = new ArrayList<LoanDisbursal>();	
+			try {
+				l = loanDisbursalDAO.retrieveAll();
+			} catch (MyException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+				
+					try {
+						loanDisbursalDAO.approveLoan(l);
+					} catch (IOException | MyException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+				try {
+					l1 = 	loanDisbursalDAO.rejectedLoanRequests();
+				} catch (MyException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				l3 = loanDisbursalDAO.rejectedRequestsList(rejectedList)();
+				
+				
+				try {
+					l2 = loanDisbursalDAO.approvedLoanList();
+				} catch (IOException | MyException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//System.out.println(l2);
 
 
 		Scanner scanner = new Scanner(System.in);
