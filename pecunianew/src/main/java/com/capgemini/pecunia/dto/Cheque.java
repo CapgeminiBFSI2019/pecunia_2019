@@ -14,6 +14,9 @@ public class Cheque {
 	private LocalDate issueDate;
 	private String status;
 	
+	public Cheque() {
+		
+	}
 	
 	
 	public Cheque() {

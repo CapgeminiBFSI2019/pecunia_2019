@@ -1,5 +1,6 @@
 package com.capgemini.pecunia.service;
 
+import java.util.Arrays;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -219,9 +220,54 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
+
 	public double updateInterest() throws TransactionException, MyException {
 		// TODO Auto-generated method stub
 		return 0;
+
+	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
+		double beneficiaryBalance = 0;
+		double payeeBalance = 0;
+		
+		String bankName = cheque.getBankName();
+		
+		Transaction creditTransaction,debitTransaction;
+		Cheque chequeDetail;
+		
+		TransactionDAO transactionDAO = new TransactionDAOImpl();
+		
+		int transId = 0;
+		
+		if((bankName != Constants.BANK_NAME) && (Arrays.asList(Constants.OTHER_BANK_NAME).contains(bankName)))
+		{
+			//other banks cheque
+			chequeDetail = new Cheque();
+			chequeDetail.setNum(cheque.getNum());
+			chequeDetail.setAccountNo(cheque.getAccountNo());
+			chequeDetail.setBankName(cheque.getBankName());
+			chequeDetail.setHolderName(cheque.getHolderName());
+			chequeDetail.setIfsc(cheque.getIfsc());
+			chequeDetail.setStatus(Constants.CHEQUE_STATUS_PENDING);
+			chequeDetail.setIssueDate(cheque.getIssueDate());
+			
+			transId = transactionDAO.generateChequeId(chequeDetail);
+			
+		}
+		else
+		{
+			if(bankName != Constants.BANK_NAME)
+			{
+				//invalid bank cheque
+				throw new TransactionException(Constants.INVALID_BANK_EXCEPTION);
+			}
+			else
+			{
+				//pecunia cheque
+				
+			}
+		}
+		return transId;
+
 	}
 
 }
