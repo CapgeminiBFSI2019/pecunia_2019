@@ -29,33 +29,49 @@ public class Demo {
 		ArrayList<Loan> l1 = new ArrayList<Loan>();	
 		ArrayList<Loan> l4 = new ArrayList<Loan>();	
 		ArrayList<Loan> l3 = new ArrayList<Loan>();	
+		ArrayList<Loan> l5 = new ArrayList<Loan>();	
 		
 		ArrayList<LoanDisbursal> l2 = new ArrayList<LoanDisbursal>();	
-//			try {
-//				l = loanDisbursalDAO.retrieveAll();
-//			} catch (MyException | IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//			
-//				
-//					try {
-//						loanDisbursalDAO.approveLoan(l);
-//					} catch (IOException | MyException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				
-//				try {
-//					l1 = 	loanDisbursalDAO.rejectedLoanRequests();
-//				} catch (MyException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				System.out.println(l1);
-//				loanDisbursalDAO.updateLoanStatus(l1);
-//		        
+			try {
+				try {
+					l = loanDisbursalDAO.retrieveAll();
+				} catch (LoanDisbursalException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (MyException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+				
+					try {
+						try {
+							l5 = loanDisbursalDAO.approveLoan(l);
+						} catch (LoanDisbursalException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} catch (IOException | MyException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+				try {
+					try {
+						l1 = 	loanDisbursalDAO.rejectedLoanRequests();
+					} catch (LoanDisbursalException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} catch (MyException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println(l1);
+				
+		        
 				
 				
 				
@@ -65,6 +81,8 @@ public class Demo {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				loanDisbursalDAO.updateLoanStatus(l1,l5);
 				//System.out.println(l2);
 				
 
