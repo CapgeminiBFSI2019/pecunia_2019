@@ -1,5 +1,6 @@
 package com.capgemini.pecunia.pl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,5 +29,25 @@ public class PassbookMain {
 		System.out.print(updatePassbook.get(i).getClosingBalance()+ "\t");
 		System.out.println();
 	}
+		
+//		PassbookMaintenanceService accountSummaryService =new PassbookMaintenanceServiceImpl();
+//		String sDate1="2019-08-10";
+//		String sDate2="2019-10-10";
+//		LocalDate date1=LocalDate.parse(sDate1);
+//		LocalDate date2=LocalDate.parse(sDate2);
+//		List <Transaction> accountSummary = new ArrayList<Transaction>();
+//		accountSummary	= accountSummaryService.accountSummary("100202000001",date1,date2);
+//		
+//		for(int i = 0;i<accountSummary.size();i++)
+//		{
+//			System.out.print(accountSummary.get(i).getId() + "\t");
+//			System.out.print(accountSummary.get(i).getTransDate()+ "\t");
+//			System.out.print(accountSummary.get(i).getAmount()+ "\t");
+//			System.out.print(accountSummary.get(i).getTransFrom()+ "\t");
+//			System.out.print(accountSummary.get(i).getTransTo()+ "\t");
+//			System.out.print(accountSummary.get(i).getType()+ "\t");
+//			System.out.print(accountSummary.get(i).getClosingBalance()+ "\t");
+//			System.out.println();
+//		}
 }
 }

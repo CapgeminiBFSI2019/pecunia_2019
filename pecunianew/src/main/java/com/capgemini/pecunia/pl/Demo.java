@@ -5,12 +5,9 @@ import java.util.ArrayList;
 
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
-import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.LoanDisbursalException;
 import com.capgemini.pecunia.exception.MyException;
@@ -22,29 +19,7 @@ import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
 public class Demo {
 	public static void main(String[] args) throws TransactionException, MyException, ParseException {
 
-import com.capgemini.pecunia.service.TransactionService;
-import com.capgemini.pecunia.service.TransactionServiceImpl;
-import com.capgemini.pecunia.util.Constants;
-import com.capgemini.pecunia.util.DBConnection;
 
-import java.util.Scanner;
-
-import com.capgemini.pecunia.dao.LoanDisbursalDAO;
-import com.capgemini.pecunia.dao.LoanDisbursalDAOImpl;
-import com.capgemini.pecunia.dto.Loan;
-import com.capgemini.pecunia.dto.LoanDisbursal;
-import com.capgemini.pecunia.exception.MyException;
-import com.capgemini.pecunia.service.LoanDisbursalService;
-import com.capgemini.pecunia.service.LoanDisbursalServiceImpl;
-
-public class Demo {
-//	public static void main(String[] args) throws TransactionException, MyException {
-
-//	public static void main1(String[] args) {
-//
-//
-
-	public static void main(String[] args) throws TransactionException, MyException, LoanDisbursalException {
 
 
 
@@ -171,12 +146,10 @@ public class Demo {
 		PassbookMaintenanceService accountSummaryService =new PassbookMaintenanceServiceImpl();
 		String sDate1="2019-08-10";
 		String sDate2="2019-10-10";
-		Date date1=new SimpleDateFormat("yyyy-mm-dd").parse(sDate1);
-		Date date2=new SimpleDateFormat("yyyy-mm-dd").parse(sDate2);
-		java.sql.Date startDate= (java.sql.Date) date1;
-		java.sql.Date endDate= (java.sql.Date) date2;
+		LocalDate date1=LocalDate.parse(sDate1);
+		LocalDate date2=LocalDate.parse(sDate2);
 		List <Transaction> accountSummary = new ArrayList<Transaction>();
-		accountSummary	= accountSummaryService.accountSummary("100202000001",startDate,endDate);
+		accountSummary	= accountSummaryService.accountSummary("100202000001",date1,date2);
 		
 		for(int i = 0;i<accountSummary.size();i++)
 		{
@@ -189,7 +162,8 @@ public class Demo {
 			System.out.print(accountSummary.get(i).getClosingBalance()+ "\t");
 			System.out.println();
 		}
-
+	}
+}
 		// String datePattern="yyyy-mm-dd";
 		// DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
 		
@@ -300,5 +274,4 @@ public class Demo {
 		
 
 
-	}
-}
+	
