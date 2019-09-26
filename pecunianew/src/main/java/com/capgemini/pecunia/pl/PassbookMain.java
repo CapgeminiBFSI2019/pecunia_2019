@@ -20,21 +20,11 @@ public class PassbookMain {
 	PassbookMaintenanceService PassbookService=new PassbookMaintenanceServiceImpl();
 	List<Transaction> updatePassbook = new ArrayList<Transaction>();
 	String accountId = "nfjkedh77frewf";
-	Account account = new Account();
-	account.setId(accountId);
-	AccountManagementService accountManagementService = new AccountManagementServiceImpl();
-	boolean accountExist = accountManagementService.validateAccountId(account);
-	if(!accountExist)
-	{
-		//throw
-		System.out.println("invalid account");
-	}
 	
-	updatePassbook	= PassbookService.updatePassbook(accountId);
+	updatePassbook = PassbookService.updatePassbook(accountId);
 	
 	if(updatePassbook.size() < 1)
 	{
-		// no trans
 		System.out.println("no trans");
 	}
 	

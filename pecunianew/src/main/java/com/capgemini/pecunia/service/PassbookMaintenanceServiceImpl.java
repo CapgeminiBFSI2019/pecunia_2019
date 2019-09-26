@@ -9,7 +9,9 @@ import org.apache.log4j.PropertyConfigurator;
 
 import com.capgemini.pecunia.dao.PassbookMaintenanceDAO;
 import com.capgemini.pecunia.dao.PassbookMaintenanceDAOImpl;
+import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Transaction;
+import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.PassbookException;
 
@@ -36,9 +38,19 @@ public class PassbookMaintenanceServiceImpl implements PassbookMaintenanceServic
 	@Override
 	public List<Transaction> updatePassbook(String accountId) throws MyException, PassbookException{
 		try {
-		List<Transaction> transactionList = new ArrayList<Transaction>();
-		PassbookMaintenanceDAO pdao = new PassbookMaintenanceDAOImpl();
-		
+			
+			List<Transaction> transactionList = new ArrayList<Transaction>();
+			PassbookMaintenanceDAO pdao = new PassbookMaintenanceDAOImpl();
+			Account account = new Account();
+			account.setId(accountId);
+			AccountManagementService accountManagementService = new AccountManagementServiceImpl();
+			boolean accountExist = accountManagementService.validateAccountId(account);
+			if(!accountExist)
+			{
+				throw new PassbookException(ErrorConstants.ERROR_VALIDATION);
+			}
+			
+			
 			transactionList = pdao.updatePassbook(accountId);
 			boolean ans=false;
 			if(transactionList.size()>0) {
@@ -50,7 +62,6 @@ public class PassbookMaintenanceServiceImpl implements PassbookMaintenanceServic
 			}
 			return transactionList;
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			throw new PassbookException(e.getMessage());
 		}
 		
