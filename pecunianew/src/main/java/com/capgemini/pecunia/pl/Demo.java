@@ -76,7 +76,7 @@ public class Demo {
 		
 		
 		String accountId="100202000001";
-		String type="Debit";
+		String type="Credit";
 		String option="Slip";
 		double amount=200.00;
 	
@@ -95,7 +95,7 @@ public class Demo {
 			trans.setTransDate(transDate);
 			
 			TransactionService transactionService=new TransactionServiceImpl();
-			int transId=transactionService.debitUsingSlip(trans);
+			int transId=transactionService.creditUsingSlip(trans);
 			System.out.println(transId);
 		
 //		LoanDisbursalDAO loanDisbursalDAO = new LoanDisbursalDAOImpl();

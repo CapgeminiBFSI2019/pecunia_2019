@@ -75,6 +75,8 @@ public class TransactionServiceImpl implements TransactionService {
 			if (amount <= Constants.MAXIMUM_CREDIT_SLIP_AMOUNT) {
 
 				newBalance = oldBalance + amount;
+				account.setBalance(newBalance);
+				transactionDAO.updateBalance(account);
 				transaction.setClosingBalance(newBalance);
 				transId = transactionDAO.generateTransactionId(transaction);
 			}
@@ -108,14 +110,15 @@ public class TransactionServiceImpl implements TransactionService {
 		Account account = new Account();
 		account.setId(accId);
 		double oldBalance = transactionDAO.getBalance(account);
+		System.out.println(oldBalance);
 		double newBalance = 0.0;
 
 		if (oldBalance > amount) {
 			newBalance = oldBalance - amount;
+			account.setBalance(newBalance);
 			transactionDAO.updateBalance(account);
-
 			Transaction debitTransaction = new Transaction();
-			debitTransaction.setId(accId);
+			debitTransaction.setAccountId(accId);
 			debitTransaction.setAmount(amount);
 			debitTransaction.setOption(Constants.TRANSACTION_OPTION_SLIP);
 			debitTransaction.setType(Constants.TRANSACTION_DEBIT);
