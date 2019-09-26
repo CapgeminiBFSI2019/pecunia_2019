@@ -84,4 +84,8 @@ public class Customer {
 		this.dob = dob;
 	}
 
+
+	public Customer() {
+	}
+
 }
