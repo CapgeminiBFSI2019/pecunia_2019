@@ -13,7 +13,10 @@ public interface LoanDisbursalService {
 	public ArrayList<Loan> rejectedLoanRequests() throws MyException, LoanDisbursalException;
 	public void approveLoan(ArrayList<Loan> l) throws IOException, MyException, LoanDisbursalException;
 	public ArrayList<LoanDisbursal> approvedLoanList() throws IOException, MyException; 
-	public ArrayList<Loan> rejectedRequestsList(ArrayList<Loan> rejectedList) throws IOException, MyException;
-	public ArrayList<LoanDisbursed>
+//	public ArrayList<Loan> rejectedRequestsList(ArrayList<Loan> rejectedList) throws IOException, MyException;
+	public void updateLoanAccount(ArrayList<LoanDisbursal> updateLoanApprovals, int numberOfMonths) throws MyException;
+	public void updateLoanStatus(ArrayList<Loan> rejectedLoanList) throws MyException;
+
+	
 	
 }

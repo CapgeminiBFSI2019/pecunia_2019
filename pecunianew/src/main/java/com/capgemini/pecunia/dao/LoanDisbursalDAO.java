@@ -15,6 +15,10 @@ public interface LoanDisbursalDAO {
 
 	public ArrayList<LoanDisbursal> loanApprovedList() throws IOException, MyException;
 	
-	public void updateLoanAccount(ArrayList<LoanDisbursal>  loanApprovals) throws IOException, MyException;
+	public void updateLoanAccount(ArrayList<LoanDisbursal>  loanApprovals, double dueAmount, double tenure, String accountId) throws IOException, MyException;
+	
+	public void updateStatus(ArrayList<Loan> loanRequests, String accountId, String Status) throws IOException, MyException;
+	
+	
 
 }
