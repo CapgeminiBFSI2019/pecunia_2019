@@ -45,8 +45,13 @@ public class Constants {
 	public static final String AMOUNT_LESS_EXCEPTION = "Credit amount is less than the minimum amount";
 	public static final String CONNECTION_FAILURE = "Connection problem. Cannot connect to the database";
 	public static final String FILE_CLOSING_FAILURE = "Files cannot be closed";
+
+	public static final String NO_LOAN_REQUESTS = "No loan request is present in database";
+	public static final String NO_REJECTED_LOAN_REQUESTS = "No loan request has been rejected";
 	public static final String[] LOAN_REQUEST_STATUS = {"Pending","Approved","Rejected"};
-	
+
+
+
 	public static final double MINIMUM_CREDIT_SLIP_AMOUNT = 100.00;
 	public static final double MAXIMUM_CREDIT_SLIP_AMOUNT = 100000.00;
 	public static final String SELF_CHEQUE = "SELF";
