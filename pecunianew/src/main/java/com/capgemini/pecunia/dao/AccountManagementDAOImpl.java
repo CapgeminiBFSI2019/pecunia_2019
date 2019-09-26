@@ -19,7 +19,9 @@ import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.util.DBConnection;
+import com.capgemini.pecunia.util.LoggerMessages;
 import com.google.protobuf.Timestamp;
+import com.mysql.cj.util.Util;
 
 public class AccountManagementDAOImpl implements AccountManagementDAO {
 
@@ -61,7 +63,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			}
 		}
 		updated = true;
-		logger.info("Deletion succesful");
+		logger.info(LoggerMessages.DELETION_SUCCESSFUL);
 		return updated;
 
 	}
@@ -109,7 +111,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			}
 		}
 		updated = true;
-		logger.info("Customer Details added");
+		logger.info(LoggerMessages.UPDATE_CUSTOMER_NAME_SUCCESSFUL);
 		return updated;
 
 	}
@@ -154,7 +156,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			}
 		}
 		updated = true;
-		logger.info("Customer Contact updated.");
+		logger.info(LoggerMessages.UPDATE_CUSTOMER_CONTACT_SUCCESSFUL);
 		return updated;
 	}
 
@@ -203,7 +205,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			}
 		}
 		updated = true;
-		logger.info("Customer Address Details updated.");
+		logger.info(LoggerMessages.UPDATE_CUSTOMER_ADDRESS_SUCCESSFUL);
 		return updated;
 
 	}
@@ -260,7 +262,8 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.VALIDATE_ID);
 			preparedStatement.setString(1, acc.getId());
 			resultSet = preparedStatement.executeQuery();
-			if (resultSet != null) {
+			
+			if (resultSet.next()) {
 				validated = true;
 			}
 		} catch (SQLException e) {
@@ -302,7 +305,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
 
-			logger.info("Customer Address Details added.");
+			logger.info(LoggerMessages.ADD_ADDRESS_SUCCESSFUL);
 			preparedStatement1 = connection.prepareStatement(AccountQueryMapper.GET_RECENT_ADDRESS_ID);
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
@@ -344,7 +347,8 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
-		logger.info("Customer Details added.");
+	
+		logger.info(LoggerMessages.ADD_CUSTOMER_DETAILS_SUCCESSFUL);
 		return custId;
 
 	}
@@ -374,7 +378,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				logger.error("Error in adding customer details.");
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			} else {
-				logger.info("New Account added.");
+				logger.info(LoggerMessages.ADD_ACCOUNT_SUCCESSFUL);
 				return acc.getId();
 			}
 

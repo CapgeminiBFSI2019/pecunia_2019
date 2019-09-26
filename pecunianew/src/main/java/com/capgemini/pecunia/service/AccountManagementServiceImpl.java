@@ -171,6 +171,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	public boolean validateAccountId(Account acc) throws MyException, AccountException {
 		try {
 			boolean validated=false;
+			System.out.println("hI1");
 			accountDAO = new AccountManagementDAOImpl();
 			validated = accountDAO.validateAccountId(acc);
 
