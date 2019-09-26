@@ -36,7 +36,7 @@ public class Logger {
 	 public static final String ACCOUNT_SUMMARY_SUCCESSFUL= "Account summary displayed successfully."; 
 	
 	 //loanDaohalfdone,have to check which ID is being returned//
-	 
+	 public static final String LOAN_ACCOUNT_ID = "Account Id returned successfully.";
 	 public static final String LOAN_DETAILS = "Loan details stored successfully.";
 	 //loandisbursalImpldone//
 	 public static final String LOAN_REQUEST = "Loan request registered successfully.";
