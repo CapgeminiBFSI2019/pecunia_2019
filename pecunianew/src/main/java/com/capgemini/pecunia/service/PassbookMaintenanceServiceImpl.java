@@ -1,5 +1,6 @@
 package com.capgemini.pecunia.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +32,8 @@ public class PassbookMaintenanceServiceImpl implements PassbookMaintenanceServic
 		try {
 			transactionList = pdao.updatePassbook(accountId);
 		} catch (PassbookException | MyException e) {
-			System.out.println(e.getMessage());
+
+
 			throw new MyException(ErrorConstants.UPDATE_PASSBOOK_ERROR);
 		}
 		return transactionList;
@@ -51,13 +53,13 @@ public class PassbookMaintenanceServiceImpl implements PassbookMaintenanceServic
 	
 	
 	@Override
-	public List<Transaction> accountSummary(String accountId, Date startDate, Date endDate) throws MyException {
+	public List<Transaction> accountSummary(String accountId, LocalDate startDate, LocalDate endDate) throws MyException {
 		List<Transaction> transactionList = new ArrayList<Transaction>();
 		PassbookMaintenanceDAO pdao = new PassbookMaintenanceDAOImpl();
 		try {
 			transactionList = pdao.accountSummary(accountId, startDate, endDate);
 		} catch (PassbookException | MyException e) {
-			System.out.println(e.getMessage());
+		
 			throw new MyException(ErrorConstants.UPDATE_PASSBOOK_ERROR);
 		}
 		return transactionList;

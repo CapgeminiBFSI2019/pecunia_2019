@@ -76,6 +76,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	@Override
 	public boolean updateCustomerName(Account acc, Customer cust) throws AccountException, MyException {
 		boolean updated = false;
+		String accId=null;
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();	
 		PreparedStatement preparedStatement1=null;	
@@ -88,20 +89,24 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement1.setString(1, acc.getId());
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			
-			String accId = resultSet.getString(1);
+			if(resultSet.next())
+			{
+				accId = resultSet.getString(1);
+			}
 			
-	
+			
 			preparedStatement2=connection.prepareStatement(AccountQueryMapper.UPDATE_NAME);
 			
 			preparedStatement2.setString(1,cust.getName());
-			preparedStatement2.setString(1,accId);
-			queryResult = preparedStatement2.executeUpdate();						
+			preparedStatement2.setString(2,accId);
+			queryResult = preparedStatement2.executeUpdate();	
 			if(queryResult==0)
 			{
 				logger.error("Error in updating customer details ");
 				throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 			}
 		}catch(SQLException e) {
+			System.out.println(e.getMessage());
 			throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 		}
 		finally {
@@ -110,6 +115,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				preparedStatement2.close();
 				connection.close();
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
@@ -122,6 +128,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	@Override
 	public boolean updateCustomerContact(Account acc, Customer cust) throws AccountException, MyException {
 		boolean updated = false;
+		String accId=null;
 		Connection connection = null;
 		int queryResult=0;
 		connection = DBConnection.getInstance().getConnection();	
@@ -133,11 +140,16 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement1.setString(1, acc.getId());
 			
 			ResultSet resultSet = preparedStatement1.executeQuery();
-			String accId = resultSet.getString(1);
+			
+			if(resultSet.next())
+			{
+				accId = resultSet.getString(1);
+			}
+			
 			
 			preparedStatement2= connection.prepareStatement(AccountQueryMapper.UPDATE_CONTACT);
 			preparedStatement2.setString(1,cust.getContact());
-			preparedStatement2.setString(1,accId);
+			preparedStatement2.setString(2,accId);
 			queryResult = preparedStatement2.executeUpdate();			
 			if(queryResult==0)
 			{
@@ -165,6 +177,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	public boolean updateCustomerAddress(Account acc, Address add) throws AccountException,MyException {
 		boolean updated = false;
 		Connection connection = null;
+		String accId=null;
 		connection = DBConnection.getInstance().getConnection();	
 		PreparedStatement preparedStatement1=null;
 		PreparedStatement preparedStatement2=null;
@@ -175,7 +188,11 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement1 = connection.prepareStatement(AccountQueryMapper.GET_ADDRESS_ID);
 			preparedStatement1.setString(1, acc.getId());
 			ResultSet resultSet = preparedStatement1.executeQuery();
-			String accId = resultSet.getString(1);
+			if(resultSet.next())
+			{
+				accId = resultSet.getString(1);
+			}
+			
 			
 			preparedStatement2= connection.prepareStatement(AccountQueryMapper.UPDATE_ADDRESS);
 			preparedStatement2.setString(1,add.getLine1());
@@ -240,12 +257,18 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	@Override
 	public boolean validateAccountId(Account acc) throws MyException, AccountException {
+		System.out.println("hi3");
 		boolean validated=false;
+
+			System.out.println("hi3");
+			System.out.println(acc.getId());
+		
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement=null;		
 
 		ResultSet resultSet = null;
+		System.out.println("Hi");
 		
 		try {
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.VALIDATE_ID);
@@ -253,13 +276,14 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet!=null) {
 				validated=true;
+				System.out.println(validated);
 			}
 		}catch(SQLException e) {
 			throw new AccountException(ErrorConstants.ERROR_VALIDATION);
 		} finally {
 			try {
 				connection.close();
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
