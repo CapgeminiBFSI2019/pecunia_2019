@@ -17,7 +17,6 @@ import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.Constants;
 
-import com.capgemini.pecunia.util.Constants;
 
 public class TransactionServiceImpl implements TransactionService {
 
@@ -131,6 +130,7 @@ public class TransactionServiceImpl implements TransactionService {
 	@Override
 	public int debitUsingSlip(Transaction transaction) throws TransactionException, MyException {
 
+
 		int transId = 0;
 		try {
 			transactionDAO = new TransactionDAOImpl();
@@ -167,7 +167,7 @@ public class TransactionServiceImpl implements TransactionService {
 		} catch (Exception e) {
 
 			throw new TransactionException(Constants.EXCEPTION_DURING_TRANSACTION);
-
+	
 		}
 		return transId;
 
