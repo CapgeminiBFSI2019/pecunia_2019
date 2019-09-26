@@ -263,7 +263,7 @@ public class TransactionServiceImpl implements TransactionService {
 	 ********************************************************************************************************/
 	
 	@Override
-	public double depositInterest(Account account) throws TransactionException {
+	public double depositInterest(Account account) throws TransactionException , MyException{
 		// TODO Auto-generated method stub
 		return 0;
 	}
