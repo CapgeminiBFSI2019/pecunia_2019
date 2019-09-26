@@ -3,6 +3,7 @@ package com.capgemini.pecunia.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -110,7 +111,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 	
 	
 	@Override
-	public List<Transaction> accountSummary(String accountId, Date startDate, Date endDate)
+	public List<Transaction> accountSummary(String accountId, LocalDate startDate, LocalDate endDate)
 			throws PassbookException, MyException {
 
 		Connection connection = DBConnection.getInstance().getConnection();
@@ -123,8 +124,8 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 		try {
 			ps = connection.prepareStatement(PassbookMaintenanceQueryMapper.QUERY_SUMMARY);
 			ps.setString(1, accountId);
-			ps.setDate(2, (java.sql.Date) startDate);
-			ps.setDate(3, (java.sql.Date) endDate);
+			ps.setDate(2, java.sql.Date.valueOf(startDate));
+			ps.setDate(3, java.sql.Date.valueOf(endDate));
 			resultSet = ps.executeQuery();
 			queryResult=ps.executeUpdate();
 			while (resultSet.next()) {
