@@ -57,7 +57,6 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	public boolean updateCustomerName(Account acc, Customer cust) throws MyException, AccountException {
 		
 		boolean updated = false;
-		System.out.println("Hi1");
 		boolean validated = validateAccountId(acc);
 		if(validated) {
 			accountDAO = new AccountManagementDAOImpl();
@@ -146,9 +145,10 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 			id = id.concat(Constants.CODE_LOAN);
 			break;
 		}
-		
+		System.out.println("In calculateAccountId");
 		accountDAO = new AccountManagementDAOImpl();
 		id = accountDAO.calculateAccountId(id);
+		
 		return id;
 	}
 
@@ -164,9 +164,6 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	@Override
 	public boolean validateAccountId(Account acc) throws MyException, AccountException {
 		boolean validated=false;
-		System.out.println("hi2");
-		
-			System.out.println(acc.getId());
 			accountDAO = new AccountManagementDAOImpl();
 			validated = accountDAO.validateAccountId(acc);
 
@@ -190,15 +187,19 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 		try {
 		accountDAO = new AccountManagementDAOImpl();
 		String custId= accountDAO.addCustomerDetails(cust, add);
+		System.out.println("A");
 		acc.setHolderId(custId);
 		String accountId = calculateAccountId(acc);
 		acc.setId(accountId);
+		System.out.println("B");
 		String createdId = accountDAO.addAccount(acc);
+		System.out.println("C");
 		if(createdId==null) {
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		}
 		return accountId;
 		}catch (Exception e) {
+			System.out.println("D");
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		}
 	}

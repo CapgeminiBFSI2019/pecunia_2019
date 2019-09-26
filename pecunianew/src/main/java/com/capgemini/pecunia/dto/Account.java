@@ -1,5 +1,7 @@
 package com.capgemini.pecunia.dto;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Account {
@@ -11,7 +13,7 @@ public class Account {
 	private String status;
 	private double balance;
 	private double interest;
-	private Date lastUpdated;
+	private LocalDateTime lastUpdated;
 	
 	public Account()
 	{
@@ -19,7 +21,7 @@ public class Account {
 	}
 	
 	public Account(String id, String holderId, String branchId, String accountType, String status, double balance,
-			double interest, Date lastUpdated) {
+			double interest, LocalDateTime lastUpdated) {
 		super();
 		this.id = id;
 		this.holderId = holderId;
@@ -75,10 +77,10 @@ public class Account {
 	public void setInterest(double interest) {
 		this.interest = interest;
 	}
-	public Date getLastUpdated() {
+	public LocalDateTime getLastUpdated() {
 		return lastUpdated;
 	}
-	public void setLastUpdated(Date lastUpdated) {
+	public void setLastUpdated(LocalDateTime lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
 

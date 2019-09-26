@@ -32,8 +32,9 @@ class AccountManagementServiceImplTest {
 	}
 
 	@Test
+	@DisplayName("Null input")
 	void testUpdateCustomerName() {
-		fail("Not yet implemented");
+		assertThrows(AccountException.class, ()-> {account.updateCustomerName(null, null);});
 	}
 
 	@Test
