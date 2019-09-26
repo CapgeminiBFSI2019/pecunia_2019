@@ -1,6 +1,7 @@
 package com.capgemini.pecunia.dto;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Customer {
 	
@@ -11,7 +12,7 @@ public class Customer {
 	private String pan;
 	private String contact;
 	private String gender;
-	private Date dob;
+	private LocalDate dob;
 	
 	public String getId() {
 		return id;
@@ -62,16 +63,16 @@ public class Customer {
 		this.gender = gender;
 	}
 
-	public Date getDob() {
+	public LocalDate getDob() {
 		return dob;
 	}
 
-	public void setDob(Date dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
 
 	public Customer(String id, String name, String addressId, String aadhar, String pan, String contact, String gender,
-			Date dob) {
+			LocalDate dob) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -81,6 +82,10 @@ public class Customer {
 		this.contact = contact;
 		this.gender = gender;
 		this.dob = dob;
+	}
+
+
+	public Customer() {
 	}
 
 }

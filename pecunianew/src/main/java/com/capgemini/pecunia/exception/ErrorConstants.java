@@ -15,7 +15,7 @@ public class ErrorConstants {
 	public static final String ACCOUNT_CREATION_ERROR = "Account not Created.";
 	public static final String LOGIN_ERROR = "Either Password or Email is incorrect";
 
-	public static final String LOAN_ADD_ERROR = "Error in performing operation.";
+	public static final String LOAN_ADD_ERROR = "Error in adding Loan Details.";
 	public static final String FETCH_ERROR = "Error in fetching account Id";
 	
 	public static final String NO_SUCH_ACCOUNT = "Account doesn't exist.";

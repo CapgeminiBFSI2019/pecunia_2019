@@ -1,22 +1,21 @@
 package com.capgemini.pecunia.pl;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.service.PassbookMaintenanceService;
 import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
 
 public class PassbookMain {
-	public static void main(String[] args) throws MyException {
+	public static void main(String[] args) throws MyException, PassbookException {
 		
 	
 	PassbookMaintenanceService PassbookService=new PassbookMaintenanceServiceImpl();
 	List<Transaction> updatePassbook = new ArrayList<Transaction>();
 	updatePassbook	= PassbookService.updatePassbook("100202000001");
-	
 	
 	for(int i = 0;i<updatePassbook.size();i++)
 	{
@@ -27,10 +26,19 @@ public class PassbookMain {
 		System.out.print(updatePassbook.get(i).getTransTo()+ "\t");
 		System.out.print(updatePassbook.get(i).getType()+ "\t");
 		System.out.print(updatePassbook.get(i).getOption()+ "\t");
-		System.out.print(updatePassbook.get(i).getChequeId()+"\t");
+		if(updatePassbook.get(i).getOption().equalsIgnoreCase("cheque"))
+		{
+			System.out.print(updatePassbook.get(i).getChequeId()+"\t");
+			
+		}
+		else {
+			System.out.print("-");
+		}
 		System.out.print(updatePassbook.get(i).getClosingBalance()+ "\t");
 		System.out.println();
+		}
 	}
+	
 		
 //		PassbookMaintenanceService accountSummaryService =new PassbookMaintenanceServiceImpl();
 //		String sDate1="2019-08-10";
@@ -54,4 +62,4 @@ public class PassbookMain {
 //			System.out.println();
 //		}
 }
-}
+
