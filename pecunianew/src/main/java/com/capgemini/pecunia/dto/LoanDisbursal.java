@@ -73,4 +73,13 @@ public class LoanDisbursal {
 
 	}
 
+	@Override
+	public String toString() {
+		return "loanDisbursalId=" + loanDisbursalId + ", loanId=" + loanId + ", accountId=" + accountId
+				+ ", disbursedAmount=" + disbursedAmount + ", dueAmount=" + dueAmount + ", numberOfEmiToBePaid="
+				+ numberOfEmiToBePaid + "";
+	}
+	
+	
+
 }
