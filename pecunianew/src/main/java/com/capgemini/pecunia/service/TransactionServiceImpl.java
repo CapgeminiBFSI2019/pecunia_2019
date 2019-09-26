@@ -11,6 +11,7 @@ import com.capgemini.pecunia.dao.TransactionDAOImpl;
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
+import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.Constants;
@@ -32,18 +33,27 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	public double getBalance(Account account) throws TransactionException, MyException {
+		try {
 		transactionDAO = new TransactionDAOImpl();
 		double balance;
 		balance = transactionDAO.getBalance(account);
 		return balance;
+		}catch (Exception e) {
+			throw new TransactionException(ErrorConstants.FETCH_ERROR);
+		}
+		
 	}
 
 	@Override
 	public boolean updateBalance(Account account) throws TransactionException, MyException {
+		try {
 		transactionDAO = new TransactionDAOImpl();
-		boolean success;
+		boolean success=false;;
 		success = transactionDAO.updateBalance(account);
 		return success;
+		}catch (Exception e) {
+			throw new TransactionException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
+		}
 	}
 
 	/*******************************************************************************************************
@@ -59,12 +69,14 @@ public class TransactionServiceImpl implements TransactionService {
 	@Override
 	public int creditUsingSlip(Transaction transaction) throws TransactionException, MyException {
 
+	try {	
+		
 		transactionDAO = new TransactionDAOImpl();
 
 		String accId = transaction.getAccountId();
-		String transType = transaction.getType();
+		
 		double amount = transaction.getAmount();
-		LocalDate transDate = transaction.getTransDate();
+		
 		Account account = new Account();
 		account.setId(accId);
 		double oldBalance = transactionDAO.getBalance(account);
@@ -83,11 +95,18 @@ public class TransactionServiceImpl implements TransactionService {
 
 			else {
 				throw new TransactionException(Constants.AMOUNT_EXCEEDS_EXCEPTION);
+				//TODO
+				
 			}
 		} else {
+			//TODO
 			throw new TransactionException(Constants.AMOUNT_LESS_EXCEPTION);
 		}
 		return transId;
+	}catch (Exception e) {
+		throw new TransactionException(Constants.TRANSACTION_AMOUNT_ERROR);
+		
+	}
 	}
 
 	/*******************************************************************************************************
@@ -102,6 +121,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	public int debitUsingSlip(Transaction transaction) throws TransactionException, MyException {
+
 		transactionDAO = new TransactionDAOImpl();
 		String accId = transaction.getAccountId();
 		String transType = transaction.getType();
@@ -129,7 +149,45 @@ public class TransactionServiceImpl implements TransactionService {
 
 		} else {
 			throw new TransactionException("Insufficient Balance:Transaction failed");
+
+		try {
+			transactionDAO = new TransactionDAOImpl();
+	        String accId = transaction.getAccountId();
+	        double amount = transaction.getAmount();
+	        LocalDate transDate = transaction.getTransDate();
+	        Account account = new Account();
+	        account.setId(accId);
+	        double oldBalance = transactionDAO.getBalance(account);
+	        System.out.println(oldBalance);
+	        double newBalance = 0.0;
+
+	 
+
+	        if (oldBalance > amount) {
+	            newBalance = oldBalance - amount;
+	            account.setBalance(newBalance);
+	            transactionDAO.updateBalance(account);
+	            Transaction debitTransaction = new Transaction();
+	            debitTransaction.setAccountId(accId);
+	            debitTransaction.setAmount(amount);
+	            debitTransaction.setOption(Constants.TRANSACTION_OPTION_SLIP);
+	            debitTransaction.setType(Constants.TRANSACTION_DEBIT);
+	            debitTransaction.setTransDate(transDate);
+	            debitTransaction.setClosingBalance(newBalance);
+	            int transId = transactionDAO.generateTransactionId(debitTransaction);
+	            return transId;
+
+
+	        } else {
+	            throw new TransactionException("");
+	        }
+		}catch (Exception e) {
+			
+			throw new TransactionException(Constants.EXCEPTION_DURING_TRANSACTION);
+
 		}
+		
+		
 	}
 
 	/*******************************************************************************************************
@@ -144,24 +202,14 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	public int debitUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
+		
+	try {	
+		
 		transactionDAO = new TransactionDAOImpl();
 		String accId = transaction.getAccountId();
-		String transType = transaction.getType();
 		double amount = transaction.getAmount();
 		LocalDate transDate = transaction.getTransDate();
 		LocalDate chequeissueDate = cheque.getIssueDate();
-		int chequeNum = cheque.getNum();
-		String holderName = cheque.getHolderName();
-		String bankName = cheque.getBankName();
-		String ifsc = cheque.getIfsc();
-//		Cheque chequeDetail;
-//		chequeDetail = new Cheque();
-//		chequeDetail.setNum(chequeNum);
-//		chequeDetail.setAccountNo(accId);
-//		chequeDetail.setBankName(bankName);
-//		chequeDetail.setHolderName(holderName);
-//		chequeDetail.setIfsc(ifsc);
-//		chequeDetail.setIssueDate(chequeissueDate);
 
 		Account account = new Account();
 		account.setId(accId);
@@ -189,11 +237,16 @@ public class TransactionServiceImpl implements TransactionService {
 				return transId;
 
 			} else {
+				//TODO logger
 				throw new TransactionException(Constants.CHEQUE_BOUNCE_EXCEPTION);
 			}
 		} else {
+			//TODO logger
 			throw new TransactionException(Constants.INVALID_CHEQUE_EXCEPTION);
 		}
+	}catch (Exception e) {
+		throw new TransactionException(Constants.EXCEPTION_DURING_TRANSACTION);
+	}
 	}
 
 	@Override
