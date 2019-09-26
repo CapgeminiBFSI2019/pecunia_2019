@@ -33,25 +33,25 @@ class AccountManagementServiceImplTest {
 	}
 
 	@Test
-	@DisplayName("Null input")
+	@DisplayName("Null inputs for update customer name")
 	void testUpdateCustomerName() {
 		assertThrows(AccountException.class, ()-> {account.updateCustomerName(null, null);});
 	}
 
 	@Test
-	@DisplayName("Vidushiishurt")
+	@DisplayName("Null inputs for update customer contact")
 	void testUpdateCustomerContact() {
 		assertThrows(AccountException.class, ()-> {account.updateCustomerContact(null,null);});
 	}
 
 	@Test
-	@DisplayName("Ghanta nahi chalraha")
+	@DisplayName("Null inputs for update customer Address")
 	void testUpdateCustomerAddress() {
 		assertThrows(AccountException.class, ()-> { account.updateCustomerAddress(null, null) ;});
 	}
 
 	@Test
-	@DisplayName("Avizek ne reject kiya")
+	@DisplayName("Null inputs for calculate account Id")
 	void testCalculateAccountId() {
 		assertThrows(AccountException.class, ()-> { account.calculateAccountId(null) ;});
 	}
@@ -63,14 +63,7 @@ class AccountManagementServiceImplTest {
 		
 		assertThrows(AccountException.class, ()-> { account.addAccount(null, null, null) ;});
 		
-	}
-	
-	
-	
-	
-	
-	
-	
+	}	
 	
 }
 
