@@ -16,6 +16,7 @@ public class Constants {
 	public static final String TRANSACTION_OPTION_SLIP = "SLIP";
 	public static final String TRANSACTION_OPTION_CHEQUE = "CHEQUE";
 	public static final String[] OTHER_BANK_NAME = { "ICICI", "SBI", "HDFC", "KOTAK", "AXIS" };
+	public static final String[] LOAN_TYPE = { "Personal Loan", "House Loan", "Vehicle Loan", "Jewel Loan"};
 	public static final String CHEQUE_STATUS_PENDING = "PENDING";
 	public static final String CHEQUE_STATUS_CLEARED = "CLEARED";
 	public static final String CHEQUE_STATUS_BOUNCED = "BOUNCED";
@@ -42,7 +43,13 @@ public class Constants {
 	public static final String LOGIN_NO_USER_FOUND = "No user found";
 	public static final String AMOUNT_EXCEEDS_EXCEPTION = "Credit amount exceeds the maximum amount";
 	public static final String AMOUNT_LESS_EXCEPTION = "Credit amount is less than the minimum amount";
+	public static final String CONNECTION_FAILURE = "Connection problem. Cannot connect to the database";
+	public static final String FILE_CLOSING_FAILURE = "Files cannot be closed";
+	public static final String[] LOAN_REQUEST_STATUS = {"Pending","Approved","Rejected"};
+	
 	public static final double MINIMUM_CREDIT_SLIP_AMOUNT = 100.00;
 	public static final double MAXIMUM_CREDIT_SLIP_AMOUNT = 100000.00;
 	public static final String SELF_CHEQUE = "SELF";
+	public static final double MINIMUM_CHEQUE__AMOUNT = 100.00;
+	public static final double MAXIMUM_CHEQUE__AMOUNT = 200000.00;
 }

@@ -5,13 +5,11 @@ import com.capgemini.pecunia.dao.LoanDAO;
 import com.capgemini.pecunia.dao.LoanDAOImpl;
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.exception.LoanException;
-import com.capgemini.pecunia.exception.MyException;
 
  
 public class LoanServiceImpl implements LoanService {
    
 	public double calculateEMI(double amount, int tenure, double roi) {
-		// validator for negative input
 		double p = amount;
 		double r = roi / 1200;
 		double a = Math.pow(1 + r, tenure);
@@ -21,16 +19,15 @@ public class LoanServiceImpl implements LoanService {
     
     
     
-	public boolean createLoanRequest(Loan loan) {
+	public boolean createLoanRequest(Loan loan) throws LoanException {
 		boolean flag = false;
 		LoanDAO ld = new LoanDAOImpl();
 		try {
 			ld.addLoanDetails(loan);
 			flag = true;
 			return flag;
-		} catch (MyException | LoanException e) {
-			// TODO logger
-			return flag;
+		} catch (Exception e) {
+			throw new LoanException(e.getMessage());
 		}
 
 	}
@@ -38,7 +35,7 @@ public class LoanServiceImpl implements LoanService {
 	
 
 	@Override
-	public boolean validateCustomerId(String account_ID) {
+	public boolean validateCustomerId(String account_ID) throws LoanException {
 		LoanDAO ld = new LoanDAOImpl();
 		boolean flag = false;
 		try {
@@ -47,11 +44,11 @@ public class LoanServiceImpl implements LoanService {
 				flag=true;
 				return flag;
 			}
-		} catch (MyException | LoanException e) {
-			//logger
-			return flag;
+		} catch (Exception e) {
+			throw new LoanException(e.getMessage());
 		}
 		return flag;
+		
 	}
     
     
