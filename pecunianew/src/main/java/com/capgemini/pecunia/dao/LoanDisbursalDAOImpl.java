@@ -74,6 +74,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 		Connection connection = DBConnection.getInstance().getConnection();
 
 		PreparedStatement preparedStatement = null;
+	
 
 		try {
 			for (int i = 0; i < loanList.size(); i++) {
@@ -86,6 +87,8 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				preparedStatement.setInt(5, loanList.get(i).getTenure());
 				preparedStatement.execute();
 			}
+			
+			
 
 		} catch (SQLException sqlException) {
 			throw new MyException(sqlException.getMessage());
@@ -200,4 +203,8 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 			}
 		}
 }
+
+
+	
+	
 }
