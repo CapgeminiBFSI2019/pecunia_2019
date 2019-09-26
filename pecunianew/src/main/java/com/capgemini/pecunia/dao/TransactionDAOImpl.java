@@ -112,24 +112,22 @@ public class TransactionDAOImpl implements TransactionDAO {
 			if (rowsAffected != 0) {
 				flag = true;
 			} else {
-			
+				// logger here
 				logger.error("Update balance failed");
 				throw new TransactionException("Update balance failed");
 			}
 		} catch (TransactionException te) {
-			// logger here 
-			logger.error("");
+			// logger here
 			throw new TransactionException(te.getMessage());
 		} catch (Exception e) {
 			// logger here
-			logger.error("");
 			throw new MyException(e.getMessage());
 		} finally {
 			try {
 				preparedStatement.close();
 				connection.close();
 			} catch (SQLException e) {
-				
+				// logger here
 				logger.error("Error closing db connection");
 				throw new MyException("Error closing db connection");
 			}

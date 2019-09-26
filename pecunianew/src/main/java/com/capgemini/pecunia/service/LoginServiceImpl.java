@@ -14,6 +14,7 @@ import com.capgemini.pecunia.exception.ErrorConstants;
 
 import com.capgemini.pecunia.exception.LoginException;
 import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.util.LoggerMessage;
 import com.capgemini.pecunia.util.Utility;
 
 public class LoginServiceImpl implements LoginService{
@@ -37,7 +38,7 @@ public class LoginServiceImpl implements LoginService{
 		String pwd=null;
 		String salt = loginDAO.validateEmail(login);
 		if(salt==null) {
-			logger.error("validation failed ");
+			
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
 		}
 		else {
@@ -45,7 +46,7 @@ public class LoginServiceImpl implements LoginService{
 			try {
 				arr = Utility.getSHA(login.getPassword() + salt);
 			} catch (NoSuchAlgorithmException e) {
-				logger.error("validation failed ");
+				logger.error(e.getMessage());
 				throw new LoginException(ErrorConstants.LOGIN_ERROR);
 			}
 			String hashPassword = Utility.toHexString(arr);
@@ -54,10 +55,10 @@ public class LoginServiceImpl implements LoginService{
 				pwd = loginDAO.fetchPassword(loginNew);
 				if(pwd.equals(hashPassword)) {
 					flag=true;
-					logger.info("Login successful");
+					logger.info(LoggerMessage.LOGIN_SUCCESSFUL);
 				}
 			} catch (LoginException e) {
-				logger.error("Validation failed ");
+				logger.error(e.getMessage());
 				throw new LoginException(ErrorConstants.LOGIN_ERROR);
 			}
 		}

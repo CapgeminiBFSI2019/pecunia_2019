@@ -11,5 +11,4 @@ public interface TransactionDAO {
 	public boolean updateBalance(Account account) throws MyException, TransactionException;
 	public int generateChequeId(Cheque cheque) throws MyException, TransactionException;
 	public int generateTransactionId(Transaction transaction) throws MyException, TransactionException;
-
 }

@@ -5,12 +5,31 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.LoanException;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.util.DBConnection;	
 public class LoanDAOImpl implements LoanDAO {
+
+	Logger logger=Logger.getRootLogger();
+	public LoanDAOImpl()
+	{
+	PropertyConfigurator.configure("resources//log4j.properties");
+	
+	}
+
+	/*******************************************************************************************************
+	 * Function Name : fetchAccountId(String accountId) - Input
+	 * Parameters : String accountId * 
+	 * Return Type : String 
+	 * Author : Rishabh Rai - Creation Date : 24/09/2019
+	 * Description : Fetch account Id from Database 
+	 * Amount , tenure and Rate of Interest as parameter and returns emi for the
+	 ********************************************************************************************************/
 
 	@Override
 	public String fetchAccountId(String accountId) throws MyException, LoanException {
@@ -39,7 +58,7 @@ public class LoanDAOImpl implements LoanDAO {
 				connection.close();
 				
 			} catch (SQLException sqlException) {
-				// logger.error(sqlException.getMessage());
+				logger.error(sqlException.getMessage());
 				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
@@ -47,12 +66,16 @@ public class LoanDAOImpl implements LoanDAO {
 		
 	}
 	
-	
-	
-	
-	public void addLoanDetails(Loan loan) throws MyException, LoanException {
+	/*******************************************************************************************************
+	 * Function Name : addLoanDetails(Loan loan) - Input
+	 * Parameters : Loan loan
+	 * Return Type : boolean 
+	 * Author : Rishabh Rai - Creation Date : 24/09/2019
+	 * Description : Adding Loan details to database  
+	 ********************************************************************************************************/
+	public boolean addLoanDetails(Loan loan) throws MyException, LoanException {
 		Connection connection = DBConnection.getInstance().getConnection();
-
+		boolean flag = false;
 		PreparedStatement preparedStatement = null;
 
 		int queryResult = 0;
@@ -70,12 +93,15 @@ public class LoanDAOImpl implements LoanDAO {
 			queryResult = preparedStatement.executeUpdate();
 
 			if (queryResult == 0) {
-				// logger.error(sqlException.getMessage());
 				throw new LoanException(ErrorConstants.LOAN_ADD_ERROR);
+			}
+			else
+			{
+				flag = true;
 			}
 
 		} catch (SQLException sqlException) {
-			// logger.error(sqlException.getMessage());
+			logger.error(sqlException.getMessage());
 			throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
 		}
 
@@ -84,10 +110,11 @@ public class LoanDAOImpl implements LoanDAO {
 				preparedStatement.close();
 				connection.close();
 			} catch (SQLException sqlException) {
-				// logger.error(sqlException.getMessage());
+				logger.error(sqlException.getMessage());
 				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
+		return flag;
 
 	}
 
