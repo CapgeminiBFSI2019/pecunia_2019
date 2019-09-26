@@ -47,7 +47,8 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			ps = connection.prepareStatement(PassbookMaintenanceQueryMapper.QUERY_TRANS_DETAILS);
 			ps.setString(1, accountId);
 			resultSet = ps.executeQuery();
-
+//			boolean gotSet = resultSet.next();
+//			System.out.println(gotSet);
 			while (resultSet.next()) {
 				Transaction details = new Transaction();
 				details.setId(resultSet.getString(1));
@@ -62,6 +63,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 				transactionList.add(details);
 			}
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
             logger.error(e.getMessage());
 			throw new PassbookException(ErrorConstants.TECH_ERROR);
 
@@ -107,11 +109,13 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 		
 		try {
 			ps = connection.prepareStatement(PassbookMaintenanceQueryMapper.QUERY_LAST_UPDATED);
+			ps.setString(1, accountId);
 			queryResult= ps.executeUpdate();
 			
 			if(queryResult==0)
 			{
-				logger.error("Updation failed");
+			
+				//logger.error("Updation failed");
 				throw new PassbookException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 
 			}
@@ -172,7 +176,6 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			ps.setDate(2, java.sql.Date.valueOf(startDate));
 			ps.setDate(3, java.sql.Date.valueOf(endDate));
 			resultSet = ps.executeQuery();
-//			queryResult=ps.executeUpdate();
 			while (resultSet.next()) {
 				Transaction details = new Transaction();
 				details.setId(resultSet.getString(1));
@@ -197,7 +200,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			}
 
 		} catch (Exception e) {
-			System.out.println("Here DAO Catch:"+e.getMessage());
+			
 			logger.error(e.getMessage());
 			throw new PassbookException(ErrorConstants.TECH_ERROR);
 
@@ -209,7 +212,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 				ps.close();
 				connection.close();
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				
 				logger.error(e.getMessage());
 				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
 
@@ -218,9 +221,5 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 	}
 
-	@Override
-	public boolean updateDate(String accountId) throws MyException, PassbookException {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 }
