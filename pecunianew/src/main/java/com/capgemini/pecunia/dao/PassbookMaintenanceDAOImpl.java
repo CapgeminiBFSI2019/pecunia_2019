@@ -59,7 +59,9 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 				details.setTransFrom(resultSet.getString(4));
 				details.setTransTo(resultSet.getString(5));
 				details.setType(resultSet.getString(6));
-				details.setClosingBalance(resultSet.getDouble(7));
+				details.setOption(resultSet.getString(7));
+				details.setChequeId(resultSet.getInt(8));
+				details.setClosingBalance(resultSet.getDouble(9));
 				transactionList.add(details);
 
 				
@@ -131,6 +133,8 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 				details.setTransFrom(resultSet.getString(4));
 				details.setTransTo(resultSet.getString(5));
 				details.setType(resultSet.getString(6));
+				details.setOption(resultSet.getString(7));
+				details.setChequeId(resultSet.getInt(8));
 				details.setClosingBalance(resultSet.getDouble(7));
 				transactionList.add(details);
 			}
