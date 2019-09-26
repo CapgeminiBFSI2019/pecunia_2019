@@ -32,7 +32,8 @@ public class PassbookMaintenanceServiceImpl implements PassbookMaintenanceServic
 		try {
 			transactionList = pdao.updatePassbook(accountId);
 		} catch (PassbookException | MyException e) {
-			System.out.print(e.getMessage());
+
+
 			throw new MyException(ErrorConstants.UPDATE_PASSBOOK_ERROR);
 		}
 		return transactionList;
@@ -58,6 +59,7 @@ public class PassbookMaintenanceServiceImpl implements PassbookMaintenanceServic
 		try {
 			transactionList = pdao.accountSummary(accountId, startDate, endDate);
 		} catch (PassbookException | MyException e) {
+		
 			throw new MyException(ErrorConstants.UPDATE_PASSBOOK_ERROR);
 		}
 		return transactionList;
