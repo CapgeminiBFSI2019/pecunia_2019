@@ -26,6 +26,8 @@ public class PassbookMain {
 		System.out.print(updatePassbook.get(i).getTransFrom()+ "\t");
 		System.out.print(updatePassbook.get(i).getTransTo()+ "\t");
 		System.out.print(updatePassbook.get(i).getType()+ "\t");
+		System.out.print(updatePassbook.get(i).getOption()+ "\t");
+		System.out.print(updatePassbook.get(i).getChequeId()+"\t");
 		System.out.print(updatePassbook.get(i).getClosingBalance()+ "\t");
 		System.out.println();
 	}
@@ -46,6 +48,8 @@ public class PassbookMain {
 //			System.out.print(accountSummary.get(i).getTransFrom()+ "\t");
 //			System.out.print(accountSummary.get(i).getTransTo()+ "\t");
 //			System.out.print(accountSummary.get(i).getType()+ "\t");
+//			System.out.println(updatePassbook.get(i).getOption()+ "\t");
+//			System.out.println(updatePassbook.get(i).getChequeId()+"\t");
 //			System.out.print(accountSummary.get(i).getClosingBalance()+ "\t");
 //			System.out.println();
 //		}
