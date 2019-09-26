@@ -140,7 +140,7 @@ public class TransactionServiceImpl implements TransactionService {
 			Account account = new Account();
 			account.setId(accId);
 			double oldBalance = transactionDAO.getBalance(account);
-			System.out.println(oldBalance);
+			
 			double newBalance = 0.0;
 
 			if (oldBalance > amount) {
@@ -252,6 +252,9 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
+		int transId = 0;
+		
+		try {
 		double beneficiaryBalance = 0, payeeBalance = 0, newBeneficiaryBalance = 0, newPayeeBalance = 0;
 
 		String bankName = cheque.getBankName();
@@ -269,7 +272,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 		TransactionDAO transactionDAO = new TransactionDAOImpl();
 
-		int transId = 0;
+		
 
 		if ((bankName != Constants.BANK_NAME) && (Arrays.asList(Constants.OTHER_BANK_NAME).contains(bankName))) {
 			// other banks cheque
@@ -340,6 +343,9 @@ public class TransactionServiceImpl implements TransactionService {
 			}
 		}
 		return transId;
+		}catch (Exception e) {
+			throw new TransactionException(Constants.EXCEPTION_DURING_TRANSACTION);
+		}
 
 	}
 

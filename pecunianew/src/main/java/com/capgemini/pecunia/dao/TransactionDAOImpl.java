@@ -54,10 +54,12 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 		} catch (TransactionException me) {
 			// logger here
+			System.out.println("trans:"+me.getMessage());
 			logger.error("");
 			throw new TransactionException(me.getMessage());
 		} catch (Exception e) {
 			// add logger here
+			System.out.println("exc:"+e.getMessage());
 			logger.error("");
 			throw new MyException(e.getMessage());
 		} finally {
@@ -139,7 +141,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			}
 			catch(SQLException e)
 			{
-				System.out.println(e.getMessage());
+				throw new MyException(e.getMessage());
 			}
 			 resultSet = preparedStatement.getGeneratedKeys();
 			if (resultSet.next()) {
