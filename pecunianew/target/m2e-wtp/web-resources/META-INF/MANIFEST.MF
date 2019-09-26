@@ -1,17 +1,5 @@
 Manifest-Version: 1.0
-
-
-Built-By: anibasu
-
-
-Built-By: arpmonda
-
-Built-By: mansagar
-
-
-
-Built-By: abhiseku
-
+Built-By: asing471
 Build-Jdk: 1.8.0_131
 Created-By: Maven Integration for Eclipse
 
