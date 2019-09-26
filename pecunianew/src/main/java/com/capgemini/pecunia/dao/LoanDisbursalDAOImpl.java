@@ -11,6 +11,7 @@ import java.util.List;
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
 import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.util.Constants;
 import com.capgemini.pecunia.util.DBConnection;
 
 public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
@@ -49,7 +50,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 		}
 
 		catch (SQLException sqlException) {
-			throw new MyException("Tehnical problem occured. Refer log");
+			throw new MyException(Constants.CONNECTION_FAILURE);
 		}
 
 		finally {
@@ -58,7 +59,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				preparedStatement.close();
 				connection.close();
 			} catch (SQLException e) {
-				throw new MyException("Files cannot be closed");
+				throw new MyException(Constants.FILE_CLOSING_FAILURE);
 
 			}
 		}
@@ -95,7 +96,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				connection.close();
 			} catch (SQLException sqlException) {
 
-				throw new MyException("Files cannot be closed");
+				throw new MyException(Constants.FILE_CLOSING_FAILURE);
 
 			}
 		}
@@ -125,14 +126,14 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 			}
 		} catch (SQLException sqlException) {
-			throw new MyException("Tehnical problem occured. Refer log");
+			throw new MyException(Constants.CONNECTION_FAILURE);
 		} finally {
 			try {
 				preparedStatement.close();
 				connection.close();
 			} catch (SQLException sqlException) {
 
-				throw new MyException("Files cannot be closed");
+				throw new MyException(Constants.FILE_CLOSING_FAILURE);
 
 			}
 		}
@@ -140,17 +141,19 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 		return approvedLoanList;
 	}
 
-	@Override
-	public void updateLoanAccount(ArrayList<LoanDisbursal> loanApprovals) throws IOException, MyException {
+	public void updateLoanAccount(ArrayList<LoanDisbursal> loanApprovals, double dueAmount,double tenure, String accountId) throws IOException, MyException {
 		Connection connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
 		try {
-			for (int i = 0; i < loanApprovals.size(); i++) {
+			
 			
 				preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.UPDATE_LOAN_ACCOUNT);
+				preparedStatement.setDouble(1, dueAmount);
+				preparedStatement.setDouble(2, tenure);
+				preparedStatement.setString(3, accountId);
+				preparedStatement.execute();
 				
-				
-			}
+			
 
 		} catch (SQLException sqlException) {
 			throw new MyException(sqlException.getMessage());
@@ -161,10 +164,40 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				connection.close();
 			} catch (SQLException sqlException) {
 
-				throw new MyException("Files cannot be closed");
+				throw new MyException(Constants.FILE_CLOSING_FAILURE);
 
 			}
 		}
+		
+		
 
+}
+	
+	public void updateStatus(ArrayList<Loan> loanRequests, String accountId, String Status) throws IOException, MyException {
+		Connection connection = DBConnection.getInstance().getConnection();
+		PreparedStatement preparedStatement = null;
+		try {
+			
+			
+				preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.UPDATE_LOAN_STATUS);
+				preparedStatement.setString(1, Status);
+				preparedStatement.setString(2, accountId);
+				preparedStatement.execute();
+				
+			
+
+		} catch (SQLException sqlException) {
+			throw new MyException(sqlException.getMessage());
+
+		} finally {
+			try {
+				preparedStatement.close();
+				connection.close();
+			} catch (SQLException sqlException) {
+
+				throw new MyException(Constants.FILE_CLOSING_FAILURE);
+
+			}
+		}
 }
 }
