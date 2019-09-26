@@ -38,7 +38,7 @@ class TransactionServiceImplTest {
 		assertThrows(TransactionException.class, ()-> {  transaction.getBalance(acc)   ;});
 	}
 	
-	//Dynamic 
+	
 	@Test
 	@DisplayName("Valid inputs. Test case passed for getBalance()")
 	void testGetBalancePass() throws TransactionException, MyException {
@@ -78,7 +78,7 @@ class TransactionServiceImplTest {
 	void testCreditUsingSlipPass() throws TransactionException, MyException {
 		Transaction tran = new Transaction();
 		tran.setAccountId("100202000001");
-		tran.setAmount(200.0);
+		tran.setAmount(500.0);
 		tran.setType(Constants.TRANSACTION_CREDIT);
 		tran.setOption(Constants.TRANSACTION_OPTION_SLIP);
 		assertNotEquals(0,transaction.creditUsingSlip(tran));
@@ -138,5 +138,70 @@ class TransactionServiceImplTest {
       assertNotNull(transaction.debitUsingCheque(trans, cheque));
 	
 	}
+	
+	@Test
+	@DisplayName("Null inputs in credit using cheque")
+	void testCreditUsingChequeNull() {
+		Transaction trans=null;
+		Cheque cheque=null;
+		assertThrows(TransactionException.class, ()-> {  transaction.creditUsingCheque(trans,cheque)   ;});
+	}
+	
+	@Test
+	@DisplayName("Valid inputs. Test case passed for credit using cheque for other bank")
+	void testCreditUsingChequePass() throws TransactionException, MyException {
+		
+		LocalDate transDate=LocalDate.now(); 
+		LocalDate issueDate=LocalDate.parse("2019-09-20");
+		
+		Transaction trans = new Transaction();
+		Cheque cheque = new Cheque();
+		trans.setAccountId("100303000001");
+		trans.setAmount(900.0);
+		trans.setOption(Constants.TRANSACTION_OPTION_CHEQUE);
+		trans.setType(Constants.TRANSACTION_CREDIT);
+		trans.setTransDate(transDate);
+
+		cheque.setAccountNo("2545489915");
+		cheque.setBankName(Constants.OTHER_BANK_NAME[0]);
+		cheque.setHolderName("Abhisek");
+		cheque.setIfsc("ICIC0006547");
+		cheque.setIssueDate(issueDate);
+     
+		
+      assertNotNull(transaction.creditUsingCheque(trans, cheque));
+	
+	}
+	
+	@Test
+	@DisplayName("Valid inputs. Test case passed for credit using cheque for pecunia bank")
+	void testCreditUsingChequePassPecunia() throws TransactionException, MyException {
+		
+		LocalDate transDate=LocalDate.now(); 
+		LocalDate issueDate=LocalDate.parse("2019-09-21");
+		
+		Transaction trans = new Transaction();
+		Cheque cheque = new Cheque();
+		trans.setAccountId("100303000001");
+		trans.setAmount(900.0);
+		trans.setOption(Constants.TRANSACTION_OPTION_CHEQUE);
+		trans.setType(Constants.TRANSACTION_CREDIT);
+		trans.setTransFrom("100402000002");
+		trans.setTransTo(Constants.NA);
+		trans.setTransDate(transDate);
+
+		cheque.setAccountNo("100402000002");
+		cheque.setBankName(Constants.BANK_NAME);
+		cheque.setHolderName("Abhisek");
+		cheque.setIfsc("PBIN0000002");
+		cheque.setIssueDate(issueDate);
+     
+		
+      assertNotNull(transaction.creditUsingCheque(trans, cheque));
+	
+	}
+	
+	
+	
 
 }

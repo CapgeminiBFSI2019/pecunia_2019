@@ -59,15 +59,14 @@ public class LoanDAOImpl implements LoanDAO {
 		try {
 			preparedStatement = connection.prepareStatement(LoanQuerryMapper.ADD_LOAN_DETAILS);
 
-			preparedStatement.setInt(1, loan.getLoanId());
-			preparedStatement.setString(2, loan.getAccountId());
-			preparedStatement.setDouble(3, loan.getAmount());
-			preparedStatement.setString(4, loan.getType());
-			preparedStatement.setDouble(5, loan.getTenure());
-			preparedStatement.setDouble(6, loan.getRoi());
-			preparedStatement.setString(7, loan.getLoanStatus());
-			preparedStatement.setDouble(8, loan.getEmi());
-			preparedStatement.setInt(9, loan.getCreditScore());
+			preparedStatement.setString(1, loan.getAccountId());
+			preparedStatement.setDouble(2, loan.getAmount());
+			preparedStatement.setString(3, loan.getType());
+			preparedStatement.setDouble(4, loan.getTenure());
+			preparedStatement.setDouble(5, loan.getRoi());
+			preparedStatement.setString(6, loan.getLoanStatus());
+			preparedStatement.setDouble(7, loan.getEmi());
+			preparedStatement.setInt(8, loan.getCreditScore());
 			queryResult = preparedStatement.executeUpdate();
 
 			if (queryResult == 0) {

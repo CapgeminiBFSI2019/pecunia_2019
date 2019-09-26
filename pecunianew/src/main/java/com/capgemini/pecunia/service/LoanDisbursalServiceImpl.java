@@ -29,7 +29,11 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		ArrayList<Loan> retrievedLoanRequests = new ArrayList<Loan>();
 		retrievedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveLoanList();
 		if (retrievedLoanRequests.size() == 0) {
+
 			throw new LoanDisbursalException(Constants.NO_LOAN_REQUESTS);
+
+	
+
 		}
 		return retrievedLoanRequests;
 	}
@@ -44,11 +48,15 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * - Description : Aprroving the loan request based on condition
 	 ********************************************************************************************************/
 
+
+	
+
 	public ArrayList<Loan> approveLoan(ArrayList<Loan> loanRequestList) throws IOException, MyException, LoanDisbursalException {
 		int size = loanRequestList.size();
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		if (loanRequestList.size() == 0) {
-			throw new LoanDisbursalException(Constants.NO_LOAN_REQUESTS);
+			throw new LoanDisbursalException("No loan request is present in database");
+
 		}
 		if (size > 0) {
 			for (int i = 0; i < loanRequestList.size(); i++) {
@@ -64,8 +72,11 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 			loanDisbursedDAO.releaseLoanSheet(loanRequestList);
 		}
+
 		
 		return loanRequestList;
+
+
 
 	}
 	
@@ -99,6 +110,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	public ArrayList<Loan> rejectedLoanRequests() throws MyException, LoanDisbursalException {
 		if (rejectedLoanList.size() == 0) {
+
 			throw new LoanDisbursalException(Constants.NO_REJECTED_LOAN_REQUESTS);
 		}
 		return rejectedLoanList;
@@ -113,6 +125,9 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * - Creation Date : 25/09/2019 
 	 * - Description : Updating the data in loan disbursed database
 	 ********************************************************************************************************/
+
+		
+
 
 	public void updateLoanAccount(ArrayList<LoanDisbursal> updateLoanApprovals, int numberOfMonths) throws MyException {
 
@@ -135,6 +150,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 		}
 	}
+
 	
 	/*******************************************************************************************************
 	 * - Function Name : updateLoanStatus(ArrayList<Loan> rejectedLoanList)
@@ -148,12 +164,16 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	public void updateLoanStatus(ArrayList<Loan> rejectedLoanList, ArrayList<Loan> approvedLoanList) throws MyException {
 
+	
+
+
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 
 		try {
 			for (int i = 0; i < rejectedLoanList.size(); i++) {
 				String accountId = rejectedLoanList.get(i).getAccountId();
 				loanDisbursedDAO.updateStatus(rejectedLoanList, accountId, Constants.LOAN_REQUEST_STATUS[2]);
+
 			
 				
 				
@@ -167,6 +187,8 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 				
 				
 			
+
+
 			}
 		} catch (IOException e) {
 
@@ -174,4 +196,8 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		}
 
 	}
+
+	
+
+
 }
