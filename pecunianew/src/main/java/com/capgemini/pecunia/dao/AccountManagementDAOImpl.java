@@ -1,13 +1,9 @@
 package com.capgemini.pecunia.dao;
 
-import java.sql.Date;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-//import java.util.Date;
-import java.time.format.DateTimeFormatter;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -20,8 +16,6 @@ import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.util.DBConnection;
 import com.capgemini.pecunia.util.LoggerMessages;
-import com.google.protobuf.Timestamp;
-import com.mysql.cj.util.Util;
 
 public class AccountManagementDAOImpl implements AccountManagementDAO {
 
@@ -47,13 +41,15 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			queryResult = preparedStatement.executeUpdate();
 
 			if (queryResult == 0) {
-				logger.error("Deletion failed ");
+
 				throw new AccountException(ErrorConstants.DELETE_ACCOUNT_ERROR);
 
 			}
 
 		} catch (SQLException e) {
+			logger.error(e.getMessage());
 			throw new AccountException(ErrorConstants.DELETE_ACCOUNT_ERROR);
+
 		} finally {
 			try {
 				preparedStatement.close();
@@ -94,11 +90,11 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement2.setString(2, accId);
 			queryResult = preparedStatement2.executeUpdate();
 			if (queryResult == 0) {
-				logger.error("Error in updating customer details ");
+				// logger.error("Error in updating customer details ");
 				throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 		} finally {
 			try {
@@ -106,7 +102,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				preparedStatement2.close();
 				connection.close();
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
@@ -141,7 +137,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement2.setString(2, accId);
 			queryResult = preparedStatement2.executeUpdate();
 			if (queryResult == 0) {
-				logger.error("Error in updating customer contact.");
+				// logger.error("Error in updating customer contact.");
 				throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 			}
 		} catch (SQLException e) {
@@ -152,6 +148,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				preparedStatement2.close();
 				connection.close();
 			} catch (Exception e) {
+				logger.error(e.getMessage());
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
@@ -189,11 +186,12 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement2.setString(7, accId);
 			queryResult = preparedStatement2.executeUpdate();
 			if (queryResult == 0) {
-				logger.error("Error in updating customer address.");
+				// logger.error("Error in updating customer address.");
 				throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 			}
 
 		} catch (SQLException e) {
+			logger.error(e.getMessage());
 			throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 		} finally {
 			try {
@@ -201,6 +199,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				preparedStatement2.close();
 				connection.close();
 			} catch (Exception e) {
+				logger.error(e.getMessage());
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
@@ -215,7 +214,6 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
-		System.out.println("in impl of acc ID");
 		ResultSet resultSet = null;
 		long oldId = 0;
 		String oldIdstr = null;
@@ -223,25 +221,23 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		try {
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.GET_RECENT_ID);
 			preparedStatement.setString(1, id + "%");
-			System.out.println("in try block");
 			resultSet = preparedStatement.executeQuery();
-			System.out.println("executing query "+preparedStatement);
 			if (resultSet.next()) {
 				oldIdstr = resultSet.getString(1);
-			}
-			else {
-				oldIdstr = id+"000000";
+			} else {
+				oldIdstr = id + "000000";
 			}
 			oldId = Long.parseLong(oldIdstr);
 			System.out.println("printing old id");
 			id = Long.toString(oldId + 1);
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			throw new AccountException("Error in creating account ID");
 		} finally {
 			try {
 				connection.close();
 			} catch (SQLException e) {
+				logger.error(e.getMessage());
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
@@ -250,7 +246,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	@Override
 	public boolean validateAccountId(Account acc) throws MyException, AccountException {
-		
+
 		boolean validated = false;
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
@@ -262,16 +258,18 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.VALIDATE_ID);
 			preparedStatement.setString(1, acc.getId());
 			resultSet = preparedStatement.executeQuery();
-			
+
 			if (resultSet.next()) {
 				validated = true;
 			}
 		} catch (SQLException e) {
+			logger.error(e.getMessage());
 			throw new AccountException(ErrorConstants.ERROR_VALIDATION);
 		} finally {
 			try {
 				connection.close();
 			} catch (Exception e) {
+				logger.error(e.getMessage());
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
@@ -301,7 +299,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			queryResult = preparedStatement.executeUpdate();
 
 			if (queryResult == 0) {
-				logger.error("Error in adding customer address.");
+//				logger.error("Error in adding customer address.");
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
 
@@ -326,7 +324,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			queryResult = preparedStatement3.executeUpdate();
 
 			if (queryResult == 0) {
-				logger.error("Error in adding customer details.");
+//				logger.error("Error in adding customer details.");
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
 
@@ -338,16 +336,17 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			}
 
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		} finally {
 			try {
 				connection.close();
 			} catch (Exception e) {
+				logger.error(e.getMessage());
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
-	
+
 		logger.info(LoggerMessages.ADD_CUSTOMER_DETAILS_SUCCESSFUL);
 		return custId;
 
@@ -375,7 +374,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			queryResult = preparedStatement.executeUpdate();
 
 			if (queryResult == 0) {
-				logger.error("Error in adding customer details.");
+//				logger.error("Error in adding customer details.");
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			} else {
 				logger.info(LoggerMessages.ADD_ACCOUNT_SUCCESSFUL);
@@ -389,6 +388,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				preparedStatement.close();
 				connection.close();
 			} catch (Exception e) {
+				logger.error(e.getMessage());
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
