@@ -148,7 +148,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 
 	        } else {
-	            throw new TransactionException("");
+	            throw new TransactionException(Constants.INSUFFICIENT_BALANCE_EXCEPTION);
 	        }
 		}catch (Exception e) {
 			
