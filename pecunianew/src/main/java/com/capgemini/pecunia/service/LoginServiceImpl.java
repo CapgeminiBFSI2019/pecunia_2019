@@ -43,7 +43,7 @@ public class LoginServiceImpl implements LoginService{
 		else {
 			byte arr[] = null;
 			try {
-				arr = Utility.getSHA(login.getPassword() + salt);
+				arr = Utility.getSHA(login.getPassword() + "" + salt);
 			} catch (NoSuchAlgorithmException e) {
 				logger.error("validation failed ");
 				throw new LoginException(ErrorConstants.LOGIN_ERROR);
@@ -52,7 +52,7 @@ public class LoginServiceImpl implements LoginService{
 			Login loginNew = new Login(login.getUsername(),null);
 			try {
 				pwd = loginDAO.fetchPassword(loginNew);
-				if(pwd.equals(hashPassword)) {
+				if(pwd==hashPassword) {
 					flag=true;
 					logger.info("Login successful");
 				}
