@@ -10,6 +10,7 @@ public class Constants {
 	public static final String CURRENT = "Current";
 	public static final String FD = "Fd";
 	public static final String LOAN = "Loan";
+	public static final String[] ACCOUNT_STATUS = {"Active", "Closed"};
 	public static final String BANK_NAME = "PECUNIA";
 	public static final String TRANSACTION_DEBIT = "DEBIT";
 	public static final String TRANSACTION_CREDIT = "CREDIT";

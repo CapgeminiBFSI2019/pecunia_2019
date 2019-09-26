@@ -140,7 +140,6 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 				id = id.concat(Constants.CODE_LOAN);
 				break;
 			}
-			System.out.println("In calculateAccountId");
 			accountDAO = new AccountManagementDAOImpl();
 			id = accountDAO.calculateAccountId(id);
 			return id;

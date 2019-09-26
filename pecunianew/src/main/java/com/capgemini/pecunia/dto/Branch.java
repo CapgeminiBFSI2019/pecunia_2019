@@ -35,5 +35,8 @@ public class Branch {
 		this.ifsc = ifsc;
 		this.address = address;
 	}
+	public Branch() {
+		
+	}
 
 }

@@ -3,67 +3,196 @@ package com.capgemini.pecunia.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.capgemini.pecunia.dto.Account;
+import com.capgemini.pecunia.dto.Address;
+import com.capgemini.pecunia.dto.Customer;
 import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.util.Constants;
+
 
 class AccountManagementServiceImplTest {
 
-	AccountManagementServiceImpl account;
+	AccountManagementServiceImpl ams;
 	@BeforeEach
 	void setUp() throws Exception {
-		account= new AccountManagementServiceImpl();
+		ams= new AccountManagementServiceImpl();
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-		account=null;
+		ams=null;
 	}
 
 	@Test
-	@DisplayName("Null input parameter")
+	@DisplayName("Null input parameter for delete account method")
 	void testDeleteAccount() {
 		
-		assertThrows(AccountException.class, ()-> {account.deleteAccount(null);});
+		assertThrows(AccountException.class, ()-> {ams.deleteAccount(null);});
 	
 	}
+	
+	@Test
+	@DisplayName("Account successfully deleted")
+	void testDeleteAccountPass() throws MyException, AccountException {
+		
+		Account account = new Account();
+		account.setId("100101000001");
+		
+		assertTrue(ams.deleteAccount(account));
+	
+	}
+	
+	
+	
+	
+	
 
 	@Test
 	@DisplayName("Null inputs for update customer name")
-	void testUpdateCustomerName() {
-		assertThrows(AccountException.class, ()-> {account.updateCustomerName(null, null);});
+	void testUpdateCustomerNameNull() {
+		assertThrows(AccountException.class, ()-> {ams.updateCustomerName(null, null);});
 	}
+	
+	@Test
+	@DisplayName("Valid inputs. Customer name updated")
+	void testUpdateCustomerNamePass() throws MyException, AccountException {
+		
+		Account account = new Account();
+		Customer customer=new Customer();
+		
+		account.setId("100101000001");
+		customer.setName("VizRazdan");
+		
+		assertTrue(ams.updateCustomerName(account, customer));
+
+	}
+	
+	
 
 	@Test
 	@DisplayName("Null inputs for update customer contact")
-	void testUpdateCustomerContact() {
-		assertThrows(AccountException.class, ()-> {account.updateCustomerContact(null,null);});
+	void testUpdateCustomerContactNull() {
+		assertThrows(AccountException.class, ()-> {ams.updateCustomerContact(null,null);});
 	}
+	
+	
+	@Test
+	@DisplayName("Valid inputs. Customer contact updated")
+	void testUpdateCustomerContactPass() throws MyException, AccountException {
+		
+		Account account = new Account();
+		Customer customer=new Customer();
+		
+		account.setId("100101000001");
+		customer.setContact("8763349049");
+		
+		assertTrue(ams.updateCustomerContact(account, customer));
+		
+	}
+	
+	
 
 	@Test
 	@DisplayName("Null inputs for update customer Address")
-	void testUpdateCustomerAddress() {
-		assertThrows(AccountException.class, ()-> { account.updateCustomerAddress(null, null) ;});
+	void testUpdateCustomerAddressNull() {
+		assertThrows(AccountException.class, ()-> { ams.updateCustomerAddress(null, null) ;});
 	}
+	
+	
+	@Test
+	@DisplayName("Valid inputs. Customer address updated")
+	void testUpdateCustomerAddressPass() throws MyException, AccountException {
+		
+		Account account = new Account();
+		Address address = new Address();
+		
+		account.setId("100101000001");
+		address.setLine1("My house is near ATP");
+		address.setLine2("But far away from my capg");
+		address.setCity("BLR");
+		address.setCountry("India");
+		address.setZipcode("400076");
+		address.setState("Krnt");
+		assertTrue(ams.updateCustomerAddress(account,address ));
+		
+		
+	}
+	
+	
 
 	@Test
 	@DisplayName("Null inputs for calculate account Id")
 	void testCalculateAccountId() {
-		assertThrows(AccountException.class, ()-> { account.calculateAccountId(null) ;});
+		assertThrows(AccountException.class, ()-> { ams.calculateAccountId(null) ;});
 	}
 
 
 	@Test
-	@DisplayName("Null inputs here")
+	@DisplayName("Null inputs in add account function")
 	void testAddAccountNull() {
 		
-		assertThrows(AccountException.class, ()-> { account.addAccount(null, null, null) ;});
+		assertThrows(AccountException.class, ()-> { ams.addAccount(null, null, null) ;});
 		
 	}	
+	
+	
+	@Test
+	@DisplayName("Null inputs in add account function")
+	void testAddAccountPass() throws MyException, AccountException {
+		
+		Account account = new Account();
+		Customer customer = new Customer();
+		Address address = new Address();
+		address.setLine1("12-Vydehi");
+		address.setLine2("ATP");
+		address.setCity("Mumbai");
+		address.setState("Maharashtra");
+		address.setCountry("India");
+		address.setZipcode("400036");
+
+		customer.setName("Avizek");
+		customer.setAadhar("658424476598");
+		customer.setPan("AF5674986A");
+		customer.setContact("9833414674");
+		customer.setGender("M");
+		LocalDate dob=LocalDate.parse("1995-10-17");
+		customer.setDob(dob);
+		
+		account.setAccountType(Constants.FD);
+		account.setBalance(9000000.00);
+		account.setBranchId("1002");
+		account.setInterest(0.00);
+		account.setStatus(Constants.ACCOUNT_STATUS[0]);
+		
+		
+		assertNotNull(ams.addAccount(customer, address, account));
+		
+		
+		
+	}	
+	
+	@Test
+	@DisplayName("Validation successful")
+	void testValidationPass() throws MyException, AccountException {
+		
+		Account account = new Account();
+		account.setId("100101000001");
+		assertTrue(ams.validateAccountId(account));
+		
+		
+	}	
+	
+	
+	
+	
 	
 }
 

@@ -59,6 +59,9 @@ public class Employee {
 		this.designation = designation;
 	}
 
+	public Employee() {
+		
+	}
 
 
 }

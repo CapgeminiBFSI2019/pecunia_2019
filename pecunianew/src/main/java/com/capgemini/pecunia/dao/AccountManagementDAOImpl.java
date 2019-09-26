@@ -228,7 +228,6 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				oldIdstr = id + "000000";
 			}
 			oldId = Long.parseLong(oldIdstr);
-			System.out.println("printing old id");
 			id = Long.toString(oldId + 1);
 		} catch (SQLException e) {
 			logger.error(e.getMessage());

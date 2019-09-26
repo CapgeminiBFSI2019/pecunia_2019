@@ -55,4 +55,8 @@ public class Ledger {
 		this.numOfLoans = numOfLoans;
 		this.totalLoanAmt = totalLoanAmt;
 	}
+	
+	public Ledger() {
+	
+	}
 }

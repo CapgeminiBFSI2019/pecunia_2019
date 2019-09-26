@@ -83,5 +83,8 @@ public class Customer {
 		this.gender = gender;
 		this.dob = dob;
 	}
+	public Customer() {
+		
+	}
 
 }

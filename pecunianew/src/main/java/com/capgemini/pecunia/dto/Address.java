@@ -75,5 +75,8 @@ public class Address {
 		this.country = country;
 		this.zipcode = zipcode;
 	}
+	public Address() {
+		
+	}
 
 }
