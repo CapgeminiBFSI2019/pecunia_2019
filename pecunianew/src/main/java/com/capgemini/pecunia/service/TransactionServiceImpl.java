@@ -23,12 +23,13 @@ public class TransactionServiceImpl implements TransactionService {
 	TransactionDAO transactionDAO;
 
 	/*******************************************************************************************************
-	 * - Function Name : getBalance(Account account) - Input Parameters : Account
-	 * account - Return Type : double - Throws : TransactionException - Author :
-	 * Rohan Patil - Creation Date : 23/09/2019 - Description : Getting balance of
-	 * the specified account
-	 * 
-	 * @throws MyException
+	 * - Function Name : getBalance(Account account) 
+	 * - Input Parameters : account object
+	 * - Return Type : double 
+	 * - Throws : TransactionException,MyException
+	 * - Author : Rohan Patil,Anwesha Das
+	 * - Creation Date : 23/09/2019 
+	 * - Description : Getting balance of the specified account
 	 ********************************************************************************************************/
 
 	@Override
@@ -44,6 +45,18 @@ public class TransactionServiceImpl implements TransactionService {
 
 	}
 
+	
+	/*******************************************************************************************************
+	 * - Function Name : updateBalance(Account account) 
+	 * - Input Parameters : account object
+	 * - Return Type : boolean 
+	 * - Throws : TransactionException,MyException
+	 * - Author : Anish Basu, Arpan Mondal
+	 * - Creation Date : 23/09/2019 
+	 * - Description : update balance of the specified account
+	 ********************************************************************************************************/
+	
+	
 	@Override
 	public boolean updateBalance(Account account) throws TransactionException, MyException {
 		try {
@@ -58,13 +71,13 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	/*******************************************************************************************************
-	 * Function Name : creditUsingSlip(Transaction transaction) - Input Parameters :
-	 * Transaction Return Type : int - Throws : TransactionException,MyException -
-	 * Author : Arpan Mondal - Creation Date : 24/09/2019 - Description : Crediting
-	 * using Slip
-	 * 
-	 * 
-	 * @throws TransactionException,MyException
+	 * - Function Name : creditUsingSlip(Transaction transaction) 
+	 * - Input Parameters : transaction object
+	 * - Return Type : int 
+	 * - Throws : TransactionException,MyException
+	 * - Author : Arpan Mondal
+	 * - Creation Date : 23/09/2019 
+	 * - Description : crediting amount using slip of the specified account
 	 ********************************************************************************************************/
 
 	@Override
@@ -118,13 +131,13 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	/*******************************************************************************************************
-	 * Function Name : debitUsingSlip(Transaction transaction) - Input Parameters :
-	 * Transaction Return Type : int - Throws : TransactionException,MyException -
-	 * Author : Anwesha Das - Creation Date : 24/09/2019 - Description : Debit using
-	 * Slip
-	 * 
-	 * 
-	 * @throws TransactionException,MyException
+	 * - Function Name : debitUsingSlip(Transaction transaction) 
+	 * - Input Parameters : transaction object
+	 * - Return Type : int 
+	 * - Throws : TransactionException,MyException
+	 * - Author : Anwesha Das
+	 * - Creation Date : 23/09/2019 
+	 * - Description : debiting amount using slip of the specified account
 	 ********************************************************************************************************/
 
 	@Override
@@ -174,15 +187,15 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	/*******************************************************************************************************
-	 * Function Name : debitUsingCheque(Transaction transaction,Cheque cheque) -
-	 * Input Parameters : Transaction, Cheque Return Type : int - Throws :
-	 * TransactionException,MyException - Author : Anish Basu - Creation Date :
-	 * 24/09/2019 - Description : Debiting using cheque
-	 * 
-	 * 
-	 * @throws TransactionException,MyException
+	 * - Function Name : debitUsingCheque(Transaction transaction,Cheque cheque) 
+	 * - Input Parameters : transaction object, cheque object
+	 * - Return Type : int 
+	 * - Throws : TransactionException,MyException
+	 * - Author : Anish Basu
+	 * - Creation Date : 23/09/2019 
+	 * - Description : debiting amount using cheque of the specified account
 	 ********************************************************************************************************/
-
+	
 	@Override
 	public int debitUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
 		int transId = 0;
@@ -238,12 +251,32 @@ public class TransactionServiceImpl implements TransactionService {
 		return transId;
 	}
 
+	
+	/*******************************************************************************************************
+	 * - Function Name : depositInterest(Account account)
+	 * - Input Parameters : account object
+	 * - Return Type :  
+	 * - Throws : TransactionException
+	 * - Author :
+	 * - Creation Date : 23/09/2019 
+	 * - Description : deposit interest of the specified account
+	 ********************************************************************************************************/
+	
 	@Override
 	public double depositInterest(Account account) throws TransactionException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	/*******************************************************************************************************
+	 * - Function Name : updateInterest()
+	 * - Input Parameters : account object
+	 * - Return Type :  
+	 * - Throws : TransactionException, MyException
+	 * - Author :
+	 * - Creation Date : 23/09/2019 
+	 * - Description : update interest of the specified account
+	 ********************************************************************************************************/
 	@Override
 
 	public double updateInterest() throws TransactionException, MyException {
@@ -251,6 +284,17 @@ public class TransactionServiceImpl implements TransactionService {
 		return 0;
 	}
 
+	/*******************************************************************************************************
+	 * - Function Name : creditUsingCheque(Transaction transaction, Cheque cheque)
+	 * - Input Parameters : transaction object, cheque object
+	 * - Return Type : int 
+	 * - Throws : TransactionException,MyException
+	 * - Author : Rohan Patil
+	 * - Creation Date : 23/09/2019 
+	 * - Description : crediting amount using cheque of the specified account
+	 ********************************************************************************************************/
+	
+	@Override
 	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
 		double beneficiaryBalance = 0, payeeBalance = 0, newBeneficiaryBalance = 0, newPayeeBalance = 0;
 
