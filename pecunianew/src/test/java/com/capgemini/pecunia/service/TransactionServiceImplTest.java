@@ -78,7 +78,7 @@ class TransactionServiceImplTest {
 	void testCreditUsingSlipPass() throws TransactionException, MyException {
 		Transaction tran = new Transaction();
 		tran.setAccountId("100202000001");
-		tran.setAmount(200.0);
+		tran.setAmount(500.0);
 		tran.setType(Constants.TRANSACTION_CREDIT);
 		tran.setOption(Constants.TRANSACTION_OPTION_SLIP);
 		assertNotEquals(0,transaction.creditUsingSlip(tran));
