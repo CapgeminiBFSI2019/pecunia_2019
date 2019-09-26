@@ -55,7 +55,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		int size = loanRequestList.size();
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		if (loanRequestList.size() == 0) {
-			throw new LoanDisbursalException("No loan request is present in database");
+			throw new LoanDisbursalException(Constants.NO_REJECTED_LOAN_REQUESTS);
 
 		}
 		if (size > 0) {
