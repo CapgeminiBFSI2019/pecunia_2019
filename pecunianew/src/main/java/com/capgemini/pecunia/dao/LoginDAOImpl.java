@@ -38,7 +38,7 @@ public class LoginDAOImpl implements LoginDAO {
 		} catch (SQLException e) {
 			logger.error("login failed ");
 
-			//TODO Insert logger
+
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
 		} finally {
 			try {

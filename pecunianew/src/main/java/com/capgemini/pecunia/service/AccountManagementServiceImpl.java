@@ -128,27 +128,34 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 
 	@Override
 	public String calculateAccountId(Account acc) throws MyException, AccountException{
-		String id="";
-		id = id.concat(acc.getBranchId());
-		String type=acc.getAccountType();
-		switch(type) {
-		case Constants.SAVINGS:
-			id = id.concat(Constants.CODE_SAVINGS);
-			break;
-		case Constants.CURRENT:
-			id = id.concat(Constants.CODE_CURRENT);
-			break;
-		case Constants.FD: 
-			id = id.concat(Constants.CODE_FD);
-			break;
-		case Constants.LOAN:
-			id = id.concat(Constants.CODE_LOAN);
-			break;
+		try {
+			String id="";
+			id = id.concat(acc.getBranchId());
+			String type=acc.getAccountType();
+			switch(type) {
+			case Constants.SAVINGS:
+				id = id.concat(Constants.CODE_SAVINGS);
+				break;
+			case Constants.CURRENT:
+				id = id.concat(Constants.CODE_CURRENT);
+				break;
+			case Constants.FD: 
+				id = id.concat(Constants.CODE_FD);
+				break;
+			case Constants.LOAN:
+				id = id.concat(Constants.CODE_LOAN);
+				break;
+			}
+			System.out.println("In calculateAccountId");
+			accountDAO = new AccountManagementDAOImpl();
+			id = accountDAO.calculateAccountId(id);
+			return id;
+		}catch(Exception e) {
+			throw new AccountException(ErrorConstants.TECH_ERROR);
 		}
 		
-		accountDAO = new AccountManagementDAOImpl();
-		id = accountDAO.calculateAccountId(id);
-		return id;
+		
+		
 	}
 
 	
@@ -162,9 +169,18 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	
 	@Override
 	public boolean validateAccountId(Account acc) throws MyException, AccountException {
-		boolean validated=false;
-		validated = accountDAO.validateAccountId(acc);
+		try {
+			boolean validated=false;
+			System.out.println("hI1");
+			accountDAO = new AccountManagementDAOImpl();
+			validated = accountDAO.validateAccountId(acc);
+
+		
 		return validated;
+		}catch(Exception e) {
+			throw new AccountException(ErrorConstants.ERROR_VALIDATION);
+		}
+		
 	}
 
 	
@@ -180,16 +196,24 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	
 	@Override
 	public String addAccount(Customer cust, Address add,Account acc) throws MyException, AccountException {
+		try {
 		accountDAO = new AccountManagementDAOImpl();
 		String custId= accountDAO.addCustomerDetails(cust, add);
+		System.out.println("A");
 		acc.setHolderId(custId);
 		String accountId = calculateAccountId(acc);
 		acc.setId(accountId);
+		System.out.println("B");
 		String createdId = accountDAO.addAccount(acc);
+		System.out.println("C");
 		if(createdId==null) {
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		}
 		return accountId;
+		}catch (Exception e) {
+			System.out.println("D");
+			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
+		}
 	}
 	
 	

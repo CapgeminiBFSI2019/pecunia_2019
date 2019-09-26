@@ -17,11 +17,20 @@ import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.util.Utility;
 
 public class LoginServiceImpl implements LoginService{
+	
+	
+	
 	Logger logger = Logger.getRootLogger();
 	public LoginServiceImpl() {
 		PropertyConfigurator.configure("resources//log4j.properties");
 	}
+	
+	
+	
 	LoginDAO loginDAO = new LoginDAOImpl();
+	
+	
+	
 	@Override
 	public boolean validateEmail(Login login) throws MyException, LoginException {
 		boolean flag=false;
@@ -40,7 +49,7 @@ public class LoginServiceImpl implements LoginService{
 				throw new LoginException(ErrorConstants.LOGIN_ERROR);
 			}
 			String hashPassword = Utility.toHexString(arr);
-			Login loginNew = new Login(login.getUsername(),"","");
+			Login loginNew = new Login(login.getUsername(),null);
 			try {
 				pwd = loginDAO.fetchPassword(loginNew);
 				if(pwd==hashPassword) {

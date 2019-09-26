@@ -1,17 +1,28 @@
 package com.capgemini.pecunia.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import com.capgemini.pecunia.dao.PassbookMaintenanceDAO;
 import com.capgemini.pecunia.dao.PassbookMaintenanceDAOImpl;
+import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.PassbookException;
 
 public class PassbookMaintenanceServiceImpl implements PassbookMaintenanceService {
+	
+	Logger logger = Logger.getRootLogger();
+
+	public PassbookMaintenanceServiceImpl() {
+		PropertyConfigurator.configure("resources//log4j.properties");
+
+	}
 
 	/*******************************************************************************************************
 	 * - Function Name : updatePassbook(String accountId) 
@@ -21,20 +32,39 @@ public class PassbookMaintenanceServiceImpl implements PassbookMaintenanceServic
 	 * - Author : Mansi Agarwal
 	 * - Creation Date : 24/09/2019 
 	 * - Description : Update transaction details in passbook
+	 * @throws PassbookException 
 	 ********************************************************************************************************/
 	
 	@Override
-	public List<Transaction> updatePassbook(String accountId) throws MyException {
-
-		List<Transaction> transactionList = new ArrayList<Transaction>();
-		PassbookMaintenanceDAO pdao = new PassbookMaintenanceDAOImpl();
+	public List<Transaction> updatePassbook(String accountId) throws MyException, PassbookException{
 		try {
+			
+			List<Transaction> transactionList = new ArrayList<Transaction>();
+			PassbookMaintenanceDAO pdao = new PassbookMaintenanceDAOImpl();
+			Account account = new Account();
+			account.setId(accountId);
+			AccountManagementService accountManagementService = new AccountManagementServiceImpl();
+			boolean accountExist = accountManagementService.validateAccountId(account);
+			if(!accountExist)
+			{
+				throw new PassbookException(ErrorConstants.ERROR_VALIDATION);
+			}
+			
+			
 			transactionList = pdao.updatePassbook(accountId);
-		} catch (PassbookException | MyException e) {
-			System.out.print(e.getMessage());
-			throw new MyException(ErrorConstants.UPDATE_PASSBOOK_ERROR);
+			boolean ans=false;
+			if(transactionList.size()>0) {
+				ans= pdao.updateLastUpdated(accountId);
+				if(ans)
+				{
+					logger.info("Updation successful");
+				}
+			}
+			return transactionList;
+		} catch (Exception e) {
+			throw new PassbookException(e.getMessage());
 		}
-		return transactionList;
+		
 	}
 
 	/*******************************************************************************************************
@@ -45,19 +75,21 @@ public class PassbookMaintenanceServiceImpl implements PassbookMaintenanceServic
 	 * - Author : Rishav Dev
 	 * - Creation Date : 24/09/2019 
 	 * - Description : Provides the account summary
+	 * @throws PassbookException 
 	 ********************************************************************************************************/
 	
 	
 	
 	
 	@Override
-	public List<Transaction> accountSummary(String accountId, Date startDate, Date endDate) throws MyException {
+	public List<Transaction> accountSummary(String accountId, LocalDate startDate, LocalDate endDate) throws MyException, PassbookException {
 		List<Transaction> transactionList = new ArrayList<Transaction>();
 		PassbookMaintenanceDAO pdao = new PassbookMaintenanceDAOImpl();
 		try {
 			transactionList = pdao.accountSummary(accountId, startDate, endDate);
-		} catch (PassbookException | MyException e) {
-			throw new MyException(ErrorConstants.UPDATE_PASSBOOK_ERROR);
+		} catch (Exception e) {
+		
+			throw new PassbookException(e.getMessage());
 		}
 		return transactionList;
 	}
