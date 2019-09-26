@@ -98,7 +98,7 @@ class TransactionServiceImplTest {
 	void testDebitUsingSlipPass() throws TransactionException, MyException {
 		Transaction tran = new Transaction();
 		tran.setAccountId("100303000001");
-		tran.setAmount(1100.0);
+		tran.setAmount(500.0);
 		tran.setType(Constants.TRANSACTION_DEBIT);
 		tran.setOption(Constants.TRANSACTION_OPTION_SLIP);
 		assertNotNull(transaction.debitUsingSlip(tran));
@@ -120,20 +120,20 @@ class TransactionServiceImplTest {
 		LocalDate transDate=LocalDate.now(); 
 		LocalDate issueDate=LocalDate.parse("2019-09-20");
 		
-		Transaction trans=new Transaction();
-		Cheque cheque=new Cheque();
+		Transaction trans = new Transaction();
+		Cheque cheque = new Cheque();
 		trans.setAccountId("100303000001");
-     trans.setAmount(500.0);
-      trans.setOption(Constants.TRANSACTION_OPTION_CHEQUE);
-      trans.setType(Constants.TRANSACTION_DEBIT);
-      trans.setTransDate(transDate);
-    
-      cheque.setAccountNo("100303000001");
-     cheque.setBankName(Constants.BANK_NAME);
-      cheque.setHolderName("Anish Babu");
-      cheque.setIfsc("PBIN0000003");
-      cheque.setIssueDate(issueDate);
-     // cheque.setStatus(Constants.CHEQUE_STATUS_CLEARED);
+		trans.setAmount(500.0);
+		trans.setOption(Constants.TRANSACTION_OPTION_CHEQUE);
+		trans.setType(Constants.TRANSACTION_DEBIT);
+		trans.setTransDate(transDate);
+
+		cheque.setAccountNo("100303000001");
+		cheque.setBankName(Constants.BANK_NAME);
+		cheque.setHolderName("Anish Babu");
+		cheque.setIfsc("PBIN0000003");
+		cheque.setIssueDate(issueDate);
+     
 		
       assertNotNull(transaction.debitUsingCheque(trans, cheque));
 	

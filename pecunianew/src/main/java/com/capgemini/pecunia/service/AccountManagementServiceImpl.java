@@ -187,6 +187,7 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	
 	@Override
 	public String addAccount(Customer cust, Address add,Account acc) throws MyException, AccountException {
+		try {
 		accountDAO = new AccountManagementDAOImpl();
 		String custId= accountDAO.addCustomerDetails(cust, add);
 		acc.setHolderId(custId);
@@ -197,6 +198,9 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		}
 		return accountId;
+		}catch (Exception e) {
+			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
+		}
 	}
 	
 	
