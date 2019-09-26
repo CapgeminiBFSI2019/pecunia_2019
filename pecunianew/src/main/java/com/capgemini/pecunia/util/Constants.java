@@ -45,4 +45,6 @@ public class Constants {
 	public static final double MINIMUM_CREDIT_SLIP_AMOUNT = 100.00;
 	public static final double MAXIMUM_CREDIT_SLIP_AMOUNT = 100000.00;
 	public static final String SELF_CHEQUE = "SELF";
+	public static final double MINIMUM_CHEQUE__AMOUNT = 100.00;
+	public static final double MAXIMUM_CHEQUE__AMOUNT = 200000.00;
 }
