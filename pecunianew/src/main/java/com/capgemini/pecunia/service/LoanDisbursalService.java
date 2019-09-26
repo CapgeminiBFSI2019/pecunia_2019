@@ -7,6 +7,7 @@ import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
 import com.capgemini.pecunia.exception.LoanDisbursalException;
 import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.TransactionException;
 
 public interface LoanDisbursalService {
 	public ArrayList<Loan> retrieveAll() throws MyException, IOException, LoanDisbursalException;
@@ -20,6 +21,8 @@ public interface LoanDisbursalService {
 
 	public ArrayList<LoanDisbursal> approvedLoanList() throws IOException, MyException;
 
-	public void updateLoanStatus(ArrayList<Loan> rejectedLoanList, ArrayList<Loan> approvedLoanList) throws MyException;
+	public int updateLoanStatus(ArrayList<Loan> rejectedLoanList, ArrayList<Loan> approvedLoanList) throws MyException;
+	
+	public void updateExistingBalance(ArrayList<Loan> approvedLoanList) throws MyException, TransactionException, LoanDisbursalException;
 
 }

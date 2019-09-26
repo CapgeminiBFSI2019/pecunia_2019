@@ -62,7 +62,7 @@ public class Demo {
 					try {
 						l1 = 	loanDisbursalDAO.rejectedLoanRequests();
 					} catch (LoanDisbursalException e) {
-						// TODO Auto-generated catch block
+						// TODO Auto-generated catch block+
 						e.printStackTrace();
 					}
 				} catch (MyException e) {
@@ -88,7 +88,12 @@ public class Demo {
 
 				
 				
-				loanDisbursalDAO.updateLoanAccount(l2, 2);
+				try {
+					loanDisbursalDAO.updateExistingBalance(l5);
+				} catch (LoanDisbursalException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 		
 
