@@ -1,6 +1,7 @@
 package com.capgemini.pecunia.dao;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import com.capgemini.pecunia.dto.Transaction;

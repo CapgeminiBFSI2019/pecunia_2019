@@ -19,6 +19,8 @@ public interface LoanDisbursalDAO {
 	
 	public void updateStatus(ArrayList<Loan> loanRequests, String accountId, String Status) throws IOException, MyException;
 	
+
+	
 	
 
 }

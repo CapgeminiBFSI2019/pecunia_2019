@@ -3,60 +3,41 @@ package com.capgemini.pecunia.pl;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.capgemini.pecunia.dto.Transaction;
-import com.capgemini.pecunia.exception.AccountException;
-
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.service.PassbookMaintenanceService;
 import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
 
 public class PassbookMain {
-	public static void main(String[] args) throws MyException, PassbookException, AccountException {
+	public static void main(String[] args) throws MyException, PassbookException {
 		
-	try {	
+	
 	PassbookMaintenanceService PassbookService=new PassbookMaintenanceServiceImpl();
 	List<Transaction> updatePassbook = new ArrayList<Transaction>();
-	String accountId = "100101000002";
+	updatePassbook	= PassbookService.updatePassbook("100202000001");
 	
-	updatePassbook = PassbookService.updatePassbook(accountId);
-	
-	if(updatePassbook.size() < 1)
+	for(int i = 0;i<updatePassbook.size();i++)
 	{
-		System.out.println("no trans");
-	}
-	
-	else
-	{
-		for(int i = 0;i<updatePassbook.size();i++)
+		System.out.print(updatePassbook.get(i).getId() + "\t");
+		System.out.print(updatePassbook.get(i).getTransDate()+ "\t");
+		System.out.print(updatePassbook.get(i).getAmount()+ "\t");
+		System.out.print(updatePassbook.get(i).getTransFrom()+ "\t");
+		System.out.print(updatePassbook.get(i).getTransTo()+ "\t");
+		System.out.print(updatePassbook.get(i).getType()+ "\t");
+		System.out.print(updatePassbook.get(i).getOption()+ "\t");
+		if(updatePassbook.get(i).getOption().equalsIgnoreCase("cheque"))
 		{
-			System.out.print(updatePassbook.get(i).getId() + "\t");
-			System.out.print(updatePassbook.get(i).getTransDate()+ "\t");
-			System.out.print(updatePassbook.get(i).getAmount()+ "\t");
-			System.out.print(updatePassbook.get(i).getTransFrom()+ "\t");
-			System.out.print(updatePassbook.get(i).getTransTo()+ "\t");
-			System.out.print(updatePassbook.get(i).getType()+ "\t");
-			System.out.print(updatePassbook.get(i).getOption()+ "\t");
-			if(updatePassbook.get(i).getOption().equalsIgnoreCase("cheque"))
-			{
-				System.out.print(updatePassbook.get(i).getChequeId()+"\t");
-				
-			}
-			else {
-				System.out.print("- \t");
-			}
-			System.out.print(updatePassbook.get(i).getClosingBalance()+ "\t");
-			System.out.println();
-			}
+			System.out.print(updatePassbook.get(i).getChequeId()+"\t");
+			
 		}
-	}catch(Exception e)
-	{
-		System.out.println(e.getMessage());
+		else {
+			System.out.print("-");
+		}
+		System.out.print(updatePassbook.get(i).getClosingBalance()+ "\t");
+		System.out.println();
+		}
 	}
-	}
-}
-	
 	
 		
 //		PassbookMaintenanceService accountSummaryService =new PassbookMaintenanceServiceImpl();
@@ -80,5 +61,5 @@ public class PassbookMain {
 //			System.out.print(accountSummary.get(i).getClosingBalance()+ "\t");
 //			System.out.println();
 //		}
-
+}
 
