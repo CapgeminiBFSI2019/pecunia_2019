@@ -10,3 +10,14 @@ public static final String UPDATE_AMOUNT = "UPDATE account SET balance = ? WHERE
 
 }
 
+//
+//Full texts	
+//loan_id
+//account_id Ascending 1
+//amount
+//type
+//tenure
+//roi
+//loan_status
+//emi
+//credit_score

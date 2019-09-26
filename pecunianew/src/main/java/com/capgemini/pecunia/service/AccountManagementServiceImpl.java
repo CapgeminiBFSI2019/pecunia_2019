@@ -128,34 +128,28 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 
 	@Override
 	public String calculateAccountId(Account acc) throws MyException, AccountException{
-		try {
-			String id="";
-			id = id.concat(acc.getBranchId());
-			String type=acc.getAccountType();
-			switch(type) {
-			case Constants.SAVINGS:
-				id = id.concat(Constants.CODE_SAVINGS);
-				break;
-			case Constants.CURRENT:
-				id = id.concat(Constants.CODE_CURRENT);
-				break;
-			case Constants.FD: 
-				id = id.concat(Constants.CODE_FD);
-				break;
-			case Constants.LOAN:
-				id = id.concat(Constants.CODE_LOAN);
-				break;
-			}
-			System.out.println("In calculateAccountId");
-			accountDAO = new AccountManagementDAOImpl();
-			id = accountDAO.calculateAccountId(id);
-			return id;
-		}catch(Exception e) {
-			throw new AccountException(ErrorConstants.TECH_ERROR);
+		String id="";
+		id = id.concat(acc.getBranchId());
+		String type=acc.getAccountType();
+		switch(type) {
+		case Constants.SAVINGS:
+			id = id.concat(Constants.CODE_SAVINGS);
+			break;
+		case Constants.CURRENT:
+			id = id.concat(Constants.CODE_CURRENT);
+			break;
+		case Constants.FD: 
+			id = id.concat(Constants.CODE_FD);
+			break;
+		case Constants.LOAN:
+			id = id.concat(Constants.CODE_LOAN);
+			break;
 		}
+		System.out.println("In calculateAccountId");
+		accountDAO = new AccountManagementDAOImpl();
+		id = accountDAO.calculateAccountId(id);
 		
-		
-		
+		return id;
 	}
 
 	
@@ -169,17 +163,12 @@ public class AccountManagementServiceImpl implements AccountManagementService{
 	
 	@Override
 	public boolean validateAccountId(Account acc) throws MyException, AccountException {
-		try {
-			boolean validated=false;
+		boolean validated=false;
 			accountDAO = new AccountManagementDAOImpl();
 			validated = accountDAO.validateAccountId(acc);
 
 		
 		return validated;
-		}catch(Exception e) {
-			throw new AccountException(ErrorConstants.ERROR_VALIDATION);
-		}
-		
 	}
 
 	

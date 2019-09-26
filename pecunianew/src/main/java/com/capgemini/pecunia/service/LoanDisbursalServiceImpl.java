@@ -15,6 +15,7 @@ import com.capgemini.pecunia.util.Constants;
 
 public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	private ArrayList<Loan> rejectedLoanList = new ArrayList<Loan>();
+
 	TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
 	ArrayList<LoanDisbursal> approvedLoanList = new ArrayList<LoanDisbursal>();
 
@@ -32,7 +33,11 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		retrievedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveLoanList();
 		if (retrievedLoanRequests.size() == 0) {
 
-			throw new LoanDisbursalException(Constants.NO_LOAN_REQUESTS);
+
+			throw new LoanDisbursalException(Constants.NO_LOAN_REQUEST);
+
+
+	
 
 		}
 		return retrievedLoanRequests;
@@ -46,12 +51,13 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * on condition
 	 ********************************************************************************************************/
 
-	public ArrayList<Loan> approveLoan(ArrayList<Loan> loanRequestList)
-			throws IOException, MyException, LoanDisbursalException {
+
+
+	public ArrayList<Loan> approveLoan(ArrayList<Loan> loanRequestList) throws IOException, MyException, LoanDisbursalException {
 		int size = loanRequestList.size();
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		if (loanRequestList.size() == 0) {
-			throw new LoanDisbursalException(Constants.NO_REJECTED_LOAN_REQUESTS);
+			throw new LoanDisbursalException("No loan request is present in database");
 
 		}
 		if (size > 0) {
@@ -69,6 +75,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 			loanDisbursedDAO.releaseLoanSheet(loanRequestList);
 		}
 
+
 		return loanRequestList;
 
 	}
@@ -80,6 +87,9 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * disbursed data
 	 ********************************************************************************************************/
 
+	
+
+
 	public ArrayList<LoanDisbursal> approvedLoanList() throws IOException, MyException {
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		
@@ -88,6 +98,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	}
 
+
 	/*******************************************************************************************************
 	 * - Function Name : rejectedLoanRequests() - Input Parameters : void - Return
 	 * Type : ArrayList<Loan> - Throws : MyException, LoanDisbursalException -
@@ -95,10 +106,10 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * rejected loan rejected
 	 ********************************************************************************************************/
 
+
 	public ArrayList<Loan> rejectedLoanRequests() throws MyException, LoanDisbursalException {
 		if (rejectedLoanList.size() == 0) {
-
-			throw new LoanDisbursalException(Constants.NO_REJECTED_LOAN_REQUESTS);
+			throw new LoanDisbursalException("No loan request has been rejected");
 		}
 		return rejectedLoanList;
 	}
@@ -140,35 +151,34 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * Updating the loan status after operation
 	 ********************************************************************************************************/
 
-	public int updateLoanStatus(ArrayList<Loan> rejectedLoanList, ArrayList<Loan> approvedLoanList)
-			throws MyException {
+
+
+	public void updateLoanStatus(ArrayList<Loan> rejectedLoanList, ArrayList<Loan> approvedLoanList) throws MyException {
+
 
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
-        int flag = 0;
+      
 		try {
 			for (int i = 0; i < rejectedLoanList.size(); i++) {
 				String accountId = rejectedLoanList.get(i).getAccountId();
 				loanDisbursedDAO.updateStatus(rejectedLoanList, accountId, Constants.LOAN_REQUEST_STATUS[2]);
 
+
 			}
-            flag++;
+           
 			for (int i = 0; i < approvedLoanList.size(); i++) {
 				String accountId = approvedLoanList.get(i).getAccountId();
 				loanDisbursedDAO.updateStatus(rejectedLoanList, accountId, Constants.LOAN_REQUEST_STATUS[1]);
 
 			}
-			flag++;
+			
 		} catch (IOException e) {
 
 			e.printStackTrace();
 		}
-		if(flag != 2) {
-			return 0;
-		}
-		return 1;
-
+		
 	}
-	
+
 	/*******************************************************************************************************
 	 * - Function Name : updateExistingBalance(ArrayList<Loan> approvedLoanRequests) - Input
 	 * Parameters : ArrayList<Loan> approvedLoanRequests - Return Type : void - Throws :
@@ -194,5 +204,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 		}
 	}
+
+	
 
 }

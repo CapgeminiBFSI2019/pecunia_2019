@@ -21,7 +21,7 @@ public interface TransactionService {
 
 	public int debitUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException;
 
-	public double depositInterest(Account account) throws TransactionException;
+	public double depositInterest(Account account) throws TransactionException,MyException;
 
 	public double updateInterest() throws TransactionException, MyException;
 }

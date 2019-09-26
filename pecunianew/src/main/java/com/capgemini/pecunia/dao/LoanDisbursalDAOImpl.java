@@ -15,31 +15,11 @@ import com.capgemini.pecunia.util.Constants;
 import com.capgemini.pecunia.util.DBConnection;
 
 public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
-	
-	/*******************************************************************************************************
-	 * - Function Name : amountToBePaid(double emi, int tenure)
-	 * - Input Parameters : double emi, int tenure
-	 * - Return Type : Double 
-	 * - Throws : None 
-	 * - Author : aninrana
-	 * - Creation Date : 25/09/2019 
-	 * - Description : Calculate the amount to be paid
-	 ********************************************************************************************************/
 
 	public double amountToBePaid(double emi, int tenure) {
 		return emi * tenure;
 	}
 
-	/*******************************************************************************************************
-	 * - Function Name : retrieveLoanList()
-	 * - Input Parameters : None
-	 * - Return Type : List 
-	 * - Throws : MyException 
-	 * - Author : aninrana
-	 * - Creation Date : 25/09/2019 
-	 * - Description : Retrieve loan requests from database
-	 ********************************************************************************************************/
-	
 	public List<Loan> retrieveLoanList() throws IOException, MyException {
 
 		Connection connection = DBConnection.getInstance().getConnection();
@@ -88,15 +68,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 	}
 
-	/*******************************************************************************************************
-	 * - Function Name : releaseLoanSheet(List<Loan> loanList)
-	 * - Input Parameters : List<Loan> loanList
-	 * - Return Type : void 
-	 * - Throws : MyException,IOException 
-	 * - Author : aninrana
-	 * - Creation Date : 25/09/2019 
-	 * - Description : Write the loan disbursed data into the database 
-	 ********************************************************************************************************/
+
 
 	public void releaseLoanSheet(List<Loan> loanList) throws IOException, MyException {
 		Connection connection = DBConnection.getInstance().getConnection();
@@ -106,7 +78,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 		try {
 			for (int i = 0; i < loanList.size(); i++) {
-				double amountDue = amountToBePaid(loanList.get(i).getEmi(), loanList.get(i).getTenure());
+				double amountDue = amountToBePaid(loanList.get(1).getEmi(), loanList.get(1).getTenure());
 				preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.INSERT_QUERY);
 				preparedStatement.setInt(1, loanList.get(i).getLoanId());
 				preparedStatement.setString(2, loanList.get(i).getAccountId());
@@ -133,16 +105,6 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 		}
 
 	}
-	
-	/*******************************************************************************************************
-	 * - Function Name : loanApprovedList()
-	 * - Input Parameters : None
-	 * - Return Type : ArrrayList<LoanDisbursal 
-	 * - Throws : MyException,IOException 
-	 * - Author : aninrana
-	 * - Creation Date : 25/09/2019 
-	 * - Description : Retrieve the loan details
-	 ********************************************************************************************************/
 
 	public ArrayList<LoanDisbursal> loanApprovedList() throws IOException, MyException {
 		Connection connection = DBConnection.getInstance().getConnection();
@@ -181,16 +143,6 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 		return approvedLoanList;
 	}
-	
-	/*******************************************************************************************************
-	 * - Function Name : updateLoanAccount(ArrayList<LoanDisbursal> loanApprovals, double dueAmount,double tenure, String accountId)
-	 * - Input Parameters : ArrayList<LoanDisbursal> loanApprovals, double dueAmount,double tenure, String accountId
-	 * - Return Type : void 
-	 * - Throws : MyException,IOException 
-	 * - Author : aninrana
-	 * - Creation Date : 25/09/2019 
-	 * - Description : Update details in the loan disbursed database
-	 ********************************************************************************************************/
 
 	public void updateLoanAccount(ArrayList<LoanDisbursal> loanApprovals, double dueAmount,double tenure, String accountId) throws IOException, MyException {
 		Connection connection = DBConnection.getInstance().getConnection();
@@ -224,17 +176,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 }
 	
-	/*******************************************************************************************************
-	 * - Function Name : updateStatus(ArrayList<Loan> loanRequests, String accountId, String Status)
-	 * - Input Parameters : ArrayList<Loan> loanRequests, String accountId, String Status
-	 * - Return Type : void 
-	 * - Throws : MyException,IOException 
-	 * - Author : aninrana
-	 * - Creation Date : 25/09/2019 
-	 ********************************************************************************************************/
-	
-	public void updateStatus(ArrayList<Loan> loanRequests, String accountId, String Status)
-			throws IOException, MyException {
+	public void updateStatus(ArrayList<Loan> loanRequests, String accountId, String Status) throws IOException, MyException {
 		Connection connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
 		try {
