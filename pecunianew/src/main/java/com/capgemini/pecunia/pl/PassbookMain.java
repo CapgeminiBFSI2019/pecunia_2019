@@ -3,23 +3,22 @@ package com.capgemini.pecunia.pl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.capgemini.pecunia.dto.Account;
+
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.AccountException;
+
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.PassbookException;
-import com.capgemini.pecunia.service.AccountManagementService;
-import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 import com.capgemini.pecunia.service.PassbookMaintenanceService;
 import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
 
 public class PassbookMain {
 	public static void main(String[] args) throws MyException, PassbookException, AccountException {
 		
-	
+	try {	
 	PassbookMaintenanceService PassbookService=new PassbookMaintenanceServiceImpl();
 	List<Transaction> updatePassbook = new ArrayList<Transaction>();
-	String accountId = "nfjkedh77frewf";
+	String accountId = "100101000002";
 	
 	updatePassbook = PassbookService.updatePassbook(accountId);
 	
@@ -45,14 +44,18 @@ public class PassbookMain {
 				
 			}
 			else {
-				System.out.print("-");
+				System.out.print("- \t");
 			}
 			System.out.print(updatePassbook.get(i).getClosingBalance()+ "\t");
 			System.out.println();
 			}
 		}
+	}catch(Exception e)
+	{
+		System.out.println(e.getMessage());
 	}
-	
+	}
+}
 	
 	
 		
@@ -77,5 +80,5 @@ public class PassbookMain {
 //			System.out.print(accountSummary.get(i).getClosingBalance()+ "\t");
 //			System.out.println();
 //		}
-}
+
 

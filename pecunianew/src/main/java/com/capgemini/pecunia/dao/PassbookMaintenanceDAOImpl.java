@@ -26,15 +26,13 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : updatePassbook(String accountId) 
-	 * - Input Parameters : String accountId
-	 * - Return Type : List 
-	 * - Throws : PassbookException, MyException 
-	 * - Author : Mansi Agarwal
-	 * - Creation Date : 24/09/2019 
-	 * - Description : Stores the transaction details in the list and returns it to service layer
+	 * - Function Name : updatePassbook(String accountId) - Input Parameters :
+	 * String accountId - Return Type : List - Throws : PassbookException,
+	 * MyException - Author : Mansi Agarwal - Creation Date : 24/09/2019 -
+	 * Description : Stores the transaction details in the list and returns it to
+	 * service layer
 	 ********************************************************************************************************/
-	
+
 	@Override
 	public List<Transaction> updatePassbook(String accountId) throws PassbookException, MyException {
 
@@ -47,8 +45,6 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			ps = connection.prepareStatement(PassbookMaintenanceQueryMapper.QUERY_TRANS_DETAILS);
 			ps.setString(1, accountId);
 			resultSet = ps.executeQuery();
-//			boolean gotSet = resultSet.next();
-//			System.out.println(gotSet);
 			while (resultSet.next()) {
 				Transaction details = new Transaction();
 				details.setId(resultSet.getString(1));
@@ -64,7 +60,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-            logger.error(e.getMessage());
+			logger.error(e.getMessage());
 			throw new PassbookException(ErrorConstants.TECH_ERROR);
 
 		} finally {
@@ -74,8 +70,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 				resultSet.close();
 				ps.close();
 				connection.close();
-				
-				
+
 			} catch (Exception e) {
 
 				logger.error(e.getMessage());
@@ -85,80 +80,61 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 		}
 
 		return transactionList;
-		
 
 	}
-	
+
 	/*******************************************************************************************************
-	 * - Function Name : updateDate(String accountId) 
-	 * - Input Parameters : String accountId
-	 * - Return Type : boolean 
-	 * - Throws : PassbookException, MyException 
-	 * - Author : Mansi Agarwal
-	 * - Creation Date : 24/09/2019 
-	 * - Description : Updates the date of last transaction that was printed in the passbook
+	 * - Function Name : updateLastUpdated(String accountId) - Input Parameters :
+	 * String accountId - Return Type : boolean - Throws : PassbookException,
+	 * MyException - Author : Mansi Agarwal - Creation Date : 24/09/2019 -
+	 * Description : Updates the date of last transaction that was printed in the
+	 * passbook
 	 ********************************************************************************************************/
-	
-	
-	public boolean updateLastUpdated(String accountId) throws MyException, PassbookException 
-	{
+
+	public boolean updateLastUpdated(String accountId) throws MyException, PassbookException {
 		boolean updated = false;
 		Connection connection = DBConnection.getInstance().getConnection();
-		PreparedStatement ps = null;		
+		PreparedStatement ps = null;
 		int queryResult = 0;
-		
+
 		try {
 			ps = connection.prepareStatement(PassbookMaintenanceQueryMapper.QUERY_LAST_UPDATED);
 			ps.setString(1, accountId);
-			queryResult= ps.executeUpdate();
-			
-			if(queryResult==0)
-			{
-			
-				//logger.error("Updation failed");
+			queryResult = ps.executeUpdate();
+
+			if (queryResult == 0) {
 				throw new PassbookException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 
-			}
-			else {
+			} else {
 				updated = true;
 			}
-				
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			throw new PassbookException(ErrorConstants.TECH_ERROR);
-		}
-		finally {
+		} finally {
 
 			try {
 				ps.close();
 				connection.close();
-			} catch (Exception e) 
-			{
+			} catch (Exception e) {
 				logger.error(e.getMessage());
 				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
-		
+
 		logger.info("Updation successful");
 		return updated;
-	
+
 	}
 
-	
-	
 	/*******************************************************************************************************
-	 * - Function Name : accountSummary(String accountId, Date startDate, Date endDate) 
-	 * - Input Parameters : String accountId, Date startDate, Date endDate
-	 * - Return Type : List 
-	 * - Throws : PassbookException, MyException 
-	 * - Author : Rishav Dev
-	 * - Creation Date : 24/09/2019 
-	 * - Description : Stores the account summary in the list and returns it to service layer
+	 * - Function Name : accountSummary(String accountId, Date startDate, Date
+	 * endDate) - Input Parameters : String accountId, Date startDate, Date endDate
+	 * - Return Type : List - Throws : PassbookException, MyException - Author :
+	 * Rishav Dev - Creation Date : 24/09/2019 - Description : Stores the account
+	 * summary in the list and returns it to service layer
 	 ********************************************************************************************************/
-	
-	
-	
-	
-	
+
 	@Override
 	public List<Transaction> accountSummary(String accountId, LocalDate startDate, LocalDate endDate)
 			throws PassbookException, MyException {
@@ -200,7 +176,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			}
 
 		} catch (Exception e) {
-			
+
 			logger.error(e.getMessage());
 			throw new PassbookException(ErrorConstants.TECH_ERROR);
 
@@ -212,7 +188,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 				ps.close();
 				connection.close();
 			} catch (Exception e) {
-				
+
 				logger.error(e.getMessage());
 				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
 
@@ -221,5 +197,4 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 
 	}
 
-	
 }
