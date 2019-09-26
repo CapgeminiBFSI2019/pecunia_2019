@@ -37,7 +37,7 @@ public class Constants {
 	public static final String EXCEPTION_DURING_TRANSACTION = "Error occured while transaction";
 	public static final String INSUFFICIENT_BALANCE_EXCEPTION = "Insufficient balance";
 	public static final String CHEQUE_BOUNCE_EXCEPTION = "Cheque bounce due to insufficient balance";
-//	public static final String LOGIN_SUCCESS = "Login succesful";
+	public static final String TRANSACTION_AMOUNT_ERROR = "The transaction could not take place";
 	public static final String LOGIN_FAILURE = "Login unsuccesful";
 	public static final String LOGIN_NO_USER_FOUND = "No user found";
 	public static final String AMOUNT_EXCEEDS_EXCEPTION = "Credit amount exceeds the maximum amount";
@@ -48,4 +48,6 @@ public class Constants {
 	public static final double MINIMUM_CREDIT_SLIP_AMOUNT = 100.00;
 	public static final double MAXIMUM_CREDIT_SLIP_AMOUNT = 100000.00;
 	public static final String SELF_CHEQUE = "SELF";
+	public static final double MINIMUM_CHEQUE__AMOUNT = 100.00;
+	public static final double MAXIMUM_CHEQUE__AMOUNT = 200000.00;
 }
