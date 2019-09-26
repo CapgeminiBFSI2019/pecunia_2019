@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.capgemini.pecunia.exception.AccountException;
+import com.capgemini.pecunia.exception.MyException;
 
 class AccountManagementServiceImplTest {
 
@@ -38,18 +39,21 @@ class AccountManagementServiceImplTest {
 	}
 
 	@Test
+	@DisplayName("Vidushiishurt")
 	void testUpdateCustomerContact() {
-		fail("Not yet implemented");
+		assertThrows(AccountException.class, ()-> {account.updateCustomerContact(null,null);});
 	}
 
 	@Test
+	@DisplayName("Ghanta nahi chalraha")
 	void testUpdateCustomerAddress() {
-		fail("Not yet implemented");
+		assertThrows(AccountException.class, ()-> { account.updateCustomerAddress(null, null) ;});
 	}
 
 	@Test
+	@DisplayName("Avizek ne reject kiya")
 	void testCalculateAccountId() {
-		fail("Not yet implemented");
+		assertThrows(AccountException.class, ()-> { account.calculateAccountId(null) ;});
 	}
 
 
