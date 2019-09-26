@@ -8,14 +8,3 @@ public static final String UPDATE_LOAN_ACCOUNT = "UPDATE loan_disbursal SET due_
 public static final String UPDATE_LOAN_STATUS = "UPDATE loan SET loan_status = ?  WHERE account_id = ?";
 }
 
-//
-//Full texts	
-//loan_id
-//account_id Ascending 1
-//amount
-//type
-//tenure
-//roi
-//loan_status
-//emi
-//credit_score

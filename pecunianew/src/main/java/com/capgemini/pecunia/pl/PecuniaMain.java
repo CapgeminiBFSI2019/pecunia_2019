@@ -6,7 +6,7 @@ public class PecuniaMain {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		int choice1 = 0, choice2 = 0, choice3 = 0;
-		System.out.println("Enter your option: " + "1. Login" + "2. Exit");
+		System.out.println("Enter your option: " + "\n1. Login" + "\n2. Exit");
 		choice1 = scanner.nextInt();
 		switch (choice1) {
 		case 1:
@@ -15,15 +15,15 @@ public class PecuniaMain {
 			// Case true
 			String flag = "y";
 			while (flag == "y") {
-				System.out.println("Enter your option: " + "1. Create Account" + "2. Update Account"
-						+ "3. Delete Existing Account" + "4. Update Passbook/ Account Summary" + "5. Transaction");
+				System.out.println("Enter your option: " + "\n1. Create Account" + "\n2. Update Account"
+						+ "\n3. Delete Existing Account" + "\n4. Update Passbook/ Account Summary" + "\n5. Transaction");
 				choice2 = scanner.nextInt();
 				switch (choice2) {
 				case 1: // Account creation function
 					break;
 				case 2:
-					System.out.println("Enter your option: " + "1. Update Name" + "2. Update Contact"
-							+ "3. Update Address Details");
+					System.out.println("Enter your option: " + "\n1. Update Name" + "\n2. Update Contact"
+							+ "\n3. Update Address Details");
 					choice3 = scanner.nextInt();
 					switch (choice3) {
 					case 1: // call updateCustomerName
@@ -37,7 +37,7 @@ public class PecuniaMain {
 					// Delete Account
 					break;
 				case 4:
-					System.out.println("Enter your option: " + "1. Update Passbook" + "2. Display Account Summary");
+					System.out.println("Enter your option: " + "\n1. Update Passbook" + "\n2. Display Account Summary");
 					int choice4 = scanner.nextInt();
 					switch (choice4) {
 					case 1: // update passbook
@@ -46,21 +46,22 @@ public class PecuniaMain {
 						break;
 					}
 				case 5:
-					System.out.println("Enter your option: " + "1. Credit Amount" + "2. Debit Account");
+					System.out.println("Enter your option: " + "\n1. Credit Amount" + "\n2. Debit Account");
 					int choice5 = scanner.nextInt();
 					switch (choice5) {
 					case 1:
-						System.out.println("Enter your option: " + "1. Credit Using Slip" + "2. Credit Using Cheque");
+						System.out.println("Enter your option: " + "\n1. Credit Using Slip" + "\n2. Credit Using Cheque");
 						int choice6 = scanner.nextInt();
 						switch (choice6) {
 						case 1: // credit using slip
+									
 							break;
 						case 2: // credit using cheque
 							break;
 						}
 					case 2:
 						System.out.println(
-								"Enter your option: " + "1. Debit Using Withdrawl Form" + "2. Debit Using Cheque");
+								"Enter your option: " + "\n1. Debit Using Withdrawl Form" + "\n2. Debit Using Cheque");
 						int choice7 = scanner.nextInt();
 						switch (choice7) {
 						case 1: // debit using slip
