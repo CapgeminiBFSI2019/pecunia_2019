@@ -51,8 +51,8 @@ public class Constants {
 	public static final double MINIMUM_CREDIT_SLIP_AMOUNT = 100.00;
 	public static final double MAXIMUM_CREDIT_SLIP_AMOUNT = 100000.00;
 	public static final String SELF_CHEQUE = "SELF";
-	public static final double MINIMUM_CHEQUE__AMOUNT = 100.00;
-	public static final double MAXIMUM_CHEQUE__AMOUNT = 200000.00;
+	public static final double MINIMUM_CHEQUE_AMOUNT = 100.00;
+	public static final double MAXIMUM_CHEQUE_AMOUNT = 200000.00;
 	public static final double SAVING_ROI = 5.0;
 	public static final double CURRENT_ROI = 0.0;
 	public static final double FD_ROI = 7.0;

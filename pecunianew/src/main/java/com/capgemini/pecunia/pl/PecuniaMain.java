@@ -9,16 +9,21 @@ import java.util.Scanner;
 
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Address;
+import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Customer;
 import com.capgemini.pecunia.dto.Login;
+import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.LoginException;
 import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 import com.capgemini.pecunia.service.LoginService;
 import com.capgemini.pecunia.service.LoginServiceImpl;
+import com.capgemini.pecunia.service.TransactionService;
+import com.capgemini.pecunia.service.TransactionServiceImpl;
 import com.capgemini.pecunia.util.Constants;
 
 public class PecuniaMain {
@@ -63,7 +68,7 @@ public class PecuniaMain {
 			}
 			while(!loginFlag);
 			String flag = "y";
-			while (flag == "y") {
+			while (flag.equalsIgnoreCase("y")) {
 				System.out.println("Enter your option: " + "\n1. Create Account" + "\n2. Update Account"
 						+ "\n3. Delete Existing Account" + "\n4. Update Passbook/ Account Summary" + "\n5. Transaction");
 				choice2 = scanner.nextInt();
@@ -72,7 +77,7 @@ public class PecuniaMain {
 					String accountId = addAccount();
 					if(accountId != null)
 					{
-						System.out.println(accountId);
+						System.out.println("Account created, account Id is :" +accountId);
 					}
 					else
 					{
@@ -140,37 +145,74 @@ public class PecuniaMain {
 						int choice6 = scanner.nextInt();
 						switch (choice6) {
 						case 1: // credit using slip
+							
+							int transIdCreditSlip = creditUsingSlip();
+							if (transIdCreditSlip != 0) {
+								System.out.println(
+										"The Transaction is Successful.\nThe Transaction ID is :" + transIdCreditSlip);
+							} else {
+								System.out.println("Error occured while transaction");
+							}
+							
 							break;
 						case 2: // credit using cheque
+							
+							int transIdCreditCheque = creditUsingCheque();
+							if (transIdCreditCheque != 0) {
+								System.out.println("The Transaction is Successful.\nThe Transaction ID is :"
+										+ transIdCreditCheque);
+							} else {
+								System.out.println("Error occured while transaction");
+							}
+							
 							break;
 						}
 					case 2:
 						System.out.println(
-								"Enter your option: " + "\n1. Debit Using Withdrawl Form" + "\n2. Debit Using Cheque");
+								"Enter your option: " + "\n1. Debit Using Slip" + "\n2. Debit Using Cheque");
 						int choice7 = scanner.nextInt();
 						switch (choice7) {
 						case 1: // debit using slip
+							
+							int transIdDebitSlip = debitUsingSlip();
+							if (transIdDebitSlip != 0) {
+								System.out.println(
+										"The Transaction is Successful.\nThe Transaction ID is :" + transIdDebitSlip);
+							} else {
+								System.out.println("Error occured while transaction");
+							}
+							
+							
 							break;
 						case 2: // debit using cheque
+							
+							System.out.println();
+							int transIdDebitCheque = debitUsingCheque();
+							if (transIdDebitCheque != 0) {
+								System.out.println(
+										"The Transaction is Successful.\nThe Transaction ID is :" + transIdDebitCheque);
+							} else {
+								System.out.println("Error occured while transaction");
+							}
+							
 							break;
 						}
 					}
 				}
 				while (true) {
 					System.out.println("Do you want to perform another operation (y/n)?");
-					String temp = scanner.nextLine();
-					if (temp == "y" || temp == "n") {
+					String temp = br.readLine();
+					if (temp.equalsIgnoreCase("y")  || temp.equalsIgnoreCase("n") ){
 						flag = temp;
 						break;
 					} else {
 						System.out.println("Invalid Character Entered. Please enter again.");
 					}
-					if (flag == "y" || flag == "n") {
-						break;
-					}
+					
 				}
 
 			}
+			System.out.println("Exiting..");
 			break;
 
 		case 2:
@@ -383,4 +425,183 @@ public class PecuniaMain {
 		}
 		return updated;
 	}
+	
+	
+	public static int creditUsingSlip() throws IOException {
+
+		Transaction transaction = new Transaction();
+		BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
+
+		System.out.println("Enter Account ID: ");
+		String accId = br1.readLine();
+
+		System.out.println("Enter Amount: ");
+		double amt = Double.parseDouble(br1.readLine());
+
+		transaction.setAmount(amt);
+		transaction.setAccountId(accId);
+		transaction.setId(Constants.NA);
+
+		TransactionService transService = new TransactionServiceImpl();
+		int transId = 0;
+		try {
+			transId = transService.creditUsingSlip(transaction);
+
+		} catch (TransactionException e) {
+
+			System.out.println(e.getMessage());
+		} catch (MyException e) {
+
+			System.out.println(e.getMessage());
+		}
+		return transId;
+
+	}
+
+	public static int debitUsingSlip() throws IOException {
+
+		Transaction transaction = new Transaction();
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		System.out.println("Enter Account ID: ");
+		String accId = br.readLine();
+
+		System.out.println("Enter Amount: ");
+		double amt = Double.parseDouble(br.readLine());
+
+		transaction.setAmount(amt);
+		transaction.setAccountId(accId);
+		transaction.setId(Constants.NA);
+
+		TransactionService transService = new TransactionServiceImpl();
+		int transId = 0;
+		try {
+			transId = transService.debitUsingSlip(transaction);
+
+		} catch (TransactionException e) {
+
+			System.out.println(e.getMessage());
+		} catch (MyException e) {
+
+			System.out.println(e.getMessage());
+		}
+		return transId;
+
+	}
+
+	public static int debitUsingCheque() throws IOException {
+
+		Transaction debitChequeTransaction = new Transaction();
+
+		BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
+
+		System.out.println("Enter Account ID: ");
+		String accIdDebitCheque = br1.readLine();
+
+		System.out.println("Enter Amount: ");
+		double amtDebitCheque = Double.parseDouble(br1.readLine());
+
+		System.out.println("Enter Cheque Number: ");
+		int chequeNumber = Integer.parseInt(br1.readLine());
+
+		System.out.println("Enter Account Holder Name: ");
+		String accholderDebitChequeName = br1.readLine();
+
+		System.out.println("Enter IFSC Code: ");
+		String chequeIfsc = br1.readLine();
+
+		System.out.println("Enter Cheque Issue Date: ");
+		String chequeIssueDate = br1.readLine();
+
+		debitChequeTransaction.setAmount(amtDebitCheque);
+		debitChequeTransaction.setAccountId(accIdDebitCheque);
+		debitChequeTransaction.setId(Constants.NA);
+
+		Cheque debitCheque = new Cheque();
+		debitCheque.setAccountNo(accIdDebitCheque);
+		debitCheque.setHolderName(accholderDebitChequeName);
+		debitCheque.setIfsc(chequeIfsc);
+		debitCheque.setIssueDate(LocalDate.parse(chequeIssueDate));
+		debitCheque.setNum(chequeNumber);
+
+		TransactionService transServiceDebitCheque = new TransactionServiceImpl();
+		int transId = 0;
+		try {
+			transId = transServiceDebitCheque.debitUsingCheque(debitChequeTransaction, debitCheque);
+
+		} catch (TransactionException e) {
+
+			System.out.println(e.getMessage());
+		} catch (MyException e) {
+
+			System.out.println(e.getMessage());
+		}
+		return transId;
+	}
+
+	public static int creditUsingCheque() throws IOException {
+
+		Transaction creditChequeTransaction = new Transaction();
+
+		BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
+
+		System.out.println("Enter Account ID of Payee: ");
+		String accPayeeIdCreditCheque = br1.readLine();
+
+		System.out.println("Enter Account ID of Benificiary: ");
+		String accBenificiaryIdCreditCheque = br1.readLine();
+
+		System.out.println("Enter Amount: ");
+		double amtCreditCheque = Double.parseDouble(br1.readLine());
+
+		System.out.println("Enter Cheque Number: ");
+		int chequeNumber = Integer.parseInt(br1.readLine());
+
+		System.out.println("Enter Account Payee Name: ");
+		String accPayeeCreditChequeName = br1.readLine();
+
+		System.out.println("Enter Account Benificiary Name: ");
+		String accBenificiaryCreditChequeName = br1.readLine();
+
+		System.out.println("Enter Payee Bank Name: ");
+		String payeeBankName = br1.readLine();
+		
+		System.out.println("Enter Payee IFSC Code: ");
+		String chequeIfsc = br1.readLine();
+
+		System.out.println("Enter Cheque Issue Date: ");
+		String chequeIssueDate = br1.readLine();
+
+		creditChequeTransaction.setAmount(amtCreditCheque);
+		creditChequeTransaction.setAccountId(accBenificiaryIdCreditCheque);
+		creditChequeTransaction.setTransTo(accBenificiaryIdCreditCheque);
+		creditChequeTransaction.setTransFrom(accPayeeIdCreditCheque);
+
+
+		Cheque creditCheque = new Cheque();
+		creditCheque.setAccountNo(accPayeeIdCreditCheque);
+		creditCheque.setHolderName(accPayeeCreditChequeName);
+		creditCheque.setIfsc(chequeIfsc);
+		creditCheque.setIssueDate(LocalDate.parse(chequeIssueDate));
+		creditCheque.setNum(chequeNumber);
+		creditCheque.setBankName(payeeBankName);
+
+		TransactionService transServiceCreditCheque = new TransactionServiceImpl();
+		int transChequeCreditId = 0;
+		try {
+			
+			transChequeCreditId = transServiceCreditCheque.creditUsingCheque(creditChequeTransaction, creditCheque);
+
+		} catch (TransactionException e) {
+
+			System.out.println(e.getMessage());
+		} catch (MyException e) {
+
+			System.out.println(e.getMessage());
+		}
+		return transChequeCreditId;
+	}
+	
+	
 }
