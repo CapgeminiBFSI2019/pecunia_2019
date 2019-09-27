@@ -56,6 +56,16 @@ public class TransactionDAOImpl implements TransactionDAO {
 				throw new TransactionException("Balance retrieve fail");
 			}
 
+
+		} catch (TransactionException me) {
+			// logger here
+			System.out.println("trans:" + me.getMessage());
+			logger.error("");
+			throw new TransactionException(me.getMessage());
+		} catch (Exception e) {
+			// add logger here
+			System.out.println("exc:" + e.getMessage());
+
 		} catch (SQLException e) {
 			// add logger here
 			logger.error("");
@@ -143,6 +153,14 @@ public class TransactionDAOImpl implements TransactionDAO {
 			preparedStatement.setString(5, cheque.getIfsc());
 			preparedStatement.setDate(6, java.sql.Date.valueOf(cheque.getIssueDate()));
 			preparedStatement.setString(7, cheque.getStatus());
+
+
+			try {
+				preparedStatement.executeUpdate();
+			} catch (SQLException e) {
+				throw new MyException(e.getMessage());
+			}
+
 			preparedStatement.executeUpdate();
 
 			resultSet = preparedStatement.getGeneratedKeys();
@@ -151,6 +169,11 @@ public class TransactionDAOImpl implements TransactionDAO {
 			} else {
 				throw new TransactionException("Error occured during cheque insertion");
 			}
+
+		} catch (TransactionException e) {
+			// TODO logger here
+			logger.error("");
+			throw new TransactionException(e.getMessage());
 		} catch (SQLException e) {
 			throw new MyException(e.getMessage());
 		} finally {
@@ -197,7 +220,14 @@ public class TransactionDAOImpl implements TransactionDAO {
 			preparedStatement.setString(7, transaction.getTransTo());
 			preparedStatement.setDouble(8, transaction.getClosingBalance());
 
+			try {
+				preparedStatement.executeUpdate();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
 			preparedStatement.executeUpdate();
+
 
 			resultSet = preparedStatement.getGeneratedKeys();
 			if (resultSet.next()) {

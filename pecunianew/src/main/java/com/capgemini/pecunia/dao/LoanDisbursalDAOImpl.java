@@ -15,6 +15,8 @@ import com.capgemini.pecunia.util.Constants;
 import com.capgemini.pecunia.util.DBConnection;
 
 public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
+	
+	private int loanId;
 
 	public double amountToBePaid(double emi, int tenure) {
 		return emi * tenure;
@@ -33,8 +35,8 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-
-				int loanId = resultSet.getInt("loan_id");
+				//TODO -------
+				loanId = resultSet.getInt("loan_id");
 				String account_id = resultSet.getString("account_id");
 				Double amount = resultSet.getDouble("amount");
 				String type = resultSet.getString("type");
@@ -68,13 +70,10 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 	}
 
-
-
 	public void releaseLoanSheet(List<Loan> loanList) throws IOException, MyException {
 		Connection connection = DBConnection.getInstance().getConnection();
 
 		PreparedStatement preparedStatement = null;
-	
 
 		try {
 			for (int i = 0; i < loanList.size(); i++) {
@@ -87,8 +86,6 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				preparedStatement.setInt(5, loanList.get(i).getTenure());
 				preparedStatement.execute();
 			}
-			
-			
 
 		} catch (SQLException sqlException) {
 			throw new MyException(sqlException.getMessage());
@@ -144,19 +141,17 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 		return approvedLoanList;
 	}
 
-	public void updateLoanAccount(ArrayList<LoanDisbursal> loanApprovals, double dueAmount,double tenure, String accountId) throws IOException, MyException {
+	public void updateLoanAccount(ArrayList<LoanDisbursal> loanApprovals, double dueAmount, double tenure,
+			String accountId) throws IOException, MyException {
 		Connection connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
 		try {
-			
-			
-				preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.UPDATE_LOAN_ACCOUNT);
-				preparedStatement.setDouble(1, dueAmount);
-				preparedStatement.setDouble(2, tenure);
-				preparedStatement.setString(3, accountId);
-				preparedStatement.execute();
-				
-			
+
+			preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.UPDATE_LOAN_ACCOUNT);
+			preparedStatement.setDouble(1, dueAmount);
+			preparedStatement.setDouble(2, tenure);
+			preparedStatement.setString(3, accountId);
+			preparedStatement.execute();
 
 		} catch (SQLException sqlException) {
 			throw new MyException(sqlException.getMessage());
@@ -171,23 +166,19 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 			}
 		}
-		
-		
 
-}
-	
-	public void updateStatus(ArrayList<Loan> loanRequests, String accountId, String Status) throws IOException, MyException {
+	}
+
+	public void updateStatus(ArrayList<Loan> loanRequests, String accountId, String Status)
+			throws IOException, MyException {
 		Connection connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
 		try {
-			
-			
-				preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.UPDATE_LOAN_STATUS);
-				preparedStatement.setString(1, Status);
-				preparedStatement.setString(2, accountId);
-				preparedStatement.execute();
-				
-			
+
+			preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.UPDATE_LOAN_STATUS);
+			preparedStatement.setString(1, Status);
+			preparedStatement.setString(2, accountId);
+			preparedStatement.execute();
 
 		} catch (SQLException sqlException) {
 			throw new MyException(sqlException.getMessage());
@@ -202,9 +193,6 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 			}
 		}
-}
+	}
 
-
-	
-	
 }

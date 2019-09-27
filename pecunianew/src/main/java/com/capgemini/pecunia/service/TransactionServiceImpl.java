@@ -296,6 +296,22 @@ public class TransactionServiceImpl implements TransactionService {
 				chequeDetail.setStatus(Constants.CHEQUE_STATUS_PENDING);
 				transId = transactionDAO.generateChequeId(chequeDetail);
 			} else {
+
+				if (!bankName.equals(Constants.BANK_NAME)) {
+					// invalid bank cheque
+					throw new TransactionException(Constants.INVALID_BANK_EXCEPTION);
+
+				// pecunia cheque
+				if (transaction.getAmount() < Constants.MINIMUM_CHEQUE_AMOUNT
+						|| transaction.getAmount() > Constants.MAXIMUM_CHEQUE_AMOUNT) {
+					// invalid cheque amount
+					throw new TransactionException(Constants.INVALID_CHEQUE_EXCEPTION);
+
+				} else {
+					// pecunia cheque
+					if (transaction.getAmount() < Constants.MINIMUM_CHEQUE__AMOUNT
+							|| transaction.getAmount() > Constants.MAXIMUM_CHEQUE__AMOUNT) {
+
 				if (!bankName.equals(Constants.BANK_NAME)) {
 					// invalid bank cheque
 					throw new TransactionException(Constants.INVALID_BANK_EXCEPTION);
@@ -303,6 +319,7 @@ public class TransactionServiceImpl implements TransactionService {
 					// pecunia cheque
 					if (transaction.getAmount() < Constants.MINIMUM_CHEQUE_AMOUNT
 							|| transaction.getAmount() > Constants.MAXIMUM_CHEQUE_AMOUNT) {
+
 						// invalid cheque amount
 						throw new TransactionException(Constants.INVALID_CHEQUE_EXCEPTION);
 					} else {
@@ -361,6 +378,10 @@ public class TransactionServiceImpl implements TransactionService {
 			}
 			return transId;
 		} catch (Exception e) {
+
+			System.out.println(e.getMessage());
+
+
 			throw new TransactionException(Constants.EXCEPTION_DURING_TRANSACTION);
 		}
 
