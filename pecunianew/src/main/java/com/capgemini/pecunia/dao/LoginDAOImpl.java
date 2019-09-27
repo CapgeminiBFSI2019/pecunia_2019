@@ -22,10 +22,14 @@ public class LoginDAOImpl implements LoginDAO {
 		PropertyConfigurator.configure("resources//log4j.properties");
 
 	}
-
+	/*******************************************************************************************************
+	 * Function Name : validateEmail(Login login) - Input Parameters : Login login
+	 * Return Type : String Author : Rishabh Rai - Creation Date :24/09/2019
+	 * Description :Validate Email from Database ,  returns Email
+	 ********************************************************************************************************/
 	@Override
 	public String validateEmail(Login login) throws MyException, LoginException {
-		String salt = null;
+		String secretKey = null;
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
@@ -34,7 +38,7 @@ public class LoginDAOImpl implements LoginDAO {
 			preparedStatement.setString(1, login.getUsername());
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
-				salt = resultSet.getString("salt");
+				secretKey = resultSet.getString("secret_key");
 			}
 
 		} catch (SQLException e) {
@@ -50,9 +54,13 @@ public class LoginDAOImpl implements LoginDAO {
 				throw new LoginException(ErrorConstants.LOGIN_ERROR);
 			}
 		}
-		return salt;
+		return secretKey;
 	}
-
+	/*******************************************************************************************************
+	 * Function Name :fetchPassword(Login login) - Input Parameters : Login login
+	 * Return Type : String Author :Kumar Saurabh - Creation Date : 24/09/2019
+	 * Description : Fetching validation details from database
+	 ********************************************************************************************************/
 	@Override
 	public String fetchPassword(Login login) throws MyException, LoginException {
 		Connection connection = null;

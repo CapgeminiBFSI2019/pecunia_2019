@@ -28,7 +28,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	@Override
 	public boolean deleteAccount(Account acc) throws MyException, AccountException {
-		boolean updated = false;
+		boolean isUpdated = false;
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
@@ -61,15 +61,15 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				
 			
 		}
-		updated = true;
+		isUpdated = true;
 		logger.info(LoggerMessage.DELETION_SUCCESSFUL);
-		return updated;
+		return isUpdated;
 
 	}
 
 	@Override
 	public boolean updateCustomerName(Account acc, Customer cust) throws AccountException, MyException {
-		boolean updated = false;
+		boolean isUpdated = false;
 		String accId = null;
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
@@ -110,15 +110,15 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
-		updated = true;
+		isUpdated = true;
 		logger.info(LoggerMessage.UPDATE_CUSTOMER_NAME_SUCCESSFUL);
-		return updated;
+		return isUpdated;
 
 	}
 
 	@Override
 	public boolean updateCustomerContact(Account acc, Customer cust) throws AccountException, MyException {
-		boolean updated = false;
+		boolean isUpdated = false;
 		String accId = null;
 		Connection connection = null;
 		int queryResult = 0;
@@ -158,14 +158,14 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
-		updated = true;
+		isUpdated = true;
 		logger.info(LoggerMessage.UPDATE_CUSTOMER_CONTACT_SUCCESSFUL);
-		return updated;
+		return isUpdated;
 	}
 
 	@Override
 	public boolean updateCustomerAddress(Account acc, Address add) throws AccountException, MyException {
-		boolean updated = false;
+		boolean isUpdated = false;
 		Connection connection = null;
 		String accId = null;
 		connection = DBConnection.getInstance().getConnection();
@@ -210,9 +210,9 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
-		updated = true;
+		isUpdated = true;
 		logger.info(LoggerMessage.UPDATE_CUSTOMER_ADDRESS_SUCCESSFUL);
-		return updated;
+		return isUpdated;
 
 	}
 
@@ -255,7 +255,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	@Override
 	public boolean validateAccountId(Account acc) throws MyException, AccountException {
 
-		boolean validated = false;
+		boolean isValidated = false;
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
@@ -267,7 +267,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement.setString(1, acc.getId());
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
-				validated = true;
+				isValidated = true;
 			} else {
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
@@ -284,7 +284,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
-		return validated;
+		return isValidated;
 	}
 
 	@Override

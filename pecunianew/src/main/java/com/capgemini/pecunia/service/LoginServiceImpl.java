@@ -24,18 +24,29 @@ public class LoginServiceImpl implements LoginService {
 
 	LoginDAO loginDAO = new LoginDAOImpl();
 
+	
+	
+	/*******************************************************************************************************
+	 * - Function Name : validateEmail(Login login) - Input Parameters : Login login
+	 *  Return Type : boolean - Throws : LoginException - Author : Kumar Saurabh - Creation Date : 24/09/2019 
+	 *  - Description : Validating an account by setting secretKey and checking validity by comparing password and hashPassword
+	 * 
+	 * @throws MyException
+	 ********************************************************************************************************/
+
+	
 	@Override
 	public boolean validateEmail(Login login) throws MyException, LoginException {
 		boolean flag = false;
-		String pwd = null;
-		String salt = loginDAO.validateEmail(login);
-		if (salt == null) {
+		String password = null;
+		String secretKey = loginDAO.validateEmail(login);
+		if (secretKey == null) {
 
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
 		} else {
 			byte arr[] = null;
 			try {
-				arr = Utility.getSHA(login.getPassword() + salt);
+				arr = Utility.getSHA(login.getPassword() + secretKey);
 			} catch (NoSuchAlgorithmException e) {
 				logger.error(e.getMessage());
 				throw new LoginException(ErrorConstants.LOGIN_ERROR);
@@ -43,8 +54,8 @@ public class LoginServiceImpl implements LoginService {
 			String hashPassword = Utility.toHexString(arr);
 			Login loginNew = new Login(login.getUsername(), null);
 			try {
-				pwd = loginDAO.fetchPassword(loginNew);
-				if (pwd.equals(hashPassword)) {
+				password = loginDAO.fetchPassword(loginNew);
+				if (password.equals(hashPassword)) {
 					flag = true;
 					logger.info(LoggerMessage.LOGIN_SUCCESSFUL);
 				}
