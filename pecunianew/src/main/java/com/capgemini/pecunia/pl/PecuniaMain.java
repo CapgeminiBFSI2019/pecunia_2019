@@ -68,7 +68,7 @@ public class PecuniaMain {
 			}
 			while(!loginFlag);
 			String flag = "y";
-			while (flag == "y") {
+			while (flag.equalsIgnoreCase("y")) {
 				System.out.println("Enter your option: " + "\n1. Create Account" + "\n2. Update Account"
 						+ "\n3. Delete Existing Account" + "\n4. Update Passbook/ Account Summary" + "\n5. Transaction");
 				choice2 = scanner.nextInt();
@@ -77,7 +77,7 @@ public class PecuniaMain {
 					String accountId = addAccount();
 					if(accountId != null)
 					{
-						System.out.println(accountId);
+						System.out.println("Account created, account Id is :" +accountId);
 					}
 					else
 					{
@@ -201,19 +201,18 @@ public class PecuniaMain {
 				}
 				while (true) {
 					System.out.println("Do you want to perform another operation (y/n)?");
-					String temp = scanner.nextLine();
-					if (temp == "y" || temp == "n") {
+					String temp = br.readLine();
+					if (temp.equalsIgnoreCase("y")  || temp.equalsIgnoreCase("n") ){
 						flag = temp;
 						break;
 					} else {
 						System.out.println("Invalid Character Entered. Please enter again.");
 					}
-					if (flag == "y" || flag == "n") {
-						break;
-					}
+					
 				}
 
 			}
+			System.out.println("Exiting..");
 			break;
 
 		case 2:
