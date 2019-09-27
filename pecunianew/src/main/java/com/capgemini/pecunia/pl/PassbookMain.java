@@ -77,11 +77,11 @@ public static void main(String[] args) throws MyException, PassbookException  {
 		List<Transaction> accountSummary = new ArrayList<Transaction>();
 		try {
 			accountSummary = accountSummaryService.accountSummary(accountId1, date1, date2);
-			if (accountSummary.size() < 1) {
-				System.out.println("no trans");
-			}
-
-			else {
+//			if (accountSummary.size() < 1) {
+//				System.out.println("no trans");
+//			}
+//
+	//		else {
 				for (int index = 0; index < accountSummary.size(); index++) {
 					System.out.print(accountSummary.get(index).getId() + "\t");
 					System.out.print(accountSummary.get(index).getTransDate() + "\t");
@@ -89,18 +89,18 @@ public static void main(String[] args) throws MyException, PassbookException  {
 					System.out.print(accountSummary.get(index).getTransFrom() + "\t");
 					System.out.print(accountSummary.get(index).getTransTo() + "\t");
 					System.out.print(accountSummary.get(index).getType() + "\t");
-					System.out.println(accountSummary.get(index).getOption() + "\t");
+					System.out.print(accountSummary.get(index).getOption() + "\t");
 					if (accountSummary.get(index).getOption().equalsIgnoreCase("cheque")) {
 						System.out.print(accountSummary.get(index).getChequeId() + "\t");
 
 					} else {
-						System.out.print("-");
+						System.out.print("-\t");
 					}
-					System.out.println(accountSummary.get(index).getChequeId() + "\t");
+					System.out.print(accountSummary.get(index).getChequeId() + "\t");
 					System.out.print(accountSummary.get(index).getClosingBalance() + "\t");
 					System.out.println();
 				}
-			}
+			//}
 		} catch (MyException | PassbookException e) {
 			System.out.println(e.getMessage());
 		}
