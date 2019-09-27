@@ -14,13 +14,11 @@ public interface LoanDisbursalDAO {
 	public void releaseLoanSheet(List<Loan> loanList) throws IOException, MyException;
 
 	public ArrayList<LoanDisbursal> loanApprovedList() throws IOException, MyException;
-	
-	public void updateLoanAccount(ArrayList<LoanDisbursal>  loanApprovals, double dueAmount, double tenure, String accountId) throws IOException, MyException;
-	
-	public void updateStatus(ArrayList<Loan> loanRequests, String accountId, String Status) throws IOException, MyException;
-	
 
-	
-	
+	public void updateLoanAccount(ArrayList<LoanDisbursal> loanApprovals, double dueAmount, double tenure,
+			String accountId) throws IOException, MyException;
+
+	public void updateStatus(ArrayList<Loan> loanRequests, String accountId, String Status)
+			throws IOException, MyException;
 
 }

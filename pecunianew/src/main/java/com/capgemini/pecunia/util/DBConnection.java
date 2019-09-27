@@ -16,21 +16,17 @@ public class DBConnection {
 	private static Properties props = null;
 	private static MysqlDataSource dataSource = null;
 
-
 	/*************************************************************************************
-	 *  - @throws DonorException
-	 *  - Private Constructor
-	 *  - Author : CAPGEMINI 
-	 *  - Creation Date : 18/11/2016
-	 *  - Desc:Loads the  jdbc.properties file and Driver Class and gets the connection
+	 * - @throws DonorException - Private Constructor - Author : CAPGEMINI -
+	 * Creation Date : 18/11/2016 - Desc:Loads the jdbc.properties file and Driver
+	 * Class and gets the connection
 	 ***************************************************************************************/
 	private DBConnection() throws MyException {
 		try {
 			props = loadProperties();
 			dataSource = prepareDataSource();
 		} catch (IOException e) {
-			throw new MyException(
-					" Could not read the database details from properties file ");
+			throw new MyException(" Could not read the database details from properties file ");
 		} catch (SQLException e) {
 			throw new MyException(e.getMessage());
 		}
@@ -38,15 +34,11 @@ public class DBConnection {
 	}
 
 	/*****************************************************************
-	 *  - Method Name:getInstance() 
-	 *  - Input Parameters : 
-	 *  - Return Type :DBConnection instance
-	 *  - Throws : DonorException 
-	 *  - Author : CAPGEMINI 
-	 *  - Creation Date : 18/11/2016
-	 *  - Description : Singleton and Thread safe class
+	 * - Method Name:getInstance() - Input Parameters : - Return Type :DBConnection
+	 * instance - Throws : DonorException - Author : CAPGEMINI - Creation Date :
+	 * 18/11/2016 - Description : Singleton and Thread safe class
 	 *******************************************************************/
-	
+
 	public static DBConnection getInstance() throws MyException {
 		synchronized (DBConnection.class) {
 			if (instance == null) {
@@ -55,15 +47,11 @@ public class DBConnection {
 		}
 		return instance;
 	}
-	
+
 	/*****************************************************************
-	 *  - Method Name:getConnection() 
-	 *  - Input Parameters : 
-	 *  - Return Type :DBConnection instance
-	 *  - Throws : DonorException 
-	 *  - Author : CAPGEMINI 
-	 *  - Creation Date : 18/11/2016
-	 *  - Description :  Returns connection object
+	 * - Method Name:getConnection() - Input Parameters : - Return Type
+	 * :DBConnection instance - Throws : DonorException - Author : CAPGEMINI -
+	 * Creation Date : 18/11/2016 - Description : Returns connection object
 	 *******************************************************************/
 	public Connection getConnection() throws MyException {
 		try {
@@ -74,16 +62,13 @@ public class DBConnection {
 		}
 		return conn;
 	}
-	
+
 	/*****************************************************************
-	 *  - Method Name:loadProperties()
-	 *  - Input Parameters : 
-	 *  - Return Type :Properties object
-	 *  - Author : CAPGEMINI 
-	 *  - Creation Date : 18/11/2016
-	 *  - Description : Returns Properties object
+	 * - Method Name:loadProperties() - Input Parameters : - Return Type :Properties
+	 * object - Author : CAPGEMINI - Creation Date : 18/11/2016 - Description :
+	 * Returns Properties object
 	 *******************************************************************/
-	
+
 	private Properties loadProperties() throws IOException {
 
 		if (props == null) {
@@ -101,16 +86,12 @@ public class DBConnection {
 		}
 	}
 
-
 	/*****************************************************************
-	 *  - Method Name:prepareDataSource() 
-	 *  - Input Parameters : 
-	 *  - Return Type :OracleDataSource object
-	 *  - Author : CAPGEMINI 
-	 *  - Creation Date : 18/11/2016
-	 *  - Description : Returns OracleDataSource object
+	 * - Method Name:prepareDataSource() - Input Parameters : - Return Type
+	 * :OracleDataSource object - Author : CAPGEMINI - Creation Date : 18/11/2016 -
+	 * Description : Returns OracleDataSource object
 	 *******************************************************************/
-	
+
 	private MysqlDataSource prepareDataSource() throws SQLException {
 
 		if (dataSource == null) {

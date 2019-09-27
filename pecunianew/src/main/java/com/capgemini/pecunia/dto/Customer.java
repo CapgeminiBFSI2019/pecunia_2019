@@ -3,7 +3,7 @@ package com.capgemini.pecunia.dto;
 import java.time.LocalDate;
 
 public class Customer {
-	
+
 	private String id;
 	private String name;
 	private String addressId;
@@ -12,11 +12,10 @@ public class Customer {
 	private String contact;
 	private String gender;
 	private LocalDate dob;
-	
+
 	public String getId() {
 		return id;
 	}
-
 
 	public String getName() {
 		return name;
@@ -82,10 +81,9 @@ public class Customer {
 		this.gender = gender;
 		this.dob = dob;
 	}
+
 	public Customer() {
-		
+
 	}
-
-
 
 }

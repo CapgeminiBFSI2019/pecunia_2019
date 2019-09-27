@@ -6,5 +6,6 @@ import com.capgemini.pecunia.exception.MyException;
 
 public interface LoginDAO {
 	public String validateEmail(Login login) throws MyException, LoginException;
-	public String fetchPassword(Login login) throws MyException,LoginException;
+
+	public String fetchPassword(Login login) throws MyException, LoginException;
 }
