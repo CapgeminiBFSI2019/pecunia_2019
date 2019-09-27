@@ -91,7 +91,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 	}
 	
 	/*******************************************************************************************************
-	 * - Function Name : updateDate(String accountId) 
+	 * - Function Name : updateLastUpdated(String accountId) 
 	 * - Input Parameters : String accountId
 	 * - Return Type : boolean 
 	 * - Throws : PassbookException, MyException 

@@ -13,7 +13,8 @@ import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
 
 class PassbookMain{
 public static void main(String[] args) throws MyException, PassbookException  {
-     	accountSummary();
+    updatePassbook(); 	
+	accountSummary();
 	}
 
 	public static void updatePassbook()
@@ -23,7 +24,6 @@ public static void main(String[] args) throws MyException, PassbookException  {
 		Scanner obj = new Scanner(System.in);
 		System.out.println("Enter accountId:");
 		String accountId = obj.nextLine();
-
 		try {
 			updatePassbook = PassbookService.updatePassbook(accountId);
 
