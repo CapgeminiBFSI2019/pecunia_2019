@@ -169,7 +169,7 @@ public class PecuniaMain {
 						}
 					case 2:
 						System.out.println(
-								"Enter your option: " + "\n1. Debit Using Withdrawl Form" + "\n2. Debit Using Cheque");
+								"Enter your option: " + "\n1. Debit Using Slip" + "\n2. Debit Using Cheque");
 						int choice7 = scanner.nextInt();
 						switch (choice7) {
 						case 1: // debit using slip
@@ -529,7 +529,7 @@ public class PecuniaMain {
 		TransactionService transServiceDebitCheque = new TransactionServiceImpl();
 		int transId = 0;
 		try {
-			transId = transServiceDebitCheque.debitUsingSlip(debitChequeTransaction);
+			transId = transServiceDebitCheque.debitUsingCheque(debitChequeTransaction, debitCheque);
 
 		} catch (TransactionException e) {
 
@@ -567,7 +567,7 @@ public class PecuniaMain {
 
 		System.out.println("Enter Payee Bank Name: ");
 		String payeeBankName = br1.readLine();
-		System.out.println("Entered bank:" + payeeBankName);
+		
 		System.out.println("Enter Payee IFSC Code: ");
 		String chequeIfsc = br1.readLine();
 
@@ -578,7 +578,7 @@ public class PecuniaMain {
 		creditChequeTransaction.setAccountId(accBenificiaryIdCreditCheque);
 		creditChequeTransaction.setTransTo(accBenificiaryIdCreditCheque);
 		creditChequeTransaction.setTransFrom(accPayeeIdCreditCheque);
-//		creditChequeTransaction.setId(Constants.NA);
+
 
 		Cheque creditCheque = new Cheque();
 		creditCheque.setAccountNo(accPayeeIdCreditCheque);
@@ -591,7 +591,7 @@ public class PecuniaMain {
 		TransactionService transServiceCreditCheque = new TransactionServiceImpl();
 		int transChequeCreditId = 0;
 		try {
-			System.out.println(payeeBankName);
+			
 			transChequeCreditId = transServiceCreditCheque.creditUsingCheque(creditChequeTransaction, creditCheque);
 
 		} catch (TransactionException e) {
