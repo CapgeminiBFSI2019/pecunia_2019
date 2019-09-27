@@ -88,13 +88,13 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 		PreparedStatement preparedStatement = null;
 		String accountId = account.getId();
-		int rowsAffected = 0;
+		int numAccountAffected = 0;
 		try {
 			preparedStatement = connection.prepareStatement(TransactionQueryMapper.UPDATE_ACOCUNT_BALANCE_QUERY);
 			preparedStatement.setDouble(1, account.getBalance());
 			preparedStatement.setString(2, accountId);
-			rowsAffected = preparedStatement.executeUpdate();
-			if (rowsAffected != 0) {
+			numAccountAffected = preparedStatement.executeUpdate();
+			if (numAccountAffected != 0) {
 				balanceUpdated = true;
 			} else {
 				// logger here
