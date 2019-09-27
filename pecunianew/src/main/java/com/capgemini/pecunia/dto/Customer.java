@@ -1,6 +1,5 @@
 package com.capgemini.pecunia.dto;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 public class Customer {
@@ -88,7 +87,5 @@ public class Customer {
 	}
 
 
-	public Customer() {
-	}
 
 }

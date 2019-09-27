@@ -269,8 +269,12 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.VALIDATE_ID);
 			preparedStatement.setString(1, acc.getId());
 			resultSet = preparedStatement.executeQuery();
-			if (resultSet != null) {
+			if (resultSet.next()) {
 				validated = true;
+			}
+			else
+			{
+				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
 		} catch (SQLException e) {
 			logger.error(e.getMessage());

@@ -104,9 +104,12 @@ public class TransactionServiceImpl implements TransactionService {
 					account.setBalance(newBalance);
 					transactionDAO.updateBalance(account);
 					transaction.setClosingBalance(newBalance);
-					transId = transactionDAO.generateTransactionId(transaction);
+					transaction.setType(Constants.TRANSACTION_CREDIT);
+					transaction.setOption(Constants.TRANSACTION_OPTION_SLIP);
 					transaction.setTransTo(Constants.NA);
 					transaction.setTransFrom(Constants.NA);
+					transId = transactionDAO.generateTransactionId(transaction);
+					
 				}
 
 				else {
@@ -199,28 +202,29 @@ public class TransactionServiceImpl implements TransactionService {
 	@Override
 	public int debitUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
 		int transId = 0;
+		int chequeId=0;
 		try {
 
 			transactionDAO = new TransactionDAOImpl();
 			String accId = transaction.getAccountId();
 			double amount = transaction.getAmount();
-			LocalDate transDate = transaction.getTransDate();
+			LocalDate transDate = LocalDate.now();
 			LocalDate chequeissueDate = cheque.getIssueDate();
-
 			Account account = new Account();
 			account.setId(accId);
 			double oldBalance = getBalance(account);
 			double newBalance = 0.0;
 			long period = ChronoUnit.DAYS.between(chequeissueDate, transDate);
 
-			if (period <= 90 && amount <= Constants.MAXIMUM_CHEQUE__AMOUNT
-					&& amount >= Constants.MINIMUM_CHEQUE__AMOUNT) {
+			if (period <= 90 && amount <= Constants.MAXIMUM_CHEQUE_AMOUNT
+					&& amount >= Constants.MINIMUM_CHEQUE_AMOUNT) {
 				if (oldBalance > amount) {
 					newBalance = oldBalance - amount;
 					account.setBalance(newBalance);
 					transactionDAO.updateBalance(account);
 					cheque.setStatus(Constants.CHEQUE_STATUS_CLEARED);
-					int chequeId = transactionDAO.generateChequeId(cheque);
+					cheque.setBankName(Constants.BANK_NAME);
+					chequeId = transactionDAO.generateChequeId(cheque);
 					Transaction debitTransaction = new Transaction();
 					debitTransaction.setAccountId(accId);
 					debitTransaction.setAmount(amount);
@@ -263,7 +267,7 @@ public class TransactionServiceImpl implements TransactionService {
 	 ********************************************************************************************************/
 	
 	@Override
-	public double depositInterest(Account account) throws TransactionException , MyException{
+	public double depositInterest(Account account) throws TransactionException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -323,13 +327,13 @@ public class TransactionServiceImpl implements TransactionService {
 			chequeDetail.setStatus(Constants.CHEQUE_STATUS_PENDING);
 			transId = transactionDAO.generateChequeId(chequeDetail);
 		} else {
-			if (bankName != Constants.BANK_NAME) {
+			if (!bankName.equals(Constants.BANK_NAME)) {
 				// invalid bank cheque
 				throw new TransactionException(Constants.INVALID_BANK_EXCEPTION);
 			} else {
 				// pecunia cheque
-				if (transaction.getAmount() < Constants.MINIMUM_CHEQUE__AMOUNT
-						|| transaction.getAmount() > Constants.MAXIMUM_CHEQUE__AMOUNT) {
+				if (transaction.getAmount() < Constants.MINIMUM_CHEQUE_AMOUNT
+						|| transaction.getAmount() > Constants.MAXIMUM_CHEQUE_AMOUNT) {
 					// invalid cheque amount
 					throw new TransactionException(Constants.INVALID_CHEQUE_EXCEPTION);
 				} else {
@@ -380,14 +384,15 @@ public class TransactionServiceImpl implements TransactionService {
 						transId = transactionDAO.generateTransactionId(debitTransaction);
 						transId = transactionDAO.generateTransactionId(creditTransaction);
 
-						transactionDAO.updateBalance(payeeAccount);
 						transactionDAO.updateBalance(beneficiaryAccount);
+						transactionDAO.updateBalance(payeeAccount);
 					}
 				}
 			}
 		}
 		return transId;
 		}catch (Exception e) {
+			System.out.println(e.getMessage());
 			throw new TransactionException(Constants.EXCEPTION_DURING_TRANSACTION);
 		}
 
