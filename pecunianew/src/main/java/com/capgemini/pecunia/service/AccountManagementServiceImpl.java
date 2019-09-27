@@ -25,20 +25,20 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 
 	@Override
 	public boolean deleteAccount(Account acc) throws MyException, AccountException {
-		boolean updated = false;
+		boolean isUpdated = false;
 		try {
 
-			boolean validated = validateAccountId(acc);
-			if (validated) {
+			boolean isValidated = validateAccountId(acc);
+			if (isValidated) {
 				accountDAO = new AccountManagementDAOImpl();
-				updated = accountDAO.deleteAccount(acc);
+				isUpdated = accountDAO.deleteAccount(acc);
 			} else {
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
 		} catch (Exception e) {
 			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 		}
-		return updated;
+		return isUpdated;
 	}
 
 	/*******************************************************************************************************
@@ -52,13 +52,13 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 
 	@Override
 	public boolean updateCustomerName(Account acc, Customer cust) throws MyException, AccountException {
-		boolean updated = false;
+		boolean isUpdated = false;
 		try {
 
-			boolean validated = validateAccountId(acc);
-			if (validated) {
+			boolean isValidated = validateAccountId(acc);
+			if (isValidated) {
 				accountDAO = new AccountManagementDAOImpl();
-				updated = accountDAO.updateCustomerName(acc, cust);
+				isUpdated = accountDAO.updateCustomerName(acc, cust);
 			} else {
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
@@ -66,7 +66,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 		} catch (Exception e) {
 			throw new AccountException(e.getMessage());
 		}
-		return updated;
+		return isUpdated;
 	}
 
 	/*******************************************************************************************************
@@ -80,20 +80,20 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 
 	@Override
 	public boolean updateCustomerContact(Account acc, Customer cust) throws MyException, AccountException {
-		boolean updated = false;
+		boolean isUpdated = false;
 		try {
 
-			boolean validated = validateAccountId(acc);
-			if (validated) {
+			boolean isValidated = validateAccountId(acc);
+			if (isValidated) {
 				accountDAO = new AccountManagementDAOImpl();
-				updated = accountDAO.updateCustomerContact(acc, cust);
+				isUpdated = accountDAO.updateCustomerContact(acc, cust);
 			} else {
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
 		} catch (Exception e) {
 			throw new AccountException(e.getMessage());
 		}
-		return updated;
+		return isUpdated;
 	}
 
 	/*******************************************************************************************************
@@ -108,19 +108,19 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	@Override
 	public boolean updateCustomerAddress(Account acc, Address add) throws MyException, AccountException {
 
-		boolean updated = false;
+		boolean isUpdated = false;
 		try {
-			boolean validated = validateAccountId(acc);
-			if (validated) {
+			boolean isValidated = validateAccountId(acc);
+			if (isValidated) {
 				accountDAO = new AccountManagementDAOImpl();
-				updated = accountDAO.updateCustomerAddress(acc, add);
+				isUpdated = accountDAO.updateCustomerAddress(acc, add);
 			} else {
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
 		} catch (Exception e) {
 			throw new AccountException(e.getMessage());
 		}
-		return updated;
+		return isUpdated;
 	}
 
 	/*******************************************************************************************************
@@ -190,11 +190,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 
 	@Override
 	public boolean validateAccountId(Account acc) throws MyException, AccountException {
-		boolean validated = false;
+		boolean isValidated = false;
 		accountDAO = new AccountManagementDAOImpl();
-		validated = accountDAO.validateAccountId(acc);
+		isValidated = accountDAO.validateAccountId(acc);
 
-		return validated;
+		return isValidated;
 	}
 
 	/*******************************************************************************************************

@@ -80,24 +80,24 @@ public class PecuniaMain {
 					choice3 = scanner.nextInt();
 					switch (choice3) {
 					case 1:
-						boolean updated = updateCustomerName();
-						if (updated) {
+						boolean isUpdated = updateCustomerName();
+						if (isUpdated) {
 							System.out.println("Details Updated");
 						} else {
 							System.out.println(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 						}
 						break;
 					case 2:
-						updated = updateCustomerContact();
-						if (updated) {
+						isUpdated = updateCustomerContact();
+						if (isUpdated) {
 							System.out.println("Details Updated");
 						} else {
 							System.out.println(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 						}
 						break;
 					case 3:
-						updated = updateCustomerAddress();
-						if (updated) {
+						isUpdated = updateCustomerAddress();
+						if (isUpdated) {
 							System.out.println("Details Updated");
 						} else {
 							System.out.println(ErrorConstants.UPDATE_ACCOUNT_ERROR);
