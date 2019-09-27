@@ -52,8 +52,10 @@ public class TransactionDAOImpl implements TransactionDAO {
 			}
 
 			if (balance == -1) {
+				// logger here
 				throw new TransactionException("Balance retrieve fail");
 			}
+
 
 		} catch (TransactionException me) {
 			// logger here
@@ -63,6 +65,9 @@ public class TransactionDAOImpl implements TransactionDAO {
 		} catch (Exception e) {
 			// add logger here
 			System.out.println("exc:" + e.getMessage());
+
+		} catch (SQLException e) {
+			// add logger here
 			logger.error("");
 			throw new MyException(e.getMessage());
 		} finally {
@@ -88,7 +93,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 	@Override
 	public boolean updateBalance(Account account) throws MyException, TransactionException {
-		boolean flag = false;
+		boolean balanceUpdated = false;
 		Connection connection = DBConnection.getInstance().getConnection();
 
 		PreparedStatement preparedStatement = null;
@@ -100,16 +105,13 @@ public class TransactionDAOImpl implements TransactionDAO {
 			preparedStatement.setString(2, accountId);
 			rowsAffected = preparedStatement.executeUpdate();
 			if (rowsAffected != 0) {
-				flag = true;
+				balanceUpdated = true;
 			} else {
 				// logger here
 				logger.error("Update balance failed");
 				throw new TransactionException("Update balance failed");
 			}
-		} catch (TransactionException te) {
-			// logger here
-			throw new TransactionException(te.getMessage());
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			// logger here
 			throw new MyException(e.getMessage());
 		} finally {
@@ -122,7 +124,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 				throw new MyException("Error closing db connection");
 			}
 		}
-		return flag;
+		return balanceUpdated;
 	}
 
 	/*******************************************************************************************************
@@ -152,17 +154,22 @@ public class TransactionDAOImpl implements TransactionDAO {
 			preparedStatement.setDate(6, java.sql.Date.valueOf(cheque.getIssueDate()));
 			preparedStatement.setString(7, cheque.getStatus());
 
+
 			try {
 				preparedStatement.executeUpdate();
 			} catch (SQLException e) {
 				throw new MyException(e.getMessage());
 			}
+
+			preparedStatement.executeUpdate();
+
 			resultSet = preparedStatement.getGeneratedKeys();
 			if (resultSet.next()) {
 				chequeId = resultSet.getInt(1);
 			} else {
 				throw new TransactionException("Error occured during cheque insertion");
 			}
+
 		} catch (TransactionException e) {
 			// TODO logger here
 			logger.error("");
@@ -212,24 +219,25 @@ public class TransactionDAOImpl implements TransactionDAO {
 			preparedStatement.setString(6, transaction.getTransFrom());
 			preparedStatement.setString(7, transaction.getTransTo());
 			preparedStatement.setDouble(8, transaction.getClosingBalance());
+
 			try {
 				preparedStatement.executeUpdate();
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
 
+			preparedStatement.executeUpdate();
+
+
 			resultSet = preparedStatement.getGeneratedKeys();
 			if (resultSet.next()) {
 				transId = resultSet.getInt(1);
 			} else {
+				// TODO logger here
 				logger.error("Error occured during transaction insertion");
 				throw new TransactionException("Error occured during transaction insertion");
 			}
-		} catch (TransactionException e) {
-			// TODO logger here
-			logger.error("");
-			throw new TransactionException(e.getMessage());
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			throw new MyException(e.getMessage());
 		} finally {
 			try {
