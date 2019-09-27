@@ -33,23 +33,19 @@ public class LoginDAOImpl implements LoginDAO {
 			preparedStatement = connection.prepareStatement(LoginQueryMapper.GET_SALT);
 			preparedStatement.setString(1, login.getUsername());
 			ResultSet resultSet = preparedStatement.executeQuery();
-			if(resultSet.next())
-			{
+			if (resultSet.next()) {
 				salt = resultSet.getString("salt");
 			}
 
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
 
-
-
-
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
 		} finally {
 			try {
 				preparedStatement.close();
 				connection.close();
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				logger.error(e.getMessage());
 				throw new LoginException(ErrorConstants.LOGIN_ERROR);
 			}
@@ -60,28 +56,28 @@ public class LoginDAOImpl implements LoginDAO {
 	@Override
 	public String fetchPassword(Login login) throws MyException, LoginException {
 		Connection connection = null;
-		String pwd=null;
+		String password = null;
 		connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = connection.prepareStatement(LoginQueryMapper.GET_PASSWORD);
 			preparedStatement.setString(1, login.getUsername());
 			ResultSet resultSet = preparedStatement.executeQuery();
-			if(resultSet.next()) {
-				pwd = resultSet.getString("password");
+			if (resultSet.next()) {
+				password = resultSet.getString("password");
 			}
-			return pwd;
+			return password;
 		} catch (SQLException e) {
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
 		} finally {
 			try {
 				connection.close();
 				preparedStatement.close();
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				logger.error(e.getMessage());
 				throw new LoginException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
 	}
 
-}	
+}

@@ -1,7 +1,6 @@
 package com.capgemini.pecunia.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,9 +10,6 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.capgemini.pecunia.dto.Account;
-
-import com.capgemini.pecunia.dto.Transaction;
-import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.MyException;
@@ -29,15 +25,12 @@ public class TransactionDAOImpl implements TransactionDAO {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : getBalance(Account account) 
-	 * - Input Parameters : account object
-	 * - Return Type : double 
-	 * - Throws : TransactionException,MyException
-	 * - Author : Rohan Patil
-	 * - Creation Date : 23/09/2019 
-	 * - Description : Getting balance of the specified account
+	 * - Function Name : getBalance(Account account) - Input Parameters : account
+	 * object - Return Type : double - Throws : TransactionException,MyException -
+	 * Author : Rohan Patil - Creation Date : 23/09/2019 - Description : Getting
+	 * balance of the specified account
 	 ********************************************************************************************************/
-	
+
 	@Override
 	public double getBalance(Account account) throws MyException, TransactionException {
 		Connection connection = DBConnection.getInstance().getConnection();
@@ -64,12 +57,12 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 		} catch (TransactionException me) {
 			// logger here
-			System.out.println("trans:"+me.getMessage());
+			System.out.println("trans:" + me.getMessage());
 			logger.error("");
 			throw new TransactionException(me.getMessage());
 		} catch (Exception e) {
 			// add logger here
-			System.out.println("exc:"+e.getMessage());
+			System.out.println("exc:" + e.getMessage());
 			logger.error("");
 			throw new MyException(e.getMessage());
 		} finally {
@@ -85,17 +78,14 @@ public class TransactionDAOImpl implements TransactionDAO {
 		}
 		return balance;
 	}
-	
+
 	/*******************************************************************************************************
-	 * - Function Name : updateBalance(Account account) 
-	 * - Input Parameters : account object
-	 * - Return Type : boolean 
-	 * - Throws : TransactionException,MyException
-	 * - Author : Anwesha Das
-	 * - Creation Date : 23/09/2019 
-	 * - Description : update balance of the specified account
+	 * - Function Name : updateBalance(Account account) - Input Parameters : account
+	 * object - Return Type : boolean - Throws : TransactionException,MyException -
+	 * Author : Anwesha Das - Creation Date : 23/09/2019 - Description : update
+	 * balance of the specified account
 	 ********************************************************************************************************/
-	
+
 	@Override
 	public boolean updateBalance(Account account) throws MyException, TransactionException {
 		boolean flag = false;
@@ -136,15 +126,12 @@ public class TransactionDAOImpl implements TransactionDAO {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : generateChequeId(Cheque cheque)
-	 * - Input Parameters : cheque object
-	 * - Return Type : int 
-	 * - Throws : TransactionException,MyException
-	 * - Author : Anish Basu
-	 * - Creation Date : 23/09/2019 
-	 * - Description : generate cheque id of the specified account
+	 * - Function Name : generateChequeId(Cheque cheque) - Input Parameters : cheque
+	 * object - Return Type : int - Throws : TransactionException,MyException -
+	 * Author : Anish Basu - Creation Date : 23/09/2019 - Description : generate
+	 * cheque id of the specified account
 	 ********************************************************************************************************/
-	
+
 	@Override
 	public int generateChequeId(Cheque cheque) throws MyException, TransactionException {
 		Connection connection = DBConnection.getInstance().getConnection();
@@ -154,8 +141,9 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 		int chequeId = 0;
 		try {
-			preparedStatement = connection.prepareStatement(TransactionQueryMapper.INSERT_CHEQUE_QUERY,Statement.RETURN_GENERATED_KEYS);
-			
+			preparedStatement = connection.prepareStatement(TransactionQueryMapper.INSERT_CHEQUE_QUERY,
+					Statement.RETURN_GENERATED_KEYS);
+
 			preparedStatement.setInt(1, cheque.getNum());
 			preparedStatement.setString(2, cheque.getAccountNo());
 			preparedStatement.setString(3, cheque.getHolderName());
@@ -163,16 +151,13 @@ public class TransactionDAOImpl implements TransactionDAO {
 			preparedStatement.setString(5, cheque.getIfsc());
 			preparedStatement.setDate(6, java.sql.Date.valueOf(cheque.getIssueDate()));
 			preparedStatement.setString(7, cheque.getStatus());
-			
-			try
-			{
+
+			try {
 				preparedStatement.executeUpdate();
-			}
-			catch(SQLException e)
-			{
+			} catch (SQLException e) {
 				throw new MyException(e.getMessage());
 			}
-			 resultSet = preparedStatement.getGeneratedKeys();
+			resultSet = preparedStatement.getGeneratedKeys();
 			if (resultSet.next()) {
 				chequeId = resultSet.getInt(1);
 			} else {
@@ -182,7 +167,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			// TODO logger here
 			logger.error("");
 			throw new TransactionException(e.getMessage());
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			throw new MyException(e.getMessage());
 		} finally {
 			try {
@@ -200,15 +185,12 @@ public class TransactionDAOImpl implements TransactionDAO {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : generateTransactionId(Transaction transaction)
-	 * - Input Parameters : transaction object
-	 * - Return Type : int 
-	 * - Throws : TransactionException,MyException
-	 * - Author : Arpan Mondal
-	 * - Creation Date : 23/09/2019 
-	 * - Description : generate transaction id of the specified account
+	 * - Function Name : generateTransactionId(Transaction transaction) - Input
+	 * Parameters : transaction object - Return Type : int - Throws :
+	 * TransactionException,MyException - Author : Arpan Mondal - Creation Date :
+	 * 23/09/2019 - Description : generate transaction id of the specified account
 	 ********************************************************************************************************/
-	
+
 	@Override
 	public int generateTransactionId(Transaction transaction) throws MyException, TransactionException {
 		Connection connection = DBConnection.getInstance().getConnection();
@@ -219,7 +201,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 		int transId = 0;
 
 		try {
-			preparedStatement = connection.prepareStatement(TransactionQueryMapper.INSERT_TRANSACTION_QUERY,Statement.RETURN_GENERATED_KEYS);
+			preparedStatement = connection.prepareStatement(TransactionQueryMapper.INSERT_TRANSACTION_QUERY,
+					Statement.RETURN_GENERATED_KEYS);
 
 			preparedStatement.setString(1, transaction.getAccountId());
 			preparedStatement.setString(2, transaction.getType());
@@ -229,15 +212,12 @@ public class TransactionDAOImpl implements TransactionDAO {
 			preparedStatement.setString(6, transaction.getTransFrom());
 			preparedStatement.setString(7, transaction.getTransTo());
 			preparedStatement.setDouble(8, transaction.getClosingBalance());
-			try
-			{
+			try {
 				preparedStatement.executeUpdate();
-			}
-			catch(Exception e)
-			{
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
-			
+
 			resultSet = preparedStatement.getGeneratedKeys();
 			if (resultSet.next()) {
 				transId = resultSet.getInt(1);

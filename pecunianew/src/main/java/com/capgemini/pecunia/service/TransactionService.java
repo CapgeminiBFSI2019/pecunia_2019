@@ -7,8 +7,7 @@ import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.exception.TransactionException;
 
 public interface TransactionService {
-	
-	
+
 	public double getBalance(Account account) throws TransactionException, MyException;
 
 	public boolean updateBalance(Account account) throws TransactionException, MyException;
@@ -21,7 +20,7 @@ public interface TransactionService {
 
 	public int debitUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException;
 
-	public double depositInterest(Account account) throws TransactionException,MyException;
+	public double depositInterest(Account account) throws TransactionException, MyException;
 
 	public double updateInterest() throws TransactionException, MyException;
 }

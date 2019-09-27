@@ -9,15 +9,3 @@ public static final String UPDATE_LOAN_STATUS = "UPDATE loan SET loan_status = ?
 public static final String UPDATE_AMOUNT = "UPDATE account SET balance = ? WHERE account_id = ?";
 
 }
-
-//
-//Full texts	
-//loan_id
-//account_id Ascending 1
-//amount
-//type
-//tenure
-//roi
-//loan_status
-//emi
-//credit_score

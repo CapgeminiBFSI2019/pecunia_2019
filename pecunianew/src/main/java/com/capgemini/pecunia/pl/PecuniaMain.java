@@ -1,4 +1,4 @@
-package com.capgemini.pecunia.pl;
+	package com.capgemini.pecunia.pl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,48 +39,38 @@ public class PecuniaMain {
 			// if validated
 			// Case true
 			boolean loginFlag = false;
-			do
-			{
+			do {
 				System.out.print("Enter username : ");
 				String username = scanner.next();
 				System.out.print("Enter password : ");
 				String password = scanner.next();
-				loginFlag = login(username,password);
-				if(loginFlag)
-				{
+				loginFlag = login(username, password);
+				if (loginFlag) {
 					System.out.println("Login successful");
 					break;
-				}
-				else
-				{
+				} else {
 					System.out.println("Login Unsuccessful");
 					System.out.print("Do you want to continue Y / N :-");
 					String choice = scanner.next();
-					if(choice.equalsIgnoreCase("n"))
-					{
+					if (choice.equalsIgnoreCase("n")) {
 						break;
-					}
-					else if(!choice.equalsIgnoreCase("y"))
-					{
+					} else if (!choice.equalsIgnoreCase("y")) {
 						System.out.println("Invalid choice");
 					}
 				}
-			}
-			while(!loginFlag);
+			} while (!loginFlag);
 			String flag = "y";
 			while (flag.equalsIgnoreCase("y")) {
 				System.out.println("Enter your option: " + "\n1. Create Account" + "\n2. Update Account"
-						+ "\n3. Delete Existing Account" + "\n4. Update Passbook/ Account Summary" + "\n5. Transaction");
+						+ "\n3. Delete Existing Account" + "\n4. Update Passbook/ Account Summary"
+						+ "\n5. Transaction");
 				choice2 = scanner.nextInt();
 				switch (choice2) {
 				case 1:
 					String accountId = addAccount();
-					if(accountId != null)
-					{
-						System.out.println("Account created, account Id is :" +accountId);
-					}
-					else
-					{
+					if (accountId != null) {
+						System.out.println("Account created, account Id is :" + accountId);
+					} else {
 						System.out.println(ErrorConstants.ACCOUNT_CREATION_ERROR);
 					}
 					break;
@@ -89,30 +79,27 @@ public class PecuniaMain {
 							+ "\n3. Update Address Details");
 					choice3 = scanner.nextInt();
 					switch (choice3) {
-					case 1: 
-						boolean updated  =updateCustomerName();
-						if(updated) {
+					case 1:
+						boolean updated = updateCustomerName();
+						if (updated) {
 							System.out.println("Details Updated");
-						}
-						else {
+						} else {
 							System.out.println(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 						}
 						break;
-					case 2: 
-						updated  =updateCustomerContact();
-						if(updated) {
+					case 2:
+						updated = updateCustomerContact();
+						if (updated) {
 							System.out.println("Details Updated");
-						}
-						else {
+						} else {
 							System.out.println(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 						}
 						break;
-					case 3: 
-						updated  =updateCustomerAddress();
-						if(updated) {
+					case 3:
+						updated = updateCustomerAddress();
+						if (updated) {
 							System.out.println("Details Updated");
-						}
-						else {
+						} else {
 							System.out.println(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 						}
 						break;
@@ -120,10 +107,9 @@ public class PecuniaMain {
 					break;
 				case 3:
 					boolean updated = deleteAccount();
-					if(updated) {
+					if (updated) {
 						System.out.println("Account Deleted");
-					}
-					else {
+					} else {
 						System.out.println(ErrorConstants.DELETE_ACCOUNT_ERROR);
 					}
 					break;
@@ -141,11 +127,12 @@ public class PecuniaMain {
 					int choice5 = scanner.nextInt();
 					switch (choice5) {
 					case 1:
-						System.out.println("Enter your option: " + "\n1. Credit Using Slip" + "\n2. Credit Using Cheque");
+						System.out
+								.println("Enter your option: " + "\n1. Credit Using Slip" + "\n2. Credit Using Cheque");
 						int choice6 = scanner.nextInt();
 						switch (choice6) {
 						case 1: // credit using slip
-							
+
 							int transIdCreditSlip = creditUsingSlip();
 							if (transIdCreditSlip != 0) {
 								System.out.println(
@@ -153,10 +140,10 @@ public class PecuniaMain {
 							} else {
 								System.out.println("Error occured while transaction");
 							}
-							
+
 							break;
 						case 2: // credit using cheque
-							
+
 							int transIdCreditCheque = creditUsingCheque();
 							if (transIdCreditCheque != 0) {
 								System.out.println("The Transaction is Successful.\nThe Transaction ID is :"
@@ -164,7 +151,7 @@ public class PecuniaMain {
 							} else {
 								System.out.println("Error occured while transaction");
 							}
-							
+
 							break;
 						}
 					case 2:
@@ -173,7 +160,7 @@ public class PecuniaMain {
 						int choice7 = scanner.nextInt();
 						switch (choice7) {
 						case 1: // debit using slip
-							
+
 							int transIdDebitSlip = debitUsingSlip();
 							if (transIdDebitSlip != 0) {
 								System.out.println(
@@ -181,11 +168,10 @@ public class PecuniaMain {
 							} else {
 								System.out.println("Error occured while transaction");
 							}
-							
-							
+
 							break;
 						case 2: // debit using cheque
-							
+
 							System.out.println();
 							int transIdDebitCheque = debitUsingCheque();
 							if (transIdDebitCheque != 0) {
@@ -194,7 +180,7 @@ public class PecuniaMain {
 							} else {
 								System.out.println("Error occured while transaction");
 							}
-							
+
 							break;
 						}
 					}
@@ -202,13 +188,13 @@ public class PecuniaMain {
 				while (true) {
 					System.out.println("Do you want to perform another operation (y/n)?");
 					String temp = br.readLine();
-					if (temp.equalsIgnoreCase("y")  || temp.equalsIgnoreCase("n") ){
+					if (temp.equalsIgnoreCase("y") || temp.equalsIgnoreCase("n")) {
 						flag = temp;
 						break;
 					} else {
 						System.out.println("Invalid Character Entered. Please enter again.");
 					}
-					
+
 				}
 
 			}
@@ -221,13 +207,12 @@ public class PecuniaMain {
 		}
 
 	}
-	
-	public static boolean login(String username,String password)
-	{
+
+	public static boolean login(String username, String password) {
 		Login login = new Login();
 		login.setUsername(username);
 		login.setPassword(password);
-		
+
 		boolean success = false;
 		LoginService loginService = new LoginServiceImpl();
 		try {
@@ -237,9 +222,8 @@ public class PecuniaMain {
 		}
 		return success;
 	}
-	
-	public static String addAccount() throws IOException
-	{
+
+	public static String addAccount() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String accountId = null;
 		System.out.println("Enter Customer Details:");
@@ -248,55 +232,55 @@ public class PecuniaMain {
 		Account acc = new Account();
 		System.out.println("Enter customer name: ");
 		String custName = br.readLine();
-		//validate
+		// validate
 		cust.setName(custName);
 		System.out.println("Enter customer aadhar: ");
 		String aadhar = br.readLine();
-		//validate
+		// validate
 		cust.setAadhar(aadhar);
 		System.out.println("Enter customer PAN: ");
 		String pan = br.readLine();
-		//validate
+		// validate
 		cust.setPan(pan);
 		System.out.println("Enter customer contact: ");
 		String contact = br.readLine();
-		//validate
+		// validate
 		cust.setContact(contact);
 		System.out.println("Enter customer Gender(M/F): ");
 		String gender = br.readLine();
-		//validate
+		// validate
 		cust.setGender(gender);
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		System.out.println("Enter customer DOB: ");
 		String dob = br.readLine();
-		//validate
+		// validate
 		cust.setDob(LocalDate.parse(dob, dateTimeFormatter));
 		System.out.println("Enter Customer Address Details:");
 		System.out.println("Enter Address Line 1: ");
 		String addressLine1 = br.readLine();
-		//validate
+		// validate
 		add.setLine1(addressLine1);
 		System.out.println("Enter Address Line 2: ");
 		String addressLine2 = br.readLine();
-		//validate
+		// validate
 		add.setLine2(addressLine2);
 		System.out.println("Enter Address City: ");
 		String city = br.readLine();
-		//validate
+		// validate
 		add.setCity(city);
 		System.out.println("Enter Address State: ");
 		String state = br.readLine();
-		//validate
+		// validate
 		add.setState(state);
 		System.out.println("Enter Address Country: ");
 		String country = br.readLine();
-		//validate
+		// validate
 		add.setCountry(country);
 		System.out.println("Enter Address Zipcode: ");
 		String zipcode = br.readLine();
-		//validate
+		// validate
 		add.setZipcode(zipcode);
-		
+
 		System.out.println("Enter Account type: ");
 		String accountType = br.readLine();
 		acc.setAccountType(accountType);
@@ -309,23 +293,22 @@ public class PecuniaMain {
 		System.out.println("Enter interest: ");
 		Double interest = Double.parseDouble(br.readLine());
 		acc.setInterest(interest);
-		
+
 		acc.setStatus("ACTIVE");
-		
+
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
 			accountId = ams.addAccount(cust, add, acc);
 		} catch (MyException | AccountException e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 		return accountId;
 	}
 
-	
-	public static boolean updateCustomerName() throws IOException{
+	public static boolean updateCustomerName() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		boolean updated=false;
+		boolean updated = false;
 		Account acc = new Account();
 		Customer cust = new Customer();
 		System.out.println("Enter the Account Id: ");
@@ -333,28 +316,28 @@ public class PecuniaMain {
 		acc.setId(accId);
 		System.out.println("Enter the new Name: ");
 		String name = br.readLine();
-		//validate
+		// validate
 		cust.setName(name);
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
 			updated = ams.updateCustomerName(acc, cust);
-			
+
 		} catch (MyException | AccountException e) {
 			System.out.println(e.getMessage());
 		}
 		return updated;
 	}
-	
-	public static boolean updateCustomerContact() throws IOException{
+
+	public static boolean updateCustomerContact() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		boolean updated=false;
+		boolean updated = false;
 		System.out.println("Enter the Account Id: ");
 		String accId = br.readLine();
 		Account acc = new Account();
 		acc.setId(accId);
 		System.out.println("Enter the new Contact: ");
 		String contact = br.readLine();
-		//validate
+		// validate
 		Customer cust = new Customer();
 		cust.setContact(contact);
 		AccountManagementService ams = new AccountManagementServiceImpl();
@@ -365,39 +348,39 @@ public class PecuniaMain {
 		}
 		return updated;
 	}
-	
-	public static boolean updateCustomerAddress() throws IOException{
+
+	public static boolean updateCustomerAddress() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		boolean updated=false;
+		boolean updated = false;
 		System.out.println("Enter the Account Id: ");
 		String accId = br.readLine();
 		Account acc = new Account();
 		acc.setId(accId);
-		Address add= new Address();
+		Address add = new Address();
 		System.out.println("Enter the new Address Details: ");
 		System.out.println("Enter Address Line 1: ");
 		String addressLine1 = br.readLine();
-		//validate
+		// validate
 		add.setLine1(addressLine1);
 		System.out.println("Enter Address Line 2: ");
 		String addressLine2 = br.readLine();
-		//validate
+		// validate
 		add.setLine1(addressLine2);
 		System.out.println("Enter Address City: ");
 		String city = br.readLine();
-		//validate
+		// validate
 		add.setCity(city);
 		System.out.println("Enter Address State: ");
 		String state = br.readLine();
-		//validate
+		// validate
 		add.setState(state);
 		System.out.println("Enter Address Country: ");
 		String country = br.readLine();
-		//validate
+		// validate
 		add.setCountry(country);
 		System.out.println("Enter Address Zipcode: ");
 		String zipcode = br.readLine();
-		//validate
+		// validate
 		add.setZipcode(zipcode);
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
@@ -407,26 +390,24 @@ public class PecuniaMain {
 		}
 		return updated;
 	}
-	
-	
+
 	public static boolean deleteAccount() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Enter the Account Id: ");
 		String accId = br.readLine();
-		boolean updated=false;
+		boolean updated = false;
 		Account acc = new Account();
 		acc.setId(accId);
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
 			updated = ams.deleteAccount(acc);
-			
+
 		} catch (MyException | AccountException e) {
 			System.out.println(e.getMessage());
 		}
 		return updated;
 	}
-	
-	
+
 	public static int creditUsingSlip() throws IOException {
 
 		Transaction transaction = new Transaction();
@@ -602,6 +583,5 @@ public class PecuniaMain {
 		}
 		return transChequeCreditId;
 	}
-	
-	
+
 }

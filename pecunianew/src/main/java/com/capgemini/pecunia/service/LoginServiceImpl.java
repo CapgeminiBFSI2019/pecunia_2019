@@ -1,6 +1,5 @@
 package com.capgemini.pecunia.service;
 
-
 import java.security.NoSuchAlgorithmException;
 
 import org.apache.log4j.Logger;
@@ -9,39 +8,31 @@ import org.apache.log4j.PropertyConfigurator;
 import com.capgemini.pecunia.dao.LoginDAO;
 import com.capgemini.pecunia.dao.LoginDAOImpl;
 import com.capgemini.pecunia.dto.Login;
-
 import com.capgemini.pecunia.exception.ErrorConstants;
-
 import com.capgemini.pecunia.exception.LoginException;
 import com.capgemini.pecunia.exception.MyException;
 import com.capgemini.pecunia.util.LoggerMessage;
 import com.capgemini.pecunia.util.Utility;
 
-public class LoginServiceImpl implements LoginService{
-	
-	
-	
+public class LoginServiceImpl implements LoginService {
+
 	Logger logger = Logger.getRootLogger();
+
 	public LoginServiceImpl() {
 		PropertyConfigurator.configure("resources//log4j.properties");
 	}
-	
-	
-	
+
 	LoginDAO loginDAO = new LoginDAOImpl();
-	
-	
-	
+
 	@Override
 	public boolean validateEmail(Login login) throws MyException, LoginException {
-		boolean flag=false;
-		String pwd=null;
+		boolean flag = false;
+		String pwd = null;
 		String salt = loginDAO.validateEmail(login);
-		if(salt==null) {
-			
+		if (salt == null) {
+
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
-		}
-		else {
+		} else {
 			byte arr[] = null;
 			try {
 				arr = Utility.getSHA(login.getPassword() + salt);
@@ -50,11 +41,11 @@ public class LoginServiceImpl implements LoginService{
 				throw new LoginException(ErrorConstants.LOGIN_ERROR);
 			}
 			String hashPassword = Utility.toHexString(arr);
-			Login loginNew = new Login(login.getUsername(),null);
+			Login loginNew = new Login(login.getUsername(), null);
 			try {
 				pwd = loginDAO.fetchPassword(loginNew);
-				if(pwd.equals(hashPassword)) {
-					flag=true;
+				if (pwd.equals(hashPassword)) {
+					flag = true;
 					logger.info(LoggerMessage.LOGIN_SUCCESSFUL);
 				}
 			} catch (LoginException e) {
@@ -64,9 +55,5 @@ public class LoginServiceImpl implements LoginService{
 		}
 		return flag;
 	}
-	
-	
-	
-	
 
 }

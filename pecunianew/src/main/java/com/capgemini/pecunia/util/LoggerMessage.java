@@ -2,18 +2,12 @@ package com.capgemini.pecunia.util;
 
 public class LoggerMessage {
 	
-	//logindaodone//
 	
-	 //public static final String LOGIN_ERROR = "Login Failed.";
      public static final String LOGIN_CONNECTION_ERROR = "Connection error";
      public static final String LOGIN_SUCCESSFUL = "Login succesful.";
      
-     //AccountmanagementDAOimpl_Deletiondone//
-	// public static final String DELETION_ERROR = "Deletion failed";
-	 public static final String DELETION_SUCCESSFUL = " Deletion succesful";
+	 public static final String DELETION_SUCCESSFUL = " Account deletion successful";
 	 
-	 //AccountmanagementDAOimpl_Updationdone//
-	 //public static final String UPDATE_CUSTOMER_NAME_ERROR = "Error in updating customer details";
 	 public static final String UPDATE_CUSTOMER_NAME_SUCCESSFUL = " Customer Details added";
 	 //public static final String UPDATE_CUSTOMER_CONTACT_ERROR = "Error in updating customer contact.";
 	 public static final String UPDATE_CUSTOMER_CONTACT_SUCCESSFUL = " Customer Contact updated.";
