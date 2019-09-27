@@ -22,7 +22,24 @@ public class ErrorConstants {
 	public static final String ERROR_VALIDATION = "Error in validating account";
 	public static final String ADD_DETAILS_ERROR = "Addition unsuccessful.";
 
- 
+	public static final String BALANCE_RETRIEVAL_ERROR = "Failed to retrieve balance";
+	public static final String BALANCE_UPDATE_ERROR = "Failed to update balance";
+	public static final String CHEQUE_INSERTION_ERROR = "Failed to add cheque details";
+	public static final String TRANSACTION_INSERTION_ERROR = "Failed to add transaction details";
+	
+	public static final String CONNECTION_FAILURE = "Connection problem. Cannot connect to the database";
+	public static final String FILE_CLOSING_FAILURE = "Files cannot be closed";
+	
+	public static final String INVALID_ACCOUNT_EXCEPTION = "Invalid Account Number";
+	public static final String INVALID_BANK_EXCEPTION = "Bank doesn't exist. ";
+	public static final String INVALID_CHEQUE_EXCEPTION = "Invalid cheque";
+	public static final String EXCEPTION_DURING_TRANSACTION = "Error occured while transaction";
+	public static final String INSUFFICIENT_BALANCE_EXCEPTION = "Insufficient balance";
+	public static final String CHEQUE_BOUNCE_EXCEPTION = "Cheque bounce due to insufficient balance";
+	public static final String TRANSACTION_AMOUNT_ERROR = "The transaction could not take place";
+	public static final String AMOUNT_EXCEEDS_EXCEPTION = "Credit amount exceeds the maximum amount";
+	public static final String AMOUNT_LESS_EXCEPTION = "Credit amount is less than the minimum amount";
+
 }
 
 

@@ -98,13 +98,13 @@ public class TransactionServiceImpl implements TransactionService {
 				}
 
 				else {
-					throw new TransactionException(Constants.AMOUNT_EXCEEDS_EXCEPTION);
+					throw new TransactionException(ErrorConstants.AMOUNT_EXCEEDS_EXCEPTION);
 					// TODO
 
 				}
 			} else {
 				// TODO
-				throw new TransactionException(Constants.AMOUNT_LESS_EXCEPTION);
+				throw new TransactionException(ErrorConstants.AMOUNT_LESS_EXCEPTION);
 			}
 		} catch (TransactionException e) {
 			e.getMessage();
@@ -112,7 +112,7 @@ public class TransactionServiceImpl implements TransactionService {
 		}
 
 		catch (Exception e) {
-			throw new TransactionException(Constants.TRANSACTION_AMOUNT_ERROR);
+			throw new TransactionException(ErrorConstants.TRANSACTION_AMOUNT_ERROR);
 
 		}
 		return transId;
@@ -157,14 +157,14 @@ public class TransactionServiceImpl implements TransactionService {
 				transId = transactionDAO.generateTransactionId(debitTransaction);
 
 			} else {
-				throw new TransactionException(Constants.INSUFFICIENT_BALANCE_EXCEPTION);
+				throw new TransactionException(ErrorConstants.INSUFFICIENT_BALANCE_EXCEPTION);
 			}
 		} catch (TransactionException e) {
 			e.getMessage();
 			throw new TransactionException(e.getMessage());
 		} catch (Exception e) {
 
-			throw new TransactionException(Constants.EXCEPTION_DURING_TRANSACTION);
+			throw new TransactionException(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 
 		}
 		return transId;
@@ -219,18 +219,18 @@ public class TransactionServiceImpl implements TransactionService {
 
 				} else {
 					// TODO logger
-					throw new TransactionException(Constants.CHEQUE_BOUNCE_EXCEPTION);
+					throw new TransactionException(ErrorConstants.CHEQUE_BOUNCE_EXCEPTION);
 				}
 			} else {
 				// TODO logger
-				throw new TransactionException(Constants.INVALID_CHEQUE_EXCEPTION);
+				throw new TransactionException(ErrorConstants.INVALID_CHEQUE_EXCEPTION);
 			}
 
 		} catch (TransactionException e) {
 			e.getMessage();
 			throw new TransactionException(e.getMessage());
 		} catch (Exception e) {
-			throw new TransactionException(Constants.EXCEPTION_DURING_TRANSACTION);
+			throw new TransactionException(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 		}
 		return transId;
 	}
@@ -298,13 +298,13 @@ public class TransactionServiceImpl implements TransactionService {
 			} else {
 				if (!bankName.equals(Constants.BANK_NAME)) {
 					// invalid bank cheque
-					throw new TransactionException(Constants.INVALID_BANK_EXCEPTION);
+					throw new TransactionException(ErrorConstants.INVALID_BANK_EXCEPTION);
 				} else {
 					// pecunia cheque
 					if (transaction.getAmount() < Constants.MINIMUM_CHEQUE_AMOUNT
 							|| transaction.getAmount() > Constants.MAXIMUM_CHEQUE_AMOUNT) {
 						// invalid cheque amount
-						throw new TransactionException(Constants.INVALID_CHEQUE_EXCEPTION);
+						throw new TransactionException(ErrorConstants.INVALID_CHEQUE_EXCEPTION);
 					} else {
 
 						Account beneficiaryAccount = new Account();
@@ -361,7 +361,7 @@ public class TransactionServiceImpl implements TransactionService {
 			}
 			return transId;
 		} catch (Exception e) {
-			throw new TransactionException(Constants.EXCEPTION_DURING_TRANSACTION);
+			throw new TransactionException(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 		}
 
 	}

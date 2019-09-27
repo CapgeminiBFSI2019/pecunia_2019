@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
+import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.util.Constants;
 import com.capgemini.pecunia.util.DBConnection;
@@ -52,7 +53,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 		}
 
 		catch (SQLException sqlException) {
-			throw new PecuniaException(Constants.CONNECTION_FAILURE);
+			throw new PecuniaException(ErrorConstants.CONNECTION_FAILURE);
 		}
 
 		finally {
@@ -61,7 +62,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				preparedStatement.close();
 				connection.close();
 			} catch (SQLException e) {
-				throw new PecuniaException(Constants.FILE_CLOSING_FAILURE);
+				throw new PecuniaException(ErrorConstants.FILE_CLOSING_FAILURE);
 
 			}
 		}
@@ -96,7 +97,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				connection.close();
 			} catch (SQLException sqlException) {
 
-				throw new PecuniaException(Constants.FILE_CLOSING_FAILURE);
+				throw new PecuniaException(ErrorConstants.FILE_CLOSING_FAILURE);
 
 			}
 		}
@@ -126,14 +127,14 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 			}
 		} catch (SQLException sqlException) {
-			throw new PecuniaException(Constants.CONNECTION_FAILURE);
+			throw new PecuniaException(ErrorConstants.CONNECTION_FAILURE);
 		} finally {
 			try {
 				preparedStatement.close();
 				connection.close();
 			} catch (SQLException sqlException) {
 
-				throw new PecuniaException(Constants.FILE_CLOSING_FAILURE);
+				throw new PecuniaException(ErrorConstants.FILE_CLOSING_FAILURE);
 
 			}
 		}
@@ -162,7 +163,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				connection.close();
 			} catch (SQLException sqlException) {
 
-				throw new PecuniaException(Constants.FILE_CLOSING_FAILURE);
+				throw new PecuniaException(ErrorConstants.FILE_CLOSING_FAILURE);
 
 			}
 		}
@@ -189,7 +190,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				connection.close();
 			} catch (SQLException sqlException) {
 
-				throw new PecuniaException(Constants.FILE_CLOSING_FAILURE);
+				throw new PecuniaException(ErrorConstants.FILE_CLOSING_FAILURE);
 
 			}
 		}

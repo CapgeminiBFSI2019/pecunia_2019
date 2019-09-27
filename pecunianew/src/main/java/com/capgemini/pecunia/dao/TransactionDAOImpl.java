@@ -12,6 +12,7 @@ import org.apache.log4j.PropertyConfigurator;
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
+import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.DBConnection;
@@ -53,7 +54,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 			if (balance == -1) {
 				// logger here
-				throw new TransactionException("Balance retrieve fail");
+				throw new TransactionException(ErrorConstants.BALANCE_RETRIEVAL_ERROR);
 			}
 
 		} catch (SQLException e) {
@@ -66,8 +67,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 				preparedStatement.close();
 				connection.close();
 			} catch (SQLException e) {
-				logger.error("Error in closing db connection");
-				throw new PecuniaException("Error in closing db connection");
+				logger.error(ErrorConstants.DB_CONNECTION_ERROR);
+				throw new PecuniaException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 
 		}
@@ -98,8 +99,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 				balanceUpdated = true;
 			} else {
 				// logger here
-				logger.error("Update balance failed");
-				throw new TransactionException("Update balance failed");
+				logger.error(ErrorConstants.BALANCE_UPDATE_ERROR);
+				throw new TransactionException(ErrorConstants.BALANCE_UPDATE_ERROR);
 			}
 		} catch (SQLException e) {
 			// logger here
@@ -110,8 +111,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 				connection.close();
 			} catch (SQLException e) {
 				// logger here
-				logger.error("Error closing db connection");
-				throw new PecuniaException("Error closing db connection");
+				logger.error(ErrorConstants.DB_CONNECTION_ERROR);
+				throw new PecuniaException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
 		return balanceUpdated;
@@ -149,7 +150,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			if (resultSet.next()) {
 				chequeId = resultSet.getInt(1);
 			} else {
-				throw new TransactionException("Error occured during cheque insertion");
+				throw new TransactionException(ErrorConstants.CHEQUE_INSERTION_ERROR);
 			}
 		} catch (SQLException e) {
 			throw new PecuniaException(e.getMessage());
@@ -204,8 +205,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 				transId = resultSet.getInt(1);
 			} else {
 				// TODO logger here
-				logger.error("Error occured during transaction insertion");
-				throw new TransactionException("Error occured during transaction insertion");
+				logger.error(ErrorConstants.TRANSACTION_INSERTION_ERROR);
+				throw new TransactionException(ErrorConstants.TRANSACTION_INSERTION_ERROR);
 			}
 		} catch (SQLException e) {
 			throw new PecuniaException(e.getMessage());
