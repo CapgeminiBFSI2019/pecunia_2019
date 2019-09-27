@@ -197,8 +197,8 @@ public class TransactionServiceImpl implements TransactionService {
 			double newBalance = 0.0;
 			long period = ChronoUnit.DAYS.between(chequeissueDate, transDate);
 
-			if (period <= 90 && amount <= Constants.MAXIMUM_CHEQUE__AMOUNT
-					&& amount >= Constants.MINIMUM_CHEQUE__AMOUNT) {
+			if (period <= 90 && amount <= Constants.MAXIMUM_CHEQUE_AMOUNT
+					&& amount >= Constants.MINIMUM_CHEQUE_AMOUNT) {
 				if (oldBalance > amount) {
 					newBalance = oldBalance - amount;
 					account.setBalance(newBalance);
@@ -297,9 +297,17 @@ public class TransactionServiceImpl implements TransactionService {
 				chequeDetail.setStatus(Constants.CHEQUE_STATUS_PENDING);
 				transId = transactionDAO.generateChequeId(chequeDetail);
 			} else {
+
 				if (!bankName.equals(Constants.BANK_NAME)) {
 					// invalid bank cheque
 					throw new TransactionException(Constants.INVALID_BANK_EXCEPTION);
+
+				// pecunia cheque
+				if (transaction.getAmount() < Constants.MINIMUM_CHEQUE_AMOUNT
+						|| transaction.getAmount() > Constants.MAXIMUM_CHEQUE_AMOUNT) {
+					// invalid cheque amount
+					throw new TransactionException(Constants.INVALID_CHEQUE_EXCEPTION);
+
 				} else {
 					// pecunia cheque
 					if (transaction.getAmount() < Constants.MINIMUM_CHEQUE__AMOUNT

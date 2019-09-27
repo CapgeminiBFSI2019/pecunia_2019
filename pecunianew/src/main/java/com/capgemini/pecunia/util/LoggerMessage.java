@@ -25,8 +25,9 @@ public class LoggerMessage {
 	 //passbookmaintainanceDAOimpldone//
 	 public static final String UPDATE_PASSBOOK_ERROR = "Error in updating passbook."; 
 	 public static final String UPDATE_PASSBOOK_SUCCESSFUL= "Passbook updated successfully."; 
+	 public static final String LAST_UPDATE_DATE_ERROR= "Error in updating date.";
 	 
-	 //public static final String ACCOUNT_SUMMARY_ERROR = "Error in displaying account summary."; 
+	 public static final String ACCOUNT_SUMMARY_ERROR = "Error in displaying account summary."; 
 	 public static final String ACCOUNT_SUMMARY_SUCCESSFUL= "Account summary displayed successfully."; 
 	
 	 //loanDaohalfdone,have to check which ID is being returned//
