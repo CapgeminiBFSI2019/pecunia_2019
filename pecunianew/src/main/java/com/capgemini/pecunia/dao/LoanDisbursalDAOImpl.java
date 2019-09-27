@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.util.Constants;
 import com.capgemini.pecunia.util.DBConnection;
 
@@ -22,7 +22,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 		return emi * tenure;
 	}
 
-	public List<Loan> retrieveLoanList() throws IOException, MyException {
+	public List<Loan> retrieveLoanList() throws IOException, PecuniaException {
 
 		Connection connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
@@ -52,7 +52,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 		}
 
 		catch (SQLException sqlException) {
-			throw new MyException(Constants.CONNECTION_FAILURE);
+			throw new PecuniaException(Constants.CONNECTION_FAILURE);
 		}
 
 		finally {
@@ -61,7 +61,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				preparedStatement.close();
 				connection.close();
 			} catch (SQLException e) {
-				throw new MyException(Constants.FILE_CLOSING_FAILURE);
+				throw new PecuniaException(Constants.FILE_CLOSING_FAILURE);
 
 			}
 		}
@@ -70,7 +70,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 	}
 
-	public void releaseLoanSheet(List<Loan> loanList) throws IOException, MyException {
+	public void releaseLoanSheet(List<Loan> loanList) throws IOException, PecuniaException {
 		Connection connection = DBConnection.getInstance().getConnection();
 
 		PreparedStatement preparedStatement = null;
@@ -88,7 +88,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 			}
 
 		} catch (SQLException sqlException) {
-			throw new MyException(sqlException.getMessage());
+			throw new PecuniaException(sqlException.getMessage());
 
 		} finally {
 			try {
@@ -96,14 +96,14 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				connection.close();
 			} catch (SQLException sqlException) {
 
-				throw new MyException(Constants.FILE_CLOSING_FAILURE);
+				throw new PecuniaException(Constants.FILE_CLOSING_FAILURE);
 
 			}
 		}
 
 	}
 
-	public ArrayList<LoanDisbursal> loanApprovedList() throws IOException, MyException {
+	public ArrayList<LoanDisbursal> loanApprovedList() throws IOException, PecuniaException {
 		Connection connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -126,14 +126,14 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 			}
 		} catch (SQLException sqlException) {
-			throw new MyException(Constants.CONNECTION_FAILURE);
+			throw new PecuniaException(Constants.CONNECTION_FAILURE);
 		} finally {
 			try {
 				preparedStatement.close();
 				connection.close();
 			} catch (SQLException sqlException) {
 
-				throw new MyException(Constants.FILE_CLOSING_FAILURE);
+				throw new PecuniaException(Constants.FILE_CLOSING_FAILURE);
 
 			}
 		}
@@ -142,7 +142,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 	}
 
 	public void updateLoanAccount(ArrayList<LoanDisbursal> loanApprovals, double dueAmount, double tenure,
-			String accountId) throws IOException, MyException {
+			String accountId) throws IOException, PecuniaException {
 		Connection connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
 		try {
@@ -154,7 +154,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 			preparedStatement.execute();
 
 		} catch (SQLException sqlException) {
-			throw new MyException(sqlException.getMessage());
+			throw new PecuniaException(sqlException.getMessage());
 
 		} finally {
 			try {
@@ -162,7 +162,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				connection.close();
 			} catch (SQLException sqlException) {
 
-				throw new MyException(Constants.FILE_CLOSING_FAILURE);
+				throw new PecuniaException(Constants.FILE_CLOSING_FAILURE);
 
 			}
 		}
@@ -170,7 +170,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 	}
 
 	public void updateStatus(ArrayList<Loan> loanRequests, String accountId, String Status)
-			throws IOException, MyException {
+			throws IOException, PecuniaException {
 		Connection connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
 		try {
@@ -181,7 +181,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 			preparedStatement.execute();
 
 		} catch (SQLException sqlException) {
-			throw new MyException(sqlException.getMessage());
+			throw new PecuniaException(sqlException.getMessage());
 
 		} finally {
 			try {
@@ -189,7 +189,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				connection.close();
 			} catch (SQLException sqlException) {
 
-				throw new MyException(Constants.FILE_CLOSING_FAILURE);
+				throw new PecuniaException(Constants.FILE_CLOSING_FAILURE);
 
 			}
 		}

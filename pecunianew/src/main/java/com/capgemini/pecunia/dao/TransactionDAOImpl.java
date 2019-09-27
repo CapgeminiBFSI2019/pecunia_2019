@@ -12,7 +12,7 @@ import org.apache.log4j.PropertyConfigurator;
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.DBConnection;
 
@@ -26,13 +26,13 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 	/*******************************************************************************************************
 	 * - Function Name : getBalance(Account account) - Input Parameters : account
-	 * object - Return Type : double - Throws : TransactionException,MyException -
+	 * object - Return Type : double - Throws : TransactionException,PecuniaException -
 	 * Author : Rohan Patil - Creation Date : 23/09/2019 - Description : Getting
 	 * balance of the specified account
 	 ********************************************************************************************************/
 
 	@Override
-	public double getBalance(Account account) throws MyException, TransactionException {
+	public double getBalance(Account account) throws PecuniaException, TransactionException {
 		Connection connection = DBConnection.getInstance().getConnection();
 
 		PreparedStatement preparedStatement = null;
@@ -59,7 +59,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 		} catch (SQLException e) {
 			// add logger here
 			logger.error("");
-			throw new MyException(e.getMessage());
+			throw new PecuniaException(e.getMessage());
 		} finally {
 			try {
 				resultSet.close();
@@ -67,7 +67,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 				connection.close();
 			} catch (SQLException e) {
 				logger.error("Error in closing db connection");
-				throw new MyException("Error in closing db connection");
+				throw new PecuniaException("Error in closing db connection");
 			}
 
 		}
@@ -76,13 +76,13 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 	/*******************************************************************************************************
 	 * - Function Name : updateBalance(Account account) - Input Parameters : account
-	 * object - Return Type : boolean - Throws : TransactionException,MyException -
+	 * object - Return Type : boolean - Throws : TransactionException,PecuniaException -
 	 * Author : Anwesha Das - Creation Date : 23/09/2019 - Description : update
 	 * balance of the specified account
 	 ********************************************************************************************************/
 
 	@Override
-	public boolean updateBalance(Account account) throws MyException, TransactionException {
+	public boolean updateBalance(Account account) throws PecuniaException, TransactionException {
 		boolean balanceUpdated = false;
 		Connection connection = DBConnection.getInstance().getConnection();
 
@@ -103,7 +103,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			}
 		} catch (SQLException e) {
 			// logger here
-			throw new MyException(e.getMessage());
+			throw new PecuniaException(e.getMessage());
 		} finally {
 			try {
 				preparedStatement.close();
@@ -111,7 +111,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			} catch (SQLException e) {
 				// logger here
 				logger.error("Error closing db connection");
-				throw new MyException("Error closing db connection");
+				throw new PecuniaException("Error closing db connection");
 			}
 		}
 		return balanceUpdated;
@@ -119,13 +119,13 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 	/*******************************************************************************************************
 	 * - Function Name : generateChequeId(Cheque cheque) - Input Parameters : cheque
-	 * object - Return Type : int - Throws : TransactionException,MyException -
+	 * object - Return Type : int - Throws : TransactionException,PecuniaException -
 	 * Author : Anish Basu - Creation Date : 23/09/2019 - Description : generate
 	 * cheque id of the specified account
 	 ********************************************************************************************************/
 
 	@Override
-	public int generateChequeId(Cheque cheque) throws MyException, TransactionException {
+	public int generateChequeId(Cheque cheque) throws PecuniaException, TransactionException {
 		Connection connection = DBConnection.getInstance().getConnection();
 
 		PreparedStatement preparedStatement = null;
@@ -152,7 +152,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 				throw new TransactionException("Error occured during cheque insertion");
 			}
 		} catch (SQLException e) {
-			throw new MyException(e.getMessage());
+			throw new PecuniaException(e.getMessage());
 		} finally {
 			try {
 				resultSet.close();
@@ -161,7 +161,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			} catch (SQLException e) {
 				// TODO logger here
 				logger.error("");
-				throw new MyException(e.getMessage());
+				throw new PecuniaException(e.getMessage());
 			}
 
 		}
@@ -171,12 +171,12 @@ public class TransactionDAOImpl implements TransactionDAO {
 	/*******************************************************************************************************
 	 * - Function Name : generateTransactionId(Transaction transaction) - Input
 	 * Parameters : transaction object - Return Type : int - Throws :
-	 * TransactionException,MyException - Author : Arpan Mondal - Creation Date :
+	 * TransactionException,PecuniaException - Author : Arpan Mondal - Creation Date :
 	 * 23/09/2019 - Description : generate transaction id of the specified account
 	 ********************************************************************************************************/
 
 	@Override
-	public int generateTransactionId(Transaction transaction) throws MyException, TransactionException {
+	public int generateTransactionId(Transaction transaction) throws PecuniaException, TransactionException {
 		Connection connection = DBConnection.getInstance().getConnection();
 
 		PreparedStatement preparedStatement = null;
@@ -208,7 +208,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 				throw new TransactionException("Error occured during transaction insertion");
 			}
 		} catch (SQLException e) {
-			throw new MyException(e.getMessage());
+			throw new PecuniaException(e.getMessage());
 		} finally {
 			try {
 				resultSet.close();
@@ -217,7 +217,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			} catch (SQLException e) {
 				// TODO logger here
 				logger.error("");
-				throw new MyException(e.getMessage());
+				throw new PecuniaException(e.getMessage());
 			}
 
 		}

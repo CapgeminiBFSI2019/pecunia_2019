@@ -11,7 +11,7 @@ import org.apache.log4j.PropertyConfigurator;
 import com.capgemini.pecunia.dto.Login;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.LoginException;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.util.DBConnection;
 
 public class LoginDAOImpl implements LoginDAO {
@@ -28,7 +28,7 @@ public class LoginDAOImpl implements LoginDAO {
 	 * Description :Validate Email from Database ,  returns Email
 	 ********************************************************************************************************/
 	@Override
-	public String validateEmail(Login login) throws MyException, LoginException {
+	public String validateEmail(Login login) throws PecuniaException, LoginException {
 		String secretKey = null;
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
@@ -62,7 +62,7 @@ public class LoginDAOImpl implements LoginDAO {
 	 * Description : Fetching validation details from database
 	 ********************************************************************************************************/
 	@Override
-	public String fetchPassword(Login login) throws MyException, LoginException {
+	public String fetchPassword(Login login) throws PecuniaException, LoginException {
 		Connection connection = null;
 		String password = null;
 		connection = DBConnection.getInstance().getConnection();

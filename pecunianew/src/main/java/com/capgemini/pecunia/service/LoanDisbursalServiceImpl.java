@@ -9,7 +9,7 @@ import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
 import com.capgemini.pecunia.exception.LoanDisbursalException;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.Constants;
 
@@ -21,12 +21,12 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	/*******************************************************************************************************
 	 * - Function Name : retrieveAll() - Input Parameters : None - Return Type :
-	 * ArrayList<Loan> - Throws : MyException, IOException, LoanDisbursalException -
+	 * ArrayList<Loan> - Throws : PecuniaException, IOException, LoanDisbursalException -
 	 * Author : aninrana - Creation Date : 25/09/2019 - Description : Retrieves loan
 	 * requests
 	 ********************************************************************************************************/
 
-	public ArrayList<Loan> retrieveAll() throws MyException, IOException, LoanDisbursalException {
+	public ArrayList<Loan> retrieveAll() throws PecuniaException, IOException, LoanDisbursalException {
 
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		ArrayList<Loan> retrievedLoanRequests = new ArrayList<Loan>();
@@ -46,14 +46,14 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	/*******************************************************************************************************
 	 * - Function Name : approveLoan(ArrayList<Loan> loanRequestList) - Input
 	 * Parameters : ArrayList<Loan> loanRequestList - Return Type : void - Throws :
-	 * IOException, MyException, LoanDisbursalException - Author : aninrana -
+	 * IOException, PecuniaException, LoanDisbursalException - Author : aninrana -
 	 * Creation Date : 25/09/2019 - Description : Aprroving the loan request based
 	 * on condition
 	 ********************************************************************************************************/
 
 
 
-	public ArrayList<Loan> approveLoan(ArrayList<Loan> loanRequestList) throws IOException, MyException, LoanDisbursalException {
+	public ArrayList<Loan> approveLoan(ArrayList<Loan> loanRequestList) throws IOException, PecuniaException, LoanDisbursalException {
 		int size = loanRequestList.size();
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		if (loanRequestList.size() == 0) {
@@ -82,7 +82,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	/*******************************************************************************************************
 	 * - Function Name : approvedLoanList() - Input Parameters : None - Return Type
-	 * : ArrayList<LoanDisbursal> - Throws : MyException,IOException - Author :
+	 * : ArrayList<LoanDisbursal> - Throws : PecuniaException,IOException - Author :
 	 * aninrana - Creation Date : 25/09/2019 - Description : retrieving the loan
 	 * disbursed data
 	 ********************************************************************************************************/
@@ -90,7 +90,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	
 
 
-	public ArrayList<LoanDisbursal> approvedLoanList() throws IOException, MyException {
+	public ArrayList<LoanDisbursal> approvedLoanList() throws IOException, PecuniaException {
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		
 		approvedLoanList = loanDisbursedDAO.loanApprovedList();
@@ -101,13 +101,13 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	/*******************************************************************************************************
 	 * - Function Name : rejectedLoanRequests() - Input Parameters : void - Return
-	 * Type : ArrayList<Loan> - Throws : MyException, LoanDisbursalException -
+	 * Type : ArrayList<Loan> - Throws : PecuniaException, LoanDisbursalException -
 	 * Author : aninrana - Creation Date : 25/09/2019 - Description : Retrieving the
 	 * rejected loan rejected
 	 ********************************************************************************************************/
 
 
-	public ArrayList<Loan> rejectedLoanRequests() throws MyException, LoanDisbursalException {
+	public ArrayList<Loan> rejectedLoanRequests() throws PecuniaException, LoanDisbursalException {
 		if (rejectedLoanList.size() == 0) {
 			throw new LoanDisbursalException("No loan request has been rejected");
 		}
@@ -118,11 +118,11 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * - Function Name : updateLoanAccount(ArrayList<LoanDisbursal>
 	 * updateLoanApprovals, int numberOfMonths) - Input Parameters :
 	 * ArrayList<LoanDisbursal> updateLoanApprovals, int numberOfMonths - Return
-	 * Type : void - Throws : throws MyException - Author : aninrana - Creation Date
+	 * Type : void - Throws : throws PecuniaException - Author : aninrana - Creation Date
 	 * : 25/09/2019 - Description : Updating the data in loan disbursed database
 	 ********************************************************************************************************/
 
-	public void updateLoanAccount(ArrayList<LoanDisbursal> updateLoanApprovals, int numberOfMonths) throws MyException {
+	public void updateLoanAccount(ArrayList<LoanDisbursal> updateLoanApprovals, int numberOfMonths) throws PecuniaException {
 
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		for (int i = 0; i < updateLoanApprovals.size(); i++) {
@@ -147,13 +147,13 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	/*******************************************************************************************************
 	 * - Function Name : updateLoanStatus(ArrayList<Loan> rejectedLoanList) - Input
 	 * Parameters : ArrayList<Loan> rejectedLoanList - Return Type : void - Throws :
-	 * MyException - Author : aninrana - Creation Date : 25/09/2019 - Description :
+	 * PecuniaException - Author : aninrana - Creation Date : 25/09/2019 - Description :
 	 * Updating the loan status after operation
 	 ********************************************************************************************************/
 
 
 
-	public void updateLoanStatus(ArrayList<Loan> rejectedLoanList, ArrayList<Loan> approvedLoanList) throws MyException {
+	public void updateLoanStatus(ArrayList<Loan> rejectedLoanList, ArrayList<Loan> approvedLoanList) throws PecuniaException {
 
 
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
@@ -182,12 +182,12 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	/*******************************************************************************************************
 	 * - Function Name : updateExistingBalance(ArrayList<Loan> approvedLoanRequests) - Input
 	 * Parameters : ArrayList<Loan> approvedLoanRequests - Return Type : void - Throws :
-	 * MyException, TransactionException, LoanDisbursalException - Author : aninrana - Creation Date : 25/09/2019 - Description :
+	 * PecuniaException, TransactionException, LoanDisbursalException - Author : aninrana - Creation Date : 25/09/2019 - Description :
 	 * Updating the Account balance of the customer
 	 ********************************************************************************************************/
 
 	public void updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
-			throws MyException, TransactionException, LoanDisbursalException {
+			throws PecuniaException, TransactionException, LoanDisbursalException {
   
 		for (int i = 0; i < approvedLoanRequests.size(); i++) {
 			Account account = new Account();

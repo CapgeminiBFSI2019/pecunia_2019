@@ -11,7 +11,7 @@ import org.apache.log4j.PropertyConfigurator;
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.LoanException;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.util.DBConnection;
 
 public class LoanDAOImpl implements LoanDAO {
@@ -31,7 +31,7 @@ public class LoanDAOImpl implements LoanDAO {
 	 ********************************************************************************************************/
 
 	@Override
-	public String fetchAccountId(String accountId) throws MyException, LoanException {
+	public String fetchAccountId(String accountId) throws PecuniaException, LoanException {
 
 		Connection connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
@@ -56,7 +56,7 @@ public class LoanDAOImpl implements LoanDAO {
 
 			} catch (SQLException sqlException) {
 				logger.error(sqlException.getMessage());
-				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
+				throw new PecuniaException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
 		return Id;
@@ -68,7 +68,7 @@ public class LoanDAOImpl implements LoanDAO {
 	 * Return Type : boolean Author : Rishabh Rai - Creation Date : 24/09/2019
 	 * Description : Adding Loan details to database
 	 ********************************************************************************************************/
-	public boolean addLoanDetails(Loan loan) throws MyException, LoanException {
+	public boolean addLoanDetails(Loan loan) throws PecuniaException, LoanException {
 		Connection connection = DBConnection.getInstance().getConnection();
 		boolean flag = false;
 		PreparedStatement preparedStatement = null;
@@ -95,7 +95,7 @@ public class LoanDAOImpl implements LoanDAO {
 
 		} catch (SQLException sqlException) {
 			logger.error(sqlException.getMessage());
-			throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
+			throw new PecuniaException(ErrorConstants.DB_CONNECTION_ERROR);
 		}
 
 		finally {
@@ -104,7 +104,7 @@ public class LoanDAOImpl implements LoanDAO {
 				connection.close();
 			} catch (SQLException sqlException) {
 				logger.error(sqlException.getMessage());
-				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
+				throw new PecuniaException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
 		return flag;

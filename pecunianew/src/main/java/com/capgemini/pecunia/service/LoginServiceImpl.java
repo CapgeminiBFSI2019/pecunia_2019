@@ -10,7 +10,7 @@ import com.capgemini.pecunia.dao.LoginDAOImpl;
 import com.capgemini.pecunia.dto.Login;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.LoginException;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.util.LoggerMessage;
 import com.capgemini.pecunia.util.Utility;
 
@@ -31,12 +31,12 @@ public class LoginServiceImpl implements LoginService {
 	 *  Return Type : boolean - Throws : LoginException - Author : Kumar Saurabh - Creation Date : 24/09/2019 
 	 *  - Description : Validating an account by setting secretKey and checking validity by comparing password and hashPassword
 	 * 
-	 * @throws MyException
+	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
 	
 	@Override
-	public boolean validateEmail(Login login) throws MyException, LoginException {
+	public boolean validateEmail(Login login) throws PecuniaException, LoginException {
 		boolean flag = false;
 		String password = null;
 		String secretKey = loginDAO.validateEmail(login);

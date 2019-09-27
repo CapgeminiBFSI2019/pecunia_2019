@@ -3,24 +3,24 @@ package com.capgemini.pecunia.service;
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 
 public interface TransactionService {
 
-	public double getBalance(Account account) throws TransactionException, MyException;
+	public double getBalance(Account account) throws TransactionException, PecuniaException;
 
-	public boolean updateBalance(Account account) throws TransactionException, MyException;
+	public boolean updateBalance(Account account) throws TransactionException, PecuniaException;
 
-	public int creditUsingSlip(Transaction transaction) throws TransactionException, MyException;
+	public int creditUsingSlip(Transaction transaction) throws TransactionException, PecuniaException;
 
-	public int debitUsingSlip(Transaction transaction) throws TransactionException, MyException;
+	public int debitUsingSlip(Transaction transaction) throws TransactionException, PecuniaException;
 
-	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException;
+	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, PecuniaException;
 
-	public int debitUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException;
+	public int debitUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, PecuniaException;
 
-	public double depositInterest(Account account) throws TransactionException, MyException;
+	public double depositInterest(Account account) throws TransactionException, PecuniaException;
 
-	public double updateInterest() throws TransactionException, MyException;
+	public double updateInterest() throws TransactionException, PecuniaException;
 }

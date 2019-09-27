@@ -14,7 +14,7 @@ import com.capgemini.pecunia.dto.Address;
 import com.capgemini.pecunia.dto.Customer;
 import com.capgemini.pecunia.exception.AccountException;
 
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.util.Constants;
 
 class AccountManagementServiceImplTest {
@@ -43,7 +43,7 @@ class AccountManagementServiceImplTest {
 
 	@Test
 	@DisplayName("Account successfully deleted")
-	void testDeleteAccountPass() throws MyException, AccountException {
+	void testDeleteAccountPass() throws PecuniaException, AccountException {
 
 		Account account = new Account();
 		account.setId("100101000001");
@@ -62,7 +62,7 @@ class AccountManagementServiceImplTest {
 
 	@Test
 	@DisplayName("Valid inputs. Customer name updated")
-	void testUpdateCustomerNamePass() throws MyException, AccountException {
+	void testUpdateCustomerNamePass() throws PecuniaException, AccountException {
 		
 		Account account = new Account();
 		Customer customer=new Customer();
@@ -83,7 +83,7 @@ class AccountManagementServiceImplTest {
 
 	@Test
 	@DisplayName("Valid inputs. Customer contact updated")
-	void testUpdateCustomerContactPass() throws MyException, AccountException {
+	void testUpdateCustomerContactPass() throws PecuniaException, AccountException {
 		
 		Account account = new Account();
 		Customer customer=new Customer();
@@ -106,7 +106,7 @@ class AccountManagementServiceImplTest {
 
 	@Test
 	@DisplayName("Valid inputs. Customer address updated")
-	void testUpdateCustomerAddressPass() throws MyException, AccountException {
+	void testUpdateCustomerAddressPass() throws PecuniaException, AccountException {
 
 		Account account = new Account();
 		Address address = new Address();
@@ -144,7 +144,7 @@ class AccountManagementServiceImplTest {
 
 //	@Test
 //	@DisplayName("Inputs in add account function")
-//	void testAddAccountPass() throws MyException, AccountException {
+//	void testAddAccountPass() throws PecuniaException, AccountException {
 //
 //		Account account = new Account();
 //		Customer customer = new Customer();
@@ -176,7 +176,7 @@ class AccountManagementServiceImplTest {
 
 	@Test
 	@DisplayName("Validation successful")
-	void testValidationPass() throws MyException, AccountException {
+	void testValidationPass() throws PecuniaException, AccountException {
 
 		Account account = new Account();
 		account.setId("100101000001");

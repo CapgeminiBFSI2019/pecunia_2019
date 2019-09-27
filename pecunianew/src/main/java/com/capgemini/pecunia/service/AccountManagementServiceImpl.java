@@ -7,7 +7,7 @@ import com.capgemini.pecunia.dto.Address;
 import com.capgemini.pecunia.dto.Customer;
 import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.ErrorConstants;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.util.Constants;
 
 public class AccountManagementServiceImpl implements AccountManagementService {
@@ -20,11 +20,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	 * Kumar - Creation Date : 24/09/2019 - Description : Deleting an account by
 	 * setting account status "Closed"
 	 * 
-	 * @throws MyException
+	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
 	@Override
-	public boolean deleteAccount(Account acc) throws MyException, AccountException {
+	public boolean deleteAccount(Account acc) throws PecuniaException, AccountException {
 		boolean isUpdated = false;
 		try {
 
@@ -47,11 +47,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	 * AccountException - Author : Aditi Singh - Creation Date : 24/09/2019 -
 	 * Description : Updating customer name
 	 * 
-	 * @throws MyException
+	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
 	@Override
-	public boolean updateCustomerName(Account acc, Customer cust) throws MyException, AccountException {
+	public boolean updateCustomerName(Account acc, Customer cust) throws PecuniaException, AccountException {
 		boolean isUpdated = false;
 		try {
 
@@ -75,11 +75,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	 * AccountException - Author : Aditi Singh - Creation Date : 24/09/2019 -
 	 * Description : Updating customer contact
 	 * 
-	 * @throws MyException
+	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
 	@Override
-	public boolean updateCustomerContact(Account acc, Customer cust) throws MyException, AccountException {
+	public boolean updateCustomerContact(Account acc, Customer cust) throws PecuniaException, AccountException {
 		boolean isUpdated = false;
 		try {
 
@@ -102,11 +102,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	 * AccountException - Author : Aditi Singh - Creation Date : 24/09/2019 -
 	 * Description : Updating customer address
 	 * 
-	 * @throws MyException
+	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
 	@Override
-	public boolean updateCustomerAddress(Account acc, Address add) throws MyException, AccountException {
+	public boolean updateCustomerAddress(Account acc, Address add) throws PecuniaException, AccountException {
 
 		boolean isUpdated = false;
 		try {
@@ -129,12 +129,12 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	 * Singh - Creation Date : 24/09/2019 - Description : Generation of a new
 	 * account ID with the given branch ID and type of Account
 	 * 
-	 * @throws MyException
+	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
 	@Override
 
-	public String calculateAccountId(Account acc) throws MyException, AccountException {
+	public String calculateAccountId(Account acc) throws PecuniaException, AccountException {
 		try {
 			String id = "";
 			id = id.concat(acc.getBranchId());
@@ -160,7 +160,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 			throw new AccountException(ErrorConstants.TECH_ERROR);
 		}
 
-//	public String calculateAccountId(Account acc) throws MyException, AccountException{
+//	public String calculateAccountId(Account acc) throws PecuniaException, AccountException{
 //		String id="";
 //		id = id.concat(acc.getBranchId());
 //		String type=acc.getAccountType();
@@ -185,11 +185,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	 * account - Return Type : double - Throws : AccountException - Author : Aditi
 	 * Singh - Creation Date : 24/09/2019 - Description : Validation of Account ID
 	 * 
-	 * @throws MyException
+	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
 	@Override
-	public boolean validateAccountId(Account acc) throws MyException, AccountException {
+	public boolean validateAccountId(Account acc) throws PecuniaException, AccountException {
 		boolean isValidated = false;
 		accountDAO = new AccountManagementDAOImpl();
 		isValidated = accountDAO.validateAccountId(acc);
@@ -203,11 +203,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	 * Throws : AccountException - Author : Vidushi Razdan - Creation Date :
 	 * 24/09/2019 - Description : Addition of new Account
 	 * 
-	 * @throws MyException
+	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
 	@Override
-	public String addAccount(Customer cust, Address add, Account acc) throws MyException, AccountException {
+	public String addAccount(Customer cust, Address add, Account acc) throws PecuniaException, AccountException {
 		try {
 			accountDAO = new AccountManagementDAOImpl();
 			String custId = accountDAO.addCustomerDetails(cust, add);

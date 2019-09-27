@@ -13,7 +13,7 @@ import com.capgemini.pecunia.dto.Address;
 import com.capgemini.pecunia.dto.Customer;
 import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.ErrorConstants;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.util.DBConnection;
 import com.capgemini.pecunia.util.LoggerMessage;
 
@@ -27,7 +27,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	}
 
 	@Override
-	public boolean deleteAccount(Account acc) throws MyException, AccountException {
+	public boolean deleteAccount(Account acc) throws PecuniaException, AccountException {
 		boolean isUpdated = false;
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
@@ -68,7 +68,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	}
 
 	@Override
-	public boolean updateCustomerName(Account acc, Customer cust) throws AccountException, MyException {
+	public boolean updateCustomerName(Account acc, Customer cust) throws AccountException, PecuniaException {
 		boolean isUpdated = false;
 		String accId = null;
 		Connection connection = null;
@@ -117,7 +117,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	}
 
 	@Override
-	public boolean updateCustomerContact(Account acc, Customer cust) throws AccountException, MyException {
+	public boolean updateCustomerContact(Account acc, Customer cust) throws AccountException, PecuniaException {
 		boolean isUpdated = false;
 		String accId = null;
 		Connection connection = null;
@@ -164,7 +164,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	}
 
 	@Override
-	public boolean updateCustomerAddress(Account acc, Address add) throws AccountException, MyException {
+	public boolean updateCustomerAddress(Account acc, Address add) throws AccountException, PecuniaException {
 		boolean isUpdated = false;
 		Connection connection = null;
 		String accId = null;
@@ -217,7 +217,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	}
 
 	@Override
-	public String calculateAccountId(String id) throws AccountException, MyException {
+	public String calculateAccountId(String id) throws AccountException, PecuniaException {
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
@@ -253,7 +253,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	}
 
 	@Override
-	public boolean validateAccountId(Account acc) throws MyException, AccountException {
+	public boolean validateAccountId(Account acc) throws PecuniaException, AccountException {
 
 		boolean isValidated = false;
 		Connection connection = null;
@@ -288,7 +288,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	}
 
 	@Override
-	public String addCustomerDetails(Customer cust, Address add) throws MyException, AccountException {
+	public String addCustomerDetails(Customer cust, Address add) throws PecuniaException, AccountException {
 		Connection connection = null;
 		String custId = null;
 		String addId = null;
@@ -363,7 +363,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	}
 
 	@Override
-	public String addAccount(Account acc) throws MyException, AccountException {
+	public String addAccount(Account acc) throws PecuniaException, AccountException {
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
 

@@ -12,7 +12,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.ErrorConstants;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.util.DBConnection;
 import com.capgemini.pecunia.util.LoggerMessage;
@@ -30,14 +30,14 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 	 * - Function Name : updatePassbook(String accountId) 
 	 * - Input Parameters : String accountId
 	 * - Return Type : List 
-	 * - Throws : PassbookException, MyException 
+	 * - Throws : PassbookException, PecuniaException 
 	 * - Author : Mansi Agarwal
 	 * - Creation Date : 24/09/2019 
 	 * - Description : Stores the transaction details in the list and returns it to service layer
 	 ********************************************************************************************************/
 	
 	@Override
-	public List<Transaction> updatePassbook(String accountId) throws PassbookException, MyException {
+	public List<Transaction> updatePassbook(String accountId) throws PassbookException, PecuniaException {
 
 		Connection connection = DBConnection.getInstance().getConnection();
 		PreparedStatement ps = null;
@@ -80,7 +80,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			} catch (Exception e) {
 
 				logger.error(e.getMessage());
-				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
+				throw new PecuniaException(ErrorConstants.DB_CONNECTION_ERROR);
 
 			}
 		}
@@ -94,14 +94,14 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 	 * - Function Name : updateLastUpdated(String accountId) 
 	 * - Input Parameters : String accountId
 	 * - Return Type : boolean 
-	 * - Throws : PassbookException, MyException 
+	 * - Throws : PassbookException, PecuniaException 
 	 * - Author : Mansi Agarwal
 	 * - Creation Date : 25/09/2019 
 	 * - Description : Updates the date of last transaction that was printed in the passbook
 	 ********************************************************************************************************/
 	
 	
-	public boolean updateLastUpdated(String accountId) throws MyException, PassbookException 
+	public boolean updateLastUpdated(String accountId) throws PecuniaException, PassbookException 
 	{
 		boolean updated = false;
 		Connection connection = DBConnection.getInstance().getConnection();
@@ -134,7 +134,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			} catch (Exception e) 
 			{
 				logger.error(e.getMessage());
-				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
+				throw new PecuniaException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
 		
@@ -149,7 +149,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 	 * - Function Name : accountSummary(String accountId, Date startDate, Date endDate) 
 	 * - Input Parameters : String accountId, Date startDate, Date endDate
 	 * - Return Type : List 
-	 * - Throws : PassbookException, MyException 
+	 * - Throws : PassbookException, PecuniaException 
 	 * - Author : Rishav Dev
 	 * - Creation Date : 24/09/2019 
 	 * - Description : Stores the account summary in the list and returns it to service layer
@@ -161,7 +161,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 	
 	@Override
 	public List<Transaction> accountSummary(String accountId, LocalDate startDate, LocalDate endDate)
-			throws PassbookException, MyException {
+			throws PassbookException, PecuniaException {
 
 		Connection connection = DBConnection.getInstance().getConnection();
 		PreparedStatement ps = null;
@@ -203,7 +203,7 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			} catch (Exception e) {
 			
 				logger.error(e.getMessage());
-				throw new MyException(ErrorConstants.DB_CONNECTION_ERROR);
+				throw new PecuniaException(ErrorConstants.DB_CONNECTION_ERROR);
 
 			}
 		}

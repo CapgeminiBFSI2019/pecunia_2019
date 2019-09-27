@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.capgemini.pecunia.dto.Transaction;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.service.PassbookMaintenanceService;
 import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
 
 class PassbookMain{
-public static void main(String[] args) throws MyException, PassbookException  {
+public static void main(String[] args) throws PecuniaException, PassbookException  {
     updatePassbook(); 	
 	accountSummary();
 	}
@@ -50,7 +50,7 @@ public static void main(String[] args) throws MyException, PassbookException  {
 					System.out.println();
 				}
 			}
-		} catch (MyException | PassbookException e) {
+		} catch (PecuniaException | PassbookException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -101,7 +101,7 @@ public static void main(String[] args) throws MyException, PassbookException  {
 					System.out.println();
 				}
 			//}
-		} catch (MyException | PassbookException e) {
+		} catch (PecuniaException | PassbookException e) {
 			System.out.println(e.getMessage());
 		}
 

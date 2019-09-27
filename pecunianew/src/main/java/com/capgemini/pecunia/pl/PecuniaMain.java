@@ -16,7 +16,7 @@ import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.LoginException;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
@@ -217,7 +217,7 @@ public class PecuniaMain {
 		LoginService loginService = new LoginServiceImpl();
 		try {
 			success = loginService.validateEmail(login);
-		} catch (MyException | LoginException e) {
+		} catch (PecuniaException | LoginException e) {
 			System.out.println(e.getMessage());
 		}
 		return success;
@@ -299,7 +299,7 @@ public class PecuniaMain {
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
 			accountId = ams.addAccount(cust, add, acc);
-		} catch (MyException | AccountException e) {
+		} catch (PecuniaException | AccountException e) {
 			System.out.println(e.getMessage());
 		}
 
@@ -322,7 +322,7 @@ public class PecuniaMain {
 		try {
 			updated = ams.updateCustomerName(acc, cust);
 
-		} catch (MyException | AccountException e) {
+		} catch (PecuniaException | AccountException e) {
 			System.out.println(e.getMessage());
 		}
 		return updated;
@@ -343,7 +343,7 @@ public class PecuniaMain {
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
 			updated = ams.updateCustomerContact(acc, cust);
-		} catch (MyException | AccountException e) {
+		} catch (PecuniaException | AccountException e) {
 			System.out.println(e.getMessage());
 		}
 		return updated;
@@ -385,7 +385,7 @@ public class PecuniaMain {
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
 			updated = ams.updateCustomerAddress(acc, add);
-		} catch (MyException | AccountException e) {
+		} catch (PecuniaException | AccountException e) {
 			System.out.println(e.getMessage());
 		}
 		return updated;
@@ -402,7 +402,7 @@ public class PecuniaMain {
 		try {
 			updated = ams.deleteAccount(acc);
 
-		} catch (MyException | AccountException e) {
+		} catch (PecuniaException | AccountException e) {
 			System.out.println(e.getMessage());
 		}
 		return updated;
@@ -431,7 +431,7 @@ public class PecuniaMain {
 		} catch (TransactionException e) {
 
 			System.out.println(e.getMessage());
-		} catch (MyException e) {
+		} catch (PecuniaException e) {
 
 			System.out.println(e.getMessage());
 		}
@@ -463,7 +463,7 @@ public class PecuniaMain {
 		} catch (TransactionException e) {
 
 			System.out.println(e.getMessage());
-		} catch (MyException e) {
+		} catch (PecuniaException e) {
 
 			System.out.println(e.getMessage());
 		}
@@ -514,7 +514,7 @@ public class PecuniaMain {
 		} catch (TransactionException e) {
 
 			System.out.println(e.getMessage());
-		} catch (MyException e) {
+		} catch (PecuniaException e) {
 
 			System.out.println(e.getMessage());
 		}
@@ -577,7 +577,7 @@ public class PecuniaMain {
 		} catch (TransactionException e) {
 
 			System.out.println(e.getMessage());
-		} catch (MyException e) {
+		} catch (PecuniaException e) {
 
 			System.out.println(e.getMessage());
 		}
