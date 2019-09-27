@@ -1,65 +1,91 @@
-package com.capgemini.pecunia.pl;
+public static void main(String[] args) throws MyException, PassbookException  {
+     
+		PassbookMaintenanceService PassbookService = new PassbookMaintenanceServiceImpl();
+		List<Transaction> updatePassbook = new ArrayList<Transaction>();
+		Scanner obj = new Scanner(System.in);
+		System.out.println("Enter accountId:");
+		String accountId = obj.nextLine();
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.capgemini.pecunia.dto.Transaction;
-import com.capgemini.pecunia.exception.MyException;
-import com.capgemini.pecunia.exception.PassbookException;
-import com.capgemini.pecunia.service.PassbookMaintenanceService;
-import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
-
-public class PassbookMain {
-	public static void main(String[] args) throws MyException, PassbookException {
-		
+	try {
+		updatePassbook = PassbookService.updatePassbook(accountId);
 	
-	PassbookMaintenanceService PassbookService=new PassbookMaintenanceServiceImpl();
-	List<Transaction> updatePassbook = new ArrayList<Transaction>();
-	updatePassbook	= PassbookService.updatePassbook("100202000001");
-	
-	for(int i = 0;i<updatePassbook.size();i++)
-	{
-		System.out.print(updatePassbook.get(i).getId() + "\t");
-		System.out.print(updatePassbook.get(i).getTransDate()+ "\t");
-		System.out.print(updatePassbook.get(i).getAmount()+ "\t");
-		System.out.print(updatePassbook.get(i).getTransFrom()+ "\t");
-		System.out.print(updatePassbook.get(i).getTransTo()+ "\t");
-		System.out.print(updatePassbook.get(i).getType()+ "\t");
-		System.out.print(updatePassbook.get(i).getOption()+ "\t");
-		if(updatePassbook.get(i).getOption().equalsIgnoreCase("cheque"))
-		{
-			System.out.print(updatePassbook.get(i).getChequeId()+"\t");
-			
+
+		if (updatePassbook.size() < 1) {
+			System.out.println("no trans");
 		}
+
 		else {
-			System.out.print("-");
+			for (int index = 0; index < updatePassbook.size(); index++) {
+				System.out.print(updatePassbook.get(index).getId() + "\t");
+				System.out.print(updatePassbook.get(index).getTransDate() + "\t");
+				System.out.print(updatePassbook.get(index).getAmount() + "\t");
+				System.out.print(updatePassbook.get(index).getTransFrom() + "\t");
+				System.out.print(updatePassbook.get(index).getTransTo() + "\t");
+				System.out.print(updatePassbook.get(index).getType() + "\t");
+				System.out.print(updatePassbook.get(index).getOption() + "\t");
+				if (updatePassbook.get(index).getOption().equalsIgnoreCase("cheque")) {
+					System.out.print(updatePassbook.get(index).getChequeId() + "\t");
+
+				} else {
+					System.out.print("-");
+				}
+				System.out.print(updatePassbook.get(index).getClosingBalance() + "\t");
+				System.out.println();
+			}
 		}
-		System.out.print(updatePassbook.get(i).getClosingBalance()+ "\t");
-		System.out.println();
+	} catch (MyException | PassbookException e) {
+		System.out.println(e.getMessage());;
+	}
+      
+
+	PassbookMaintenanceService accountSummaryService = new PassbookMaintenanceServiceImpl();
+
+	
+	System.out.println("Enter accountId:");
+	String accountId1 = obj.nextLine();
+	
+	
+	System.out.println("Enter start date:");
+	String sdate1 = obj.nextLine();
+	
+
+	
+	System.out.println("Enter end date:");
+	String sdate2 = obj.nextLine();
+	
+	LocalDate date1 = LocalDate.parse(sdate1);
+	LocalDate date2 = LocalDate.parse(sdate2);
+	
+	List <Transaction> accountSummary = new ArrayList<Transaction>();
+	accountSummary=accountSummaryService.accountSummary(accountId1,date1,date2);
+
+	if(accountSummary.size()<1)
+	{
+		System.out.println("no trans");
+	}
+
+	else
+	{
+		for (int index = 0; index < accountSummary.size(); index++) {
+			System.out.print(accountSummary.get(index).getId() + "\t");
+			System.out.print(accountSummary.get(index).getTransDate() + "\t");
+			System.out.print(accountSummary.get(index).getAmount() + "\t");
+			System.out.print(accountSummary.get(index).getTransFrom() + "\t");
+			System.out.print(accountSummary.get(index).getTransTo() + "\t");
+			System.out.print(accountSummary.get(index).getType() + "\t");
+			System.out.println(accountSummary.get(index).getOption() + "\t");
+			if (accountSummary.get(index).getOption().equalsIgnoreCase("cheque")) {
+				System.out.print(accountSummary.get(index).getChequeId() + "\t");
+
+			} else {
+				System.out.print("-");
+			}
+			System.out.println(accountSummary.get(index).getChequeId() + "\t");
+			System.out.print(accountSummary.get(index).getClosingBalance() + "\t");
+			System.out.println();
 		}
 	}
+	obj.close();}	
 	
-		
-//		PassbookMaintenanceService accountSummaryService =new PassbookMaintenanceServiceImpl();
-//		String sDate1="2019-08-10";
-//		String sDate2="2019-10-10";
-//		LocalDate date1=LocalDate.parse(sDate1);
-//		LocalDate date2=LocalDate.parse(sDate2);
-//		List <Transaction> accountSummary = new ArrayList<Transaction>();
-//		accountSummary	= accountSummaryService.accountSummary("100202000001",date1,date2);
-//		
-//		for(int i = 0;i<accountSummary.size();i++)
-//		{
-//			System.out.print(accountSummary.get(i).getId() + "\t");
-//			System.out.print(accountSummary.get(i).getTransDate()+ "\t");
-//			System.out.print(accountSummary.get(i).getAmount()+ "\t");
-//			System.out.print(accountSummary.get(i).getTransFrom()+ "\t");
-//			System.out.print(accountSummary.get(i).getTransTo()+ "\t");
-//			System.out.print(accountSummary.get(i).getType()+ "\t");
-//			System.out.println(updatePassbook.get(i).getOption()+ "\t");
-//			System.out.println(updatePassbook.get(i).getChequeId()+"\t");
-//			System.out.print(accountSummary.get(i).getClosingBalance()+ "\t");
-//			System.out.println();
-//		}
 }
-
+	
