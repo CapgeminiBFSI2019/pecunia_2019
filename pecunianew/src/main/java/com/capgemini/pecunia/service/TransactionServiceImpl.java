@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import com.capgemini.pecunia.dao.TransactionDAO;
 import com.capgemini.pecunia.dao.TransactionDAOImpl;
 import com.capgemini.pecunia.dto.Account;
@@ -16,6 +19,11 @@ import com.capgemini.pecunia.util.Constants;
 
 public class TransactionServiceImpl implements TransactionService {
 
+	Logger logger = Logger.getRootLogger();
+
+	public TransactionServiceImpl() {
+		PropertyConfigurator.configure("resources//log4j.properties");
+	}
 	TransactionDAO transactionDAO;
 
 	/*******************************************************************************************************
@@ -33,6 +41,8 @@ public class TransactionServiceImpl implements TransactionService {
 			balance = transactionDAO.getBalance(account);
 			return balance;
 		} catch (Exception e) {
+			
+			logger.error(ErrorConstants.FETCH_ERROR);
 			throw new TransactionException(ErrorConstants.FETCH_ERROR);
 		}
 
@@ -53,6 +63,8 @@ public class TransactionServiceImpl implements TransactionService {
 			success = transactionDAO.updateBalance(account);
 			return success;
 		} catch (Exception e) {
+		
+			logger.error(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 			throw new TransactionException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 		}
 	}
@@ -98,20 +110,26 @@ public class TransactionServiceImpl implements TransactionService {
 				}
 
 				else {
+					
+					logger.error(ErrorConstants.AMOUNT_EXCEEDS_EXCEPTION);
 					throw new TransactionException(ErrorConstants.AMOUNT_EXCEEDS_EXCEPTION);
-					// TODO
 
 				}
 			} else {
-				// TODO
+				
+				logger.error(ErrorConstants.AMOUNT_LESS_EXCEPTION);
 				throw new TransactionException(ErrorConstants.AMOUNT_LESS_EXCEPTION);
 			}
 		} catch (TransactionException e) {
-			e.getMessage();
+			
+			
+			logger.error(e.getMessage());
 			throw new TransactionException(e.getMessage());
 		}
 
 		catch (Exception e) {
+			
+			logger.error(ErrorConstants.TRANSACTION_AMOUNT_ERROR);
 			throw new TransactionException(ErrorConstants.TRANSACTION_AMOUNT_ERROR);
 
 		}
@@ -157,13 +175,18 @@ public class TransactionServiceImpl implements TransactionService {
 				transId = transactionDAO.generateTransactionId(debitTransaction);
 
 			} else {
+				
+				logger.error(ErrorConstants.INSUFFICIENT_BALANCE_EXCEPTION);
 				throw new TransactionException(ErrorConstants.INSUFFICIENT_BALANCE_EXCEPTION);
 			}
 		} catch (TransactionException e) {
-			e.getMessage();
+			
+			logger.error(e.getMessage());	
 			throw new TransactionException(e.getMessage());
+			
 		} catch (Exception e) {
 
+			logger.error(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 			throw new TransactionException(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 
 		}
@@ -218,18 +241,24 @@ public class TransactionServiceImpl implements TransactionService {
 					transId = transactionDAO.generateTransactionId(debitTransaction);
 
 				} else {
-					// TODO logger
+					
+					logger.error(ErrorConstants.CHEQUE_BOUNCE_EXCEPTION);
 					throw new TransactionException(ErrorConstants.CHEQUE_BOUNCE_EXCEPTION);
 				}
 			} else {
-				// TODO logger
+				
+				logger.error(ErrorConstants.INVALID_CHEQUE_EXCEPTION);
 				throw new TransactionException(ErrorConstants.INVALID_CHEQUE_EXCEPTION);
 			}
 
 		} catch (TransactionException e) {
-			e.getMessage();
+			
+			logger.error(e.getMessage());
 			throw new TransactionException(e.getMessage());
+			
 		} catch (Exception e) {
+			
+			logger.error(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 			throw new TransactionException(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 		}
 		return transId;
@@ -298,12 +327,16 @@ public class TransactionServiceImpl implements TransactionService {
 			} else {
 				if (!bankName.equals(Constants.BANK_NAME)) {
 					// invalid bank cheque
+					
+					logger.error(ErrorConstants.INVALID_BANK_EXCEPTION);
 					throw new TransactionException(ErrorConstants.INVALID_BANK_EXCEPTION);
 				} else {
 					// pecunia cheque
 					if (transaction.getAmount() < Constants.MINIMUM_CHEQUE_AMOUNT
 							|| transaction.getAmount() > Constants.MAXIMUM_CHEQUE_AMOUNT) {
 						// invalid cheque amount
+						
+						logger.error(ErrorConstants.INVALID_CHEQUE_EXCEPTION);
 						throw new TransactionException(ErrorConstants.INVALID_CHEQUE_EXCEPTION);
 					} else {
 
@@ -361,6 +394,8 @@ public class TransactionServiceImpl implements TransactionService {
 			}
 			return transId;
 		} catch (Exception e) {
+			
+			logger.error(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 			throw new TransactionException(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 		}
 
