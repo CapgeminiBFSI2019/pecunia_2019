@@ -56,7 +56,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			}
 
 			if (balance == -1) {
-
+				logger.error(ErrorConstants.BALANCE_RETRIEVAL_ERROR);
 				throw new TransactionException(ErrorConstants.BALANCE_RETRIEVAL_ERROR);
 			}
 
