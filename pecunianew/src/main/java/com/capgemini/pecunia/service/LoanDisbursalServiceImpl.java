@@ -33,11 +33,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		retrievedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveLoanList();
 		if (retrievedLoanRequests.size() == 0) {
 
-
 			throw new LoanDisbursalException(Constants.NO_LOAN_REQUEST);
-
-
-	
 
 		}
 		return retrievedLoanRequests;
@@ -51,9 +47,8 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * on condition
 	 ********************************************************************************************************/
 
-
-
-	public ArrayList<Loan> approveLoan(ArrayList<Loan> loanRequestList) throws IOException, PecuniaException, LoanDisbursalException {
+	public ArrayList<Loan> approveLoan(ArrayList<Loan> loanRequestList)
+			throws IOException, PecuniaException, LoanDisbursalException {
 		int size = loanRequestList.size();
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		if (loanRequestList.size() == 0) {
@@ -61,20 +56,19 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 		}
 		if (size > 0) {
-			for (int i = 0; i < loanRequestList.size(); i++) {
+			for (int index = 0; index < loanRequestList.size(); index++) {
 
-				int creditScore = loanRequestList.get(i).getCreditScore();
+				int creditScore = loanRequestList.get(index).getCreditScore();
 				if (creditScore < 670) {
 
-					rejectedLoanList.add(loanRequestList.get(i));
-					loanRequestList.remove(i);
+					rejectedLoanList.add(loanRequestList.get(index));
+					loanRequestList.remove(index);
 				}
 
 			}
 
 			loanDisbursedDAO.releaseLoanSheet(loanRequestList);
 		}
-
 
 		return loanRequestList;
 
@@ -87,17 +81,13 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * disbursed data
 	 ********************************************************************************************************/
 
-	
-
-
 	public ArrayList<LoanDisbursal> approvedLoanList() throws IOException, PecuniaException {
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
-		
+
 		approvedLoanList = loanDisbursedDAO.loanApprovedList();
 		return approvedLoanList;
 
 	}
-
 
 	/*******************************************************************************************************
 	 * - Function Name : rejectedLoanRequests() - Input Parameters : void - Return
@@ -105,7 +95,6 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * Author : aninrana - Creation Date : 25/09/2019 - Description : Retrieving the
 	 * rejected loan rejected
 	 ********************************************************************************************************/
-
 
 	public ArrayList<Loan> rejectedLoanRequests() throws PecuniaException, LoanDisbursalException {
 		if (rejectedLoanList.size() == 0) {
@@ -120,28 +109,39 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * ArrayList<LoanDisbursal> updateLoanApprovals, int numberOfMonths - Return
 	 * Type : void - Throws : throws PecuniaException - Author : aninrana - Creation Date
 	 * : 25/09/2019 - Description : Updating the data in loan disbursed database
+	 * 
+	 * @throws LoanDisbursalException
 	 ********************************************************************************************************/
 
-	public void updateLoanAccount(ArrayList<LoanDisbursal> updateLoanApprovals, int numberOfMonths) throws PecuniaException {
+	public String updateLoanAccount(ArrayList<LoanDisbursal> updateLoanApprovals, int numberOfMonths)
+			throws PecuniaException, LoanDisbursalException {
+		String status = "Updated";
+		if (updateLoanApprovals != null) {
+			LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
+			for (int index = 0; index < updateLoanApprovals.size(); index++) {
+				double updatedDueAmount = updateLoanApprovals.get(index).getDisbursedAmount()
+						- (updateLoanApprovals.get(index).getDisbursedAmount()
+								/ updateLoanApprovals.get(index).getNumberOfEmiToBePaid()) * numberOfMonths;
 
-		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
-		for (int i = 0; i < updateLoanApprovals.size(); i++) {
-			double updatedDueAmount = updateLoanApprovals.get(i).getDisbursedAmount()
-					- (updateLoanApprovals.get(i).getDisbursedAmount()
-							/ updateLoanApprovals.get(i).getNumberOfEmiToBePaid()) * numberOfMonths;
+				double updatedTenure = updateLoanApprovals.get(index).getNumberOfEmiToBePaid() - numberOfMonths;
 
-			double updatedTenure = updateLoanApprovals.get(i).getNumberOfEmiToBePaid() - numberOfMonths;
+				String accountId = updateLoanApprovals.get(index).getAccountId();
 
-			String accountId = updateLoanApprovals.get(i).getAccountId();
+				try {
+					loanDisbursedDAO.updateLoanAccount(updateLoanApprovals, updatedDueAmount, updatedTenure, accountId);
+				} catch (IOException e) {
 
-			try {
-				loanDisbursedDAO.updateLoanAccount(updateLoanApprovals, updatedDueAmount, updatedTenure, accountId);
-			} catch (IOException e) {
+					throw new LoanDisbursalException(e.getMessage());
+				}
 
-				e.printStackTrace();
 			}
-
 		}
+		
+		else {
+			status = "Not updated";
+		}
+		
+		return status;
 	}
 
 	/*******************************************************************************************************
@@ -149,62 +149,67 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * Parameters : ArrayList<Loan> rejectedLoanList - Return Type : void - Throws :
 	 * PecuniaException - Author : aninrana - Creation Date : 25/09/2019 - Description :
 	 * Updating the loan status after operation
+	 * 
+	 * @throws LoanDisbursalException
 	 ********************************************************************************************************/
 
-
-
-	public void updateLoanStatus(ArrayList<Loan> rejectedLoanList, ArrayList<Loan> approvedLoanList) throws PecuniaException {
-
-
+	public String updateLoanStatus(ArrayList<Loan> rejectedLoanList, ArrayList<Loan> approvedLoanList)
+			throws PecuniaException, LoanDisbursalException {
+		String status = "Updated";
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
-      
-		try {
-			for (int i = 0; i < rejectedLoanList.size(); i++) {
-				String accountId = rejectedLoanList.get(i).getAccountId();
-				loanDisbursedDAO.updateStatus(rejectedLoanList, accountId, Constants.LOAN_REQUEST_STATUS[2]);
+		if (rejectedLoanList != null || approvedLoanList != null) {
+			try {
+				for (int i = 0; i < rejectedLoanList.size(); i++) {
+					String accountId = rejectedLoanList.get(i).getAccountId();
+					loanDisbursedDAO.updateStatus(rejectedLoanList, accountId, Constants.LOAN_REQUEST_STATUS[2]);
 
+				}
 
+				for (int i = 0; i < approvedLoanList.size(); i++) {
+					String accountId = approvedLoanList.get(i).getAccountId();
+					loanDisbursedDAO.updateStatus(rejectedLoanList, accountId, Constants.LOAN_REQUEST_STATUS[1]);
+
+				}
+
+			} catch (IOException e) {
+
+				throw new LoanDisbursalException(e.getMessage());
 			}
-           
-			for (int i = 0; i < approvedLoanList.size(); i++) {
-				String accountId = approvedLoanList.get(i).getAccountId();
-				loanDisbursedDAO.updateStatus(rejectedLoanList, accountId, Constants.LOAN_REQUEST_STATUS[1]);
 
-			}
-			
-		} catch (IOException e) {
-
-			e.printStackTrace();
+		} else {
+			status = "Not updated";
 		}
-		
+		return status;
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : updateExistingBalance(ArrayList<Loan> approvedLoanRequests) - Input
-	 * Parameters : ArrayList<Loan> approvedLoanRequests - Return Type : void - Throws :
-	 * PecuniaException, TransactionException, LoanDisbursalException - Author : aninrana - Creation Date : 25/09/2019 - Description :
-	 * Updating the Account balance of the customer
+	 * - Function Name : updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
+	 * - Input Parameters : ArrayList<Loan> approvedLoanRequests - Return Type :
+	 * void - Throws : PecuniaException, TransactionException, LoanDisbursalException -
+	 * Author : aninrana - Creation Date : 25/09/2019 - Description : Updating the
+	 * Account balance of the customer
 	 ********************************************************************************************************/
 
-	public void updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
+	public String updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
 			throws PecuniaException, TransactionException, LoanDisbursalException {
-  
+		String status = "Updated";
 		for (int i = 0; i < approvedLoanRequests.size(); i++) {
 			Account account = new Account();
 			account.setId(approvedLoanRequests.get(i).getAccountId());
 			double oldBalance = transactionDAOImpl.getBalance(account);
 			double updatedBalance = oldBalance - approvedLoanRequests.get(i).getEmi();
 			if (updatedBalance < 0) {
-				System.out.println("Not enough balance");
+				
+				status = "Not updated";
 			} else {
 				account.setBalance(updatedBalance);
 				transactionDAOImpl.updateBalance(account);
 				updateLoanAccount(approvedLoanList, 1);
+				status = "Updated";
 			}
 
 		}
+		return status;
 	}
-
-	
 
 }
