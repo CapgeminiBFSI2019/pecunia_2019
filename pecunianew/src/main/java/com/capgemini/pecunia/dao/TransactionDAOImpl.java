@@ -16,6 +16,9 @@ import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.DBConnection;
+import com.capgemini.pecunia.util.LoggerMessage;
+
+import jdk.nashorn.internal.runtime.options.LoggingOption.LoggerInfo;
 
 public class TransactionDAOImpl implements TransactionDAO {
 
@@ -53,13 +56,13 @@ public class TransactionDAOImpl implements TransactionDAO {
 			}
 
 			if (balance == -1) {
-				// logger here
+				
 				throw new TransactionException(ErrorConstants.BALANCE_RETRIEVAL_ERROR);
 			}
 
 		} catch (SQLException e) {
-			// add logger here
-			logger.error("");
+			logger.error(e.getMessage());
+			
 			throw new PecuniaException(e.getMessage());
 		} finally {
 			try {
@@ -72,6 +75,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			}
 
 		}
+		logger.info(LoggerMessage.ACCOUNT_BALANCE_SUCCESSFUL);
 		return balance;
 	}
 
@@ -98,23 +102,23 @@ public class TransactionDAOImpl implements TransactionDAO {
 			if (numAccountAffected != 0) {
 				balanceUpdated = true;
 			} else {
-				// logger here
-				logger.error(ErrorConstants.BALANCE_UPDATE_ERROR);
+				
 				throw new TransactionException(ErrorConstants.BALANCE_UPDATE_ERROR);
 			}
 		} catch (SQLException e) {
-			// logger here
+			logger.error(e.getMessage());
 			throw new PecuniaException(e.getMessage());
 		} finally {
 			try {
 				preparedStatement.close();
 				connection.close();
 			} catch (SQLException e) {
-				// logger here
+				
 				logger.error(ErrorConstants.DB_CONNECTION_ERROR);
 				throw new PecuniaException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
+		logger.info(LoggerMessage.BALANCE_UPDATED_SUCCESSFUL);
 		return balanceUpdated;
 	}
 
@@ -153,6 +157,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 				throw new TransactionException(ErrorConstants.CHEQUE_INSERTION_ERROR);
 			}
 		} catch (SQLException e) {
+			logger.error(e.getMessage());
 			throw new PecuniaException(e.getMessage());
 		} finally {
 			try {
@@ -160,12 +165,12 @@ public class TransactionDAOImpl implements TransactionDAO {
 				preparedStatement.close();
 				connection.close();
 			} catch (SQLException e) {
-				// TODO logger here
-				logger.error("");
+				logger.error(e.getMessage());
 				throw new PecuniaException(e.getMessage());
 			}
 
 		}
+		logger.info(LoggerMessage.CHEQUE_ID_SUCCESSFUL);
 		return chequeId;
 	}
 
@@ -204,11 +209,11 @@ public class TransactionDAOImpl implements TransactionDAO {
 			if (resultSet.next()) {
 				transId = resultSet.getInt(1);
 			} else {
-				// TODO logger here
-				logger.error(ErrorConstants.TRANSACTION_INSERTION_ERROR);
+			
 				throw new TransactionException(ErrorConstants.TRANSACTION_INSERTION_ERROR);
 			}
 		} catch (SQLException e) {
+			logger.error(e.getMessage());
 			throw new PecuniaException(e.getMessage());
 		} finally {
 			try {
@@ -216,13 +221,12 @@ public class TransactionDAOImpl implements TransactionDAO {
 				preparedStatement.close();
 				connection.close();
 			} catch (SQLException e) {
-				// TODO logger here
-				logger.error("");
+				logger.error(e.getMessage());
 				throw new PecuniaException(e.getMessage());
 			}
 
 		}
-
+logger.info(LoggerMessage.TRANSACTION_ID_SUCCESSFUL);
 		return transId;
 	}
 
