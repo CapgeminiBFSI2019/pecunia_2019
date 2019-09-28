@@ -24,7 +24,7 @@ public class Constants {
 	public static final String CHEQUE_STATUS_BOUNCED = "BOUNCED";
 	public static final String NA = "-";
 	public static final String DATE_FORMAT = "YYYY-MM-DD HH:mm:ss";
-	public static final String DATE_FORMAT_1 = "YYYY-MM-DD";
+	public static final String DATE_FORMAT_1 = "yyyy-MM-dd";
 	
 	
 	
