@@ -5,21 +5,30 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Address;
 import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Customer;
+import com.capgemini.pecunia.dto.Loan;
+import com.capgemini.pecunia.dto.LoanDisbursal;
 import com.capgemini.pecunia.dto.Login;
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.ErrorConstants;
+import com.capgemini.pecunia.exception.LoanDisbursalException;
+import com.capgemini.pecunia.exception.LoanException;
 import com.capgemini.pecunia.exception.LoginException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
+import com.capgemini.pecunia.service.LoanDisbursalService;
+import com.capgemini.pecunia.service.LoanDisbursalServiceImpl;
+import com.capgemini.pecunia.service.LoanService;
+import com.capgemini.pecunia.service.LoanServiceImpl;
 import com.capgemini.pecunia.service.LoginService;
 import com.capgemini.pecunia.service.LoginServiceImpl;
 import com.capgemini.pecunia.service.TransactionService;
@@ -27,7 +36,7 @@ import com.capgemini.pecunia.service.TransactionServiceImpl;
 import com.capgemini.pecunia.util.Constants;
 
 public class PecuniaMain {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, LoanDisbursalException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		Scanner scanner = new Scanner(System.in);
 		int choice1 = 0, choice2 = 0, choice3 = 0;
@@ -63,7 +72,7 @@ public class PecuniaMain {
 			while (flag.equalsIgnoreCase("y")) {
 				System.out.println("Enter your option: " + "\n1. Create Account" + "\n2. Update Account"
 						+ "\n3. Delete Existing Account" + "\n4. Update Passbook/ Account Summary"
-						+ "\n5. Transaction");
+						+ "\n5. Transaction" + "\n6. Loan Management");
 				choice2 = scanner.nextInt();
 				switch (choice2) {
 				case 1:
@@ -154,6 +163,7 @@ public class PecuniaMain {
 
 							break;
 						}
+						break;
 					case 2:
 						System.out.println(
 								"Enter your option: " + "\n1. Debit Using Slip" + "\n2. Debit Using Cheque");
@@ -183,7 +193,26 @@ public class PecuniaMain {
 
 							break;
 						}
+						break;
 					}
+					break;
+				case 6:
+					System.out.println("Enter your option: \n1. Create Loan request \n2. Disburse Loan Amount");
+					int choice8 = scanner.nextInt();
+					switch(choice8) {
+					case 1:
+						boolean requestSuccess = addLoanDetails();
+						if(requestSuccess)
+						{
+							System.out.println("Loan request added successfully.");
+						}
+						break;
+					case 2:
+						loanDisbursal();
+						break;
+					}
+					break;
+					
 				}
 				while (true) {
 					System.out.println("Do you want to perform another operation (y/n)?");
@@ -584,4 +613,155 @@ public class PecuniaMain {
 		return transChequeCreditId;
 	}
 
+	public static boolean addLoanDetails() throws IOException
+	{
+		Scanner scanner = new Scanner(System.in);
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		LoanServiceImpl lsi = new LoanServiceImpl();
+		
+		boolean result= false;
+		try {
+				System.out.println("Enter account Id : ");
+				String accId = br.readLine();
+				System.out.println("Enter Loan Amount : ");
+				double amount = scanner.nextDouble();
+				System.out.println("Enter Rate of interest :");
+				double roi = scanner.nextDouble();
+				System.out.println("Enter Tenure:");
+				int tenure = scanner.nextInt();
+				System.out.println("Enter credit score : ");
+				int creditScore = scanner.nextInt();
+				System.out.println(
+						"Select type of Loan :\n Type '1' for Personal Loan \n Type '2' for House Loan \n Type '3' for Vehicle Loan \n Type '4' for Jewel Loan");
+				int input = Integer.parseInt(br.readLine());
+				String type = null;
+				if (input == 1) {
+					type = Constants.LOAN_TYPE[0];
+				} else if (input == 2) {
+					type = Constants.LOAN_TYPE[1];
+				} else if (input == 3) {
+					type = Constants.LOAN_TYPE[2];
+				} else if (input == 4) {
+					type = Constants.LOAN_TYPE[3];
+				}
+				double emi = lsi.calculateEMI(amount, tenure, roi);
+				Loan loan = new Loan();
+				loan.setAmount(amount);
+				loan.setCreditScore(creditScore);
+				loan.setEmi(emi);
+				loan.setLoanStatus("Pending");
+				loan.setRoi(roi);
+				loan.setTenure(tenure);
+				loan.setType(type);
+				loan.setAccountId(accId);
+				LoanService loaserim = new LoanServiceImpl();
+				result = loaserim.createLoanRequest(loan);
+
+		} catch (LoanException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			scanner.close();
+			br.close();
+		}
+		return result;
+	}
+
+	public static void loanDisbursal() throws LoanDisbursalException
+	{
+		Scanner sc = new Scanner(System.in);
+		ArrayList<Loan> retrievedLoanRequests = new ArrayList<Loan>();
+		ArrayList<Loan> approvedLoanRequests = new ArrayList<Loan>();
+		ArrayList<Loan> rejectedLoanRequests = new ArrayList<Loan>();
+		ArrayList<LoanDisbursal> loanDisbursedData = new ArrayList<LoanDisbursal>();
+		String update;
+		LoanDisbursalService loanDisbursalService = new LoanDisbursalServiceImpl();
+		
+		try {
+			while (true) {
+				System.out.println(
+						"press" + "\n" + " 1. to retrieve loan requests" + "\n" + "2. to accept/reject loan requests" + "\n"
+								+ "3. to retrieve the data from loan disbursed database" + "\n"
+								+ "4. to update the existing balance of account" + "\n" + "0. to exit");
+
+				int choice = sc.nextInt();
+
+				if (choice == 1) {
+
+					try {
+						retrievedLoanRequests = loanDisbursalService.retrieveAll();
+						System.out.println(retrievedLoanRequests);
+					} catch (PecuniaException | IOException | LoanDisbursalException e) {
+						throw new LoanDisbursalException(e.getMessage());
+					}
+
+				}
+
+				else if (choice == 2) {
+
+					try {
+
+						approvedLoanRequests = loanDisbursalService.approveLoan(retrievedLoanRequests);
+						if (approvedLoanRequests.size() == 0)
+							System.out.println("No approved loan requests");
+						else {
+							System.out.println("Approved loan requests");
+							System.out.println(approvedLoanRequests);
+						}
+						if (rejectedLoanRequests.size() == 0)
+							System.out.println("No rejected loan requests");
+						else {
+							System.out.println("Rejected loan requests");
+							rejectedLoanRequests = loanDisbursalService.rejectedLoanRequests();
+							System.out.println(rejectedLoanRequests);
+						}
+						if(approvedLoanRequests.size() == 0 && rejectedLoanRequests.size() == 0)
+							System.out.println("No loan requests");
+						update = loanDisbursalService.updateLoanStatus(rejectedLoanRequests, approvedLoanRequests);
+						System.out.println(update);
+					} catch (PecuniaException | IOException | LoanDisbursalException e) {
+						throw new LoanDisbursalException(e.getMessage());
+					}
+
+				}
+
+				else if (choice == 3) {
+					try {
+						loanDisbursedData = loanDisbursalService.approvedLoanList();
+
+					} catch (PecuniaException | IOException e) {
+						throw new LoanDisbursalException(e.getMessage());
+					}
+
+				}
+
+				else if (choice == 4) {
+
+					try {
+						loanDisbursalService.updateExistingBalance(approvedLoanRequests);
+					} catch (PecuniaException | TransactionException e) {
+						throw new LoanDisbursalException(e.getMessage());
+					}
+
+				}
+
+				else if (choice == 0) {
+
+					System.exit(1);
+
+				}
+
+				else {
+					System.out.println("INVALID CHOICE");
+				}
+
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		
+	}
 }
