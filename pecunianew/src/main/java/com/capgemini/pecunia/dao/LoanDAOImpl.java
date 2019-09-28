@@ -49,6 +49,7 @@ public class LoanDAOImpl implements LoanDAO {
 			
 			return Id;
 		} catch (Exception e) {
+			logger.error(e.getMessage());
 			throw new LoanException(ErrorConstants.FETCH_ERROR);
 		}
 		finally {

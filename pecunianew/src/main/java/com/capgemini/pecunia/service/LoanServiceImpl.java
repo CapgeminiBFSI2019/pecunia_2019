@@ -3,8 +3,10 @@ package com.capgemini.pecunia.service;
 import com.capgemini.pecunia.dao.LoanDAO;
 import com.capgemini.pecunia.dao.LoanDAOImpl;
 import com.capgemini.pecunia.dto.Loan;
+import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.LoanException;
 import com.capgemini.pecunia.exception.PecuniaException;
+import com.capgemini.pecunia.util.LoggerMessage;
 
 public class LoanServiceImpl implements LoanService {
 
@@ -67,7 +69,7 @@ public class LoanServiceImpl implements LoanService {
 				return isValidated;
 			}
 		}catch (Exception e) {
-			throw new LoanException("Account Id does not exist");
+			throw new LoanException(ErrorConstants.NO_SUCH_ACCOUNT);
 		}
 		
 		return isValidated;
