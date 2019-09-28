@@ -12,7 +12,8 @@ public class LoggerMessage {
 	public static final String UPDATE_CUSTOMER_CONTACT_SUCCESSFUL = " Customer Contact updated.";
 
 	public static final String UPDATE_CUSTOMER_ADDRESS_SUCCESSFUL = " Customer address updated.";
-
+	public static final String ACCOUNT_ID_RETURNED = "Account Id returned successfully";
+	public static final String ACCOUNT_VALIDATION_SUCCESSFULL = "Account Id validated successfully";
 	public static final String ADD_ADDRESS_SUCCESSFUL = "Customer Address Details added.";
 
 	public static final String ADD_CUSTOMER_DETAILS_SUCCESSFUL = "Customer Details added.";

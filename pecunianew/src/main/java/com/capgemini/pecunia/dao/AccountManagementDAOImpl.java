@@ -51,6 +51,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			queryResult = preparedStatement.executeUpdate();
 
 			if (queryResult == 0) {
+				logger.error(ErrorConstants.DELETE_ACCOUNT_ERROR);
 				throw new AccountException(ErrorConstants.DELETE_ACCOUNT_ERROR);
 
 			}
@@ -113,7 +114,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement2.setString(2, accId);
 			queryResult = preparedStatement2.executeUpdate();
 			if (queryResult == 0) {
-
+				logger.error(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 				throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 			}
 		} catch (SQLException e) {
@@ -171,6 +172,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement2.setString(2, accId);
 			queryResult = preparedStatement2.executeUpdate();
 			if (queryResult == 0) {
+				logger.error(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 				throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 			}
 		} catch (SQLException e) {
@@ -232,6 +234,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement2.setString(7, accId);
 			queryResult = preparedStatement2.executeUpdate();
 			if (queryResult == 0) {
+				logger.error(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 				throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 			}
 
@@ -298,6 +301,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
+		logger.info(LoggerMessage.ACCOUNT_ID_RETURNED);
 		return id;
 	}
 
@@ -328,6 +332,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			if (resultSet.next()) {
 				isValidated = true;
 			} else {
+				logger.error(ErrorConstants.NO_SUCH_ACCOUNT);
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
 		} catch (SQLException e) {
@@ -343,6 +348,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
+		logger.info(LoggerMessage.ACCOUNT_VALIDATION_SUCCESSFULL);
 		return isValidated;
 	}
 
@@ -380,6 +386,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			queryResult = preparedStatement.executeUpdate();
 
 			if (queryResult == 0) {
+				logger.error(ErrorConstants.ADD_DETAILS_ERROR);
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
 
@@ -404,6 +411,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			queryResult = preparedStatement3.executeUpdate();
 
 			if (queryResult == 0) {
+				logger.error(ErrorConstants.ADD_DETAILS_ERROR);
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
 
@@ -461,6 +469,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			queryResult = preparedStatement.executeUpdate();
 
 			if (queryResult == 0) {
+				logger.error(ErrorConstants.ADD_DETAILS_ERROR);
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			} else {
 				logger.info(LoggerMessage.ADD_ACCOUNT_SUCCESSFUL);

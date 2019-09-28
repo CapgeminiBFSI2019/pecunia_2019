@@ -75,6 +75,7 @@ public class LoginDAOImpl implements LoginDAO {
 			}
 			return password;
 		} catch (SQLException e) {
+			logger.error(ErrorConstants.LOGIN_ERROR);
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
 		} finally {
 			try {
