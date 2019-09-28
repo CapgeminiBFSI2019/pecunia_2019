@@ -71,17 +71,12 @@ public static void main(String[] args) throws MyException, PassbookException  {
 		System.out.println("Enter end date:");
 		String sdate2 = obj.nextLine();
 
-		LocalDate date1 = LocalDate.parse(sdate1);
+
 		LocalDate date2 = LocalDate.parse(sdate2);
 
 		List<Transaction> accountSummary = new ArrayList<Transaction>();
 		try {
 			accountSummary = accountSummaryService.accountSummary(accountId1, date1, date2);
-//			if (accountSummary.size() < 1) {
-//				System.out.println("no trans");
-//			}
-//
-	//		else {
 				for (int index = 0; index < accountSummary.size(); index++) {
 					System.out.print(accountSummary.get(index).getId() + "\t");
 					System.out.print(accountSummary.get(index).getTransDate() + "\t");
