@@ -15,12 +15,13 @@ import com.capgemini.pecunia.util.Constants;
 public class LoanRequestMain {
 	public static void main(String[] args) throws IOException, NumberFormatException,PecuniaException {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Enter account Id : ");
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String accId = br.readLine();
+		
 		LoanServiceImpl lsi = new LoanServiceImpl();
 		try {
-			if (lsi.validateCustomerId(accId)) {
+				System.out.println("Enter account Id : ");
+				String accId = br.readLine();
 				System.out.println("Enter Loan Amount : ");
 				double amount = scanner.nextDouble();
 				System.out.println("Enter Rate of interest :");
@@ -58,7 +59,6 @@ public class LoanRequestMain {
 					System.out.println("Loan request created for account id: '"+accId+"' for "+type);
 				}
 
-			}
 		} catch (LoanException e) {
 			System.out.println(e.getMessage());
 		} finally {
