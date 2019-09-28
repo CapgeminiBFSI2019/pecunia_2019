@@ -71,7 +71,7 @@ public static void main(String[] args) throws PecuniaException, PassbookExceptio
 		System.out.println("Enter end date:");
 		String sdate2 = obj.nextLine();
 
-
+		LocalDate date1 = LocalDate.parse(sdate1);
 		LocalDate date2 = LocalDate.parse(sdate2);
 
 		List<Transaction> accountSummary = new ArrayList<Transaction>();
