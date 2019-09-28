@@ -41,7 +41,6 @@ public class LoginServiceImpl implements LoginService {
 		String password = null;
 		String secretKey = loginDAO.validateEmail(login);
 		if (secretKey == null) {
-
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
 		} else {
 			byte arr[] = null;
