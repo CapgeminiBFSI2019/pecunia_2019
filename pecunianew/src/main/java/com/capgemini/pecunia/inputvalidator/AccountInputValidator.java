@@ -15,6 +15,8 @@ import com.capgemini.pecunia.util.Constants;
 public class AccountInputValidator 
 {
 	public static boolean checkIfDigit(String value){
+
+
 		boolean ifDigit=true;
 		for(int check =0;check<value.length();check++){
 			if(!Character.isDigit(value.charAt(check))) {
@@ -24,6 +26,7 @@ public class AccountInputValidator
 		}
 		return ifDigit;
 	}
+
 	
 	public static boolean checkIfAlphaNumeric(String value){
 		int digit=0;
@@ -65,6 +68,29 @@ public class AccountInputValidator
 			isValidDate = false;
 		}
 		return isValidDate;
+	}
+
+
+
+	public boolean checkIfAlphaNumeric(String value){
+		int digit=0;
+		int alpha=0;
+		boolean isAlphaNumeric=false;
+		for(int check =0;check<value.length();check++){
+			if(Character.isDigit(value.charAt(check))) 
+				digit++;
+			else if(!Pattern.matches(".*[!@#$%&*()_+=|<>?{}.\\[\\]~-]+.*",value)){
+				alpha++;
+			}
+		}
+		if(digit!=0 && alpha!=0)
+			isAlphaNumeric=true;
+			
+		return isAlphaNumeric;
+	}
+	public void checkIfSpecialCharacters(String value){
+		int poop=0;
+		
 	}
 
 //	if(Pattern.matches(".*[0-9]+.*", customerName) || Pattern.matches(".*[!@#$%&*()_+=|<>?{}.\\[\\]~-]+.*",customerName ))
@@ -127,6 +153,11 @@ public class AccountInputValidator
 //		throw new InvalidParameterException("Invalid Account Interest");	
 //		
 //	}
+
 	}
+
+	
+}
+
 
 
