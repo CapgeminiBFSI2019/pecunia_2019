@@ -10,7 +10,7 @@ import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.ErrorConstants;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.Constants;
 
@@ -20,13 +20,13 @@ public class TransactionServiceImpl implements TransactionService {
 
 	/*******************************************************************************************************
 	 * - Function Name : getBalance(Account account) - Input Parameters : account
-	 * object - Return Type : double - Throws : TransactionException,MyException -
+	 * object - Return Type : double - Throws : TransactionException,PecuniaException -
 	 * Author : Rohan Patil,Anwesha Das - Creation Date : 23/09/2019 - Description :
 	 * Getting balance of the specified account
 	 ********************************************************************************************************/
 
 	@Override
-	public double getBalance(Account account) throws TransactionException, MyException {
+	public double getBalance(Account account) throws TransactionException, PecuniaException {
 		try {
 			transactionDAO = new TransactionDAOImpl();
 			double balance;
@@ -40,13 +40,13 @@ public class TransactionServiceImpl implements TransactionService {
 
 	/*******************************************************************************************************
 	 * - Function Name : updateBalance(Account account) - Input Parameters : account
-	 * object - Return Type : boolean - Throws : TransactionException,MyException -
+	 * object - Return Type : boolean - Throws : TransactionException,PecuniaException -
 	 * Author : Anish Basu, Arpan Mondal - Creation Date : 23/09/2019 - Description
 	 * : update balance of the specified account
 	 ********************************************************************************************************/
 
 	@Override
-	public boolean updateBalance(Account account) throws TransactionException, MyException {
+	public boolean updateBalance(Account account) throws TransactionException, PecuniaException {
 		try {
 			transactionDAO = new TransactionDAOImpl();
 			boolean success = false;
@@ -60,13 +60,13 @@ public class TransactionServiceImpl implements TransactionService {
 	/*******************************************************************************************************
 	 * - Function Name : creditUsingSlip(Transaction transaction) - Input Parameters
 	 * : transaction object - Return Type : int - Throws :
-	 * TransactionException,MyException - Author : Arpan Mondal - Creation Date :
+	 * TransactionException,PecuniaException - Author : Arpan Mondal - Creation Date :
 	 * 23/09/2019 - Description : crediting amount using slip of the specified
 	 * account
 	 ********************************************************************************************************/
 
 	@Override
-	public int creditUsingSlip(Transaction transaction) throws TransactionException, MyException {
+	public int creditUsingSlip(Transaction transaction) throws TransactionException, PecuniaException {
 
 		int transId = 0;
 		try {
@@ -98,13 +98,13 @@ public class TransactionServiceImpl implements TransactionService {
 				}
 
 				else {
-					throw new TransactionException(Constants.AMOUNT_EXCEEDS_EXCEPTION);
+					throw new TransactionException(ErrorConstants.AMOUNT_EXCEEDS_EXCEPTION);
 					// TODO
 
 				}
 			} else {
 				// TODO
-				throw new TransactionException(Constants.AMOUNT_LESS_EXCEPTION);
+				throw new TransactionException(ErrorConstants.AMOUNT_LESS_EXCEPTION);
 			}
 		} catch (TransactionException e) {
 			e.getMessage();
@@ -112,7 +112,7 @@ public class TransactionServiceImpl implements TransactionService {
 		}
 
 		catch (Exception e) {
-			throw new TransactionException(Constants.TRANSACTION_AMOUNT_ERROR);
+			throw new TransactionException(ErrorConstants.TRANSACTION_AMOUNT_ERROR);
 
 		}
 		return transId;
@@ -121,13 +121,13 @@ public class TransactionServiceImpl implements TransactionService {
 	/*******************************************************************************************************
 	 * - Function Name : debitUsingSlip(Transaction transaction) - Input Parameters
 	 * : transaction object - Return Type : int - Throws :
-	 * TransactionException,MyException - Author : Anwesha Das - Creation Date :
+	 * TransactionException,PecuniaException - Author : Anwesha Das - Creation Date :
 	 * 23/09/2019 - Description : debiting amount using slip of the specified
 	 * account
 	 ********************************************************************************************************/
 
 	@Override
-	public int debitUsingSlip(Transaction transaction) throws TransactionException, MyException {
+	public int debitUsingSlip(Transaction transaction) throws TransactionException, PecuniaException {
 
 		int transId = 0;
 		try {
@@ -157,14 +157,14 @@ public class TransactionServiceImpl implements TransactionService {
 				transId = transactionDAO.generateTransactionId(debitTransaction);
 
 			} else {
-				throw new TransactionException(Constants.INSUFFICIENT_BALANCE_EXCEPTION);
+				throw new TransactionException(ErrorConstants.INSUFFICIENT_BALANCE_EXCEPTION);
 			}
 		} catch (TransactionException e) {
 			e.getMessage();
 			throw new TransactionException(e.getMessage());
 		} catch (Exception e) {
 
-			throw new TransactionException(Constants.EXCEPTION_DURING_TRANSACTION);
+			throw new TransactionException(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 
 		}
 		return transId;
@@ -174,13 +174,13 @@ public class TransactionServiceImpl implements TransactionService {
 	/*******************************************************************************************************
 	 * - Function Name : debitUsingCheque(Transaction transaction,Cheque cheque) -
 	 * Input Parameters : transaction object, cheque object - Return Type : int -
-	 * Throws : TransactionException,MyException - Author : Anish Basu - Creation
+	 * Throws : TransactionException,PecuniaException - Author : Anish Basu - Creation
 	 * Date : 23/09/2019 - Description : debiting amount using cheque of the
 	 * specified account
 	 ********************************************************************************************************/
 
 	@Override
-	public int debitUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
+	public int debitUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, PecuniaException {
 		int transId = 0;
 		int chequeId = 0;
 		try {
@@ -219,18 +219,18 @@ public class TransactionServiceImpl implements TransactionService {
 
 				} else {
 					// TODO logger
-					throw new TransactionException(Constants.CHEQUE_BOUNCE_EXCEPTION);
+					throw new TransactionException(ErrorConstants.CHEQUE_BOUNCE_EXCEPTION);
 				}
 			} else {
 				// TODO logger
-				throw new TransactionException(Constants.INVALID_CHEQUE_EXCEPTION);
+				throw new TransactionException(ErrorConstants.INVALID_CHEQUE_EXCEPTION);
 			}
 
 		} catch (TransactionException e) {
 			e.getMessage();
 			throw new TransactionException(e.getMessage());
 		} catch (Exception e) {
-			throw new TransactionException(Constants.EXCEPTION_DURING_TRANSACTION);
+			throw new TransactionException(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 		}
 		return transId;
 	}
@@ -250,13 +250,13 @@ public class TransactionServiceImpl implements TransactionService {
 
 	/*******************************************************************************************************
 	 * - Function Name : updateInterest() - Input Parameters : account object -
-	 * Return Type : - Throws : TransactionException, MyException - Author : -
+	 * Return Type : - Throws : TransactionException, PecuniaException - Author : -
 	 * Creation Date : 23/09/2019 - Description : update interest of the specified
 	 * account
 	 ********************************************************************************************************/
 	@Override
 
-	public double updateInterest() throws TransactionException, MyException {
+	public double updateInterest() throws TransactionException, PecuniaException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -264,13 +264,13 @@ public class TransactionServiceImpl implements TransactionService {
 	/*******************************************************************************************************
 	 * - Function Name : creditUsingCheque(Transaction transaction, Cheque cheque) -
 	 * Input Parameters : transaction object, cheque object - Return Type : int -
-	 * Throws : TransactionException,MyException - Author : Rohan Patil - Creation
+	 * Throws : TransactionException,PecuniaException - Author : Rohan Patil - Creation
 	 * Date : 23/09/2019 - Description : crediting amount using cheque of the
 	 * specified account
 	 ********************************************************************************************************/
 
 	@Override
-	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, MyException {
+	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, PecuniaException {
 		int transId = 0;
 
 		try {
@@ -298,13 +298,13 @@ public class TransactionServiceImpl implements TransactionService {
 			} else {
 				if (!bankName.equals(Constants.BANK_NAME)) {
 					// invalid bank cheque
-					throw new TransactionException(Constants.INVALID_BANK_EXCEPTION);
+					throw new TransactionException(ErrorConstants.INVALID_BANK_EXCEPTION);
 				} else {
 					// pecunia cheque
 					if (transaction.getAmount() < Constants.MINIMUM_CHEQUE_AMOUNT
 							|| transaction.getAmount() > Constants.MAXIMUM_CHEQUE_AMOUNT) {
 						// invalid cheque amount
-						throw new TransactionException(Constants.INVALID_CHEQUE_EXCEPTION);
+						throw new TransactionException(ErrorConstants.INVALID_CHEQUE_EXCEPTION);
 					} else {
 
 						Account beneficiaryAccount = new Account();
@@ -361,7 +361,7 @@ public class TransactionServiceImpl implements TransactionService {
 			}
 			return transId;
 		} catch (Exception e) {
-			throw new TransactionException(Constants.EXCEPTION_DURING_TRANSACTION);
+			throw new TransactionException(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 		}
 
 	}

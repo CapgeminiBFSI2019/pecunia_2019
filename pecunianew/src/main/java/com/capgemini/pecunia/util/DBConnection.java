@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.mysql.cj.jdbc.MysqlDataSource;
 
 public class DBConnection {
@@ -21,14 +21,14 @@ public class DBConnection {
 	 * Creation Date : 18/11/2016 - Desc:Loads the jdbc.properties file and Driver
 	 * Class and gets the connection
 	 ***************************************************************************************/
-	private DBConnection() throws MyException {
+	private DBConnection() throws PecuniaException {
 		try {
 			props = loadProperties();
 			dataSource = prepareDataSource();
 		} catch (IOException e) {
-			throw new MyException(" Could not read the database details from properties file ");
+			throw new PecuniaException(" Could not read the database details from properties file ");
 		} catch (SQLException e) {
-			throw new MyException(e.getMessage());
+			throw new PecuniaException(e.getMessage());
 		}
 
 	}
@@ -39,7 +39,7 @@ public class DBConnection {
 	 * 18/11/2016 - Description : Singleton and Thread safe class
 	 *******************************************************************/
 
-	public static DBConnection getInstance() throws MyException {
+	public static DBConnection getInstance() throws PecuniaException {
 		synchronized (DBConnection.class) {
 			if (instance == null) {
 				instance = new DBConnection();
@@ -53,12 +53,12 @@ public class DBConnection {
 	 * :DBConnection instance - Throws : DonorException - Author : CAPGEMINI -
 	 * Creation Date : 18/11/2016 - Description : Returns connection object
 	 *******************************************************************/
-	public Connection getConnection() throws MyException {
+	public Connection getConnection() throws PecuniaException {
 		try {
 
 			conn = dataSource.getConnection();
 		} catch (SQLException e) {
-			throw new MyException(" Database connection problem");
+			throw new PecuniaException(" Database connection problem");
 		}
 		return conn;
 	}
