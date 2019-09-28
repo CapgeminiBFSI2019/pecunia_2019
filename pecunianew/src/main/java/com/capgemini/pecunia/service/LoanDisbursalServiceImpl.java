@@ -98,9 +98,6 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 ********************************************************************************************************/
 
 	public ArrayList<Loan> rejectedLoanRequests() throws PecuniaException, LoanDisbursalException {
-		if (rejectedLoanList.size() == 0) {
-			throw new LoanDisbursalException("No loan request has been rejected");
-		}
 		return rejectedLoanList;
 	}
 
@@ -200,7 +197,6 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 			double oldBalance = transactionDAOImpl.getBalance(account);
 			double updatedBalance = oldBalance - approvedLoanRequests.get(index).getEmi();
 			if (updatedBalance < 0) {
-				System.out.println("Not enough balance");
 				status = Constants.STATUS_CHECK[1];
 			} else {
 				account.setBalance(updatedBalance);
