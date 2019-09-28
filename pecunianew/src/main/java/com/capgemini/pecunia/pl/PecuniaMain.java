@@ -39,18 +39,18 @@ import com.capgemini.pecunia.util.Constants;
 public class PecuniaMain {
 	public static void main(String[] args) throws IOException, LoanDisbursalException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		Scanner scanner = new Scanner(System.in);
 		int choice1 = 0, choice2 = 0, choice3 = 0;
 		System.out.println("Enter your option: " + "\n1. Login" + "\n2. Exit");
-		choice1 = scanner.nextInt();
+
+		choice1 = Integer.parseInt(br.readLine());
 		switch (choice1) {
 		case 1:
 			boolean loginFlag = false;
 			do {
 				System.out.print("Enter username : ");
-				String username = scanner.next();
+				String username = br.readLine();
 				System.out.print("Enter password : ");
-				String password = scanner.next();
+				String password = br.readLine();
 				loginFlag = login(username, password);
 				if (loginFlag) {
 					System.out.println("Login successful");
@@ -58,7 +58,7 @@ public class PecuniaMain {
 				} else {
 					System.out.println("Login Unsuccessful");
 					System.out.print("Do you want to continue Y / N :-");
-					String choice = scanner.next();
+					String choice = br.readLine();
 					if (choice.equalsIgnoreCase("n")) {
 						break;
 					} else if (!choice.equalsIgnoreCase("y")) {
@@ -71,7 +71,7 @@ public class PecuniaMain {
 				System.out.println("Enter your option: " + "\n1. Create Account" + "\n2. Update Account"
 						+ "\n3. Delete Existing Account" + "\n4. Update Passbook/ Account Summary" + "\n5. Transaction"
 						+ "\n6. Loan Management");
-				choice2 = scanner.nextInt();
+				choice2 = Integer.parseInt(br.readLine());
 				switch (choice2) {
 				case 1:
 					String accountId = addAccount();
@@ -84,7 +84,7 @@ public class PecuniaMain {
 				case 2:
 					System.out.println("Enter your option: " + "\n1. Update Name" + "\n2. Update Contact"
 							+ "\n3. Update Address Details");
-					choice3 = scanner.nextInt();
+					choice3 = Integer.parseInt(br.readLine());
 					switch (choice3) {
 					case 1:
 						boolean isUpdated = updateCustomerName();
@@ -122,7 +122,7 @@ public class PecuniaMain {
 					break;
 				case 4:
 					System.out.println("Enter your option: " + "\n1. Update Passbook" + "\n2. Display Account Summary");
-					int choice4 = scanner.nextInt();
+					int choice4 = Integer.parseInt(br.readLine());
 					switch (choice4) {
 					case 1: // update passbook
 						break;
@@ -131,12 +131,12 @@ public class PecuniaMain {
 					}
 				case 5:
 					System.out.println("Enter your option: " + "\n1. Credit Amount" + "\n2. Debit Account");
-					int choice5 = scanner.nextInt();
+					int choice5 = Integer.parseInt(br.readLine());
 					switch (choice5) {
 					case 1:
 						System.out
 								.println("Enter your option: " + "\n1. Credit Using Slip" + "\n2. Credit Using Cheque");
-						int choice6 = scanner.nextInt();
+						int choice6 = Integer.parseInt(br.readLine());
 						switch (choice6) {
 						case 1: // credit using slip
 
@@ -164,7 +164,7 @@ public class PecuniaMain {
 						break;
 					case 2:
 						System.out.println("Enter your option: " + "\n1. Debit Using Slip" + "\n2. Debit Using Cheque");
-						int choice7 = scanner.nextInt();
+						int choice7 = Integer.parseInt(br.readLine());
 						switch (choice7) {
 						case 1: // debit using slip
 
@@ -195,7 +195,8 @@ public class PecuniaMain {
 					break;
 				case 6:
 					System.out.println("Enter your option: \n1. Create Loan request \n2. Disburse Loan Amount");
-					int choice8 = scanner.nextInt();
+
+					int choice8 = Integer.parseInt(br.readLine());
 					switch (choice8) {
 					case 1:
 						boolean requestSuccess = addLoanDetails();
@@ -625,15 +626,12 @@ public class PecuniaMain {
 
 	public static boolean addLoanDetails() throws IOException {
 		Scanner scanner = new Scanner(System.in);
-
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-		LoanServiceImpl lsi = new LoanServiceImpl();
-
 		boolean result = false;
+		System.out.println("Enter account Id : ");
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String accId = br.readLine();
+		LoanServiceImpl lsi = new LoanServiceImpl();
 		try {
-			System.out.println("Enter account Id : ");
-			String accId = br.readLine();
 			System.out.println("Enter Loan Amount : ");
 			double amount = scanner.nextDouble();
 			System.out.println("Enter Rate of interest :");
@@ -678,14 +676,14 @@ public class PecuniaMain {
 	}
 
 	public static void loanDisbursal() throws LoanDisbursalException {
-		Scanner sc = new Scanner(System.in);
+
 		ArrayList<Loan> retrievedLoanRequests = new ArrayList<Loan>();
 		ArrayList<Loan> approvedLoanRequests = new ArrayList<Loan>();
 		ArrayList<Loan> rejectedLoanRequests = new ArrayList<Loan>();
 		ArrayList<LoanDisbursal> loanDisbursedData = new ArrayList<LoanDisbursal>();
 		String update;
 		LoanDisbursalService loanDisbursalService = new LoanDisbursalServiceImpl();
-
+		Scanner sc = new Scanner(System.in);
 		try {
 			while (true) {
 				System.out.println(
@@ -720,6 +718,14 @@ public class PecuniaMain {
 							rejectedLoanRequests = loanDisbursalService.rejectedLoanRequests();
 							System.out.println(rejectedLoanRequests);
 						
+
+						System.out.println("Approved loan requests");
+						System.out.println(approvedLoanRequests);
+
+						System.out.println("Rejected loan requests");
+						rejectedLoanRequests = loanDisbursalService.rejectedLoanRequests();
+						System.out.println(rejectedLoanRequests);
+
 						if (approvedLoanRequests.size() == 0 && rejectedLoanRequests.size() == 0)
 							System.out.println("No loan requests");
 						update = loanDisbursalService.updateLoanStatus(rejectedLoanRequests, approvedLoanRequests);
