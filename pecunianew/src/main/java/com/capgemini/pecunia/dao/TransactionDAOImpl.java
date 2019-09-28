@@ -30,9 +30,9 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 	/*******************************************************************************************************
 	 * - Function Name : getBalance(Account account) - Input Parameters : account
-	 * object - Return Type : double - Throws : TransactionException,PecuniaException -
-	 * Author : Rohan Patil - Creation Date : 23/09/2019 - Description : Getting
-	 * balance of the specified account
+	 * object - Return Type : double - Throws :
+	 * TransactionException,PecuniaException - Author : Rohan Patil - Creation Date
+	 * : 23/09/2019 - Description : Getting balance of the specified account
 	 ********************************************************************************************************/
 
 	@Override
@@ -56,13 +56,13 @@ public class TransactionDAOImpl implements TransactionDAO {
 			}
 
 			if (balance == -1) {
-				
+
 				throw new TransactionException(ErrorConstants.BALANCE_RETRIEVAL_ERROR);
 			}
 
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
-			
+
 			throw new PecuniaException(e.getMessage());
 		} finally {
 			try {
@@ -81,9 +81,9 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 	/*******************************************************************************************************
 	 * - Function Name : updateBalance(Account account) - Input Parameters : account
-	 * object - Return Type : boolean - Throws : TransactionException,PecuniaException -
-	 * Author : Anwesha Das - Creation Date : 23/09/2019 - Description : update
-	 * balance of the specified account
+	 * object - Return Type : boolean - Throws :
+	 * TransactionException,PecuniaException - Author : Anwesha Das - Creation Date
+	 * : 23/09/2019 - Description : update balance of the specified account
 	 ********************************************************************************************************/
 
 	@Override
@@ -102,7 +102,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			if (numAccountAffected != 0) {
 				balanceUpdated = true;
 			} else {
-				
+
 				throw new TransactionException(ErrorConstants.BALANCE_UPDATE_ERROR);
 			}
 		} catch (SQLException e) {
@@ -113,7 +113,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 				preparedStatement.close();
 				connection.close();
 			} catch (SQLException e) {
-				
+
 				logger.error(ErrorConstants.DB_CONNECTION_ERROR);
 				throw new PecuniaException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
@@ -177,8 +177,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 	/*******************************************************************************************************
 	 * - Function Name : generateTransactionId(Transaction transaction) - Input
 	 * Parameters : transaction object - Return Type : int - Throws :
-	 * TransactionException,PecuniaException - Author : Arpan Mondal - Creation Date :
-	 * 23/09/2019 - Description : generate transaction id of the specified account
+	 * TransactionException,PecuniaException - Author : Arpan Mondal - Creation Date
+	 * : 23/09/2019 - Description : generate transaction id of the specified account
 	 ********************************************************************************************************/
 
 	@Override
@@ -209,7 +209,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			if (resultSet.next()) {
 				transId = resultSet.getInt(1);
 			} else {
-			
+
 				throw new TransactionException(ErrorConstants.TRANSACTION_INSERTION_ERROR);
 			}
 		} catch (SQLException e) {
@@ -226,7 +226,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			}
 
 		}
-logger.info(LoggerMessage.TRANSACTION_ID_SUCCESSFUL);
+		logger.info(LoggerMessage.TRANSACTION_ID_SUCCESSFUL);
 		return transId;
 	}
 
