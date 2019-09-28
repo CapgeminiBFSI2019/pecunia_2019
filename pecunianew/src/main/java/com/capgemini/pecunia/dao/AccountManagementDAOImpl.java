@@ -26,6 +26,16 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	}
 
+	
+	/*******************************************************************************************************
+	 * - Function Name : deleteAccount(Account acc) - Input Parameters : Account
+	 * account - Return Type : boolean - Throws : AccountException 
+	 * - Author : Rohit Kumar - Creation Date : 24/09/2019 - Description : Deleting an account by
+	 * setting account status "Closed" and returns the confirmation to service layer
+	 * 
+	 * @throws PecuniaException
+	 ********************************************************************************************************/
+	
 	@Override
 	public boolean deleteAccount(Account acc) throws PecuniaException, AccountException {
 		boolean isUpdated = false;
@@ -66,6 +76,16 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		return isUpdated;
 
 	}
+
+	
+	/*******************************************************************************************************
+	 * - Function Name : updateCustomerName(Account acc, Customer cust) - Input
+	 * Parameters : Account acc, Customer cust Return Type : boolean - Throws :
+	 * AccountException - Author : Aditi Singh - Creation Date : 24/09/2019 -
+	 * Description : Updates customer name in the database and returns confirmation to service layer
+	 * 
+	 * @throws PecuniaException
+	 ********************************************************************************************************/
 
 	@Override
 	public boolean updateCustomerName(Account acc, Customer cust) throws AccountException, PecuniaException {
@@ -116,6 +136,16 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	}
 
+	
+	/*******************************************************************************************************
+	 * - Function Name : updateCustomerContact(Account acc, Customer cust) - Input
+	 * Parameters : Account acc, Customer cust Return Type : boolean - Throws :
+	 * AccountException - Author : Aditi Singh - Creation Date : 24/09/2019 -
+	 * Description : Updates customer contact and returns the confirmation to service layer
+	 * 
+	 * @throws PecuniaException
+	 ********************************************************************************************************/
+	
 	@Override
 	public boolean updateCustomerContact(Account acc, Customer cust) throws AccountException, PecuniaException {
 		boolean isUpdated = false;
@@ -163,6 +193,16 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		return isUpdated;
 	}
 
+	
+	/*******************************************************************************************************
+	 * - Function Name : updateCustomerName(Account acc, Address add) - Input
+	 * Parameters : Account acc, Address add Return Type : boolean - Throws :
+	 * AccountException - Author : Aditi Singh - Creation Date : 24/09/2019 -
+	 * Description : Updates customer address and returns the confirmation to service layer
+	 * 
+	 * @throws PecuniaException
+	 ********************************************************************************************************/
+	
 	@Override
 	public boolean updateCustomerAddress(Account acc, Address add) throws AccountException, PecuniaException {
 		boolean isUpdated = false;
@@ -216,6 +256,15 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	}
 
+	
+	/*******************************************************************************************************
+	 * - Function Name : calculateAccountId(Account acc) - Input Parameters :
+	 * Account acc Return Type : String - Throws : AccountException 
+	 * - Author : Aditi Singh - Creation Date : 24/09/2019 
+	 * - Description : Generation of a new account ID with the given branch ID and type of Account
+	 * @throws PecuniaException
+	 ********************************************************************************************************/
+	
 	@Override
 	public String calculateAccountId(String id) throws AccountException, PecuniaException {
 		Connection connection = null;
@@ -252,6 +301,16 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		return id;
 	}
 
+	
+	/*******************************************************************************************************
+	 * - Function Name : validateAccountId(Account acc) - Input Parameters : Account
+	 * account - Return Type : double - Throws : AccountException 
+	 * - Author : Aditi Singh - Creation Date : 24/09/2019 
+	 * - Description : Validation of Account ID from the database
+	 * 
+	 * @throws PecuniaException
+	 ********************************************************************************************************/
+	
 	@Override
 	public boolean validateAccountId(Account acc) throws PecuniaException, AccountException {
 
@@ -287,6 +346,17 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		return isValidated;
 	}
 
+	
+	/*******************************************************************************************************
+	 * - Function Name : addAccount(Customer cust, Address add,Account acc) - Input
+	 * Parameters : Customer cust, Address add,Account acc - Return Type : String -
+	 * Throws : AccountException - Author : Vidushi Razdan - Creation Date :
+	 * 24/09/2019 - Description : Addition of new Account by adding address, customer details
+	 * and returns the generated customer ID
+	 * @throws PecuniaException
+	 ********************************************************************************************************/
+
+	
 	@Override
 	public String addCustomerDetails(Customer cust, Address add) throws PecuniaException, AccountException {
 		Connection connection = null;
@@ -362,6 +432,13 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	}
 
+	/*******************************************************************************************************
+	 * - Function Name : addAccount(Account acc) - Input Parameters : Account acc - Return Type : String 
+	 * - Throws : AccountException - Author : Vidushi Razdan - Creation Date : 24/09/2019 
+	 * - Description : Addition of new Account by adding account details and returns the generated accountID
+	 * @throws PecuniaException
+	 ********************************************************************************************************/
+	
 	@Override
 	public String addAccount(Account acc) throws PecuniaException, AccountException {
 		Connection connection = null;

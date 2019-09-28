@@ -160,24 +160,6 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 			throw new AccountException(ErrorConstants.TECH_ERROR);
 		}
 
-//	public String calculateAccountId(Account acc) throws PecuniaException, AccountException{
-//		String id="";
-//		id = id.concat(acc.getBranchId());
-//		String type=acc.getAccountType();
-//		switch(type) {
-//		case Constants.SAVINGS:
-//			id = id.concat(Constants.CODE_SAVINGS);
-//			break;
-//		case Constants.CURRENT:
-//			id = id.concat(Constants.CODE_CURRENT);
-//			break;
-//		case Constants.FD: 
-//			id = id.concat(Constants.CODE_FD);
-//			break;
-//		case Constants.LOAN:
-//			id = id.concat(Constants.CODE_LOAN);
-//			break;
-
 	}
 
 	/*******************************************************************************************************
