@@ -8,6 +8,7 @@ import com.capgemini.pecunia.dao.TransactionDAOImpl;
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
+import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.LoanDisbursalException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
@@ -52,7 +53,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		int size = loanRequestList.size();
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		if (loanRequestList.size() == 0) {
-			throw new LoanDisbursalException("No loan request is present in database");
+			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
 
 		}
 		if (size > 0) {
@@ -115,7 +116,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	public String updateLoanAccount(ArrayList<LoanDisbursal> updateLoanApprovals, int numberOfMonths)
 			throws PecuniaException, LoanDisbursalException {
-		String status = "Updated";
+		String status = Constants.STATUS_CHECK[0];
 		if (updateLoanApprovals != null) {
 			LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 			for (int index = 0; index < updateLoanApprovals.size(); index++) {
@@ -138,7 +139,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		}
 		
 		else {
-			status = "Not updated";
+			status = Constants.STATUS_CHECK[1];
 		}
 		
 		return status;
@@ -155,18 +156,18 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	public String updateLoanStatus(ArrayList<Loan> rejectedLoanList, ArrayList<Loan> approvedLoanList)
 			throws PecuniaException, LoanDisbursalException {
-		String status = "Updated";
+		String status = Constants.STATUS_CHECK[0];
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		if (rejectedLoanList != null || approvedLoanList != null) {
 			try {
-				for (int i = 0; i < rejectedLoanList.size(); i++) {
-					String accountId = rejectedLoanList.get(i).getAccountId();
+				for (int index = 0; index < rejectedLoanList.size(); index++) {
+					String accountId = rejectedLoanList.get(index).getAccountId();
 					loanDisbursedDAO.updateStatus(rejectedLoanList, accountId, Constants.LOAN_REQUEST_STATUS[2]);
 
 				}
 
-				for (int i = 0; i < approvedLoanList.size(); i++) {
-					String accountId = approvedLoanList.get(i).getAccountId();
+				for (int index = 0; index < approvedLoanList.size(); index++) {
+					String accountId = approvedLoanList.get(index).getAccountId();
 					loanDisbursedDAO.updateStatus(rejectedLoanList, accountId, Constants.LOAN_REQUEST_STATUS[1]);
 
 				}
@@ -177,7 +178,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 			}
 
 		} else {
-			status = "Not updated";
+			status = Constants.STATUS_CHECK[1];
 		}
 		return status;
 	}
@@ -192,20 +193,20 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	public String updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
 			throws PecuniaException, TransactionException, LoanDisbursalException {
-		String status = "Updated";
-		for (int i = 0; i < approvedLoanRequests.size(); i++) {
+		String status = Constants.STATUS_CHECK[0];
+		for (int index = 0; index < approvedLoanRequests.size(); index++) {
 			Account account = new Account();
-			account.setId(approvedLoanRequests.get(i).getAccountId());
+			account.setId(approvedLoanRequests.get(index).getAccountId());
 			double oldBalance = transactionDAOImpl.getBalance(account);
-			double updatedBalance = oldBalance - approvedLoanRequests.get(i).getEmi();
+			double updatedBalance = oldBalance - approvedLoanRequests.get(index).getEmi();
 			if (updatedBalance < 0) {
-				
-				status = "Not updated";
+				System.out.println("Not enough balance");
+				status = Constants.STATUS_CHECK[1];
 			} else {
 				account.setBalance(updatedBalance);
 				transactionDAOImpl.updateBalance(account);
 				updateLoanAccount(approvedLoanList, 1);
-				status = "Updated";
+				status = Constants.STATUS_CHECK[0];
 			}
 
 		}
