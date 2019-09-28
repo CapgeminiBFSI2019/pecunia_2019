@@ -10,6 +10,7 @@ public class Constants {
 	public static final String CURRENT = "Current";
 	public static final String FD = "Fd";
 	public static final String LOAN = "Loan";
+	public static final String[] STATUS= {"Updated", "Not updated"}; 
 	public static final String[] ACCOUNT_STATUS = {"Active", "Closed"};
 	public static final String BANK_NAME = "PECUNIA";
 	public static final String TRANSACTION_DEBIT = "DEBIT";
@@ -28,7 +29,8 @@ public class Constants {
 	
 	
 	public static final String[] LOAN_REQUEST_STATUS = {"Pending","Approved","Rejected"};
-	
+    
+	public static final String[] STATUS_CHECK= {"Updated", "Not updated"}; 
 	public static final double MINIMUM_CREDIT_SLIP_AMOUNT = 100.00;
 	public static final double MAXIMUM_CREDIT_SLIP_AMOUNT = 100000.00;
 	public static final String SELF_CHEQUE = "SELF";

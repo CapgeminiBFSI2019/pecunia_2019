@@ -77,11 +77,6 @@ public static void main(String[] args) throws PecuniaException, PassbookExceptio
 		List<Transaction> accountSummary = new ArrayList<Transaction>();
 		try {
 			accountSummary = accountSummaryService.accountSummary(accountId1, date1, date2);
-//			if (accountSummary.size() < 1) {
-//				System.out.println("no trans");
-//			}
-//
-	//		else {
 				for (int index = 0; index < accountSummary.size(); index++) {
 					System.out.print(accountSummary.get(index).getId() + "\t");
 					System.out.print(accountSummary.get(index).getTransDate() + "\t");

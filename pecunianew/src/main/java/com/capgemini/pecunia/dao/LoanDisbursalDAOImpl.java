@@ -12,16 +12,43 @@ import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.PecuniaException;
-import com.capgemini.pecunia.util.Constants;
 import com.capgemini.pecunia.util.DBConnection;
 
 public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
-	
+
 	private int loanId;
+	private String accountId;
+	private Double amount;
+	private String type;
+	private int tenure;
+	private int roi;
+	private String status;
+	private Double emi;
+	private int creditScore;
+	private int loanDisbursedId;
+	private int loanId1;
+	private String accountId1;
+	private Double disbursedAmount;
+	private double dueAmount;
+	private double emiToBePaid;
+
+	/*******************************************************************************************************
+	 * - Function Name : amountToBePaid(double emi, int tenure) - Input Parameters
+	 * :double emi, int tenure - Return Type : double - Throws : None - Author :
+	 * aninrana - Creation Date : 25/09/2019 - Description : Calculating the total
+	 * amount to be paid after interest.
+	 ********************************************************************************************************/
 
 	public double amountToBePaid(double emi, int tenure) {
 		return emi * tenure;
 	}
+
+	/*******************************************************************************************************
+	 * - Function Name : retrieveLoanList() - Input Parameters :none - Return Type :
+	 * List<Loan> - Throws : None - Author : IOException, PecuniaException -
+	 * Creation Date : 25/09/2019 - Description : Retrieving the loan requests from
+	 * the database
+	 ********************************************************************************************************/
 
 	public List<Loan> retrieveLoanList() throws IOException, PecuniaException {
 
@@ -36,17 +63,17 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-				//TODO -------
+
 				loanId = resultSet.getInt("loan_id");
-				String account_id = resultSet.getString("account_id");
-				Double amount = resultSet.getDouble("amount");
-				String type = resultSet.getString("type");
-				int tenure = resultSet.getInt("tenure");
-				int roi = resultSet.getInt("roi");
-				String status = resultSet.getString("loan_status");
-				Double emi = resultSet.getDouble("emi");
-				int creditScore = resultSet.getInt("credit_score");
-				Loan loan = new Loan(loanId, account_id, amount, type, tenure, roi, status, emi, creditScore);
+				accountId = resultSet.getString("account_id");
+				amount = resultSet.getDouble("amount");
+				type = resultSet.getString("type");
+				tenure = resultSet.getInt("tenure");
+				roi = resultSet.getInt("roi");
+				status = resultSet.getString("loan_status");
+				emi = resultSet.getDouble("emi");
+				creditScore = resultSet.getInt("credit_score");
+				Loan loan = new Loan(loanId, accountId, amount, type, tenure, roi, status, emi, creditScore);
 				requestList.add(loan);
 
 			}
@@ -71,20 +98,27 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 	}
 
+	/*******************************************************************************************************
+	 * - Function Name : releaseLoanSheet(List<Loan> loanList) - Input Parameters
+	 * :List<Loan> loanList - Return Type : void - Throws : IOException,
+	 * PecuniaException - Author : aninrana - Creation Date : 25/09/2019 -
+	 * Description : Updating the data in loan disbursed database
+	 ********************************************************************************************************/
+
 	public void releaseLoanSheet(List<Loan> loanList) throws IOException, PecuniaException {
 		Connection connection = DBConnection.getInstance().getConnection();
 
 		PreparedStatement preparedStatement = null;
 
 		try {
-			for (int i = 0; i < loanList.size(); i++) {
-				double amountDue = amountToBePaid(loanList.get(1).getEmi(), loanList.get(1).getTenure());
+			for (int index = 0; index < loanList.size(); index++) {
+				double amountDue = amountToBePaid(loanList.get(index).getEmi(), loanList.get(index).getTenure());
 				preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.INSERT_QUERY);
-				preparedStatement.setInt(1, loanList.get(i).getLoanId());
-				preparedStatement.setString(2, loanList.get(i).getAccountId());
-				preparedStatement.setDouble(3, loanList.get(i).getAmount());
+				preparedStatement.setInt(1, loanList.get(index).getLoanId());
+				preparedStatement.setString(2, loanList.get(index).getAccountId());
+				preparedStatement.setDouble(3, loanList.get(index).getAmount());
 				preparedStatement.setDouble(4, amountDue);
-				preparedStatement.setInt(5, loanList.get(i).getTenure());
+				preparedStatement.setInt(5, loanList.get(index).getTenure());
 				preparedStatement.execute();
 			}
 
@@ -104,6 +138,13 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 	}
 
+	/*******************************************************************************************************
+	 * - Function Name : loanApprovedList() - Input Parameters : None - Return Type
+	 * : ArrayList<LoanDisbursal> - Throws : IOException, PecuniaException - Author
+	 * : aninrana - Creation Date : 25/09/2019 - Description : returning the list of
+	 * loan customers whose loan request has been approved
+	 ********************************************************************************************************/
+
 	public ArrayList<LoanDisbursal> loanApprovedList() throws IOException, PecuniaException {
 		Connection connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
@@ -115,13 +156,13 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 
-				int loanDisbursedId = resultSet.getInt("loan_disbursal_id");
-				int loanId = resultSet.getInt("loan_id");
-				String accountId = resultSet.getString("account_id");
-				Double disbursedAmount = resultSet.getDouble("disbursed_amount");
-				double dueAmount = resultSet.getDouble("due_amount");
-				double emiToBePaid = resultSet.getDouble("emi_to_be_paid");
-				LoanDisbursal getDetails = new LoanDisbursal(loanDisbursedId, loanId, accountId, disbursedAmount,
+				loanDisbursedId = resultSet.getInt("loan_disbursal_id");
+				loanId1 = resultSet.getInt("loan_id");
+				accountId = resultSet.getString("account_id");
+				disbursedAmount = resultSet.getDouble("disbursed_amount");
+				dueAmount = resultSet.getDouble("due_amount");
+				emiToBePaid = resultSet.getDouble("emi_to_be_paid");
+				LoanDisbursal getDetails = new LoanDisbursal(loanDisbursedId, loanId1, accountId1, disbursedAmount,
 						dueAmount, emiToBePaid);
 				approvedLoanList.add(getDetails);
 
@@ -141,6 +182,15 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 		return approvedLoanList;
 	}
+
+	/*******************************************************************************************************
+	 * - Function Name : updateLoanAccount(ArrayList<LoanDisbursal> loanApprovals,
+	 * double dueAmount,double tenure, String accountId) - Input Parameters :
+	 * ArrayList<LoanDisbursal> loanApprovals, double dueAmount,double tenure,
+	 * String accountId - Return Type : void - Throws : IOException,
+	 * PecuniaException - Author : aninrana - Creation Date : 25/09/2019 -
+	 * Description : Updating the main account balance of the loan customer
+	 ********************************************************************************************************/
 
 	public void updateLoanAccount(ArrayList<LoanDisbursal> loanApprovals, double dueAmount, double tenure,
 			String accountId) throws IOException, PecuniaException {
@@ -169,6 +219,14 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 		}
 
 	}
+
+	/*******************************************************************************************************
+	 * - Function Name : updateStatus(ArrayList<Loan> loanRequests, String
+	 * accountId, String Status) - Input Parameters : ArrayList<Loan> loanRequests,
+	 * String accountId, String Status - Return Type : void - Throws : IOException,
+	 * PecuniaException - Author : aninrana - Creation Date : 25/09/2019 -
+	 * Description : Updating loan status of the loan customers
+	 ********************************************************************************************************/
 
 	public void updateStatus(ArrayList<Loan> loanRequests, String accountId, String Status)
 			throws IOException, PecuniaException {

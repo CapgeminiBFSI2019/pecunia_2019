@@ -43,7 +43,6 @@ public class LoginDAOImpl implements LoginDAO {
 
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
-
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
 		} finally {
 			try {
@@ -76,6 +75,7 @@ public class LoginDAOImpl implements LoginDAO {
 			}
 			return password;
 		} catch (SQLException e) {
+			logger.error(ErrorConstants.LOGIN_ERROR);
 			throw new LoginException(ErrorConstants.LOGIN_ERROR);
 		} finally {
 			try {
