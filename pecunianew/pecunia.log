@@ -96,3 +96,7 @@
 2019-09-28-main-ERROR-root      :Unknown column 'salt' in 'field list'
 2019-09-28-main-ERROR-root      :Unknown column 'salt' in 'field list'
 2019-09-28-main-ERROR-root      :Unknown column 'salt' in 'field list'
+2019-09-28-main-INFO -root      :Login succesful.
+2019-09-28-main-INFO -root      :Account balance fetched successfully.
+2019-09-28-main-INFO -root      :Balance updated successfully.
+2019-09-28-main-INFO -root      :Generated transaction ID successfully.
