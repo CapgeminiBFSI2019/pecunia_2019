@@ -21,51 +21,6 @@ public class LoanDAOImpl implements LoanDAO {
 	PropertyConfigurator.configure("resources//log4j.properties");
 	
 	}
-
-	/*******************************************************************************************************
-	 * -Function Name : fetchAccountId(String accountId) - Input
-	 * -Parameters : String accountId
-	 * -Return Type : String 
-	 * -Author : Rishabh Rai 
-	 * -Creation Date : 24/09/2019
-	 * -Description : Fetch account Id from Database 
-	 * ********************************************************************************************************/
-
-	
-	public String fetchAccountId(String accountId) throws PecuniaException, LoanException {
-		
-		Connection connection = DBConnection.getInstance().getConnection();
-		PreparedStatement preparedStatement = null;
-		ResultSet rs = null;
-
-		String Id = null;
-		try {
-			preparedStatement = connection.prepareStatement(LoanQuerryMapper.FETCH_ACCOUNT_ID);
-			preparedStatement.setString(1, accountId);
-			rs = preparedStatement.executeQuery();		
-			while(rs.next()) {
-				Id=rs.getString(1);
-			}
-			
-			return Id;
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			throw new LoanException(ErrorConstants.FETCH_ERROR);
-		}
-		finally {
-			try {
-				rs.close();
-				preparedStatement.close();
-				connection.close();
-				
-			} catch (SQLException sqlException) {
-				logger.error(sqlException.getMessage());
-				throw new PecuniaException(ErrorConstants.DB_CONNECTION_ERROR);
-			}
-		}
-		
-		
-	}
 	
 	/*******************************************************************************************************
 	 * -Function Name : addLoanDetails(Loan loan) - Input
@@ -102,7 +57,7 @@ public class LoanDAOImpl implements LoanDAO {
 				isadditionsuccess = true;
 			}
 
-		} catch (Exception sqlException) {
+		} catch (SQLException sqlException) {
 			logger.error(sqlException.getMessage());
 			throw new PecuniaException(sqlException.getMessage());
 		}

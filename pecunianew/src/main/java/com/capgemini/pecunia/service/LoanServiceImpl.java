@@ -2,6 +2,7 @@ package com.capgemini.pecunia.service;
 
 import com.capgemini.pecunia.dao.LoanDAO;
 import com.capgemini.pecunia.dao.LoanDAOImpl;
+import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.LoanException;
@@ -39,10 +40,17 @@ public class LoanServiceImpl implements LoanService {
 
 	public boolean createLoanRequest(Loan loan) throws LoanException {
 		boolean isRequestSuccess = false;
+		boolean isValidAccount = false;
 		LoanDAO ld = new LoanDAOImpl();
 		try {
-			isRequestSuccess= ld.addLoanDetails(loan);
-
+			Account account = new Account();
+			account.setId(loan.getAccountId());
+			AccountManagementService accountManagementService = new AccountManagementServiceImpl();
+			isValidAccount = accountManagementService.validateAccountId(account);
+			if(isValidAccount)
+			{
+				isRequestSuccess= ld.addLoanDetails(loan);
+			}
 		} catch (Exception e) {
 			throw new LoanException(e.getMessage());
 		}
@@ -50,30 +58,6 @@ public class LoanServiceImpl implements LoanService {
 
 	}
 
-	/*******************************************************************************************************
-	 * -Function Name :validateCustomerId(String account_Id) 
-	 * -Input Parameters :String account_ID 
-	 * -Return Type : boolean - Author : Rishabh Rai - Creation
-	 * -Date : 24/09/2019
-	 * -@throws MyException , LoanException 
-	 * -Description : Validating account Id
-	 ********************************************************************************************************/
-
-	public boolean validateCustomerId(String accountId) throws LoanException{
-		LoanDAO ld = new LoanDAOImpl();
-		boolean isValidated = false;
-		try {
-			String ID = ld.fetchAccountId(accountId);
-			if (ID.equals(accountId)) {
-				isValidated= true;
-				return isValidated;
-			}
-		}catch (Exception e) {
-			throw new LoanException(ErrorConstants.NO_SUCH_ACCOUNT);
-		}
-		
-		return isValidated;
-
-	}
+	
 
 }

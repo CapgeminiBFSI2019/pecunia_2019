@@ -11,7 +11,6 @@ public interface LoanService {
 	
 	public boolean createLoanRequest(Loan loan) throws LoanException;
 
-	public boolean validateCustomerId(String account_ID) throws LoanException;
 
 
 
