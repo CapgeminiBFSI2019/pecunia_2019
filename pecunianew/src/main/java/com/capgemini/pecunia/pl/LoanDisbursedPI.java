@@ -1,7 +1,8 @@
 package com.capgemini.pecunia.pl;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
@@ -11,7 +12,6 @@ import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.service.LoanDisbursalService;
 import com.capgemini.pecunia.service.LoanDisbursalServiceImpl;
 
-
 public class LoanDisbursedPI {
 	public static void main(String[] args) throws LoanDisbursalException {
 		Scanner sc = new Scanner(System.in);
@@ -19,96 +19,87 @@ public class LoanDisbursedPI {
 		ArrayList<Loan> approvedLoanRequests = new ArrayList<Loan>();
 		ArrayList<Loan> rejectedLoanRequests = new ArrayList<Loan>();
 		ArrayList<LoanDisbursal> loanDisbursedData = new ArrayList<LoanDisbursal>();
+		String update;
 		LoanDisbursalService loanDisbursalService = new LoanDisbursalServiceImpl();
-        
-		System.out.println("press 1 to retrieve loan requests");
 		
-		int choice = sc.nextInt();
-		
-		switch(choice){
-		case 1: 
-			try {
-				retrievedLoanRequests = loanDisbursalService.retrieveAll();
-				System.out.println(retrievedLoanRequests);
-			} catch (PecuniaException | IOException | LoanDisbursalException e) {
-				// TODO Auto-generated catch block
-				throw new LoanDisbursalException(e.getMessage());
-			}
-			
-			break;
-			
-			default:
-				System.out.println("Invalid choice");
-		}
-		
-		
-		System.out.println("press 1 to accept/reject loan requests");
-		int choice1 = sc.nextInt();
-		
-		switch(choice1){
-		case 1: 
-			try {
-				
-				System.out.println("Approved loan requests");
-				approvedLoanRequests = loanDisbursalService.approveLoan(retrievedLoanRequests);
-				System.out.println(approvedLoanRequests);
-				System.out.println("Rejected loan requests");
-				rejectedLoanRequests = loanDisbursalService.rejectedLoanRequests();
-				System.out.println(rejectedLoanRequests);
-				loanDisbursalService.updateLoanStatus(rejectedLoanRequests,approvedLoanRequests);
-			} catch (PecuniaException | IOException | LoanDisbursalException e) {
-				// TODO Auto-generated catch block
-				throw new LoanDisbursalException(e.getMessage());
-			}
-			
-			break;
-			
-			default:
-				System.out.println("Invalid choice");
-		}
-		
-		System.out.println("press 1 to retrieve the data from loan disbursed database");
-		int choice2 = sc.nextInt();
-		
+		while (true) {
+			System.out.println(
+					"press" + "\n" + " 1. to retrieve loan requests" + "\n" + "2. to accept/reject loan requests" + "\n"
+							+ "3. to retrieve the data from loan disbursed database" + "\n"
+							+ "4. to update the existing balance of account" + "\n" + "0. to exit");
 
-		switch(choice2){
-		case 1: 
-			try {
-				loanDisbursedData  = loanDisbursalService.approvedLoanList();
-				
-				
-			} catch (PecuniaException | IOException e) {
-				// TODO Auto-generated catch block
-				throw new LoanDisbursalException(e.getMessage());
-			}
-			
-			break;
-			
-			default:
-				System.out.println("Invalid choice");
-		}
-		
-		System.out.println("press 1 to update the existing balance of account");
-		int choice3 = sc.nextInt();
-		
-		switch(choice3){
-		case 1: 
-			
-			try {
-				loanDisbursalService.updateExistingBalance(approvedLoanRequests);
-			} catch (PecuniaException | TransactionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			int choice = sc.nextInt();
+
+			if (choice == 1) {
+
+				try {
+					retrievedLoanRequests = loanDisbursalService.retrieveAll();
+					System.out.println(retrievedLoanRequests);
+				} catch (PecuniaException | IOException | LoanDisbursalException e) {
+					throw new LoanDisbursalException(e.getMessage());
+				}
+
 			}
 
-			break;
-			
-			default:
-				System.out.println("Invalid choice");
+			else if (choice == 2) {
+
+				try {
+
+					approvedLoanRequests = loanDisbursalService.approveLoan(retrievedLoanRequests);
+					if (approvedLoanRequests.size() == 0)
+						System.out.println("No approved loan requests");
+					else {
+						System.out.println("Approved loan requests");
+						System.out.println(approvedLoanRequests);
+					}
+					if (rejectedLoanRequests.size() == 0)
+						System.out.println("No rejected loan requests");
+					else {
+						System.out.println("Rejected loan requests");
+						rejectedLoanRequests = loanDisbursalService.rejectedLoanRequests();
+						System.out.println(rejectedLoanRequests);
+					}
+					if(approvedLoanRequests.size() == 0 && rejectedLoanRequests.size() == 0)
+						System.out.println("No loan requests");
+					update = loanDisbursalService.updateLoanStatus(rejectedLoanRequests, approvedLoanRequests);
+					System.out.println(update);
+				} catch (PecuniaException | IOException | LoanDisbursalException e) {
+					throw new LoanDisbursalException(e.getMessage());
+				}
+
+			}
+
+			else if (choice == 3) {
+				try {
+					loanDisbursedData = loanDisbursalService.approvedLoanList();
+
+				} catch (PecuniaException | IOException e) {
+					throw new LoanDisbursalException(e.getMessage());
+				}
+
+			}
+
+			else if (choice == 4) {
+
+				try {
+					loanDisbursalService.updateExistingBalance(approvedLoanRequests);
+				} catch (PecuniaException | TransactionException e) {
+					throw new LoanDisbursalException(e.getMessage());
+				}
+
+			}
+
+			else if (choice == 0) {
+
+				System.exit(1);
+
+			}
+
+			else {
+				System.out.println("INVALID CHOICE");
+			}
+
 		}
-		
-		
-	
-		
 	}
+
 }
