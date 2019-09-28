@@ -4,7 +4,7 @@ public class TransactionInputValidator {
 
 	public boolean validateAccId(String accId) {
 		boolean validator = false;
-		if (accId != null && !accId.isEmpty() && accId.length() == 14) {
+		if (accId != null && !accId.isEmpty() && accId.length() == 12) {
 			if (accId.matches("[0-9]{14}")) {
 				validator = true;
 			}
