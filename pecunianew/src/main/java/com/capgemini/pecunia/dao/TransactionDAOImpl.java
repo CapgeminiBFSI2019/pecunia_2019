@@ -102,7 +102,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			if (numAccountAffected != 0) {
 				balanceUpdated = true;
 			} else {
-
+				logger.error(ErrorConstants.BALANCE_UPDATE_ERROR);
 				throw new TransactionException(ErrorConstants.BALANCE_UPDATE_ERROR);
 			}
 		} catch (SQLException e) {
@@ -154,6 +154,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			if (resultSet.next()) {
 				chequeId = resultSet.getInt(1);
 			} else {
+				logger.error(ErrorConstants.CHEQUE_INSERTION_ERROR);
 				throw new TransactionException(ErrorConstants.CHEQUE_INSERTION_ERROR);
 			}
 		} catch (SQLException e) {
@@ -209,7 +210,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			if (resultSet.next()) {
 				transId = resultSet.getInt(1);
 			} else {
-
+				logger.error(ErrorConstants.TRANSACTION_INSERTION_ERROR);
 				throw new TransactionException(ErrorConstants.TRANSACTION_INSERTION_ERROR);
 			}
 		} catch (SQLException e) {
