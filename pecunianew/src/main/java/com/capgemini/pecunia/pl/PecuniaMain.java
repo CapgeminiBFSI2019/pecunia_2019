@@ -23,6 +23,7 @@ import com.capgemini.pecunia.exception.LoanException;
 import com.capgemini.pecunia.exception.LoginException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
+import com.capgemini.pecunia.inputvalidator.AccountInputValidator;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 import com.capgemini.pecunia.service.LoanDisbursalService;
@@ -44,9 +45,6 @@ public class PecuniaMain {
 		choice1 = scanner.nextInt();
 		switch (choice1) {
 		case 1:
-			// validateLogin
-			// if validated
-			// Case true
 			boolean loginFlag = false;
 			do {
 				System.out.print("Enter username : ");
@@ -253,17 +251,32 @@ public class PecuniaMain {
 	public static String addAccount() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String accountId = null;
+		boolean isValid  = true;
+		String aadhar=null;
 		System.out.println("Enter Customer Details:");
 		Customer cust = new Customer();
 		Address add = new Address();
 		Account acc = new Account();
-		System.out.println("Enter customer name: ");
-		String custName = br.readLine();
-		// validate
+		String custName = null;
+		do {
+			System.out.println("Enter customer name: ");
+			custName = br.readLine();
+			if(AccountInputValidator.checkIfAlphaNumeric(custName)==true || AccountInputValidator.checkIfDigit(custName)==true || AccountInputValidator.checkIfSpecialCharacter(custName)==true) {
+				System.out.println("Invalid. Enter again.");
+				isValid=false;
+			}
+			
+		}while(!isValid);
 		cust.setName(custName);
-		System.out.println("Enter customer aadhar: ");
-		String aadhar = br.readLine();
-		// validate
+		do {
+			System.out.println("Enter customer aadhar: ");
+			aadhar = br.readLine();
+			if(AccountInputValidator.checkIfAlphaNumeric(aadhar)==true || AccountInputValidator.checkLength(12, aadhar)==true || AccountInputValidator.checkIfSpecialCharacter(custName)==true) {
+				System.out.println("Invalid. Enter again.");
+				isValid=false;
+			}
+			
+		}while(!isValid);
 		cust.setAadhar(aadhar);
 		System.out.println("Enter customer PAN: ");
 		String pan = br.readLine();
@@ -698,19 +711,15 @@ public class PecuniaMain {
 					try {
 
 						approvedLoanRequests = loanDisbursalService.approveLoan(retrievedLoanRequests);
-						if (approvedLoanRequests.size() == 0)
-							System.out.println("No approved loan requests");
-						else {
+					
 							System.out.println("Approved loan requests");
 							System.out.println(approvedLoanRequests);
-						}
-						if (rejectedLoanRequests.size() == 0)
-							System.out.println("No rejected loan requests");
-						else {
+						
+						
 							System.out.println("Rejected loan requests");
 							rejectedLoanRequests = loanDisbursalService.rejectedLoanRequests();
 							System.out.println(rejectedLoanRequests);
-						}
+						
 						if (approvedLoanRequests.size() == 0 && rejectedLoanRequests.size() == 0)
 							System.out.println("No loan requests");
 						update = loanDisbursalService.updateLoanStatus(rejectedLoanRequests, approvedLoanRequests);
