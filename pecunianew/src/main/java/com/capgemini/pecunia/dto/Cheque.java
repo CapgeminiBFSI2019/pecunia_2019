@@ -1,10 +1,9 @@
 package com.capgemini.pecunia.dto;
 
-import java.time.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Cheque {
-		
+
 	private String id;
 	private int num;
 	private String accountNo;
@@ -13,17 +12,13 @@ public class Cheque {
 	private String ifsc;
 	private LocalDate issueDate;
 	private String status;
-	
+
 	public Cheque() {
-		
+
 	}
-	
-	
-	
 
-
-	public Cheque(String id, int num, String accountNo, String holderName, String bankName, String ifsc, LocalDate issueDate,
-			String status) {
+	public Cheque(String id, int num, String accountNo, String holderName, String bankName, String ifsc,
+			LocalDate issueDate, String status) {
 		super();
 		this.id = id;
 		this.num = num;
@@ -35,12 +30,10 @@ public class Cheque {
 		this.status = status;
 	}
 
-
 	public String getId() {
 		return id;
 	}
 
-	
 	public int getNum() {
 		return num;
 	}

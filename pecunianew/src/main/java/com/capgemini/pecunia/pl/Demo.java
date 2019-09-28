@@ -13,7 +13,7 @@ import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.LoanDisbursalException;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.service.LoanDisbursalService;
 import com.capgemini.pecunia.service.LoanDisbursalServiceImpl;
@@ -25,7 +25,7 @@ import com.sun.java_cup.internal.runtime.Scanner;
 
 
 public class Demo {
-	public static void main(String[] args) throws TransactionException, MyException, ParseException {
+	public static void main(String[] args) throws TransactionException, PecuniaException, ParseException {
 
 //		LoanDisbursalService loanDisbursalDAO = new LoanDisbursalServiceImpl();
 //		ArrayList<Loan> l = new ArrayList<Loan>();
@@ -36,7 +36,7 @@ public class Demo {
 //		ArrayList<LoanDisbursal> l2 = new ArrayList<LoanDisbursal>();	
 //			try {
 //				l = loanDisbursalDAO.retrieveAll();
-//			} catch (MyException | IOException e) {
+//			} catch (PecuniaException | IOException e) {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
 //			}
@@ -45,14 +45,14 @@ public class Demo {
 //				
 //					try {
 //						loanDisbursalDAO.approveLoan(l);
-//					} catch (IOException | MyException e) {
+//					} catch (IOException | PecuniaException e) {
 //						// TODO Auto-generated catch block
 //						e.printStackTrace();
 //					}
 //				
 //				try {
 //					l1 = 	loanDisbursalDAO.rejectedLoanRequests();
-//				} catch (MyException e) {
+//				} catch (PecuniaException e) {
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}
@@ -69,7 +69,7 @@ public class Demo {
 						// TODO Auto-generated catch block+
 						e.printStackTrace();
 					}
-				} catch (MyException e) {
+				} catch (PecuniaException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -78,7 +78,7 @@ public class Demo {
 				
 //				try {
 //					l2 = loanDisbursalDAO.approvedLoanList();
-//				} catch (IOException | MyException e) {
+//				} catch (IOException | PecuniaException e) {
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}

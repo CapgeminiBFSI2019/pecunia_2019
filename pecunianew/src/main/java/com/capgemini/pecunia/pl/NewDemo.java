@@ -7,13 +7,13 @@ import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Address;
 import com.capgemini.pecunia.dto.Customer;
 import com.capgemini.pecunia.exception.AccountException;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 
 public class NewDemo {
 
-	public static void main(String[] args) throws MyException, AccountException {
+	public static void main(String[] args) throws PecuniaException, AccountException {
 		
 		LocalDate date = LocalDate.parse("1996-05-01");
 		
