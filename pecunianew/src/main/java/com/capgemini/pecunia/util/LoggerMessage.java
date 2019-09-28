@@ -12,7 +12,8 @@ public class LoggerMessage {
 	public static final String UPDATE_CUSTOMER_CONTACT_SUCCESSFUL = " Customer Contact updated.";
 
 	public static final String UPDATE_CUSTOMER_ADDRESS_SUCCESSFUL = " Customer address updated.";
-
+	public static final String ACCOUNT_ID_RETURNED = "Account Id returned successfully";
+	public static final String ACCOUNT_VALIDATION_SUCCESSFULL = "Account Id validated successfully";
 	public static final String ADD_ADDRESS_SUCCESSFUL = "Customer Address Details added.";
 
 	public static final String ADD_CUSTOMER_DETAILS_SUCCESSFUL = "Customer Details added.";
@@ -35,7 +36,7 @@ public class LoggerMessage {
 	// transactionDAOImpldone//
 	public static final String ACCOUNT_BALANCE_SUCCESSFUL = "Account balance fetched successfully.";
 	public static final String BALANCE_UPDATED_SUCCESSFUL = "Balance updated successfully.";
-	public static final String DATABASE_UPDATED_SUCCESSFUL = "Transaction details updated successfully in database";
+	//public static final String DATABASE_UPDATED_SUCCESSFUL = "Transaction details updated successfully in database";
 	public static final String CHEQUE_ID_SUCCESSFUL = "Generated cheque ID successfully.";
 	public static final String TRANSACTION_ID_SUCCESSFUL = "Generated transaction ID successfully.";
 

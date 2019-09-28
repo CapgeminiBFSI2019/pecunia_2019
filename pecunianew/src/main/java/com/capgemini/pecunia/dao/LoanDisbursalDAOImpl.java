@@ -23,6 +23,8 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 		return emi * tenure;
 	}
 
+	
+	
 	public List<Loan> retrieveLoanList() throws IOException, PecuniaException {
 
 		Connection connection = DBConnection.getInstance().getConnection();
