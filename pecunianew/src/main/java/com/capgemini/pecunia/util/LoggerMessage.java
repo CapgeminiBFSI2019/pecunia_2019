@@ -34,9 +34,13 @@ public class LoggerMessage {
 	public static final String LOAN_DATA_FETCH = "Loan approval list fetched successfully from database.";
 
 
+
 	public static final String ACCOUNT_BALANCE_SUCCESSFUL = "Account balance fetched successfully.";
 	public static final String BALANCE_UPDATED_SUCCESSFUL = "Balance updated successfully.";
 	
+
+	
+
 	public static final String CHEQUE_ID_SUCCESSFUL = "Generated cheque ID successfully.";
 	public static final String TRANSACTION_ID_SUCCESSFUL = "Generated transaction ID successfully.";
 
