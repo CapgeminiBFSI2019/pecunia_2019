@@ -37,7 +37,7 @@ public class LoginServiceImpl implements LoginService {
 	
 	@Override
 	public boolean validateEmail(Login login) throws PecuniaException, LoginException {
-		boolean flag = false;
+		boolean isValidated = false;
 		String password = null;
 		String secretKey = loginDAO.validateEmail(login);
 		if (secretKey == null) {
@@ -55,7 +55,7 @@ public class LoginServiceImpl implements LoginService {
 			try {
 				password = loginDAO.fetchPassword(loginNew);
 				if (password.equals(hashPassword)) {
-					flag = true;
+					isValidated = true;
 					logger.info(LoggerMessage.LOGIN_SUCCESSFUL);
 				}
 			} catch (LoginException e) {
@@ -63,7 +63,7 @@ public class LoginServiceImpl implements LoginService {
 				throw new LoginException(ErrorConstants.LOGIN_ERROR);
 			}
 		}
-		return flag;
+		return isValidated;
 	}
 
 }

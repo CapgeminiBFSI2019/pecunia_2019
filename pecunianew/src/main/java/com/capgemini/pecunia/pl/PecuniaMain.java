@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.capgemini.pecunia.dto.Account;
@@ -21,6 +22,7 @@ import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.LoanDisbursalException;
 import com.capgemini.pecunia.exception.LoanException;
 import com.capgemini.pecunia.exception.LoginException;
+import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.inputvalidator.AccountInputValidator;
@@ -32,6 +34,8 @@ import com.capgemini.pecunia.service.LoanService;
 import com.capgemini.pecunia.service.LoanServiceImpl;
 import com.capgemini.pecunia.service.LoginService;
 import com.capgemini.pecunia.service.LoginServiceImpl;
+import com.capgemini.pecunia.service.PassbookMaintenanceService;
+import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
 import com.capgemini.pecunia.service.TransactionService;
 import com.capgemini.pecunia.service.TransactionServiceImpl;
 import com.capgemini.pecunia.util.Constants;
@@ -125,8 +129,10 @@ public class PecuniaMain {
 					int choice4 = Integer.parseInt(br.readLine());
 					switch (choice4) {
 					case 1: // update passbook
+						updatePassbook();
 						break;
 					case 2: // account Summary
+						accountSummary();
 						break;
 					}
 				case 5:
@@ -252,8 +258,8 @@ public class PecuniaMain {
 	public static String addAccount() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String accountId = null;
-		boolean isValid  = true;
-		String aadhar=null;
+		boolean isValid = true;
+		String aadhar = null;
 		System.out.println("Enter Customer Details:");
 		Customer cust = new Customer();
 		Address add = new Address();
@@ -262,22 +268,26 @@ public class PecuniaMain {
 		do {
 			System.out.println("Enter customer name: ");
 			custName = br.readLine();
-			if(AccountInputValidator.checkIfAlphaNumeric(custName)==true || AccountInputValidator.checkIfDigit(custName)==true || AccountInputValidator.checkIfSpecialCharacter(custName)==true) {
+			if (AccountInputValidator.checkIfAlphaNumeric(custName) == true
+					|| AccountInputValidator.checkIfDigit(custName) == true
+					|| AccountInputValidator.checkIfSpecialCharacter(custName) == true) {
 				System.out.println("Invalid. Enter again.");
-				isValid=false;
+				isValid = false;
 			}
-			
-		}while(!isValid);
+
+		} while (!isValid);
 		cust.setName(custName);
 		do {
 			System.out.println("Enter customer aadhar: ");
 			aadhar = br.readLine();
-			if(AccountInputValidator.checkIfAlphaNumeric(aadhar)==true || AccountInputValidator.checkLength(12, aadhar)==true || AccountInputValidator.checkIfSpecialCharacter(custName)==true) {
+			if (AccountInputValidator.checkIfAlphaNumeric(aadhar) == true
+					|| AccountInputValidator.checkLength(12, aadhar) == true
+					|| AccountInputValidator.checkIfSpecialCharacter(custName) == true) {
 				System.out.println("Invalid. Enter again.");
-				isValid=false;
+				isValid = false;
 			}
-			
-		}while(!isValid);
+
+		} while (!isValid);
 		cust.setAadhar(aadhar);
 		System.out.println("Enter customer PAN: ");
 		String pan = br.readLine();
@@ -583,9 +593,6 @@ public class PecuniaMain {
 		System.out.println("Enter Account Payee Name: ");
 		String accPayeeCreditChequeName = br1.readLine();
 
-		System.out.println("Enter Account Benificiary Name: ");
-		String accBenificiaryCreditChequeName = br1.readLine();
-
 		System.out.println("Enter Payee Bank Name: ");
 		String payeeBankName = br1.readLine();
 
@@ -630,41 +637,98 @@ public class PecuniaMain {
 		System.out.println("Enter account Id : ");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String accId = br.readLine();
-		LoanServiceImpl lsi = new LoanServiceImpl();
+		LoanService loanServiceImpl = new LoanServiceImpl();
+		double amount = 0.0, roi = 0.0;
+		int tenure = 0, creditScore = 0;
+		String type = null;
 		try {
-			System.out.println("Enter Loan Amount : ");
-			double amount = scanner.nextDouble();
-			System.out.println("Enter Rate of interest :");
-			double roi = scanner.nextDouble();
-			System.out.println("Enter Tenure:");
-			int tenure = scanner.nextInt();
-			System.out.println("Enter credit score : ");
-			int creditScore = scanner.nextInt();
-			System.out.println(
-					"Select type of Loan :\n Type '1' for Personal Loan \n Type '2' for House Loan \n Type '3' for Vehicle Loan \n Type '4' for Jewel Loan");
-			int input = Integer.parseInt(br.readLine());
-			String type = null;
-			if (input == 1) {
-				type = Constants.LOAN_TYPE[0];
-			} else if (input == 2) {
-				type = Constants.LOAN_TYPE[1];
-			} else if (input == 3) {
-				type = Constants.LOAN_TYPE[2];
-			} else if (input == 4) {
-				type = Constants.LOAN_TYPE[3];
+			try {
+				do {
+					System.out.println("Enter Loan Amount : ");
+					amount = scanner.nextDouble();
+					if (amount <= 0) {
+						System.out.println("Amount cannot be negative or zero.");
+					}
+				} while (amount <= 0);
+			} catch (NumberFormatException e) {
+				System.out.println("Please enter amount in numeric format.");
 			}
-			double emi = lsi.calculateEMI(amount, tenure, roi);
+
+			try {
+				do {
+					System.out.println("Enter Rate of interest :");
+					roi = scanner.nextDouble();
+					if (roi <= 0) {
+						System.out.println("Rate of interest cannot be negative or zero.");
+					}
+				} while (roi <= 0);
+			} catch (NumberFormatException e) {
+				System.out.println("Please enter rate of interest in numeric format.");
+			}
+
+			try {
+				do {
+					System.out.println("Enter Tenure:");
+					tenure = scanner.nextInt();
+					if (tenure <= 0) {
+						System.out.println("Tenure cannot be negative or zero.");
+					}
+				} while (tenure <= 0);
+			} catch (NumberFormatException e) {
+				System.out.println("Please enter tenure in integer format.");
+			}
+
+			try {
+				do {
+					System.out.println("Enter credit score : ");
+					creditScore = scanner.nextInt();
+					if (creditScore <= 0) {
+						System.out.println("Credit Score cannot be negative or zero.");
+					}
+				} while (creditScore <= 0);
+			} catch (NumberFormatException e) {
+				System.out.println("Please enter credit score in integer format.");
+			}
+
+			boolean isValidLoanType = false;
+
+			while (!isValidLoanType) {
+				try {
+					System.out.println(
+							"Select type of Loan :\n Type '1' for Personal Loan \n Type '2' for House Loan \n Type '3' for Vehicle Loan \n Type '4' for Jewel Loan");
+					int input = Integer.parseInt(br.readLine());
+					if (input == 1) {
+						type = Constants.LOAN_TYPE[0];
+						isValidLoanType = true;
+					} else if (input == 2) {
+						type = Constants.LOAN_TYPE[1];
+						isValidLoanType = true;
+					} else if (input == 3) {
+						type = Constants.LOAN_TYPE[2];
+						isValidLoanType = true;
+					} else if (input == 4) {
+						type = Constants.LOAN_TYPE[3];
+						isValidLoanType = true;
+					}
+					if (!isValidLoanType) {
+						System.out.println("Please select valid loan type.");
+					}
+				} catch (NumberFormatException e) {
+					System.out.println("Please enter correct option for loan type.");
+				}
+			}
+
+			double emi = loanServiceImpl.calculateEMI(amount, tenure, roi);
 			Loan loan = new Loan();
 			loan.setAmount(amount);
 			loan.setCreditScore(creditScore);
 			loan.setEmi(emi);
-			loan.setLoanStatus("Pending");
+			loan.setLoanStatus(Constants.LOAN_REQUEST_STATUS[0]);
 			loan.setRoi(roi);
 			loan.setTenure(tenure);
 			loan.setType(type);
 			loan.setAccountId(accId);
-			LoanService loaserim = new LoanServiceImpl();
-			result = loaserim.createLoanRequest(loan);
+			result = loanServiceImpl.createLoanRequest(loan);
 
 		} catch (LoanException e) {
 			System.out.println(e.getMessage());
@@ -709,15 +773,13 @@ public class PecuniaMain {
 					try {
 
 						approvedLoanRequests = loanDisbursalService.approveLoan(retrievedLoanRequests);
-					
-							System.out.println("Approved loan requests");
-							System.out.println(approvedLoanRequests);
-						
-						
-							System.out.println("Rejected loan requests");
-							rejectedLoanRequests = loanDisbursalService.rejectedLoanRequests();
-							System.out.println(rejectedLoanRequests);
-						
+
+						System.out.println("Approved loan requests");
+						System.out.println(approvedLoanRequests);
+
+						System.out.println("Rejected loan requests");
+						rejectedLoanRequests = loanDisbursalService.rejectedLoanRequests();
+						System.out.println(rejectedLoanRequests);
 
 						System.out.println("Approved loan requests");
 						System.out.println(approvedLoanRequests);
@@ -771,5 +833,97 @@ public class PecuniaMain {
 			System.out.println(e.getMessage());
 		}
 
+	}
+
+	public static void updatePassbook()
+	{
+		PassbookMaintenanceService PassbookService = new PassbookMaintenanceServiceImpl();
+		List<Transaction> updatePassbook = new ArrayList<Transaction>();
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter accountId:");
+		String accountId = scanner.nextLine();
+		try {
+			updatePassbook = PassbookService.updatePassbook(accountId);
+
+			if (updatePassbook.size() < 1) {
+				System.out.println("no trans");
+			}
+
+			else {
+				for (int index = 0; index < updatePassbook.size(); index++) {
+					System.out.print(updatePassbook.get(index).getId() + "\t");
+					System.out.print(updatePassbook.get(index).getTransDate() + "\t");
+					System.out.print(updatePassbook.get(index).getAmount() + "\t");
+					System.out.print(updatePassbook.get(index).getTransFrom() + "\t");
+					System.out.print(updatePassbook.get(index).getTransTo() + "\t");
+					System.out.print(updatePassbook.get(index).getType() + "\t");
+					System.out.print(updatePassbook.get(index).getOption() + "\t");
+					if (updatePassbook.get(index).getOption().equalsIgnoreCase("cheque")) {
+						System.out.print(updatePassbook.get(index).getChequeId() + "\t");
+
+					} else {
+						System.out.print("-\t");
+					}
+					System.out.print(updatePassbook.get(index).getClosingBalance() + "\t");
+					System.out.println();
+				}
+			}
+		} catch (PecuniaException | PassbookException e) {
+			System.out.println(e.getMessage());
+		}
+		finally
+		{
+			scanner.close();
+		}
+	}
+
+	public static void accountSummary()
+	{
+		Scanner scanner = new Scanner(System.in);
+		
+		PassbookMaintenanceService accountSummaryService = new PassbookMaintenanceServiceImpl();
+
+		System.out.println("Enter accountId:");
+		String accountId1 = scanner.nextLine();
+
+		System.out.println("Enter start date:");
+		String sdate1 = scanner.nextLine();
+
+		System.out.println("Enter end date:");
+		String sdate2 = scanner.nextLine();
+
+		LocalDate date1 = LocalDate.parse(sdate1);
+		LocalDate date2 = LocalDate.parse(sdate2);
+
+		List<Transaction> accountSummary = new ArrayList<Transaction>();
+		try {
+			accountSummary = accountSummaryService.accountSummary(accountId1, date1, date2);
+				for (int index = 0; index < accountSummary.size(); index++) {
+					System.out.print(accountSummary.get(index).getId() + "\t");
+					System.out.print(accountSummary.get(index).getTransDate() + "\t");
+					System.out.print(accountSummary.get(index).getAmount() + "\t");
+					System.out.print(accountSummary.get(index).getTransFrom() + "\t");
+					System.out.print(accountSummary.get(index).getTransTo() + "\t");
+					System.out.print(accountSummary.get(index).getType() + "\t");
+					System.out.print(accountSummary.get(index).getOption() + "\t");
+					if (accountSummary.get(index).getOption().equalsIgnoreCase("cheque")) {
+						System.out.print(accountSummary.get(index).getChequeId() + "\t");
+
+					} else {
+						System.out.print("-\t");
+					}
+					System.out.print(accountSummary.get(index).getChequeId() + "\t");
+					System.out.print(accountSummary.get(index).getClosingBalance() + "\t");
+					System.out.println();
+				}
+			//}
+		} catch (PecuniaException | PassbookException e) {
+			System.out.println(e.getMessage());
+		}
+		finally
+		{
+			scanner.close();
+		}
+		
 	}
 }

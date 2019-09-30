@@ -65,40 +65,5 @@ class LoanServiceImplTest {
 		
 	}
 	
-	
-
-	@Test
-	@DisplayName("Input string is null")
-	void testValidateCustomerIdNull() {
-		String input=null;
-		assertThrows(LoanException.class, ()-> { loan.validateCustomerId(input);});
-		
-	}
-	
-	@Test
-	@DisplayName("Input string is empty")
-	void testValidateCustomerIdEmpty() {
-		String input="";
-		assertThrows(LoanException.class, ()-> { loan.validateCustomerId(input);});
-		
-	}
-	
-	@Test
-	@DisplayName("Valid input. Validate customer id test case passed")
-	void testValidateCustomerIdPass() throws LoanException {
-		String input="100202000001";
-		assertTrue(loan.validateCustomerId(input));
-		
-	}
-	
-	
-	@Test
-	@DisplayName("Invalid input. Validate customer id test case failed")
-	void testValidateCustomerIdFail() throws LoanException {
-		String input="100202000001*123";
-		assertThrows(LoanException.class, ()-> { loan.validateCustomerId(input);});
-		
-	}
-	
 
 }
