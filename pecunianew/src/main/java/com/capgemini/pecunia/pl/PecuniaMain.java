@@ -26,6 +26,7 @@ import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.inputvalidator.AccountInputValidator;
+import com.capgemini.pecunia.inputvalidator.TransactionInputValidator;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 import com.capgemini.pecunia.service.LoanDisbursalService;
@@ -666,13 +667,28 @@ public class PecuniaMain {
 
 		Transaction transaction = new Transaction();
 		BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
-
-		System.out.println("Enter Account ID: ");
-		String accId = br1.readLine();
-
+		boolean isValid=true;
+		String accId=null;
+		do {
+			System.out.println("Enter the Account Id: ");
+			accId = br1.readLine();
+			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true || AccountInputValidator.checkIfAlphaNumeric(accId) == true || AccountInputValidator.checkLength(12, accId) == false) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+		} while (isValid==false);
+		
+		isValid=true;
+		double amt=0.0;
+		TransactionInputValidator transValidator=new TransactionInputValidator();
+		do {
 		System.out.println("Enter Amount: ");
-		double amt = Double.parseDouble(br1.readLine());
-
+		amt = Double.parseDouble(br1.readLine());
+		if(!transValidator.transactionAmountisValid(amt)) {
+			System.out.println("Invalid. Enter again.");
+			isValid=false;
+		}
+		}while(isValid==false);
 		transaction.setAmount(amt);
 		transaction.setAccountId(accId);
 		transaction.setId(Constants.NA);
@@ -699,11 +715,28 @@ public class PecuniaMain {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		System.out.println("Enter Account ID: ");
-		String accId = br.readLine();
-
+		boolean isValid=true;
+		String accId=null;
+		do {
+			System.out.println("Enter the Account Id: ");
+			accId = br.readLine();
+			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true || AccountInputValidator.checkIfAlphaNumeric(accId) == true || AccountInputValidator.checkLength(12, accId) == false) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+		} while (isValid==false);
+		
+		isValid=true;
+		double amt=0.0;
+		TransactionInputValidator transValidator=new TransactionInputValidator();
+		do {
 		System.out.println("Enter Amount: ");
-		double amt = Double.parseDouble(br.readLine());
+		amt = Double.parseDouble(br.readLine());
+		if(!transValidator.transactionAmountisValid(amt)) {
+			System.out.println("Invalid. Enter again.");
+			isValid=false;
+		}
+		}while(isValid==false);
 
 		transaction.setAmount(amt);
 		transaction.setAccountId(accId);
@@ -731,11 +764,28 @@ public class PecuniaMain {
 
 		BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
 
-		System.out.println("Enter Account ID: ");
-		String accIdDebitCheque = br1.readLine();
-
+		boolean isValid=true;
+		String accIdDebitCheque=null;
+		do {
+			System.out.println("Enter the Account Id: ");
+			accIdDebitCheque = br1.readLine();
+			if (AccountInputValidator.checkIfSpecialCharacter(accIdDebitCheque) == true || AccountInputValidator.checkIfAlphaNumeric(accIdDebitCheque) == true || AccountInputValidator.checkLength(12, accIdDebitCheque) == false) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+		} while (isValid==false);
+		
+		isValid=true;
+		double amtDebitCheque=0.0;
+		TransactionInputValidator transValidator=new TransactionInputValidator();
+		do {
 		System.out.println("Enter Amount: ");
-		double amtDebitCheque = Double.parseDouble(br1.readLine());
+		amtDebitCheque = Double.parseDouble(br1.readLine());
+		if(!transValidator.transactionAmountisValid(amtDebitCheque)) {
+			System.out.println("Invalid. Enter again.");
+			isValid=false;
+		}
+		}while(isValid==false);
 
 		System.out.println("Enter Cheque Number: ");
 		int chequeNumber = Integer.parseInt(br1.readLine());
