@@ -36,7 +36,6 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 	 * - Description : Stores the transaction details in the list and returns it to service layer
 	 ********************************************************************************************************/
 	
-	@Override
 	public List<Transaction> updatePassbook(String accountId) throws PassbookException, PecuniaException {
 
 		Connection connection = DBConnection.getInstance().getConnection();
@@ -155,11 +154,6 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 	 * - Description : Stores the account summary in the list and returns it to service layer
 	 ********************************************************************************************************/
 	
-	
-	
-	
-	
-	@Override
 	public List<Transaction> accountSummary(String accountId, LocalDate startDate, LocalDate endDate)
 			throws PassbookException, PecuniaException {
 
