@@ -12,6 +12,7 @@ import com.capgemini.pecunia.dto.Login;
 import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.LoginException;
 import com.capgemini.pecunia.exception.PecuniaException;
+import com.capgemini.pecunia.inputvalidator.AccountInputValidator;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 import com.capgemini.pecunia.service.LoginService;
@@ -40,24 +41,26 @@ public class NewDemo {
 //		Boolean vali =ams.deleteAccount(acc);
 //		System.out.println(vali);
 ////		
-		Scanner scanner = new Scanner(System.in);
-		System.out.print("Enter username : ");
-		String username = scanner.next();
-		System.out.print("Enter password : ");
-		String password = scanner.next();
-		Login login = new Login();
-		login.setUsername(username);
-		login.setPassword(password);
-
-		boolean success = false;
-		LoginService loginService = new LoginServiceImpl();
-		try {
-			success = loginService.validateEmail(login);
-			System.out.println(success);
-		} catch (PecuniaException | LoginException e) {
-			System.out.println(e.getMessage());
-		}
-		scanner.close();
+//		Scanner scanner = new Scanner(System.in);
+//		System.out.print("Enter username : ");
+//		String username = scanner.next();
+//		System.out.print("Enter password : ");
+//		String password = scanner.next();
+//		Login login = new Login();
+//		login.setUsername(username);
+//		login.setPassword(password);
+//
+//		boolean success = false;
+//		LoginService loginService = new LoginServiceImpl();
+//		try {
+//			success = loginService.validateEmail(login);
+//			System.out.println(success);
+//		} catch (PecuniaException | LoginException e) {
+//			System.out.println(e.getMessage());
+//		}
+//		scanner.close();
+		String date = "2019-01-32";
+		System.out.println(AccountInputValidator.dateValidator(date));
 	}
 
 }
