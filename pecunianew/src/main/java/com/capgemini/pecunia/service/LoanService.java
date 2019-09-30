@@ -2,6 +2,7 @@ package com.capgemini.pecunia.service;
 
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.exception.LoanException;
+import com.capgemini.pecunia.exception.PecuniaException;
 
 public interface LoanService {
 	
@@ -10,7 +11,6 @@ public interface LoanService {
 	
 	public boolean createLoanRequest(Loan loan) throws LoanException;
 
-	public boolean validateCustomerId(String account_ID) throws LoanException;
 
 
 

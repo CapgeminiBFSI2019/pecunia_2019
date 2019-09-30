@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import com.capgemini.pecunia.dto.Login;
 import com.capgemini.pecunia.exception.LoginException;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 
 
 class LoginServiceImplTest {
@@ -34,7 +34,7 @@ class LoginServiceImplTest {
 
 	@Test
 	@DisplayName("Valid Input.Test case passed")
-	void testValidateEmailPass() throws MyException, LoginException {
+	void testValidateEmailPass() throws PecuniaException, LoginException {
 		
 		Login loginData= new Login();
 		loginData.setUsername("saurabh5881@gmail.com");

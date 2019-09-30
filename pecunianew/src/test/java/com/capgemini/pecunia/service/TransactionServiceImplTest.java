@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
-import com.capgemini.pecunia.exception.MyException;
+import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.Constants;
 
@@ -41,7 +41,7 @@ class TransactionServiceImplTest {
 	
 	@Test
 	@DisplayName("Valid inputs. Test case passed for getBalance()")
-	void testGetBalancePass() throws TransactionException, MyException {
+	void testGetBalancePass() throws TransactionException, PecuniaException {
 		Account account = new Account();
 		account.setId("100202000001");
 		assertEquals(20000, transaction.getBalance(account));
@@ -57,7 +57,7 @@ class TransactionServiceImplTest {
 
 	@Test
 	@DisplayName("Valid inputs. Test case passed for updateBalance()")
-	void testUpdateBalancePass() throws TransactionException, MyException {
+	void testUpdateBalancePass() throws TransactionException, PecuniaException {
 		Account account = new Account();
 		account.setId("100202000001");
 		account.setBalance(20000.00);
@@ -75,7 +75,7 @@ class TransactionServiceImplTest {
 
 	@Test
 	@DisplayName("Valid inputs. Test case passed for creditUsingSlip()")
-	void testCreditUsingSlipPass() throws TransactionException, MyException {
+	void testCreditUsingSlipPass() throws TransactionException, PecuniaException {
 		Transaction tran = new Transaction();
 		tran.setAccountId("100202000001");
 		tran.setAmount(500.0);
@@ -95,7 +95,7 @@ class TransactionServiceImplTest {
 
 	@Test
 	@DisplayName("Valid input. Test case passed for debit using slip")
-	void testDebitUsingSlipPass() throws TransactionException, MyException {
+	void testDebitUsingSlipPass() throws TransactionException, PecuniaException {
 		Transaction tran = new Transaction();
 		tran.setAccountId("100303000001");
 		tran.setAmount(500.0);
@@ -115,7 +115,7 @@ class TransactionServiceImplTest {
 
 	@Test
 	@DisplayName("Valid inputs. Test case passed for debit using cheque")
-	void testDebitUsingChequePass() throws TransactionException, MyException {
+	void testDebitUsingChequePass() throws TransactionException, PecuniaException {
 		
 		LocalDate transDate=LocalDate.now(); 
 		LocalDate issueDate=LocalDate.parse("2019-09-20");
@@ -149,7 +149,7 @@ class TransactionServiceImplTest {
 	
 	@Test
 	@DisplayName("Valid inputs. Test case passed for credit using cheque for other bank")
-	void testCreditUsingChequePass() throws TransactionException, MyException {
+	void testCreditUsingChequePass() throws TransactionException, PecuniaException {
 		
 		LocalDate transDate=LocalDate.now(); 
 		LocalDate issueDate=LocalDate.parse("2019-09-20");
@@ -175,7 +175,7 @@ class TransactionServiceImplTest {
 	
 	@Test
 	@DisplayName("Valid inputs. Test case passed for credit using cheque for pecunia bank")
-	void testCreditUsingChequePassPecunia() throws TransactionException, MyException {
+	void testCreditUsingChequePassPecunia() throws TransactionException, PecuniaException {
 		
 		LocalDate transDate=LocalDate.now(); 
 		LocalDate issueDate=LocalDate.parse("2019-09-21");

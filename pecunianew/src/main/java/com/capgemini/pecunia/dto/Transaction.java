@@ -1,6 +1,6 @@
 package com.capgemini.pecunia.dto;
 
-import java.time.*;
+import java.time.LocalDate;
 
 public class Transaction {
 	private String id;

@@ -1,6 +1,5 @@
 package com.capgemini.pecunia.dto;
 
-
 public class LoanDisbursal {
 
 	private int loanDisbursalId;
@@ -79,7 +78,5 @@ public class LoanDisbursal {
 				+ ", disbursedAmount=" + disbursedAmount + ", dueAmount=" + dueAmount + ", numberOfEmiToBePaid="
 				+ numberOfEmiToBePaid + "";
 	}
-	
-	
 
 }
