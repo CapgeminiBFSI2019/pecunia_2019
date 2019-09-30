@@ -252,8 +252,8 @@ public class PecuniaMain {
 	public static String addAccount() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String accountId = null;
-		boolean isValid  = true;
-		String aadhar=null;
+		boolean isValid = true;
+		String aadhar = null;
 		System.out.println("Enter Customer Details:");
 		Customer cust = new Customer();
 		Address add = new Address();
@@ -262,22 +262,26 @@ public class PecuniaMain {
 		do {
 			System.out.println("Enter customer name: ");
 			custName = br.readLine();
-			if(AccountInputValidator.checkIfAlphaNumeric(custName)==true || AccountInputValidator.checkIfDigit(custName)==true || AccountInputValidator.checkIfSpecialCharacter(custName)==true) {
+			if (AccountInputValidator.checkIfAlphaNumeric(custName) == true
+					|| AccountInputValidator.checkIfDigit(custName) == true
+					|| AccountInputValidator.checkIfSpecialCharacter(custName) == true) {
 				System.out.println("Invalid. Enter again.");
-				isValid=false;
+				isValid = false;
 			}
-			
-		}while(!isValid);
+
+		} while (!isValid);
 		cust.setName(custName);
 		do {
 			System.out.println("Enter customer aadhar: ");
 			aadhar = br.readLine();
-			if(AccountInputValidator.checkIfAlphaNumeric(aadhar)==true || AccountInputValidator.checkLength(12, aadhar)==true || AccountInputValidator.checkIfSpecialCharacter(custName)==true) {
+			if (AccountInputValidator.checkIfAlphaNumeric(aadhar) == true
+					|| AccountInputValidator.checkLength(12, aadhar) == true
+					|| AccountInputValidator.checkIfSpecialCharacter(custName) == true) {
 				System.out.println("Invalid. Enter again.");
-				isValid=false;
+				isValid = false;
 			}
-			
-		}while(!isValid);
+
+		} while (!isValid);
 		cust.setAadhar(aadhar);
 		System.out.println("Enter customer PAN: ");
 		String pan = br.readLine();
@@ -631,34 +635,92 @@ public class PecuniaMain {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String accId = br.readLine();
 		LoanServiceImpl lsi = new LoanServiceImpl();
+		double amount = 0.0, roi = 0.0;
+		int tenure = 0, creditScore = 0;
+		String type = null;
 		try {
-			System.out.println("Enter Loan Amount : ");
-			double amount = scanner.nextDouble();
-			System.out.println("Enter Rate of interest :");
-			double roi = scanner.nextDouble();
-			System.out.println("Enter Tenure:");
-			int tenure = scanner.nextInt();
-			System.out.println("Enter credit score : ");
-			int creditScore = scanner.nextInt();
-			System.out.println(
-					"Select type of Loan :\n Type '1' for Personal Loan \n Type '2' for House Loan \n Type '3' for Vehicle Loan \n Type '4' for Jewel Loan");
-			int input = Integer.parseInt(br.readLine());
-			String type = null;
-			if (input == 1) {
-				type = Constants.LOAN_TYPE[0];
-			} else if (input == 2) {
-				type = Constants.LOAN_TYPE[1];
-			} else if (input == 3) {
-				type = Constants.LOAN_TYPE[2];
-			} else if (input == 4) {
-				type = Constants.LOAN_TYPE[3];
+			try {
+				do {
+					System.out.println("Enter Loan Amount : ");
+					amount = scanner.nextDouble();
+					if (amount <= 0) {
+						System.out.println("Amount cannot be negative or zero.");
+					}
+				} while (amount <= 0);
+			} catch (NumberFormatException e) {
+				System.out.println("Please enter amount in numeric format.");
 			}
+
+			try {
+				do {
+					System.out.println("Enter Rate of interest :");
+					roi = scanner.nextDouble();
+					if (roi <= 0) {
+						System.out.println("Rate of interest cannot be negative or zero.");
+					}
+				} while (roi <= 0);
+			} catch (NumberFormatException e) {
+				System.out.println("Please enter rate of interest in numeric format.");
+			}
+
+			try {
+				do {
+					System.out.println("Enter Tenure:");
+					tenure = scanner.nextInt();
+					if (tenure <= 0) {
+						System.out.println("Tenure cannot be negative or zero.");
+					}
+				} while (tenure <= 0);
+			} catch (NumberFormatException e) {
+				System.out.println("Please enter tenure in integer format.");
+			}
+
+			try {
+				do {
+					System.out.println("Enter credit score : ");
+					creditScore = scanner.nextInt();
+					if (creditScore <= 0) {
+						System.out.println("Credit Score cannot be negative or zero.");
+					}
+				} while (creditScore <= 0);
+			} catch (NumberFormatException e) {
+				System.out.println("Please enter credit score in integer format.");
+			}
+
+			boolean isValidLoanType = false;
+
+			while (!isValidLoanType) {
+				try {
+					System.out.println(
+							"Select type of Loan :\n Type '1' for Personal Loan \n Type '2' for House Loan \n Type '3' for Vehicle Loan \n Type '4' for Jewel Loan");
+					int input = Integer.parseInt(br.readLine());
+					if (input == 1) {
+						type = Constants.LOAN_TYPE[0];
+						isValidLoanType = true;
+					} else if (input == 2) {
+						type = Constants.LOAN_TYPE[1];
+						isValidLoanType = true;
+					} else if (input == 3) {
+						type = Constants.LOAN_TYPE[2];
+						isValidLoanType = true;
+					} else if (input == 4) {
+						type = Constants.LOAN_TYPE[3];
+						isValidLoanType = true;
+					}
+					if (!isValidLoanType) {
+						System.out.println("Please select valid loan type.");
+					}
+				} catch (NumberFormatException e) {
+					System.out.println("Please enter correct option for loan type.");
+				}
+			}
+
 			double emi = lsi.calculateEMI(amount, tenure, roi);
 			Loan loan = new Loan();
 			loan.setAmount(amount);
 			loan.setCreditScore(creditScore);
 			loan.setEmi(emi);
-			loan.setLoanStatus("Pending");
+			loan.setLoanStatus(Constants.LOAN_REQUEST_STATUS[0]);
 			loan.setRoi(roi);
 			loan.setTenure(tenure);
 			loan.setType(type);
@@ -709,15 +771,13 @@ public class PecuniaMain {
 					try {
 
 						approvedLoanRequests = loanDisbursalService.approveLoan(retrievedLoanRequests);
-					
-							System.out.println("Approved loan requests");
-							System.out.println(approvedLoanRequests);
-						
-						
-							System.out.println("Rejected loan requests");
-							rejectedLoanRequests = loanDisbursalService.rejectedLoanRequests();
-							System.out.println(rejectedLoanRequests);
-						
+
+						System.out.println("Approved loan requests");
+						System.out.println(approvedLoanRequests);
+
+						System.out.println("Rejected loan requests");
+						rejectedLoanRequests = loanDisbursalService.rejectedLoanRequests();
+						System.out.println(rejectedLoanRequests);
 
 						System.out.println("Approved loan requests");
 						System.out.println(approvedLoanRequests);
