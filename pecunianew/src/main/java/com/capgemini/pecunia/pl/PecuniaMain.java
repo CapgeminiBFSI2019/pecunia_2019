@@ -26,6 +26,7 @@ import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.inputvalidator.AccountInputValidator;
+import com.capgemini.pecunia.inputvalidator.TransactionInputValidator;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 import com.capgemini.pecunia.service.LoanDisbursalService;
@@ -685,13 +686,9 @@ public class PecuniaMain {
 		isValid = false;
 		double amt = 0.0;
 		TransactionInputValidator transValidator = new TransactionInputValidator();
-		do {
-
-		System.out.println("Enter Account ID: ");
-		String accId = br1.readLine();
 
 		System.out.println("Enter Amount: ");
-		double amt = Double.parseDouble(br1.readLine());
+		amt = Double.parseDouble(br1.readLine());
 
 		transaction.setAmount(amt);
 		transaction.setAccountId(accId);
@@ -738,7 +735,6 @@ public class PecuniaMain {
 		isValid = true;
 		double amt = 0.0;
 		TransactionInputValidator transValidator = new TransactionInputValidator();
-		do {
 
 			boolean typeMatch = false;
 			do {
@@ -751,8 +747,6 @@ public class PecuniaMain {
 				}
 			} while (!typeMatch);
 
-		System.out.println("Enter Amount: ");
-		double amt = Double.parseDouble(br.readLine());
 
 		transaction.setAmount(amt);
 		transaction.setAccountId(accId);
@@ -874,9 +868,6 @@ public class PecuniaMain {
 				isValid=true;
 			}
 		} while (!isValid);
-
-		System.out.println("Enter Account ID of Benificiary: ");
-		String accBenificiaryIdCreditCheque = br1.readLine();
 
 		System.out.println("Enter Amount: ");
 		double amtCreditCheque = Double.parseDouble(br1.readLine());
