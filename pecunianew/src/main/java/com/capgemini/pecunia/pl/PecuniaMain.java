@@ -715,6 +715,9 @@ public class PecuniaMain {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
+			else {
+				isValid=true;
+			}
 		} while (!isValid);
 
 		isValid = false;
@@ -776,6 +779,9 @@ public class PecuniaMain {
 					|| AccountInputValidator.checkLength(12, accId) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
+			}
+			else {
+				isValid=true;
 			}
 		} while (!isValid);
 
@@ -839,6 +845,9 @@ public class PecuniaMain {
 					|| AccountInputValidator.checkLength(12, accIdDebitCheque) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
+			}
+			else {
+				isValid=true;
 			}
 		} while (!isValid);
 
@@ -939,6 +948,9 @@ public class PecuniaMain {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
+			else {
+				isValid=true;
+			}
 		} while (!isValid);
 
 		isValid = true;
@@ -951,6 +963,9 @@ public class PecuniaMain {
 					|| AccountInputValidator.checkLength(12, accBenificiaryIdCreditCheque) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
+			}
+			else {
+				isValid=true;
 			}
 		} while (!isValid);
 
