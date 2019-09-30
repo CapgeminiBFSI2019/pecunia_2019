@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -261,15 +262,20 @@ public class PecuniaMain {
 		String accountId = null;
 		boolean isValid = true;
 		String aadhar = null;
-		String accountType=null;
-		String pan=null; String contact=null; 
-		String addressLine1 = null; String addressLine2 = null;
-		String city=null; String state=null;
-		String country=null; String zipcode=null;
-		String gender=null; double balance=0.0;
-		double interest=0.0;
-		String branchId=null;
-		String dob=null;
+		String accountType = null;
+		String pan = null;
+		String contact = null;
+		String addressLine1 = null;
+		String addressLine2 = null;
+		String city = null;
+		String state = null;
+		String country = null;
+		String zipcode = null;
+		String gender = null;
+		double balance = 0.0;
+		double interest = 0.0;
+		String branchId = null;
+		String dob = null;
 		System.out.println("Enter Customer Details:");
 		Customer cust = new Customer();
 		Address add = new Address();
@@ -287,7 +293,7 @@ public class PecuniaMain {
 
 		} while (!isValid);
 		cust.setName(custName);
-		isValid=true;
+		isValid = true;
 		do {
 			System.out.println("Enter customer aadhar: ");
 			aadhar = br.readLine();
@@ -300,40 +306,45 @@ public class PecuniaMain {
 
 		} while (!isValid);
 		cust.setAadhar(aadhar);
-		isValid=true;
+		isValid = true;
 		do {
 			System.out.println("Enter customer PAN: ");
 			pan = br.readLine();
-			if (AccountInputValidator.checkLength(10, pan) == false || AccountInputValidator.checkIfSpecialCharacter(pan) == true) {
+			if (AccountInputValidator.checkLength(10, pan) == false
+					|| AccountInputValidator.checkIfSpecialCharacter(pan) == true) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		cust.setPan(pan);
-		isValid=true;
+		isValid = true;
 		do {
 			System.out.println("Enter customer contact: ");
 			contact = br.readLine();
-			if (AccountInputValidator.checkLength(10, contact) == false || AccountInputValidator.checkIfSpecialCharacter(contact) == true || AccountInputValidator.checkIfAlphaNumeric(contact) == true) {
+			if (AccountInputValidator.checkLength(10, contact) == false
+					|| AccountInputValidator.checkIfSpecialCharacter(contact) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(contact) == true) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		cust.setContact(contact);
-		
-		isValid=true;
+
+		isValid = true;
 		do {
 			System.out.println("Enter customer Gender(M/F): ");
 			gender = br.readLine();
-			if (AccountInputValidator.checkLength(1, gender) == false || AccountInputValidator.checkIfSpecialCharacter(gender) == true || AccountInputValidator.checkIfAlphaNumeric(gender) == true) {
+			if (AccountInputValidator.checkLength(1, gender) == false
+					|| AccountInputValidator.checkIfSpecialCharacter(gender) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(gender) == true) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		cust.setGender(gender);
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		
-		isValid=true;
+
+		isValid = true;
 		do {
 			System.out.println("Enter customer DOB: ");
 			dob = br.readLine();
@@ -341,11 +352,11 @@ public class PecuniaMain {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		cust.setDob(LocalDate.parse(dob, dateTimeFormatter));
 		System.out.println("Enter Customer Address Details:");
-		
-		isValid=true;
+
+		isValid = true;
 		do {
 			System.out.println("Enter Address Line 1: ");
 			addressLine1 = br.readLine();
@@ -353,9 +364,9 @@ public class PecuniaMain {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
-		add.setLine1(addressLine1);		
-		isValid=true;
+		} while (isValid == false);
+		add.setLine1(addressLine1);
+		isValid = true;
 		do {
 			System.out.println("Enter Address Line 2: ");
 			addressLine2 = br.readLine();
@@ -363,97 +374,106 @@ public class PecuniaMain {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		add.setLine2(addressLine2);
-		isValid=true;
+		isValid = true;
 		do {
 			System.out.println("Enter Address City: ");
 			city = br.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(city) == true || AccountInputValidator.checkIfAlphaNumeric(city) == true) {
+			if (AccountInputValidator.checkIfSpecialCharacter(city) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(city) == true) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		add.setCity(city);
 
-		isValid=true;
+		isValid = true;
 		do {
 			System.out.println("Enter Address State: ");
 			state = br.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(state) == true || AccountInputValidator.checkIfAlphaNumeric(state) == true) {
+			if (AccountInputValidator.checkIfSpecialCharacter(state) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(state) == true) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		add.setState(state);
-		
-		isValid=true;
+
+		isValid = true;
 		do {
 			System.out.println("Enter Address Country: ");
 			country = br.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(country) == true || AccountInputValidator.checkIfAlphaNumeric(country) == true) {
+			if (AccountInputValidator.checkIfSpecialCharacter(country) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(country) == true) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		add.setCountry(country);
-		
-		isValid=true;
+
+		isValid = true;
 		do {
 			System.out.println("Enter Address Zipcode: ");
 			zipcode = br.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(zipcode) == true || AccountInputValidator.checkIfAlphaNumeric(zipcode) == true || AccountInputValidator.checkLength(6, zipcode) == false) {
+			if (AccountInputValidator.checkIfSpecialCharacter(zipcode) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(zipcode) == true
+					|| AccountInputValidator.checkLength(6, zipcode) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		add.setZipcode(zipcode);
 
-		
-		isValid=true;
+		isValid = true;
 		do {
 			System.out.println("Enter Account type: ");
 			accountType = br.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(accountType) == true || AccountInputValidator.checkIfAlphaNumeric(accountType) == true || accountType!=Constants.SAVINGS || accountType!=Constants.CURRENT || accountType!=Constants.FD || accountType!=Constants.LOAN) {
+			if (AccountInputValidator.checkIfSpecialCharacter(accountType) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accountType) == true
+					|| accountType != Constants.SAVINGS || accountType != Constants.CURRENT
+					|| accountType != Constants.FD || accountType != Constants.LOAN) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		acc.setAccountType(accountType);
-		
-		isValid=true;
+
+		isValid = true;
 		do {
 			System.out.println("Enter Account Balance: ");
 			balance = Double.parseDouble(br.readLine());
-			if (balance<0) {
+			if (balance < 0) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		acc.setBalance(balance);
-		
-		isValid=true;
+
+		isValid = true;
 		do {
 			System.out.println("Enter BranchID: ");
 			branchId = br.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(branchId) == true || AccountInputValidator.checkIfAlphaNumeric(branchId) == true || AccountInputValidator.checkLength(4, branchId) == false) {
+			if (AccountInputValidator.checkIfSpecialCharacter(branchId) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(branchId) == true
+					|| AccountInputValidator.checkLength(4, branchId) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		acc.setBranchId(branchId);
-		
-		isValid=true;
+
+		isValid = true;
 		do {
 			System.out.println("Enter interest: ");
 			interest = Double.parseDouble(br.readLine());
-			if (interest<0) {
+			if (interest < 0) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		acc.setInterest(interest);
-		
+
 		acc.setStatus("ACTIVE");
 
 		AccountManagementService ams = new AccountManagementServiceImpl();
@@ -469,22 +489,24 @@ public class PecuniaMain {
 	public static boolean updateCustomerName() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		boolean updated = false;
-		String accId=null;
-		String name=null;
+		String accId = null;
+		String name = null;
 		Account acc = new Account();
 		Customer cust = new Customer();
-		
-		boolean isValid=true;
+
+		boolean isValid = true;
 		do {
 			System.out.println("Enter the Account Id: ");
 			accId = br.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true || AccountInputValidator.checkIfAlphaNumeric(accId) == true || AccountInputValidator.checkLength(12, accId) == false) {
+			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accId) == true
+					|| AccountInputValidator.checkLength(12, accId) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		acc.setId(accId);
-		isValid=true;
+		isValid = true;
 		do {
 			System.out.println("Enter the new Name: ");
 			name = br.readLine();
@@ -510,29 +532,33 @@ public class PecuniaMain {
 	public static boolean updateCustomerContact() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		boolean updated = false;
-		boolean isValid=true;
-		String accId=null;
-		String contact=null;
+		boolean isValid = true;
+		String accId = null;
+		String contact = null;
 		do {
 			System.out.println("Enter the Account Id: ");
 			accId = br.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true || AccountInputValidator.checkIfAlphaNumeric(accId) == true || AccountInputValidator.checkLength(12, accId) == false) {
+			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accId) == true
+					|| AccountInputValidator.checkLength(12, accId) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		Account acc = new Account();
 		acc.setId(accId);
-		
-		isValid=true;
+
+		isValid = true;
 		do {
 			System.out.println("Enter the new Contact: ");
 			contact = br.readLine();
-			if (AccountInputValidator.checkLength(10, contact) == false || AccountInputValidator.checkIfSpecialCharacter(contact) == true || AccountInputValidator.checkIfAlphaNumeric(contact) == true) {
+			if (AccountInputValidator.checkLength(10, contact) == false
+					|| AccountInputValidator.checkIfSpecialCharacter(contact) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(contact) == true) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		Customer cust = new Customer();
 		cust.setContact(contact);
 		AccountManagementService ams = new AccountManagementServiceImpl();
@@ -547,24 +573,29 @@ public class PecuniaMain {
 	public static boolean updateCustomerAddress() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		boolean updated = false;
-		boolean isValid=true;
-		String accId=null;
-		String addressLine1 = null; String addressLine2 = null;
-		String city=null; String state=null;
-		String country=null; String zipcode=null;
+		boolean isValid = true;
+		String accId = null;
+		String addressLine1 = null;
+		String addressLine2 = null;
+		String city = null;
+		String state = null;
+		String country = null;
+		String zipcode = null;
 		Account acc = new Account();
 		do {
 			System.out.println("Enter the Account Id: ");
 			accId = br.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true || AccountInputValidator.checkIfAlphaNumeric(accId) == true || AccountInputValidator.checkLength(12, accId) == false) {
+			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accId) == true
+					|| AccountInputValidator.checkLength(12, accId) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		acc.setId(accId);
 		Address add = new Address();
 		System.out.println("Enter the new Address Details: ");
-		isValid=true;
+		isValid = true;
 		do {
 			System.out.println("Enter Address Line 1: ");
 			addressLine1 = br.readLine();
@@ -572,9 +603,9 @@ public class PecuniaMain {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
-		add.setLine1(addressLine1);		
-		isValid=true;
+		} while (isValid == false);
+		add.setLine1(addressLine1);
+		isValid = true;
 		do {
 			System.out.println("Enter Address Line 2: ");
 			addressLine2 = br.readLine();
@@ -582,50 +613,55 @@ public class PecuniaMain {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		add.setLine2(addressLine2);
-		isValid=true;
+		isValid = true;
 		do {
 			System.out.println("Enter Address City: ");
 			city = br.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(city) == true || AccountInputValidator.checkIfAlphaNumeric(city) == true) {
+			if (AccountInputValidator.checkIfSpecialCharacter(city) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(city) == true) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		add.setCity(city);
 
-		isValid=true;
+		isValid = true;
 		do {
 			System.out.println("Enter Address State: ");
 			state = br.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(state) == true || AccountInputValidator.checkIfAlphaNumeric(state) == true) {
+			if (AccountInputValidator.checkIfSpecialCharacter(state) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(state) == true) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		add.setState(state);
-		
-		isValid=true;
+
+		isValid = true;
 		do {
 			System.out.println("Enter Address Country: ");
 			country = br.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(country) == true || AccountInputValidator.checkIfAlphaNumeric(country) == true) {
+			if (AccountInputValidator.checkIfSpecialCharacter(country) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(country) == true) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		add.setCountry(country);
-		
-		isValid=true;
+
+		isValid = true;
 		do {
 			System.out.println("Enter Address Zipcode: ");
 			zipcode = br.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(zipcode) == true || AccountInputValidator.checkIfAlphaNumeric(zipcode) == true || AccountInputValidator.checkLength(6, zipcode) == false) {
+			if (AccountInputValidator.checkIfSpecialCharacter(zipcode) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(zipcode) == true
+					|| AccountInputValidator.checkLength(6, zipcode) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		add.setZipcode(zipcode);
 
 		AccountManagementService ams = new AccountManagementServiceImpl();
@@ -639,19 +675,21 @@ public class PecuniaMain {
 
 	public static boolean deleteAccount() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String accId=null;
-		
+		String accId = null;
+
 		boolean updated = false;
 		Account acc = new Account();
-		boolean isValid=true;
+		boolean isValid = true;
 		do {
 			System.out.println("Enter the Account Id: ");
 			accId = br.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true || AccountInputValidator.checkIfAlphaNumeric(accId) == true || AccountInputValidator.checkLength(12, accId) == false) {
+			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accId) == true
+					|| AccountInputValidator.checkLength(12, accId) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
+		} while (isValid == false);
 		acc.setId(accId);
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
@@ -667,28 +705,45 @@ public class PecuniaMain {
 
 		Transaction transaction = new Transaction();
 		BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
-		boolean isValid=true;
-		String accId=null;
+		boolean isValid = true;
+		String accId = null;
 		do {
 			System.out.println("Enter the Account Id: ");
 			accId = br1.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true || AccountInputValidator.checkIfAlphaNumeric(accId) == true || AccountInputValidator.checkLength(12, accId) == false) {
+			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accId) == true
+					|| AccountInputValidator.checkLength(12, accId) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
-		
-		isValid=true;
-		double amt=0.0;
-		TransactionInputValidator transValidator=new TransactionInputValidator();
+		} while (isValid == false);
+
+		isValid = true;
+		double amt = 0.0;
+		TransactionInputValidator transValidator = new TransactionInputValidator();
 		do {
-		System.out.println("Enter Amount: ");
-		amt = Double.parseDouble(br1.readLine());
-		if(!transValidator.transactionAmountisValid(amt)) {
-			System.out.println("Invalid. Enter again.");
-			isValid=false;
-		}
-		}while(isValid==false);
+			
+			boolean typeMatch = false;
+			do
+			{
+				System.out.println("Enter Amount: ");
+				try
+				{
+					amt = Double.parseDouble(br1.readLine());
+				}
+				catch(InputMismatchException e)
+				{
+					System.out.println("message here");
+				}
+			}
+			while(!typeMatch);
+			
+			
+			if (!transValidator.transactionAmountisValid(amt)) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+		} while (!isValid);
 		transaction.setAmount(amt);
 		transaction.setAccountId(accId);
 		transaction.setId(Constants.NA);
@@ -715,28 +770,30 @@ public class PecuniaMain {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		boolean isValid=true;
-		String accId=null;
+		boolean isValid = true;
+		String accId = null;
 		do {
 			System.out.println("Enter the Account Id: ");
 			accId = br.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true || AccountInputValidator.checkIfAlphaNumeric(accId) == true || AccountInputValidator.checkLength(12, accId) == false) {
+			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accId) == true
+					|| AccountInputValidator.checkLength(12, accId) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
-		
-		isValid=true;
-		double amt=0.0;
-		TransactionInputValidator transValidator=new TransactionInputValidator();
+		} while (isValid == false);
+
+		isValid = true;
+		double amt = 0.0;
+		TransactionInputValidator transValidator = new TransactionInputValidator();
 		do {
-		System.out.println("Enter Amount: ");
-		amt = Double.parseDouble(br.readLine());
-		if(!transValidator.transactionAmountisValid(amt)) {
-			System.out.println("Invalid. Enter again.");
-			isValid=false;
-		}
-		}while(isValid==false);
+			System.out.println("Enter Amount: ");
+			amt = Double.parseDouble(br.readLine());
+			if (!transValidator.transactionAmountisValid(amt)) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+		} while (isValid == false);
 
 		transaction.setAmount(amt);
 		transaction.setAccountId(accId);
@@ -764,34 +821,52 @@ public class PecuniaMain {
 
 		BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
 
-		boolean isValid=true;
-		String accIdDebitCheque=null;
+		boolean isValid = true;
+		String accIdDebitCheque = null;
 		do {
 			System.out.println("Enter the Account Id: ");
 			accIdDebitCheque = br1.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(accIdDebitCheque) == true || AccountInputValidator.checkIfAlphaNumeric(accIdDebitCheque) == true || AccountInputValidator.checkLength(12, accIdDebitCheque) == false) {
+			if (AccountInputValidator.checkIfSpecialCharacter(accIdDebitCheque) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accIdDebitCheque) == true
+					|| AccountInputValidator.checkLength(12, accIdDebitCheque) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid==false);
-		
-		isValid=true;
-		double amtDebitCheque=0.0;
-		TransactionInputValidator transValidator=new TransactionInputValidator();
+		} while (isValid == false);
+
+		isValid = true;
+		double amtDebitCheque = 0.0;
+		TransactionInputValidator transValidator = new TransactionInputValidator();
 		do {
-		System.out.println("Enter Amount: ");
-		amtDebitCheque = Double.parseDouble(br1.readLine());
-		if(!transValidator.transactionAmountisValid(amtDebitCheque)) {
-			System.out.println("Invalid. Enter again.");
-			isValid=false;
-		}
-		}while(isValid==false);
+			System.out.println("Enter Amount: ");
+			amtDebitCheque = Double.parseDouble(br1.readLine());
+			if (!transValidator.transactionAmountisValid(amtDebitCheque)) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+		} while (isValid == false);
 
-		System.out.println("Enter Cheque Number: ");
-		int chequeNumber = Integer.parseInt(br1.readLine());
+		isValid = true;
+		int chequeNumber = 0;
+		do {
+			System.out.println("Enter Cheque Number: ");
+			chequeNumber = Integer.parseInt(br1.readLine());
+			if (!transValidator.chequeNumberisValid(chequeNumber)) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+		} while (isValid == false);
 
-		System.out.println("Enter Account Holder Name: ");
-		String accholderDebitChequeName = br1.readLine();
+		isValid = true;
+		String accholderDebitChequeName = null;
+		do {
+			System.out.println("Enter Account Holder Name: ");
+			accholderDebitChequeName = br1.readLine();
+			if (!transValidator.validateAccountName(accholderDebitChequeName)) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+		} while (isValid == false);
 
 		System.out.println("Enter IFSC Code: ");
 		String chequeIfsc = br1.readLine();
@@ -831,20 +906,67 @@ public class PecuniaMain {
 
 		BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
 
-		System.out.println("Enter Account ID of Payee: ");
-		String accPayeeIdCreditCheque = br1.readLine();
+		boolean isValid = true;
+		String accPayeeIdCreditCheque = null;
+		do {
+			System.out.println("Enter Account ID of Payee: ");
+			accPayeeIdCreditCheque = br1.readLine();
+			if (AccountInputValidator.checkIfSpecialCharacter(accPayeeIdCreditCheque) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accPayeeIdCreditCheque) == true
+					|| AccountInputValidator.checkLength(12, accPayeeIdCreditCheque) == false) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+		} while (isValid == false);
 
-		System.out.println("Enter Account ID of Benificiary: ");
-		String accBenificiaryIdCreditCheque = br1.readLine();
+		isValid = true;
+		String accBenificiaryIdCreditCheque = null;
+		do {
+			System.out.println("Enter Account ID of Benificiary: ");
+			accBenificiaryIdCreditCheque = br1.readLine();
+			if (AccountInputValidator.checkIfSpecialCharacter(accBenificiaryIdCreditCheque) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accBenificiaryIdCreditCheque) == true
+					|| AccountInputValidator.checkLength(12, accBenificiaryIdCreditCheque) == false) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+		} while (isValid == false);
 
-		System.out.println("Enter Amount: ");
-		double amtCreditCheque = Double.parseDouble(br1.readLine());
+		isValid = true;
+		double amtCreditCheque = 0.0;
+		TransactionInputValidator transValidator = new TransactionInputValidator();
+		do {
+			System.out.println("Enter Amount: ");
+			amtCreditCheque = Double.parseDouble(br1.readLine());
+			if (!transValidator.transactionAmountisValid(amtCreditCheque)) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+		} while (isValid == false);
 
-		System.out.println("Enter Cheque Number: ");
-		int chequeNumber = Integer.parseInt(br1.readLine());
+		isValid = true;
+		int chequeNumber = 0;
+		do {
+			System.out.println("Enter Cheque Number: ");
+			chequeNumber = Integer.parseInt(br1.readLine());
+			if (!transValidator.chequeNumberisValid(chequeNumber)) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+		} while (isValid == false);
 
-		System.out.println("Enter Account Payee Name: ");
-		String accPayeeCreditChequeName = br1.readLine();
+		isValid = true;
+		String accPayeeCreditChequeName = null;
+		do {
+			System.out.println("Enter Account Payee Name: ");
+			accPayeeCreditChequeName = br1.readLine();
+			if (AccountInputValidator.checkIfSpecialCharacter(accPayeeCreditChequeName) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accPayeeCreditChequeName) == true
+					|| AccountInputValidator.checkLength(12, accPayeeCreditChequeName) == false) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+		} while (isValid == false);
 
 		System.out.println("Enter Payee Bank Name: ");
 		String payeeBankName = br1.readLine();
@@ -1088,8 +1210,7 @@ public class PecuniaMain {
 
 	}
 
-	public static void updatePassbook()
-	{
+	public static void updatePassbook() {
 		PassbookMaintenanceService PassbookService = new PassbookMaintenanceServiceImpl();
 		List<Transaction> updatePassbook = new ArrayList<Transaction>();
 		Scanner scanner = new Scanner(System.in);
@@ -1123,17 +1244,14 @@ public class PecuniaMain {
 			}
 		} catch (PecuniaException | PassbookException e) {
 			System.out.println(e.getMessage());
-		}
-		finally
-		{
+		} finally {
 			scanner.close();
 		}
 	}
 
-	public static void accountSummary()
-	{
+	public static void accountSummary() {
 		Scanner scanner = new Scanner(System.in);
-		
+
 		PassbookMaintenanceService accountSummaryService = new PassbookMaintenanceServiceImpl();
 
 		System.out.println("Enter accountId:");
@@ -1151,32 +1269,30 @@ public class PecuniaMain {
 		List<Transaction> accountSummary = new ArrayList<Transaction>();
 		try {
 			accountSummary = accountSummaryService.accountSummary(accountId1, date1, date2);
-				for (int index = 0; index < accountSummary.size(); index++) {
-					System.out.print(accountSummary.get(index).getId() + "\t");
-					System.out.print(accountSummary.get(index).getTransDate() + "\t");
-					System.out.print(accountSummary.get(index).getAmount() + "\t");
-					System.out.print(accountSummary.get(index).getTransFrom() + "\t");
-					System.out.print(accountSummary.get(index).getTransTo() + "\t");
-					System.out.print(accountSummary.get(index).getType() + "\t");
-					System.out.print(accountSummary.get(index).getOption() + "\t");
-					if (accountSummary.get(index).getOption().equalsIgnoreCase("cheque")) {
-						System.out.print(accountSummary.get(index).getChequeId() + "\t");
-
-					} else {
-						System.out.print("-\t");
-					}
+			for (int index = 0; index < accountSummary.size(); index++) {
+				System.out.print(accountSummary.get(index).getId() + "\t");
+				System.out.print(accountSummary.get(index).getTransDate() + "\t");
+				System.out.print(accountSummary.get(index).getAmount() + "\t");
+				System.out.print(accountSummary.get(index).getTransFrom() + "\t");
+				System.out.print(accountSummary.get(index).getTransTo() + "\t");
+				System.out.print(accountSummary.get(index).getType() + "\t");
+				System.out.print(accountSummary.get(index).getOption() + "\t");
+				if (accountSummary.get(index).getOption().equalsIgnoreCase("cheque")) {
 					System.out.print(accountSummary.get(index).getChequeId() + "\t");
-					System.out.print(accountSummary.get(index).getClosingBalance() + "\t");
-					System.out.println();
+
+				} else {
+					System.out.print("-\t");
 				}
-			//}
+				System.out.print(accountSummary.get(index).getChequeId() + "\t");
+				System.out.print(accountSummary.get(index).getClosingBalance() + "\t");
+				System.out.println();
+			}
+			// }
 		} catch (PecuniaException | PassbookException e) {
 			System.out.println(e.getMessage());
-		}
-		finally
-		{
+		} finally {
 			scanner.close();
 		}
-		
+
 	}
 }
