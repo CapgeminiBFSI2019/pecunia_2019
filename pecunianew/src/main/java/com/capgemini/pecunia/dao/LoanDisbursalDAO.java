@@ -18,7 +18,7 @@ public interface LoanDisbursalDAO {
 	public void updateLoanAccount(ArrayList<LoanDisbursal> loanApprovals, double dueAmount, double tenure,
 			String accountId) throws IOException, PecuniaException;
 
-	public void updateStatus(ArrayList<Loan> loanRequests, String accountId, String Status)
+	public void updateStatus(ArrayList<Loan> loanRequests, int loanID, String Status)
 			throws IOException, PecuniaException;
 
 }

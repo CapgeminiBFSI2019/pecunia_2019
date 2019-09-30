@@ -156,11 +156,11 @@ class AccountManagementServiceImplTest {
 //		address.setCountry("India");
 //		address.setZipcode("400036");
 //
-//		customer.setName("Avizek");
+//		customer.setName("Avizzek");
 //		customer.setAadhar("898424476569");
-//		customer.setPan("AF5904986F");
-//		customer.setContact("6832484674");
-//		customer.setGender("F");
+//		customer.setPan("AF590J986F");
+//		customer.setContact("6832404674");
+//		customer.setGender("M");
 //		LocalDate dob = LocalDate.parse("1995-10-17");
 //		customer.setDob(dob);
 //

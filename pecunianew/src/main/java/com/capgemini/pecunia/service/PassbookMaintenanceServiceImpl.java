@@ -90,14 +90,7 @@ public class PassbookMaintenanceServiceImpl implements PassbookMaintenanceServic
 		
 			
 			transactionList = pdao.accountSummary(accountId, startDate, endDate);
-			boolean ans=false;
-			if(transactionList.size()>0) {
-				ans= pdao.updateLastUpdated(accountId);
-				if(ans)
-				{
-					logger.info(LoggerMessage.ACCOUNT_SUMMARY_SUCCESSFUL);
-				}
-			}
+			
 			return transactionList;
 		} catch (Exception e) {
 			throw new PassbookException(e.getMessage());

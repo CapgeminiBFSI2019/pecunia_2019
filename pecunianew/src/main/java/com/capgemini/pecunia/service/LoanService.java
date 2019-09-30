@@ -2,7 +2,7 @@ package com.capgemini.pecunia.service;
 
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.exception.LoanException;
-import com.capgemini.pecunia.exception.PecuniaException;
+
 
 public interface LoanService {
 	
