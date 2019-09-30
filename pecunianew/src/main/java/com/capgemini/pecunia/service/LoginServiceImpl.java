@@ -35,7 +35,7 @@ public class LoginServiceImpl implements LoginService {
 	 ********************************************************************************************************/
 
 	
-	@Override
+	
 	public boolean validateEmail(Login login) throws PecuniaException, LoginException {
 		boolean isValidated = false;
 		String password = null;
