@@ -637,7 +637,7 @@ public class PecuniaMain {
 		System.out.println("Enter account Id : ");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String accId = br.readLine();
-		LoanService lsi = new LoanServiceImpl();
+		LoanService loanServiceImpl = new LoanServiceImpl();
 		double amount = 0.0, roi = 0.0;
 		int tenure = 0, creditScore = 0;
 		String type = null;
@@ -718,7 +718,7 @@ public class PecuniaMain {
 				}
 			}
 
-			double emi = lsi.calculateEMI(amount, tenure, roi);
+			double emi = loanServiceImpl.calculateEMI(amount, tenure, roi);
 			Loan loan = new Loan();
 			loan.setAmount(amount);
 			loan.setCreditScore(creditScore);
@@ -728,8 +728,7 @@ public class PecuniaMain {
 			loan.setTenure(tenure);
 			loan.setType(type);
 			loan.setAccountId(accId);
-			LoanService loaserim = new LoanServiceImpl();
-			result = loaserim.createLoanRequest(loan);
+			result = loanServiceImpl.createLoanRequest(loan);
 
 		} catch (LoanException e) {
 			System.out.println(e.getMessage());
