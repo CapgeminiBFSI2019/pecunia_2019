@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -716,32 +715,29 @@ public class PecuniaMain {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid == false);
+		} while (!isValid);
 
-		isValid = true;
+		isValid = false;
 		double amt = 0.0;
 		TransactionInputValidator transValidator = new TransactionInputValidator();
 		do {
-			
+
 			boolean typeMatch = false;
-			do
-			{
+			do {
 				System.out.println("Enter Amount: ");
-				try
-				{
+				try {
 					amt = Double.parseDouble(br1.readLine());
+					typeMatch = true;
+				} catch (NumberFormatException e) {
+					System.out.println("Wrong type entered");
 				}
-				catch(InputMismatchException e)
-				{
-					System.out.println("message here");
-				}
-			}
-			while(!typeMatch);
-			
-			
+			} while (!typeMatch);
+
 			if (!transValidator.transactionAmountisValid(amt)) {
 				System.out.println("Invalid. Enter again.");
-				isValid = false;
+
+			} else {
+				isValid = true;
 			}
 		} while (!isValid);
 		transaction.setAmount(amt);
@@ -781,19 +777,31 @@ public class PecuniaMain {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid == false);
+		} while (!isValid);
 
 		isValid = true;
 		double amt = 0.0;
 		TransactionInputValidator transValidator = new TransactionInputValidator();
 		do {
-			System.out.println("Enter Amount: ");
-			amt = Double.parseDouble(br.readLine());
+
+			boolean typeMatch = false;
+			do {
+				System.out.println("Enter Amount: ");
+				try {
+					amt = Double.parseDouble(br.readLine());
+					typeMatch = true;
+				} catch (NumberFormatException e) {
+					System.out.println("Wrong type entered");
+				}
+			} while (!typeMatch);
+
 			if (!transValidator.transactionAmountisValid(amt)) {
 				System.out.println("Invalid. Enter again.");
-				isValid = false;
+
+			} else {
+				isValid = true;
 			}
-		} while (isValid == false);
+		} while (!isValid);
 
 		transaction.setAmount(amt);
 		transaction.setAccountId(accId);
@@ -832,41 +840,55 @@ public class PecuniaMain {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid == false);
+		} while (!isValid);
 
 		isValid = true;
 		double amtDebitCheque = 0.0;
 		TransactionInputValidator transValidator = new TransactionInputValidator();
 		do {
-			System.out.println("Enter Amount: ");
-			amtDebitCheque = Double.parseDouble(br1.readLine());
+
+			boolean typeMatch = false;
+			do {
+				System.out.println("Enter Amount: ");
+				try {
+					amtDebitCheque = Double.parseDouble(br1.readLine());
+					typeMatch = true;
+				} catch (NumberFormatException e) {
+					System.out.println("Wrong type entered");
+				}
+			} while (!typeMatch);
+
 			if (!transValidator.transactionAmountisValid(amtDebitCheque)) {
 				System.out.println("Invalid. Enter again.");
-				isValid = false;
-			}
-		} while (isValid == false);
 
-		isValid = true;
+			} else {
+				isValid = true;
+			}
+		} while (!isValid);
+
+		isValid = false;
 		int chequeNumber = 0;
 		do {
 			System.out.println("Enter Cheque Number: ");
 			chequeNumber = Integer.parseInt(br1.readLine());
 			if (!transValidator.chequeNumberisValid(chequeNumber)) {
 				System.out.println("Invalid. Enter again.");
-				isValid = false;
+			} else {
+				isValid = true;
 			}
-		} while (isValid == false);
+		} while (!isValid);
 
-		isValid = true;
+		isValid = false;
 		String accholderDebitChequeName = null;
 		do {
 			System.out.println("Enter Account Holder Name: ");
 			accholderDebitChequeName = br1.readLine();
 			if (!transValidator.validateAccountName(accholderDebitChequeName)) {
 				System.out.println("Invalid. Enter again.");
-				isValid = false;
+			} else {
+				isValid = true;
 			}
-		} while (isValid == false);
+		} while (!isValid);
 
 		System.out.println("Enter IFSC Code: ");
 		String chequeIfsc = br1.readLine();
@@ -917,7 +939,7 @@ public class PecuniaMain {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid == false);
+		} while (!isValid);
 
 		isValid = true;
 		String accBenificiaryIdCreditCheque = null;
@@ -930,43 +952,55 @@ public class PecuniaMain {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid == false);
+		} while (!isValid);
 
 		isValid = true;
 		double amtCreditCheque = 0.0;
 		TransactionInputValidator transValidator = new TransactionInputValidator();
 		do {
-			System.out.println("Enter Amount: ");
-			amtCreditCheque = Double.parseDouble(br1.readLine());
+
+			boolean typeMatch = false;
+			do {
+				System.out.println("Enter Amount: ");
+				try {
+					amtCreditCheque = Double.parseDouble(br1.readLine());
+					typeMatch = true;
+				} catch (NumberFormatException e) {
+					System.out.println("Wrong type entered");
+				}
+			} while (!typeMatch);
+
 			if (!transValidator.transactionAmountisValid(amtCreditCheque)) {
 				System.out.println("Invalid. Enter again.");
-				isValid = false;
-			}
-		} while (isValid == false);
 
-		isValid = true;
+			} else {
+				isValid = true;
+			}
+		} while (!isValid);
+
+		isValid = false;
 		int chequeNumber = 0;
 		do {
 			System.out.println("Enter Cheque Number: ");
 			chequeNumber = Integer.parseInt(br1.readLine());
 			if (!transValidator.chequeNumberisValid(chequeNumber)) {
 				System.out.println("Invalid. Enter again.");
-				isValid = false;
+			} else {
+				isValid = true;
 			}
-		} while (isValid == false);
+		} while (!isValid);
 
-		isValid = true;
+		isValid = false;
 		String accPayeeCreditChequeName = null;
 		do {
-			System.out.println("Enter Account Payee Name: ");
+			System.out.println("Enter Account Holder Name: ");
 			accPayeeCreditChequeName = br1.readLine();
-			if (AccountInputValidator.checkIfSpecialCharacter(accPayeeCreditChequeName) == true
-					|| AccountInputValidator.checkIfAlphaNumeric(accPayeeCreditChequeName) == true
-					|| AccountInputValidator.checkLength(12, accPayeeCreditChequeName) == false) {
+			if (!transValidator.validateAccountName(accPayeeCreditChequeName)) {
 				System.out.println("Invalid. Enter again.");
-				isValid = false;
+			} else {
+				isValid = true;
 			}
-		} while (isValid == false);
+		} while (!isValid);
 
 		System.out.println("Enter Payee Bank Name: ");
 		String payeeBankName = br1.readLine();
