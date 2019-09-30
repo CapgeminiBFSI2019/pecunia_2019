@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -721,13 +722,28 @@ public class PecuniaMain {
 		double amt = 0.0;
 		TransactionInputValidator transValidator = new TransactionInputValidator();
 		do {
-			System.out.println("Enter Amount: ");
-			amt = Double.parseDouble(br1.readLine());
+			
+			boolean typeMatch = false;
+			do
+			{
+				System.out.println("Enter Amount: ");
+				try
+				{
+					amt = Double.parseDouble(br1.readLine());
+				}
+				catch(InputMismatchException e)
+				{
+					System.out.println("message here");
+				}
+			}
+			while(!typeMatch);
+			
+			
 			if (!transValidator.transactionAmountisValid(amt)) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
-		} while (isValid == false);
+		} while (!isValid);
 		transaction.setAmount(amt);
 		transaction.setAccountId(accId);
 		transaction.setId(Constants.NA);
