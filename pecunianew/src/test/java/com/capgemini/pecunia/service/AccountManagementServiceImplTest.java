@@ -142,37 +142,37 @@ class AccountManagementServiceImplTest {
 
 	}
 
-//	@Test
-//	@DisplayName("Inputs in add account function")
-//	void testAddAccountPass() throws PecuniaException, AccountException {
-//
-//		Account account = new Account();
-//		Customer customer = new Customer();
-//		Address address = new Address();
-//		address.setLine1("12-Vydehi");
-//		address.setLine2("ATP");
-//		address.setCity("Mumbai");
-//		address.setState("Maharashtra");
-//		address.setCountry("India");
-//		address.setZipcode("400036");
-//
-//		customer.setName("Avizzek");
-//		customer.setAadhar("898424476569");
-//		customer.setPan("AF590J986F");
-//		customer.setContact("6832404674");
-//		customer.setGender("M");
-//		LocalDate dob = LocalDate.parse("1995-10-17");
-//		customer.setDob(dob);
-//
-//		account.setAccountType(Constants.FD);
-//		account.setBalance(9000000.00);
-//		account.setBranchId("1002");
-//		account.setInterest(0.00);
-//		account.setStatus(Constants.ACCOUNT_STATUS[0]);
-//
-//		assertNotNull(ams.addAccount(customer, address, account));
-//
-//	}
+	@Test
+	@DisplayName("Inputs in add account function")
+	void testAddAccountPass() throws PecuniaException, AccountException {
+
+		Account account = new Account();
+		Customer customer = new Customer();
+		Address address = new Address();
+		address.setLine1("12-Vydehi");
+		address.setLine2("ATP");
+		address.setCity("Mumbai");
+		address.setState("Maharashtra");
+		address.setCountry("India");
+		address.setZipcode("400036");
+
+		customer.setName("Avizzek");
+		customer.setAadhar("898424476569");
+		customer.setPan("AF590J986F");
+		customer.setContact("6832404674");
+		customer.setGender("M");
+		LocalDate dob = LocalDate.parse("1995-10-17");
+		customer.setDob(dob);
+
+		account.setAccountType(Constants.FD);
+		account.setBalance(9000000.00);
+		account.setBranchId("1002");
+		account.setInterest(0.00);
+		account.setStatus(Constants.ACCOUNT_STATUS[0]);
+
+		assertNotNull(ams.addAccount(customer, address, account));
+
+	}
 
 	@Test
 	@DisplayName("Validation successful")
