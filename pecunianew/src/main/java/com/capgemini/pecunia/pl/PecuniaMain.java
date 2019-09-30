@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.capgemini.pecunia.dto.Account;
@@ -21,6 +22,7 @@ import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.LoanDisbursalException;
 import com.capgemini.pecunia.exception.LoanException;
 import com.capgemini.pecunia.exception.LoginException;
+import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.inputvalidator.AccountInputValidator;
@@ -32,6 +34,8 @@ import com.capgemini.pecunia.service.LoanService;
 import com.capgemini.pecunia.service.LoanServiceImpl;
 import com.capgemini.pecunia.service.LoginService;
 import com.capgemini.pecunia.service.LoginServiceImpl;
+import com.capgemini.pecunia.service.PassbookMaintenanceService;
+import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
 import com.capgemini.pecunia.service.TransactionService;
 import com.capgemini.pecunia.service.TransactionServiceImpl;
 import com.capgemini.pecunia.util.Constants;
@@ -125,8 +129,10 @@ public class PecuniaMain {
 					int choice4 = Integer.parseInt(br.readLine());
 					switch (choice4) {
 					case 1: // update passbook
+						updatePassbook();
 						break;
 					case 2: // account Summary
+						accountSummary();
 						break;
 					}
 				case 5:
@@ -587,9 +593,6 @@ public class PecuniaMain {
 		System.out.println("Enter Account Payee Name: ");
 		String accPayeeCreditChequeName = br1.readLine();
 
-		System.out.println("Enter Account Benificiary Name: ");
-		String accBenificiaryCreditChequeName = br1.readLine();
-
 		System.out.println("Enter Payee Bank Name: ");
 		String payeeBankName = br1.readLine();
 
@@ -634,7 +637,7 @@ public class PecuniaMain {
 		System.out.println("Enter account Id : ");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String accId = br.readLine();
-		LoanServiceImpl lsi = new LoanServiceImpl();
+		LoanService lsi = new LoanServiceImpl();
 		double amount = 0.0, roi = 0.0;
 		int tenure = 0, creditScore = 0;
 		String type = null;
@@ -831,5 +834,97 @@ public class PecuniaMain {
 			System.out.println(e.getMessage());
 		}
 
+	}
+
+	public static void updatePassbook()
+	{
+		PassbookMaintenanceService PassbookService = new PassbookMaintenanceServiceImpl();
+		List<Transaction> updatePassbook = new ArrayList<Transaction>();
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter accountId:");
+		String accountId = scanner.nextLine();
+		try {
+			updatePassbook = PassbookService.updatePassbook(accountId);
+
+			if (updatePassbook.size() < 1) {
+				System.out.println("no trans");
+			}
+
+			else {
+				for (int index = 0; index < updatePassbook.size(); index++) {
+					System.out.print(updatePassbook.get(index).getId() + "\t");
+					System.out.print(updatePassbook.get(index).getTransDate() + "\t");
+					System.out.print(updatePassbook.get(index).getAmount() + "\t");
+					System.out.print(updatePassbook.get(index).getTransFrom() + "\t");
+					System.out.print(updatePassbook.get(index).getTransTo() + "\t");
+					System.out.print(updatePassbook.get(index).getType() + "\t");
+					System.out.print(updatePassbook.get(index).getOption() + "\t");
+					if (updatePassbook.get(index).getOption().equalsIgnoreCase("cheque")) {
+						System.out.print(updatePassbook.get(index).getChequeId() + "\t");
+
+					} else {
+						System.out.print("-\t");
+					}
+					System.out.print(updatePassbook.get(index).getClosingBalance() + "\t");
+					System.out.println();
+				}
+			}
+		} catch (PecuniaException | PassbookException e) {
+			System.out.println(e.getMessage());
+		}
+		finally
+		{
+			scanner.close();
+		}
+	}
+
+	public static void accountSummary()
+	{
+		Scanner scanner = new Scanner(System.in);
+		
+		PassbookMaintenanceService accountSummaryService = new PassbookMaintenanceServiceImpl();
+
+		System.out.println("Enter accountId:");
+		String accountId1 = scanner.nextLine();
+
+		System.out.println("Enter start date:");
+		String sdate1 = scanner.nextLine();
+
+		System.out.println("Enter end date:");
+		String sdate2 = scanner.nextLine();
+
+		LocalDate date1 = LocalDate.parse(sdate1);
+		LocalDate date2 = LocalDate.parse(sdate2);
+
+		List<Transaction> accountSummary = new ArrayList<Transaction>();
+		try {
+			accountSummary = accountSummaryService.accountSummary(accountId1, date1, date2);
+				for (int index = 0; index < accountSummary.size(); index++) {
+					System.out.print(accountSummary.get(index).getId() + "\t");
+					System.out.print(accountSummary.get(index).getTransDate() + "\t");
+					System.out.print(accountSummary.get(index).getAmount() + "\t");
+					System.out.print(accountSummary.get(index).getTransFrom() + "\t");
+					System.out.print(accountSummary.get(index).getTransTo() + "\t");
+					System.out.print(accountSummary.get(index).getType() + "\t");
+					System.out.print(accountSummary.get(index).getOption() + "\t");
+					if (accountSummary.get(index).getOption().equalsIgnoreCase("cheque")) {
+						System.out.print(accountSummary.get(index).getChequeId() + "\t");
+
+					} else {
+						System.out.print("-\t");
+					}
+					System.out.print(accountSummary.get(index).getChequeId() + "\t");
+					System.out.print(accountSummary.get(index).getClosingBalance() + "\t");
+					System.out.println();
+				}
+			//}
+		} catch (PecuniaException | PassbookException e) {
+			System.out.println(e.getMessage());
+		}
+		finally
+		{
+			scanner.close();
+		}
+		
 	}
 }
