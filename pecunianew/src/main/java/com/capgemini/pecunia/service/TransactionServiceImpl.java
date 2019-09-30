@@ -24,16 +24,17 @@ public class TransactionServiceImpl implements TransactionService {
 	public TransactionServiceImpl() {
 		PropertyConfigurator.configure("resources//log4j.properties");
 	}
+
 	TransactionDAO transactionDAO;
 
 	/*******************************************************************************************************
 	 * - Function Name : getBalance(Account account) - Input Parameters : account
-	 * object - Return Type : double - Throws : TransactionException,PecuniaException -
-	 * Author : Rohan Patil,Anwesha Das - Creation Date : 23/09/2019 - Description :
-	 * Getting balance of the specified account
+	 * object - Return Type : double - Throws :
+	 * TransactionException,PecuniaException - Author : Rohan Patil,Anwesha Das -
+	 * Creation Date : 23/09/2019 - Description : Getting balance of the specified
+	 * account
 	 ********************************************************************************************************/
 
-	@Override
 	public double getBalance(Account account) throws TransactionException, PecuniaException {
 		try {
 			transactionDAO = new TransactionDAOImpl();
@@ -41,7 +42,7 @@ public class TransactionServiceImpl implements TransactionService {
 			balance = transactionDAO.getBalance(account);
 			return balance;
 		} catch (Exception e) {
-			
+
 			logger.error(ErrorConstants.FETCH_ERROR);
 			throw new TransactionException(ErrorConstants.FETCH_ERROR);
 		}
@@ -50,12 +51,12 @@ public class TransactionServiceImpl implements TransactionService {
 
 	/*******************************************************************************************************
 	 * - Function Name : updateBalance(Account account) - Input Parameters : account
-	 * object - Return Type : boolean - Throws : TransactionException,PecuniaException -
-	 * Author : Anish Basu, Arpan Mondal - Creation Date : 23/09/2019 - Description
-	 * : update balance of the specified account
+	 * object - Return Type : boolean - Throws :
+	 * TransactionException,PecuniaException - Author : Anish Basu, Arpan Mondal -
+	 * Creation Date : 23/09/2019 - Description : update balance of the specified
+	 * account
 	 ********************************************************************************************************/
 
-	@Override
 	public boolean updateBalance(Account account) throws TransactionException, PecuniaException {
 		try {
 			transactionDAO = new TransactionDAOImpl();
@@ -63,7 +64,7 @@ public class TransactionServiceImpl implements TransactionService {
 			success = transactionDAO.updateBalance(account);
 			return success;
 		} catch (Exception e) {
-		
+
 			logger.error(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 			throw new TransactionException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 		}
@@ -72,12 +73,11 @@ public class TransactionServiceImpl implements TransactionService {
 	/*******************************************************************************************************
 	 * - Function Name : creditUsingSlip(Transaction transaction) - Input Parameters
 	 * : transaction object - Return Type : int - Throws :
-	 * TransactionException,PecuniaException - Author : Arpan Mondal - Creation Date :
-	 * 23/09/2019 - Description : crediting amount using slip of the specified
+	 * TransactionException,PecuniaException - Author : Arpan Mondal - Creation Date
+	 * : 23/09/2019 - Description : crediting amount using slip of the specified
 	 * account
 	 ********************************************************************************************************/
 
-	@Override
 	public int creditUsingSlip(Transaction transaction) throws TransactionException, PecuniaException {
 
 		int transId = 0;
@@ -110,25 +110,24 @@ public class TransactionServiceImpl implements TransactionService {
 				}
 
 				else {
-					
+
 					logger.error(ErrorConstants.AMOUNT_EXCEEDS_EXCEPTION);
 					throw new TransactionException(ErrorConstants.AMOUNT_EXCEEDS_EXCEPTION);
 
 				}
 			} else {
-				
+
 				logger.error(ErrorConstants.AMOUNT_LESS_EXCEPTION);
 				throw new TransactionException(ErrorConstants.AMOUNT_LESS_EXCEPTION);
 			}
 		} catch (TransactionException e) {
-			
-			
+
 			logger.error(e.getMessage());
 			throw new TransactionException(e.getMessage());
 		}
 
 		catch (Exception e) {
-			
+
 			logger.error(ErrorConstants.TRANSACTION_AMOUNT_ERROR);
 			throw new TransactionException(ErrorConstants.TRANSACTION_AMOUNT_ERROR);
 
@@ -139,12 +138,11 @@ public class TransactionServiceImpl implements TransactionService {
 	/*******************************************************************************************************
 	 * - Function Name : debitUsingSlip(Transaction transaction) - Input Parameters
 	 * : transaction object - Return Type : int - Throws :
-	 * TransactionException,PecuniaException - Author : Anwesha Das - Creation Date :
-	 * 23/09/2019 - Description : debiting amount using slip of the specified
+	 * TransactionException,PecuniaException - Author : Anwesha Das - Creation Date
+	 * : 23/09/2019 - Description : debiting amount using slip of the specified
 	 * account
 	 ********************************************************************************************************/
 
-	@Override
 	public int debitUsingSlip(Transaction transaction) throws TransactionException, PecuniaException {
 
 		int transId = 0;
@@ -175,15 +173,15 @@ public class TransactionServiceImpl implements TransactionService {
 				transId = transactionDAO.generateTransactionId(debitTransaction);
 
 			} else {
-				
+
 				logger.error(ErrorConstants.INSUFFICIENT_BALANCE_EXCEPTION);
 				throw new TransactionException(ErrorConstants.INSUFFICIENT_BALANCE_EXCEPTION);
 			}
 		} catch (TransactionException e) {
-			
-			logger.error(e.getMessage());	
+
+			logger.error(e.getMessage());
 			throw new TransactionException(e.getMessage());
-			
+
 		} catch (Exception e) {
 
 			logger.error(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
@@ -197,12 +195,11 @@ public class TransactionServiceImpl implements TransactionService {
 	/*******************************************************************************************************
 	 * - Function Name : debitUsingCheque(Transaction transaction,Cheque cheque) -
 	 * Input Parameters : transaction object, cheque object - Return Type : int -
-	 * Throws : TransactionException,PecuniaException - Author : Anish Basu - Creation
-	 * Date : 23/09/2019 - Description : debiting amount using cheque of the
-	 * specified account
+	 * Throws : TransactionException,PecuniaException - Author : Anish Basu -
+	 * Creation Date : 23/09/2019 - Description : debiting amount using cheque of
+	 * the specified account
 	 ********************************************************************************************************/
 
-	@Override
 	public int debitUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, PecuniaException {
 		int transId = 0;
 		int chequeId = 0;
@@ -241,23 +238,23 @@ public class TransactionServiceImpl implements TransactionService {
 					transId = transactionDAO.generateTransactionId(debitTransaction);
 
 				} else {
-					
+
 					logger.error(ErrorConstants.CHEQUE_BOUNCE_EXCEPTION);
 					throw new TransactionException(ErrorConstants.CHEQUE_BOUNCE_EXCEPTION);
 				}
 			} else {
-				
+
 				logger.error(ErrorConstants.INVALID_CHEQUE_EXCEPTION);
 				throw new TransactionException(ErrorConstants.INVALID_CHEQUE_EXCEPTION);
 			}
 
 		} catch (TransactionException e) {
-			
+
 			logger.error(e.getMessage());
 			throw new TransactionException(e.getMessage());
-			
+
 		} catch (Exception e) {
-			
+
 			logger.error(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 			throw new TransactionException(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 		}
@@ -265,40 +262,13 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : depositInterest(Account account) - Input Parameters :
-	 * account object - Return Type : - Throws : TransactionException - Author : -
-	 * Creation Date : 23/09/2019 - Description : deposit interest of the specified
-	 * account
-	 ********************************************************************************************************/
-
-	@Override
-	public double depositInterest(Account account) throws TransactionException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	/*******************************************************************************************************
-	 * - Function Name : updateInterest() - Input Parameters : account object -
-	 * Return Type : - Throws : TransactionException, PecuniaException - Author : -
-	 * Creation Date : 23/09/2019 - Description : update interest of the specified
-	 * account
-	 ********************************************************************************************************/
-	@Override
-
-	public double updateInterest() throws TransactionException, PecuniaException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	/*******************************************************************************************************
 	 * - Function Name : creditUsingCheque(Transaction transaction, Cheque cheque) -
 	 * Input Parameters : transaction object, cheque object - Return Type : int -
-	 * Throws : TransactionException,PecuniaException - Author : Rohan Patil - Creation
-	 * Date : 23/09/2019 - Description : crediting amount using cheque of the
-	 * specified account
+	 * Throws : TransactionException,PecuniaException - Author : Rohan Patil -
+	 * Creation Date : 23/09/2019 - Description : crediting amount using cheque of
+	 * the specified account
 	 ********************************************************************************************************/
 
-	@Override
 	public int creditUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, PecuniaException {
 		int transId = 0;
 
@@ -327,7 +297,7 @@ public class TransactionServiceImpl implements TransactionService {
 			} else {
 				if (!bankName.equals(Constants.BANK_NAME)) {
 					// invalid bank cheque
-					
+
 					logger.error(ErrorConstants.INVALID_BANK_EXCEPTION);
 					throw new TransactionException(ErrorConstants.INVALID_BANK_EXCEPTION);
 				} else {
@@ -335,7 +305,7 @@ public class TransactionServiceImpl implements TransactionService {
 					if (transaction.getAmount() < Constants.MINIMUM_CHEQUE_AMOUNT
 							|| transaction.getAmount() > Constants.MAXIMUM_CHEQUE_AMOUNT) {
 						// invalid cheque amount
-						
+
 						logger.error(ErrorConstants.INVALID_CHEQUE_EXCEPTION);
 						throw new TransactionException(ErrorConstants.INVALID_CHEQUE_EXCEPTION);
 					} else {
@@ -394,7 +364,7 @@ public class TransactionServiceImpl implements TransactionService {
 			}
 			return transId;
 		} catch (Exception e) {
-			
+
 			logger.error(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 			throw new TransactionException(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 		}

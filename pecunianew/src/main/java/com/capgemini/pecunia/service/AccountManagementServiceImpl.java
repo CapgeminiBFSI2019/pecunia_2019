@@ -23,7 +23,6 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
-	@Override
 	public boolean deleteAccount(Account acc) throws PecuniaException, AccountException {
 		boolean isUpdated = false;
 		try {
@@ -50,7 +49,6 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
-	@Override
 	public boolean updateCustomerName(Account acc, Customer cust) throws PecuniaException, AccountException {
 		boolean isUpdated = false;
 		try {
@@ -78,7 +76,6 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
-	@Override
 	public boolean updateCustomerContact(Account acc, Customer cust) throws PecuniaException, AccountException {
 		boolean isUpdated = false;
 		try {
@@ -105,7 +102,6 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
-	@Override
 	public boolean updateCustomerAddress(Account acc, Address add) throws PecuniaException, AccountException {
 
 		boolean isUpdated = false;
@@ -131,8 +127,6 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	 * 
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
-
-	@Override
 
 	public String calculateAccountId(Account acc) throws PecuniaException, AccountException {
 		try {
@@ -170,7 +164,6 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
-	@Override
 	public boolean validateAccountId(Account acc) throws PecuniaException, AccountException {
 		boolean isValidated = false;
 		accountDAO = new AccountManagementDAOImpl();
@@ -188,7 +181,6 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
-	@Override
 	public String addAccount(Customer cust, Address add, Account acc) throws PecuniaException, AccountException {
 		try {
 			accountDAO = new AccountManagementDAOImpl();

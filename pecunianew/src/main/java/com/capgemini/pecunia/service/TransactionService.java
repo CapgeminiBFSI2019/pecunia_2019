@@ -20,7 +20,5 @@ public interface TransactionService {
 
 	public int debitUsingCheque(Transaction transaction, Cheque cheque) throws TransactionException, PecuniaException;
 
-	public double depositInterest(Account account) throws TransactionException, PecuniaException;
 
-	public double updateInterest() throws TransactionException, PecuniaException;
 }
