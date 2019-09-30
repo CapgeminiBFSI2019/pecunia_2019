@@ -666,6 +666,26 @@ public class PecuniaMain {
 
 		Transaction transaction = new Transaction();
 		BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
+		boolean isValid = true;
+		String accId = null;
+		do {
+			System.out.println("Enter the Account Id: ");
+			accId = br1.readLine();
+			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accId) == true
+					|| AccountInputValidator.checkLength(12, accId) == false) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+			else {
+				isValid=true;
+			}
+		} while (!isValid);
+
+		isValid = false;
+		double amt = 0.0;
+		TransactionInputValidator transValidator = new TransactionInputValidator();
+		do {
 
 		System.out.println("Enter Account ID: ");
 		String accId = br1.readLine();
@@ -699,8 +719,37 @@ public class PecuniaMain {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		System.out.println("Enter Account ID: ");
-		String accId = br.readLine();
+		boolean isValid = true;
+		String accId = null;
+		do {
+			System.out.println("Enter the Account Id: ");
+			accId = br.readLine();
+			if (AccountInputValidator.checkIfSpecialCharacter(accId) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accId) == true
+					|| AccountInputValidator.checkLength(12, accId) == false) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+			else {
+				isValid=true;
+			}
+		} while (!isValid);
+
+		isValid = true;
+		double amt = 0.0;
+		TransactionInputValidator transValidator = new TransactionInputValidator();
+		do {
+
+			boolean typeMatch = false;
+			do {
+				System.out.println("Enter Amount: ");
+				try {
+					amt = Double.parseDouble(br.readLine());
+					typeMatch = true;
+				} catch (NumberFormatException e) {
+					System.out.println("Wrong type entered");
+				}
+			} while (!typeMatch);
 
 		System.out.println("Enter Amount: ");
 		double amt = Double.parseDouble(br.readLine());
@@ -731,8 +780,21 @@ public class PecuniaMain {
 
 		BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
 
-		System.out.println("Enter Account ID: ");
-		String accIdDebitCheque = br1.readLine();
+		boolean isValid = true;
+		String accIdDebitCheque = null;
+		do {
+			System.out.println("Enter the Account Id: ");
+			accIdDebitCheque = br1.readLine();
+			if (AccountInputValidator.checkIfSpecialCharacter(accIdDebitCheque) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accIdDebitCheque) == true
+					|| AccountInputValidator.checkLength(12, accIdDebitCheque) == false) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+			else {
+				isValid=true;
+			}
+		} while (!isValid);
 
 		System.out.println("Enter Amount: ");
 		double amtDebitCheque = Double.parseDouble(br1.readLine());
@@ -781,8 +843,37 @@ public class PecuniaMain {
 
 		BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
 
-		System.out.println("Enter Account ID of Payee: ");
-		String accPayeeIdCreditCheque = br1.readLine();
+		boolean isValid = true;
+		String accPayeeIdCreditCheque = null;
+		do {
+			System.out.println("Enter Account ID of Payee: ");
+			accPayeeIdCreditCheque = br1.readLine();
+			if (AccountInputValidator.checkIfSpecialCharacter(accPayeeIdCreditCheque) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accPayeeIdCreditCheque) == true
+					|| AccountInputValidator.checkLength(12, accPayeeIdCreditCheque) == false) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+			else {
+				isValid=true;
+			}
+		} while (!isValid);
+
+		isValid = true;
+		String accBenificiaryIdCreditCheque = null;
+		do {
+			System.out.println("Enter Account ID of Benificiary: ");
+			accBenificiaryIdCreditCheque = br1.readLine();
+			if (AccountInputValidator.checkIfSpecialCharacter(accBenificiaryIdCreditCheque) == true
+					|| AccountInputValidator.checkIfAlphaNumeric(accBenificiaryIdCreditCheque) == true
+					|| AccountInputValidator.checkLength(12, accBenificiaryIdCreditCheque) == false) {
+				System.out.println("Invalid. Enter again.");
+				isValid = false;
+			}
+			else {
+				isValid=true;
+			}
+		} while (!isValid);
 
 		System.out.println("Enter Account ID of Benificiary: ");
 		String accBenificiaryIdCreditCheque = br1.readLine();
