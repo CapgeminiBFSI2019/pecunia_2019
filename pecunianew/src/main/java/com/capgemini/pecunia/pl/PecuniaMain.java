@@ -944,109 +944,159 @@ public class PecuniaMain {
 
 	public static void loanDisbursal() throws LoanDisbursalException {
 
-		ArrayList<Loan> retrievedLoanRequests = new ArrayList<Loan>();
-		ArrayList<Loan> approvedLoanRequests = new ArrayList<Loan>();
-		ArrayList<Loan> rejectedLoanRequests = new ArrayList<Loan>();
-		ArrayList<LoanDisbursal> loanDisbursedData = new ArrayList<LoanDisbursal>();
-		String update;
-		LoanDisbursalService loanDisbursalService = new LoanDisbursalServiceImpl();
-		Scanner sc = new Scanner(System.in);
-		try {
-			
-			while (true) {
-				System.out.println(
-						"press" + "\n" + "1. to retrieve loan requests" + "\n" + "2. to accept/reject loan requests"
-								+ "\n" + "3. to retrieve the data from loan disbursed database" + "\n"
-								+ "4. to update the existing balance of account" + "\n" + "0. to exit");
+		 
 
-				int choice = sc.nextInt();
+        ArrayList<Loan> retrievedLoanRequests = new ArrayList<Loan>();
+        ArrayList<Loan> approvedLoanRequests = new ArrayList<Loan>();
+        ArrayList<Loan> rejectedLoanRequests = new ArrayList<Loan>();
+        ArrayList<LoanDisbursal> loanDisbursedData = new ArrayList<LoanDisbursal>();
+        String update;
+        LoanDisbursalService loanDisbursalService = new LoanDisbursalServiceImpl();
+        Scanner sc = new Scanner(System.in);
+        try {
+            while (true) {
+                System.out.println(
+                        "press" + "\n" + "1. to retrieve loan requests" + "\n" + "2. to accept/reject loan requests"
+                                + "\n" + "3. to retrieve the data from loan disbursed database" + "\n"
+                                + "4. to update the existing balance of account" + "\n" + "0. to exit");
 
-				if (choice == 1) {
+ 
 
-					try {
-						retrievedLoanRequests = loanDisbursalService.retrieveAll();
-						System.out.println(retrievedLoanRequests);
-					} catch (PecuniaException | IOException | LoanDisbursalException e) {
-						throw new LoanDisbursalException(e.getMessage());
-					}
+                int choice = sc.nextInt();
 
-				}
+ 
 
-				else if (choice == 2) {
+                if (choice == 1) {
 
-					try {
+ 
 
-						approvedLoanRequests = loanDisbursalService.approveLoan();
+                    try {
+                        retrievedLoanRequests = loanDisbursalService.retrieveAll();
+                        System.out.println(retrievedLoanRequests);
+                    } catch (PecuniaException | IOException | LoanDisbursalException e) {
+                        throw new LoanDisbursalException(e.getMessage());
+                    }
 
-						System.out.println("Approved loan requests");
-						System.out.println(approvedLoanRequests);
+ 
 
-						System.out.println("Rejected loan requests");
-						rejectedLoanRequests = loanDisbursalService.rejectedLoanRequests();
-						System.out.println(rejectedLoanRequests);
+                }
 
-						System.out.println("Approved loan requests");
-						System.out.println(approvedLoanRequests);
+ 
 
-						System.out.println("Rejected loan requests");
-						rejectedLoanRequests = loanDisbursalService.rejectedLoanRequests();
-						System.out.println(rejectedLoanRequests);
+                else if (choice == 2) {
 
-						if (approvedLoanRequests.size() == 0 && rejectedLoanRequests.size() == 0)
-							System.out.println("No loan requests");
-						update = loanDisbursalService.updateLoanStatus(rejectedLoanRequests, approvedLoanRequests);
-						
-					} catch (PecuniaException | IOException | LoanDisbursalException e) {
-						throw new LoanDisbursalException(e.getMessage());
-					}
+ 
 
-				}
+                    try {
 
-				else if (choice == 3) {
-					try {
-						loanDisbursedData = loanDisbursalService.approvedLoanList();
-						System.out.println(loanDisbursedData);
+ 
 
-					} catch (PecuniaException | IOException e) {
-						throw new LoanDisbursalException(e.getMessage());
-					}
+                        approvedLoanRequests = loanDisbursalService.approveLoan();
 
-				}
+ 
 
-				else if (choice == 4) {
+                        System.out.println("Approved loan requests");
+                        System.out.println(approvedLoanRequests);
 
-					try {
-						String status = loanDisbursalService.updateExistingBalance(approvedLoanRequests);
-						if(status.equals(Constants.STATUS_CHECK[0])) {
-							System.out.println("Amount has been deducted");
-						}
-						else if(status.equals(Constants.STATUS_CHECK[1])) {
-							System.out.println("No amount has been deducted");
-						}
-					} catch (PecuniaException | TransactionException e) {
-						throw new LoanDisbursalException(e.getMessage());
-					}
+ 
 
-				}
+                        System.out.println("Rejected loan requests");
+                        rejectedLoanRequests = loanDisbursalService.rejectedLoanRequests();
+                        System.out.println(rejectedLoanRequests);
 
-				else if (choice == 0) {
+ 
 
-					System.exit(1);
+                        System.out.println("Approved loan requests");
+                        System.out.println(approvedLoanRequests);
 
-				}
+ 
 
-				else {
-					System.out.println("INVALID CHOICE");
-				}
+                        System.out.println("Rejected loan requests");
+                        rejectedLoanRequests = loanDisbursalService.rejectedLoanRequests();
+                        System.out.println(rejectedLoanRequests);
 
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}finally {
+ 
+
+                        if (approvedLoanRequests.size() == 0 && rejectedLoanRequests.size() == 0)
+                            System.out.println("No loan requests");
+                        update = loanDisbursalService.updateLoanStatus(rejectedLoanRequests, approvedLoanRequests);
+                        
+                    } catch (PecuniaException | IOException | LoanDisbursalException e) {
+                        throw new LoanDisbursalException(e.getMessage());
+                    }
+
+ 
+
+                }
+
+ 
+
+                else if (choice == 3) {
+                    try {
+                        loanDisbursedData = loanDisbursalService.approvedLoanList();
+
+ 
+
+                    } catch (PecuniaException | IOException e) {
+                        throw new LoanDisbursalException(e.getMessage());
+                    }
+
+ 
+
+                }
+
+ 
+
+                else if (choice == 4) {
+
+ 
+
+                    try {
+                        String status = loanDisbursalService.updateExistingBalance(approvedLoanRequests);
+                        if(status.equals(Constants.STATUS_CHECK[0])) {
+                            System.out.println("Amount has been deducted");
+                        }
+                        else {
+                            System.out.println("Amount has been deducted");
+                        }
+                    } catch (PecuniaException | TransactionException e) {
+                        throw new LoanDisbursalException(e.getMessage());
+                    }
+
+ 
+
+                }
+
+ 
+
+                else if (choice == 0) {
+
+ 
+
+                    System.exit(1);
+
+ 
+
+                }
+
+ 
+
+                else {
+                    System.out.println("INVALID CHOICE");
+                }
+
+ 
+
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }finally {
 			sc.close();
 		}
 
-	}
+ 
+
+    }
 
 	public static void updatePassbook()
 	{
