@@ -133,6 +133,22 @@ public class Loan {
 	public Loan() {
 		
 	}
+	
+	  public String toString()
+	    {
+	        StringBuilder sb = new StringBuilder();
+	        sb.append("------------------------Printing Loan Details---------------------------- \n");
+	        sb.append("Loan Id: " + loanId +"\n");
+	        sb.append("Account Id: "+ accountId +"\n");
+	        sb.append("Amount: "+ amount +"\n");
+	        sb.append("Type : "+ type +"\n");
+	        sb.append("Tenure : "+ tenure +"\n");
+	        sb.append("Rate of Interest : "+ roi +"\n");
+	        sb.append("Loan Status: "+ loanStatus +"\n");
+	        sb.append("Emi : "+ emi +"\n");
+	        sb.append("Credit Score : "+ creditScore +"\n");
+	        return sb.toString();
+	    }
 }
  
 

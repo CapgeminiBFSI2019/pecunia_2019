@@ -72,11 +72,20 @@ public class LoanDisbursal {
 
 	}
 
-	@Override
-	public String toString() {
-		return "loanDisbursalId=" + loanDisbursalId + ", loanId=" + loanId + ", accountId=" + accountId
-				+ ", disbursedAmount=" + disbursedAmount + ", dueAmount=" + dueAmount + ", numberOfEmiToBePaid="
-				+ numberOfEmiToBePaid + "";
-	}
+	 public String toString() {
+	        StringBuilder sb = new StringBuilder();
+	       
+	        sb.append("------------------------Printing Loan Details---------------------------- \n");
+	        sb.append("loanDisbursalId=" + loanDisbursalId +"\n");
+	        sb.append("loanId=: "+ loanId +"\n");
+	        sb.append("accountId=: "+ accountId +"\n");
+	        sb.append("disbursedAmount= : "+ disbursedAmount +"\n");
+	        sb.append("dueAmount=: "+ dueAmount +"\n");
+	        sb.append("numberOfEmiToBePaid=: "+ numberOfEmiToBePaid +"\n");
+	        return sb.toString();
+	
+	
 
+}
+	 
 }
