@@ -157,7 +157,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 			double newBalance = 0.0;
 
-			if (oldBalance > amount) {
+			if (oldBalance >= amount) {
 				newBalance = oldBalance - amount;
 				account.setBalance(newBalance);
 				transactionDAO.updateBalance(account);
