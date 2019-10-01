@@ -3,6 +3,9 @@ package com.capgemini.pecunia.service;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import com.capgemini.pecunia.dao.LoanDisbursalDAOImpl;
 import com.capgemini.pecunia.dao.TransactionDAOImpl;
 import com.capgemini.pecunia.dto.Account;
@@ -13,9 +16,18 @@ import com.capgemini.pecunia.exception.LoanDisbursalException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.Constants;
+import com.capgemini.pecunia.util.LoggerMessage;
 
 public class LoanDisbursalServiceImpl implements LoanDisbursalService {
-	private ArrayList<Loan> rejectedLoanList = new ArrayList<Loan>();
+	
+	Logger logger = Logger.getRootLogger();
+
+	public LoanDisbursalServiceImpl() {
+		PropertyConfigurator.configure("resources//log4j.properties");
+
+	}
+	
+	
 
 	TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
 	ArrayList<LoanDisbursal> approvedLoanList = new ArrayList<LoanDisbursal>();
@@ -33,10 +45,11 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		ArrayList<Loan> retrievedLoanRequests = new ArrayList<Loan>();
 		retrievedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveLoanList();
 		if (retrievedLoanRequests.size() == 0) {
-
-			throw new LoanDisbursalException(Constants.NO_LOAN_REQUEST);
+			logger.error(ErrorConstants.NO_LOAN_REQUESTS);
+			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
 
 		}
+		logger.info(LoggerMessage.LOAN_REQUEST);
 		return retrievedLoanRequests;
 	}
 
@@ -48,30 +61,18 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * on condition
 	 ********************************************************************************************************/
 
-	public ArrayList<Loan> approveLoan(ArrayList<Loan> loanRequestList)
+	public ArrayList<Loan> approveLoan()
 			throws IOException, PecuniaException, LoanDisbursalException {
-		int size = loanRequestList.size();
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
-		if (loanRequestList.size() == 0) {
+		ArrayList<Loan> acceptedLoanRequests = new ArrayList<Loan>();
+		acceptedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveAcceptedLoanList();
+		if (acceptedLoanRequests.size() == 0) {
+			logger.error(ErrorConstants.NO_LOAN_REQUESTS);
 			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
 
 		}
-		if (size > 0) {
-			for (int index = 0; index < loanRequestList.size(); index++) {
-
-				int creditScore = loanRequestList.get(index).getCreditScore();
-				if (creditScore < 670) {
-
-					rejectedLoanList.add(loanRequestList.get(index));
-					loanRequestList.remove(index);
-				}
-
-			}
-
-			loanDisbursedDAO.releaseLoanSheet(loanRequestList);
-		}
-
-		return loanRequestList;
+		logger.info(LoggerMessage.LOAN_REQUEST);
+		return acceptedLoanRequests;
 
 	}
 
@@ -84,8 +85,9 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	public ArrayList<LoanDisbursal> approvedLoanList() throws IOException, PecuniaException {
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
-
+        
 		approvedLoanList = loanDisbursedDAO.loanApprovedList();
+		logger.info(LoggerMessage.APPROVED_LOAN_REQUESTS_FETCHED);
 		return approvedLoanList;
 
 	}
@@ -95,10 +97,21 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * Type : ArrayList<Loan> - Throws : PecuniaException, LoanDisbursalException -
 	 * Author : aninrana - Creation Date : 25/09/2019 - Description : Retrieving the
 	 * rejected loan rejected
+	 * @throws IOException 
 	 ********************************************************************************************************/
 
-	public ArrayList<Loan> rejectedLoanRequests() throws PecuniaException, LoanDisbursalException {
-		return rejectedLoanList;
+	public ArrayList<Loan> rejectedLoanRequests() throws PecuniaException, LoanDisbursalException, IOException {
+		
+		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
+		ArrayList<Loan> rejectedLoanRequests = new ArrayList<Loan>();
+		rejectedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveRejectedLoanList();
+		if (rejectedLoanRequests.size() == 0) {
+			logger.error(ErrorConstants.NO_LOAN_REQUESTS);
+			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
+
+		}
+		logger.info(LoggerMessage.LOAN_REQUEST);
+		return rejectedLoanRequests;
 	}
 
 	/*******************************************************************************************************
@@ -127,8 +140,8 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 				try {
 					loanDisbursedDAO.updateLoanAccount(updateLoanApprovals, updatedDueAmount, updatedTenure, accountId);
-				} catch (IOException e) {
-
+				} catch (Exception e) {
+					logger.error(e.getMessage());
 					throw new LoanDisbursalException(e.getMessage());
 				}
 
@@ -136,7 +149,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		}
 		
 		else {
-			status = Constants.STATUS_CHECK[1];
+			status =Constants.STATUS_CHECK[1];
 		}
 		
 		return status;
@@ -158,25 +171,26 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		if (rejectedLoanList != null || approvedLoanList != null) {
 			try {
 				for (int index = 0; index < rejectedLoanList.size(); index++) {
-					String accountId = rejectedLoanList.get(index).getAccountId();
-					loanDisbursedDAO.updateStatus(rejectedLoanList, accountId, Constants.LOAN_REQUEST_STATUS[2]);
+					int loanId = rejectedLoanList.get(index).getLoanId();
+					loanDisbursedDAO.updateStatus(rejectedLoanList, loanId, Constants.LOAN_REQUEST_STATUS[2]);
 
 				}
 
 				for (int index = 0; index < approvedLoanList.size(); index++) {
-					String accountId = approvedLoanList.get(index).getAccountId();
-					loanDisbursedDAO.updateStatus(rejectedLoanList, accountId, Constants.LOAN_REQUEST_STATUS[1]);
+					int loanId = approvedLoanList.get(index).getLoanId();
+					loanDisbursedDAO.updateStatus(rejectedLoanList, loanId, Constants.LOAN_REQUEST_STATUS[1]);
 
 				}
 
-			} catch (IOException e) {
-
+			} catch (Exception e) {
+				logger.error(e.getMessage());
 				throw new LoanDisbursalException(e.getMessage());
 			}
 
 		} else {
 			status = Constants.STATUS_CHECK[1];
 		}
+		logger.info(LoggerMessage.UPDATE_LOAN_STATUS);
 		return status;
 	}
 
@@ -191,11 +205,12 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	public String updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
 			throws PecuniaException, TransactionException, LoanDisbursalException {
 		String status = Constants.STATUS_CHECK[0];
-		for (int index = 0; index < approvedLoanRequests.size(); index++) {
+		
+		for (int i = 0; i < approvedLoanRequests.size(); i++) {
 			Account account = new Account();
-			account.setId(approvedLoanRequests.get(index).getAccountId());
+			account.setId(approvedLoanRequests.get(i).getAccountId());
 			double oldBalance = transactionDAOImpl.getBalance(account);
-			double updatedBalance = oldBalance - approvedLoanRequests.get(index).getEmi();
+			double updatedBalance = oldBalance - approvedLoanRequests.get(i).getEmi();
 			if (updatedBalance < 0) {
 				status = Constants.STATUS_CHECK[1];
 			} else {
@@ -206,6 +221,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 			}
 
 		}
+		logger.info(LoggerMessage.UPDATE_ACCOUNT_BALANCE);
 		return status;
 	}
 

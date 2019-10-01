@@ -12,9 +12,9 @@ import com.capgemini.pecunia.exception.TransactionException;
 public interface LoanDisbursalService {
 	public ArrayList<Loan> retrieveAll() throws PecuniaException, IOException, LoanDisbursalException;
 
-	public ArrayList<Loan> rejectedLoanRequests() throws PecuniaException, LoanDisbursalException;
+	public ArrayList<Loan> rejectedLoanRequests() throws PecuniaException, LoanDisbursalException, IOException;
 
-	public ArrayList<Loan> approveLoan(ArrayList<Loan> l) throws IOException, PecuniaException, LoanDisbursalException;
+	public ArrayList<Loan> approveLoan() throws IOException, PecuniaException, LoanDisbursalException;
 
 	public ArrayList<LoanDisbursal> approvedLoanList() throws IOException, PecuniaException;
 

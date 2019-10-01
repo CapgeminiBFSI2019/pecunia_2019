@@ -120,8 +120,9 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : calculateAccountId(Account acc) - Input Parameters :
-	 * Account acc Return Type : String - Throws : AccountException - Author : Aditi
+	 * - Function Name : calculateAccountId(Account acc) - 
+	 * Input Parameters :	 * Account acc 
+	 * Return Type : String - Throws : AccountException - Author : Aditi
 	 * Singh - Creation Date : 24/09/2019 - Description : Generation of a new
 	 * account ID with the given branch ID and type of Account
 	 * 
