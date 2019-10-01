@@ -1187,6 +1187,26 @@ public class PecuniaMain {
  
 
                 }
+                
+                else if (choice == 5) {
+
+                	 
+                  System.out.println("Enter the Account Number"); 
+                  String accountId = sc.next();
+                  String loans =  loanDisbursalService.numberOfLoanAccounts(approvedLoanRequests, accountId);
+                  System.out.println(loans); 
+
+                }
+                
+                else if (choice == 6) {
+
+               	 
+                    System.out.println("Enter the Account Number"); 
+                    String accountId = sc.next();
+                    double loans =  loanDisbursalService.calculateEMIToBePaid(approvedLoanRequests, accountId);
+                    System.out.println(loans); 
+
+                  }
 
  
 

@@ -11,7 +11,7 @@ import com.capgemini.pecunia.exception.PecuniaException;
 public interface LoanDisbursalDAO {
 	public List<Loan> retrieveLoanList() throws IOException, PecuniaException;
 
-	public void releaseLoanSheet(List<Loan> loanList) throws IOException, PecuniaException;
+	public void releaseLoanSheet(ArrayList<Loan> loanList) throws IOException, PecuniaException;
 
 	public ArrayList<LoanDisbursal> loanApprovedList() throws IOException, PecuniaException;
 

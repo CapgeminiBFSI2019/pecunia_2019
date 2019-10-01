@@ -14,9 +14,9 @@ import org.apache.log4j.PropertyConfigurator;
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
 import com.capgemini.pecunia.exception.ErrorConstants;
-
+import com.capgemini.pecunia.exception.LoanDisbursalException;
 import com.capgemini.pecunia.exception.PecuniaException;
-
+import com.capgemini.pecunia.util.Constants;
 import com.capgemini.pecunia.util.DBConnection;
 import com.capgemini.pecunia.util.LoggerMessage;
 
@@ -277,7 +277,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 	
 
 
-	public void releaseLoanSheet(List<Loan> loanList) throws IOException, PecuniaException {
+	public void releaseLoanSheet(ArrayList<Loan> loanList) throws IOException, PecuniaException {
 		Connection connection = DBConnection.getInstance().getConnection();
 
 		PreparedStatement preparedStatement = null;
