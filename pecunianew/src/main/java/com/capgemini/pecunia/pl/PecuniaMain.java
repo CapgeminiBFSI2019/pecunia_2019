@@ -714,9 +714,8 @@ public class PecuniaMain {
 					|| AccountInputValidator.checkLength(12, accId) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
-			}
-			else {
-				isValid=true;
+			} else {
+				isValid = true;
 			}
 		} while (!isValid);
 
@@ -779,9 +778,8 @@ public class PecuniaMain {
 					|| AccountInputValidator.checkLength(12, accId) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
-			}
-			else {
-				isValid=true;
+			} else {
+				isValid = true;
 			}
 		} while (!isValid);
 
@@ -845,9 +843,8 @@ public class PecuniaMain {
 					|| AccountInputValidator.checkLength(12, accIdDebitCheque) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
-			}
-			else {
-				isValid=true;
+			} else {
+				isValid = true;
 			}
 		} while (!isValid);
 
@@ -947,9 +944,8 @@ public class PecuniaMain {
 					|| AccountInputValidator.checkLength(12, accPayeeIdCreditCheque) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
-			}
-			else {
-				isValid=true;
+			} else {
+				isValid = true;
 			}
 		} while (!isValid);
 
@@ -963,13 +959,12 @@ public class PecuniaMain {
 					|| AccountInputValidator.checkLength(12, accBenificiaryIdCreditCheque) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
-			}
-			else {
-				isValid=true;
+			} else {
+				isValid = true;
 			}
 		} while (!isValid);
 
-		isValid = true;
+		isValid = false;
 		double amtCreditCheque = 0.0;
 		TransactionInputValidator transValidator = new TransactionInputValidator();
 		do {
@@ -996,8 +991,16 @@ public class PecuniaMain {
 		isValid = false;
 		int chequeNumber = 0;
 		do {
-			System.out.println("Enter Cheque Number: ");
-			chequeNumber = Integer.parseInt(br1.readLine());
+			boolean typeMatch = false;
+			do {
+				System.out.println("Enter Cheque Number: ");
+				try {
+					chequeNumber = Integer.parseInt(br1.readLine());
+					typeMatch = true;
+				} catch (NumberFormatException e) {
+					System.out.println("Wrong type entered");
+				}
+			} while (!typeMatch);
 			if (!transValidator.chequeNumberisValid(chequeNumber)) {
 				System.out.println("Invalid. Enter again.");
 			} else {
