@@ -20,14 +20,14 @@ import com.capgemini.pecunia.service.AccountManagementServiceImpl;
  */
 public class UpdateCustomerContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		String accountId = request.getParameter("account-id");
 		String custContact = request.getParameter("contact");
 
-		response.setContentType("html/text");
+		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 
 		Account account = new Account();
@@ -39,8 +39,9 @@ public class UpdateCustomerContactServlet extends HttpServlet {
 		try {
 			boolean updated = ams.updateCustomerContact(account, customer);
 			if (updated) {
-				request.getRequestDispatcher("updateContact.html").include(request, response);
 				out.println("<h1> Customer Contact Successfully Updated </h1>");
+
+				request.getRequestDispatcher("updateContact.html").include(request, response);
 			}
 		} catch (PecuniaException | AccountException e) {
 			out.println("<h1>Failure</h1><br>");
