@@ -17,8 +17,6 @@ public class LoanDAOImpl implements LoanDAO {
 	Logger logger=Logger.getRootLogger();
 	public LoanDAOImpl()
 	{
-	PropertyConfigurator.configure("resources//log4j.properties");
-	
 	}
 	
 	/*******************************************************************************************************

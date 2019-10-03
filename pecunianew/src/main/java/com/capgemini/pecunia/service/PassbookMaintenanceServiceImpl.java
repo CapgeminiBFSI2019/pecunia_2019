@@ -21,8 +21,6 @@ public class PassbookMaintenanceServiceImpl implements PassbookMaintenanceServic
 	Logger logger = Logger.getRootLogger();
 
 	public PassbookMaintenanceServiceImpl() {
-		PropertyConfigurator.configure("resources//log4j.properties");
-
 	}
 
 	/*******************************************************************************************************
