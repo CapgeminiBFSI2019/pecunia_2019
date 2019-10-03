@@ -22,8 +22,6 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 	Logger logger = Logger.getRootLogger();
 
 	public PassbookMaintenanceDAOImpl() {
-		PropertyConfigurator.configure("resources//log4j.properties");
-
 	}
 
 	/*******************************************************************************************************

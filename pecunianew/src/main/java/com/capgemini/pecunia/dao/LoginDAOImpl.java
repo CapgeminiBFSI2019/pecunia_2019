@@ -19,8 +19,6 @@ public class LoginDAOImpl implements LoginDAO {
 	Logger logger = Logger.getRootLogger();
 
 	public LoginDAOImpl() {
-		//PropertyConfigurator.configure("resources//log4j.properties");
-
 	}
 	/*******************************************************************************************************
 	 * Function Name : validateEmail(Login login) - Input Parameters : Login login
