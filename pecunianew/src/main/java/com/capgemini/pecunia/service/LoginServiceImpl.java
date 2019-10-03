@@ -19,7 +19,6 @@ public class LoginServiceImpl implements LoginService {
 	Logger logger = Logger.getRootLogger();
 
 	public LoginServiceImpl() {
-		//PropertyConfigurator.configure("resources//log4j.properties");
 	}
 
 	LoginDAO loginDAO = new LoginDAOImpl();
