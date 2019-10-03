@@ -25,7 +25,6 @@ public class TransactionDAOImpl implements TransactionDAO {
 	Logger logger = Logger.getRootLogger();
 
 	public TransactionDAOImpl() {
-		PropertyConfigurator.configure("resources//log4j.properties");
 	}
 
 	/*******************************************************************************************************
@@ -146,7 +145,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 			preparedStatement.setString(3, cheque.getHolderName());
 			preparedStatement.setString(4, cheque.getBankName());
 			preparedStatement.setString(5, cheque.getIfsc());
-			preparedStatement.setDate(6, java.sql.Date.valueOf(cheque.getIssueDate()));
+			preparedStatement.setDate(6, java.sql.Date.valueOf(cheque.getIssueDate().plusDays(1)));
 			preparedStatement.setString(7, cheque.getStatus());
 			preparedStatement.executeUpdate();
 

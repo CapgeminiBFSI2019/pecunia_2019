@@ -22,7 +22,6 @@ public class TransactionServiceImpl implements TransactionService {
 	Logger logger = Logger.getRootLogger();
 
 	public TransactionServiceImpl() {
-		PropertyConfigurator.configure("resources//log4j.properties");
 	}
 
 	TransactionDAO transactionDAO;
