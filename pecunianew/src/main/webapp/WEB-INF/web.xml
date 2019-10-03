@@ -94,4 +94,15 @@
     <servlet-name>DeleteAccount</servlet-name>
     <url-pattern>/DeleteAccount</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>LoanRequestServlet</display-name>
+    <servlet-name>LoanRequestServlet</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.LoanRequestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoanRequestServlet</servlet-name>
+    <url-pattern>/LoanRequestServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
