@@ -32,7 +32,7 @@ public class UpdateCustomerAddressServlet extends HttpServlet {
 		String country = request.getParameter("country");
 		String zipcode = request.getParameter("zipcode");
 
-		response.setContentType("html/text");
+		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 
 		Account account = new Account();
