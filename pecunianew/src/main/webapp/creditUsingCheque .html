@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
+    <script src="main.js "></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body>
+        <nav class="navbar navbar-expand-sm bg-info navbar-light">
+                <!-- Brand/logo -->
+                <a href="#"><i class="fas fa-home "style="font-size:24px;"></i></a>
+        
+                <ul class="navbar-nav">
+                        <li class="nav-item active">
+                          <a class="nav-link" href="#">CreditUsingCheque</a>
+                        </li>
+                </ul>       
+                <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a href="#"><i class="fas fa-print" style="font-size:24px;"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#"><i class="fas fa-power-off "style="font-size:24px;"></i></a>
+                            </li>
+                        </ul>
+                        
+                    </div>
+          
+            </nav>
+    <form id="credit-cheque-form " class="container transaction-form " method="POST" action="creditcheque">
+        <div class="row ">
+            <div class="form-group col-md-6 ">
+                <label for="payee-account-number ">Payee Account Number</label>
+                <input type="number " class="form-control " id="payee-account-number " name="payeeAccountNumber " placeholder="Enter payee account number ">
+            </div>
+            <div class="form-group col-md-6 ">
+                <label for="beneficiary-account-number ">Beneficiary Account Number</label>
+                <input type="number " class="form-control " id="beneficiary-account-number " name="beneficiaryAccountNumber " placeholder="Enter beneficiary account number ">
+            </div>
+        </div>
+        <div class="row ">
+            <div class="form-group col-md-6 ">
+                <label for="credit-cheque-number ">Cheque Number</label>
+                <input type="number " class="form-control " id="credit-cheque-number " name="creditChequeNumber " placeholder="Enter cheque number ">
+            </div>
+            <div class="form-group col-md-6 ">
+                <label for="payee-name ">Payee Name</label>
+                <input type="text " class="form-control " id="payee-name " name="payeeName " placeholder="Enter payee name ">
+            </div>
+
+        </div>
+        <div class="row ">
+            <div class="form-group col-md-3 ">
+                <label for="credit-cheque-amount ">Amount</label>
+                <input type="number " class="form-control " id="credit-cheque-amount " name="creditChequeAmount " placeholder="Enter cheque amount " required>
+            </div>
+
+
+            <div class="form-group col-md-3 ">
+                <label for="credit-cheque-issue-date ">Cheque Issue Date</label>
+                <input type="text " class="form-control " id="credit-cheque-issue-date " name="creditChequeIssueDate " placeholder="Enter cheque issue date ">
+            </div>
+            <div class="form-group col-md-3 ">
+                <label for="inputBank ">Bank</label>
+                <select id="inputBank " class="form-control ">
+                            <option value="PECUNIA ">PECUNIA</option>
+                            <option value="ICICI ">ICICI</option>
+                            <option value="HDFC ">HDFC</option>
+                            <option value="AXIS ">AXIS</option>
+                            <option value="KOTAK ">KOTAK</option>
+                        </select>
+            </div>
+            <div class="form-group col-md-3 ">
+                <label for="payee-ifsc ">IFSC</label>
+                <input type="text " class="form-control " id="payee-ifsc " name="payeeIfsc " placeholder="Enter IFSC number ">
+            </div>
+        </div>
+        <div class="d-flex justify-content-center ">
+                <button type="submit " class="btn btn-primary ">Submit</button>
+        </div>
+    </form>
+</body>
+
+</html>

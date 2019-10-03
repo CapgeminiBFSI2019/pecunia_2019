@@ -22,7 +22,6 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	Logger logger = Logger.getRootLogger();
 
 	public AccountManagementDAOImpl() {
-		PropertyConfigurator.configure("resources//log4j.properties");
 
 	}
 
@@ -420,7 +419,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement3.setString(4, customer.getPan());
 			preparedStatement3.setString(5, customer.getContact());
 			preparedStatement3.setString(6, customer.getGender());
-			preparedStatement3.setDate(7, java.sql.Date.valueOf(customer.getDob()));
+			preparedStatement3.setDate(7, java.sql.Date.valueOf(customer.getDob().plusDays(1)));
 
 			queryResult = preparedStatement3.executeUpdate();
 
