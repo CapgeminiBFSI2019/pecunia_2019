@@ -59,8 +59,9 @@ public class PassbookServlet extends HttpServlet {
 					"	<div class=\"container\">\r\n" + 
 					"		<h2 class=\"col-8\">Passbook Details</h2>\r\n" + 
 					"		<table class=\"table table-bordered\">\r\n" + 
-					"			<thead class=\"thead-light\">\r\n" + 
-					"				<th colspan=9>Account ID:</th>\r\n" + 
+					"			<thead class=\"thead-light\">\r\n");
+			
+			out.write("<th colspan=9>Account ID:" + accountId +"</th>\r\n" + 
 					"				</tr>\r\n" + 
 					"				<tr>\r\n" + 
 					"					<th>Id</th>\r\n" + 
@@ -85,6 +86,7 @@ public class PassbookServlet extends HttpServlet {
 				out.write("<td>"+ transaction.getTransTo()+ "</td>");
 				out.write("<td>"+ transaction.getType()+ "</td>");
 				out.write("<td>"+ transaction.getOption()+ "</td>");
+				out.write("<td>"+ transaction.getChequeId()+ "</td>");
 				out.write("<td>"+ transaction.getClosingBalance()+ "</td>");
 				out.write("</tr>");
 			}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Passbook Maintenance</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/usm/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div class="container">
+		<div class="jumbotron bg-info text-white">
+			<h1 align="center" class="bg-info text-white">
+				<b><i>Pecunia</i></b>
+			</h1>
+		</div>
+	</div>
+
+	<h2 align="center">
+		<b>Passbook Maintenance Service</b>
+	</h2>
+	<br>
+
+	<div class="container">
+		<div class="row ">
+			<h2 class="col-8 offset-2">Update Passbook</h2>
+		</div>
+		<form action="PassbookServlet">
+			<div class="row ">
+				<div class="form-group col-8 offset-2">
+					<label for="accountID">Enter Account ID:</label> 
+					<input type="text" class="form-control" placeholder="Enter accountID" name="accountID" required>
+				</div>
+				<div class="offset-9 ">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div>
+		<hr>
+	</div>
+
+	<div class="container">
+		<div class="row ">
+			<h2 class="col-8 offset-2">Account Summary</h2>
+		</div>
+
+		<form action="PassbookServlet">
+
+			<div class="row ">
+				<div class="form-group col-8 offset-2">
+					<label for="accountID">Enter Account ID:</label> <input type="text"
+						class="form-control" placeholder="Enter accountID"
+						name="accountID" required>
+				</div>
+			</div>
+
+			<div class="row ">
+				<div class="form-group col-sm-4 offset-sm-2">
+					<label for="datetime">Enter start date:</label> <input
+						type="datetime-local" class="form-control"
+						placeholder="Enter start date" name="start date" required>
+				</div>
+				<div class="form-group col-sm-4">
+					<label for="datetime">Enter end date:</label> <input
+						type="datetime-local" class="form-control"
+						placeholder="Enter end date" name="end date" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="offset-9">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</div>
+
+		</form>
+	</div>
+
+</body>
+</html>
