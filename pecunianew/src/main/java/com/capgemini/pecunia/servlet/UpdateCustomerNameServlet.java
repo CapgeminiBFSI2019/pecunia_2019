@@ -23,11 +23,11 @@ public class UpdateCustomerNameServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String accountId = request.getParameter("account-id");
 
 		String custName = request.getParameter("name");
-		
+
 		response.setContentType("html/text");
 		PrintWriter out = response.getWriter();
 
@@ -39,14 +39,14 @@ public class UpdateCustomerNameServlet extends HttpServlet {
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
 			boolean updated = ams.updateCustomerName(account, customer);
-			if(updated) {
+			if (updated) {
 				request.getRequestDispatcher("updateName.html").include(request, response);
-				out.println("<h1> Customer Name Successfully Updated </h1>");	
+				out.println("<h1> Customer Name Successfully Updated </h1>");
 			}
 		} catch (PecuniaException | AccountException e) {
 			out.println("<h1>Failure</h1><br>");
 			request.getRequestDispatcher("updateName.html").include(request, response);
-			
+
 		}
 
 	}

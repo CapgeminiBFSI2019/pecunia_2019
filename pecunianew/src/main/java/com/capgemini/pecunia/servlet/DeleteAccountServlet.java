@@ -9,43 +9,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.capgemini.pecunia.dto.Account;
-import com.capgemini.pecunia.dto.Customer;
 import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 
 /**
- * Servlet implementation class UpdateCustomerContactServlet
+ * Servlet implementation class DeleteAccount
  */
-public class UpdateCustomerContactServlet extends HttpServlet {
+public class DeleteAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		String accountId = request.getParameter("account-id");
-		String custContact = request.getParameter("contact");
 
 		response.setContentType("html/text");
 		PrintWriter out = response.getWriter();
 
 		Account account = new Account();
-		Customer customer = new Customer();
 		account.setId(accountId);
-		customer.setContact(custContact);
 
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
-			boolean updated = ams.updateCustomerContact(account, customer);
+			boolean updated = ams.deleteAccount(account);
 			if (updated) {
-				request.getRequestDispatcher("updateContact.html").include(request, response);
-				out.println("<h1> Customer Contact Successfully Updated </h1>");
+				request.getRequestDispatcher("deleteAccount.html").include(request, response);
+				out.println("<h1> Account Successfully Deleted </h1>");
 			}
 		} catch (PecuniaException | AccountException e) {
 			out.println("<h1>Failure</h1><br>");
-			request.getRequestDispatcher("updateContact.html").include(request, response);
+			request.getRequestDispatcher("deleteAccount.html").include(request, response);
+
 		}
+
 	}
 
 }

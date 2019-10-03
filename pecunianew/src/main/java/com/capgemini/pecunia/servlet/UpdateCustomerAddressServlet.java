@@ -21,19 +21,20 @@ import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 public class UpdateCustomerAddressServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String accountId = request.getParameter("account-id");
 
-		String line1 = request.getParameter("address-line-1");
-		String line2 = request.getParameter("address-line-2");
+		String line1 = request.getParameter("address-line1");
+		String line2 = request.getParameter("address-line2");
 		String city = request.getParameter("city");
 		String state = request.getParameter("state");
 		String country = request.getParameter("country");
 		String zipcode = request.getParameter("zipcode");
-		
+
 		response.setContentType("html/text");
 		PrintWriter out = response.getWriter();
-		
+
 		Account account = new Account();
 		Address address = new Address();
 		account.setId(accountId);
@@ -47,13 +48,13 @@ public class UpdateCustomerAddressServlet extends HttpServlet {
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
 			boolean updated = ams.updateCustomerAddress(account, address);
-			if(updated) {
-				request.getRequestDispatcher("updateContact.html").include(request, response);
+			if (updated) {
+				request.getRequestDispatcher("updateAddress.html").include(request, response);
 				out.println("<h1> Customer Address Successfully Updated </h1>");
 			}
 		} catch (PecuniaException | AccountException e) {
 			out.println("<h1>Failure</h1><br>");
-			request.getRequestDispatcher("updateContact.html").include(request, response);
+			request.getRequestDispatcher("updateAddress.html").include(request, response);
 		}
 	}
 
