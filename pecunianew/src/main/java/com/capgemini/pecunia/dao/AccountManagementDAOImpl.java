@@ -28,16 +28,18 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	
 	/*******************************************************************************************************
-	 * - Function Name : deleteAccount(Account acc) - Input Parameters : Account
-	 * account - Return Type : boolean - Throws : AccountException 
-	 * - Author : Rohit Kumar - Creation Date : 24/09/2019 - Description : Deleting an account by
-	 * setting account status "Closed" and returns the confirmation to service layer
-	 * 
+	 * - Function Name : deleteAccount(Account account) 
+	 * - Input Parameters : Account account 
+	 * - Return Type : boolean 
+	 * - Throws : AccountException 
+	 * - Author : Rohit Kumar 
+	 * - Creation Date : 24/09/2019 
+	 * - Description : Deleting an account by setting account status "Closed" and returns the confirmation to service layer
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 	
 	@Override
-	public boolean deleteAccount(Account acc) throws PecuniaException, AccountException {
+	public boolean deleteAccount(Account account) throws PecuniaException, AccountException {
 		boolean isUpdated = false;
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
@@ -47,7 +49,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 		try {
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.DELETE_ACCOUNT);
-			preparedStatement.setString(1, acc.getId());
+			preparedStatement.setString(1, account.getId());
 			queryResult = preparedStatement.executeUpdate();
 
 			if (queryResult == 0) {
@@ -80,16 +82,18 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	
 	/*******************************************************************************************************
-	 * - Function Name : updateCustomerName(Account acc, Customer cust) - Input
-	 * Parameters : Account acc, Customer cust Return Type : boolean - Throws :
-	 * AccountException - Author : Aditi Singh - Creation Date : 24/09/2019 -
-	 * Description : Updates customer name in the database and returns confirmation to service layer
-	 * 
+	 * - Function Name : updateCustomerName(Account account, Customer customer) 
+	 * - Input Parameters : Account account, Customer customer 
+	 * - Return Type : boolean 
+	 * - Throws : AccountException 
+	 * - Author : Aditi Singh 
+	 * - Creation Date : 24/09/2019 
+	 * - Description : Updates customer name in the database and returns confirmation to service layer
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
 	@Override
-	public boolean updateCustomerName(Account acc, Customer cust) throws AccountException, PecuniaException {
+	public boolean updateCustomerName(Account account, Customer customer) throws AccountException, PecuniaException {
 		boolean isUpdated = false;
 		String accId = null;
 		Connection connection = null;
@@ -101,7 +105,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 		try {
 			preparedStatement1 = connection.prepareStatement(AccountQueryMapper.GET_CUSTOMER_ID);
-			preparedStatement1.setString(1, acc.getId());
+			preparedStatement1.setString(1, account.getId());
 			ResultSet resultSet = preparedStatement1.executeQuery();
 
 			if (resultSet.next()) {
@@ -110,7 +114,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 			preparedStatement2 = connection.prepareStatement(AccountQueryMapper.UPDATE_NAME);
 
-			preparedStatement2.setString(1, cust.getName());
+			preparedStatement2.setString(1, customer.getName());
 			preparedStatement2.setString(2, accId);
 			queryResult = preparedStatement2.executeUpdate();
 			if (queryResult == 0) {
@@ -139,16 +143,18 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	
 	/*******************************************************************************************************
-	 * - Function Name : updateCustomerContact(Account acc, Customer cust) - Input
-	 * Parameters : Account acc, Customer cust Return Type : boolean - Throws :
-	 * AccountException - Author : Aditi Singh - Creation Date : 24/09/2019 -
-	 * Description : Updates customer contact and returns the confirmation to service layer
-	 * 
+	 * - Function Name : updateCustomerContact(Account account, Customer customer) 
+	 * - Input Parameters : Account account, Customer customer 
+	 * - Return Type : boolean 
+	 * - Throws : AccountException 
+	 * - Author : Aditi Singh 
+	 * - Creation Date : 24/09/2019 
+	 * - Description : Updates customer contact and returns the confirmation to service layer
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 	
 	@Override
-	public boolean updateCustomerContact(Account acc, Customer cust) throws AccountException, PecuniaException {
+	public boolean updateCustomerContact(Account account, Customer customer) throws AccountException, PecuniaException {
 		boolean isUpdated = false;
 		String accId = null;
 		Connection connection = null;
@@ -159,7 +165,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 		try {
 			preparedStatement1 = connection.prepareStatement(AccountQueryMapper.GET_CUSTOMER_ID);
-			preparedStatement1.setString(1, acc.getId());
+			preparedStatement1.setString(1, account.getId());
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
 
@@ -168,7 +174,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			}
 
 			preparedStatement2 = connection.prepareStatement(AccountQueryMapper.UPDATE_CONTACT);
-			preparedStatement2.setString(1, cust.getContact());
+			preparedStatement2.setString(1, customer.getContact());
 			preparedStatement2.setString(2, accId);
 			queryResult = preparedStatement2.executeUpdate();
 			if (queryResult == 0) {
@@ -197,16 +203,18 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	
 	/*******************************************************************************************************
-	 * - Function Name : updateCustomerName(Account acc, Address add) - Input
-	 * Parameters : Account acc, Address add Return Type : boolean - Throws :
-	 * AccountException - Author : Aditi Singh - Creation Date : 24/09/2019 -
-	 * Description : Updates customer address and returns the confirmation to service layer
-	 * 
+	 * - Function Name : updateCustomerName(Account account, Address address) 
+	 * - Input Parameters : Account account, Address address 
+	 * - Return Type : boolean 
+	 * - Throws : AccountException 
+	 * - Author : Aditi Singh 
+	 * - Creation Date : 24/09/2019 -
+	 * - Description : Updates customer address and returns the confirmation to service layer
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 	
 	@Override
-	public boolean updateCustomerAddress(Account acc, Address add) throws AccountException, PecuniaException {
+	public boolean updateCustomerAddress(Account account, Address address) throws AccountException, PecuniaException {
 		boolean isUpdated = false;
 		Connection connection = null;
 		String accId = null;
@@ -218,19 +226,19 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 		try {
 			preparedStatement1 = connection.prepareStatement(AccountQueryMapper.GET_ADDRESS_ID);
-			preparedStatement1.setString(1, acc.getId());
+			preparedStatement1.setString(1, account.getId());
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			if (resultSet.next()) {
 				accId = resultSet.getString(1);
 			}
 
 			preparedStatement2 = connection.prepareStatement(AccountQueryMapper.UPDATE_ADDRESS);
-			preparedStatement2.setString(1, add.getLine1());
-			preparedStatement2.setString(2, add.getLine2());
-			preparedStatement2.setString(3, add.getCity());
-			preparedStatement2.setString(4, add.getState());
-			preparedStatement2.setString(5, add.getCountry());
-			preparedStatement2.setString(6, add.getZipcode());
+			preparedStatement2.setString(1, address.getLine1());
+			preparedStatement2.setString(2, address.getLine2());
+			preparedStatement2.setString(3, address.getCity());
+			preparedStatement2.setString(4, address.getState());
+			preparedStatement2.setString(5, address.getCountry());
+			preparedStatement2.setString(6, address.getZipcode());
 			preparedStatement2.setString(7, accId);
 			queryResult = preparedStatement2.executeUpdate();
 			if (queryResult == 0) {
@@ -261,30 +269,33 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	
 	/*******************************************************************************************************
-	 * - Function Name : calculateAccountId(Account acc) - Input Parameters :
-	 * Account acc Return Type : String - Throws : AccountException 
-	 * - Author : Aditi Singh - Creation Date : 24/09/2019 
+	 * - Function Name : calculateAccountId(Account account) 
+	 * - Input Parameters : Account account 
+	 * - Return Type : String 
+	 * - Throws : AccountException 
+	 * - Author : Aditi Singh 
+	 * - Creation Date : 24/09/2019 
 	 * - Description : Generation of a new account ID with the given branch ID and type of Account
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 	
 	@Override
-	public String calculateAccountId(String id) throws AccountException, PecuniaException {
+	public String calculateAccountId(Account account) throws AccountException, PecuniaException {
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		long oldId = 0;
 		String oldIdstr = null;
-
+		String id=null;
 		try {
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.GET_RECENT_ID);
-			preparedStatement.setString(1, id + "%");
+			preparedStatement.setString(1, account.getId() + "%");
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				oldIdstr = resultSet.getString(1);
 			} else {
-				oldIdstr = id + "000000";
+				oldIdstr = account.getId() + "000000";
 			}
 			oldId = Long.parseLong(oldIdstr);
 			id = Long.toString(oldId + 1);
@@ -307,16 +318,17 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	
 	/*******************************************************************************************************
-	 * - Function Name : validateAccountId(Account acc) - Input Parameters : Account
-	 * account - Return Type : double - Throws : AccountException 
-	 * - Author : Aditi Singh - Creation Date : 24/09/2019 
+	 * - Function Name : validateAccountId(Account account) - Input Parameters : Account account 
+	 * - Return Type : double 
+	 * - Throws : AccountException 
+	 * - Author : Aditi Singh 
+	 * - Creation Date : 24/09/2019 
 	 * - Description : Validation of Account ID from the database
-	 * 
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 	
 	@Override
-	public boolean validateAccountId(Account acc) throws PecuniaException, AccountException {
+	public boolean validateAccountId(Account account) throws PecuniaException, AccountException {
 
 		boolean isValidated = false;
 		Connection connection = null;
@@ -327,7 +339,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 		try {
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.VALIDATE_ID);
-			preparedStatement.setString(1, acc.getId());
+			preparedStatement.setString(1, account.getId());
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				isValidated = true;
@@ -354,17 +366,19 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	
 	/*******************************************************************************************************
-	 * - Function Name : addAccount(Customer cust, Address add,Account acc) - Input
-	 * Parameters : Customer cust, Address add,Account acc - Return Type : String -
-	 * Throws : AccountException - Author : Vidushi Razdan - Creation Date :
-	 * 24/09/2019 - Description : Addition of new Account by adding address, customer details
-	 * and returns the generated customer ID
+	 * - Function Name : addCustomerDetails(Customer customer, Address address) 
+	 * - Input Parameters : Customer customer, Address address 
+	 * - Return Type : String 
+	 * - Throws : AccountException 
+	 * - Author : Vidushi Razdan 
+	 * - Creation Date : 24/09/2019 
+	 * - Description : Addition of new Account by adding address, customer details and returns the generated customer ID
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
 	
 	@Override
-	public String addCustomerDetails(Customer cust, Address add) throws PecuniaException, AccountException {
+	public String addCustomerDetails(Customer customer, Address address) throws PecuniaException, AccountException {
 		Connection connection = null;
 		String custId = null;
 		String addId = null;
@@ -377,12 +391,12 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		try {
 
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.ADD_ADDRESS);
-			preparedStatement.setString(1, add.getLine1());
-			preparedStatement.setString(2, add.getLine2());
-			preparedStatement.setString(3, add.getCity());
-			preparedStatement.setString(4, add.getState());
-			preparedStatement.setString(5, add.getCountry());
-			preparedStatement.setString(6, add.getZipcode());
+			preparedStatement.setString(1, address.getLine1());
+			preparedStatement.setString(2, address.getLine2());
+			preparedStatement.setString(3, address.getCity());
+			preparedStatement.setString(4, address.getState());
+			preparedStatement.setString(5, address.getCountry());
+			preparedStatement.setString(6, address.getZipcode());
 			queryResult = preparedStatement.executeUpdate();
 
 			if (queryResult == 0) {
@@ -400,13 +414,13 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 			queryResult = 0;
 			PreparedStatement preparedStatement3 = connection.prepareStatement(AccountQueryMapper.ADD_CUSTOMER);
-			preparedStatement3.setString(1, cust.getName());
+			preparedStatement3.setString(1, customer.getName());
 			preparedStatement3.setString(2, addId);
-			preparedStatement3.setString(3, cust.getAadhar());
-			preparedStatement3.setString(4, cust.getPan());
-			preparedStatement3.setString(5, cust.getContact());
-			preparedStatement3.setString(6, cust.getGender());
-			preparedStatement3.setDate(7, java.sql.Date.valueOf(cust.getDob()));
+			preparedStatement3.setString(3, customer.getAadhar());
+			preparedStatement3.setString(4, customer.getPan());
+			preparedStatement3.setString(5, customer.getContact());
+			preparedStatement3.setString(6, customer.getGender());
+			preparedStatement3.setDate(7, java.sql.Date.valueOf(customer.getDob()));
 
 			queryResult = preparedStatement3.executeUpdate();
 
@@ -441,14 +455,18 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : addAccount(Account acc) - Input Parameters : Account acc - Return Type : String 
-	 * - Throws : AccountException - Author : Vidushi Razdan - Creation Date : 24/09/2019 
+	 * - Function Name : addAccount(Account account) 
+	 * - Input Parameters : Account account 
+	 * - Return Type : String 
+	 * - Throws : AccountException 
+	 * - Author : Vidushi Razdan 
+	 * - Creation Date : 24/09/2019 
 	 * - Description : Addition of new Account by adding account details and returns the generated accountID
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 	
 	@Override
-	public String addAccount(Account acc) throws PecuniaException, AccountException {
+	public String addAccount(Account account) throws PecuniaException, AccountException {
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
 
@@ -458,13 +476,13 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 		try {
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.ADD_ACCOUNT);
-			preparedStatement.setString(1, acc.getId());
-			preparedStatement.setString(2, acc.getHolderId());
-			preparedStatement.setString(3, acc.getBranchId());
-			preparedStatement.setString(4, acc.getAccountType());
-			preparedStatement.setString(5, acc.getStatus());
-			preparedStatement.setDouble(6, acc.getBalance());
-			preparedStatement.setDouble(7, acc.getInterest());
+			preparedStatement.setString(1, account.getId());
+			preparedStatement.setString(2, account.getHolderId());
+			preparedStatement.setString(3, account.getBranchId());
+			preparedStatement.setString(4, account.getAccountType());
+			preparedStatement.setString(5, account.getStatus());
+			preparedStatement.setDouble(6, account.getBalance());
+			preparedStatement.setDouble(7, account.getInterest());
 
 			queryResult = preparedStatement.executeUpdate();
 
@@ -473,7 +491,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			} else {
 				logger.info(LoggerMessage.ADD_ACCOUNT_SUCCESSFUL);
-				return acc.getId();
+				return account.getId();
 			}
 
 		} catch (SQLException e) {

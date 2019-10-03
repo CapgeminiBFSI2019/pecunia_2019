@@ -15,11 +15,13 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	AccountManagementDAO accountDAO;
 
 	/*******************************************************************************************************
-	 * - Function Name : deleteAccount(Account acc) - Input Parameters : Account
-	 * account - Return Type : boolean - Throws : AccountException - Author : Rohit
-	 * Kumar - Creation Date : 24/09/2019 - Description : Deleting an account by
-	 * setting account status "Closed"
-	 * 
+	 * - Function Name : deleteAccount(Account account) 
+	 * - Input Parameters : Account account 
+	 * - Return Type : boolean 
+	 * - Throws : AccountException 
+	 * - Author : Rohit Kumar 
+	 * - Creation Date : 24/09/2019 
+	 * - Description : Deleting an account by setting account status "Closed"
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
@@ -41,22 +43,24 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : updateCustomerName(Account acc, Customer cust) - Input
-	 * Parameters : Account acc, Customer cust Return Type : boolean - Throws :
-	 * AccountException - Author : Aditi Singh - Creation Date : 24/09/2019 -
+	 * - Function Name : updateCustomerName(Account account, Customer customer) 
+	 * - Input Parameters : Account account, Customer customer 
+	 * - Return Type : boolean 
+	 * - Throws : AccountException 
+	 * - Author : Aditi Singh 
+	 * - Creation Date : 24/09/2019 -
 	 * Description : Updating customer name
-	 * 
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
-	public boolean updateCustomerName(Account acc, Customer cust) throws PecuniaException, AccountException {
+	public boolean updateCustomerName(Account account, Customer customer) throws PecuniaException, AccountException {
 		boolean isUpdated = false;
 		try {
 
-			boolean isValidated = validateAccountId(acc);
+			boolean isValidated = validateAccountId(account);
 			if (isValidated) {
 				accountDAO = new AccountManagementDAOImpl();
-				isUpdated = accountDAO.updateCustomerName(acc, cust);
+				isUpdated = accountDAO.updateCustomerName(account, customer);
 			} else {
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
@@ -68,22 +72,24 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : updateCustomerContact(Account acc, Customer cust) - Input
-	 * Parameters : Account acc, Customer cust Return Type : boolean - Throws :
-	 * AccountException - Author : Aditi Singh - Creation Date : 24/09/2019 -
+	 * - Function Name : updateCustomerContact(Account account, Customer customer) 
+	 * - Input Parameters : Account account, Customer customer 
+	 * - Return Type : boolean 
+	 * - Throws : AccountException 
+	 * - Author : Aditi Singh 
+	 * - Creation Date : 24/09/2019 -
 	 * Description : Updating customer contact
-	 * 
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
-	public boolean updateCustomerContact(Account acc, Customer cust) throws PecuniaException, AccountException {
+	public boolean updateCustomerContact(Account account, Customer customer) throws PecuniaException, AccountException {
 		boolean isUpdated = false;
 		try {
 
-			boolean isValidated = validateAccountId(acc);
+			boolean isValidated = validateAccountId(account);
 			if (isValidated) {
 				accountDAO = new AccountManagementDAOImpl();
-				isUpdated = accountDAO.updateCustomerContact(acc, cust);
+				isUpdated = accountDAO.updateCustomerContact(account, customer);
 			} else {
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
@@ -94,22 +100,24 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : updateCustomerName(Account acc, Address add) - Input
-	 * Parameters : Account acc, Address add Return Type : boolean - Throws :
-	 * AccountException - Author : Aditi Singh - Creation Date : 24/09/2019 -
+	 * - Function Name : updateCustomerName(Account account, Address address) 
+	 * - Input Parameters : Account account, Address address 
+	 * - Return Type : boolean 
+	 * - Throws : AccountException 
+	 * - Author : Aditi Singh 
+	 * - Creation Date : 24/09/2019 -
 	 * Description : Updating customer address
-	 * 
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
-	public boolean updateCustomerAddress(Account acc, Address add) throws PecuniaException, AccountException {
+	public boolean updateCustomerAddress(Account account, Address address) throws PecuniaException, AccountException {
 
 		boolean isUpdated = false;
 		try {
-			boolean isValidated = validateAccountId(acc);
+			boolean isValidated = validateAccountId(account);
 			if (isValidated) {
 				accountDAO = new AccountManagementDAOImpl();
-				isUpdated = accountDAO.updateCustomerAddress(acc, add);
+				isUpdated = accountDAO.updateCustomerAddress(account, address);
 			} else {
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
@@ -120,20 +128,21 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : calculateAccountId(Account acc) - 
-	 * Input Parameters :	 * Account acc 
-	 * Return Type : String - Throws : AccountException - Author : Aditi
-	 * Singh - Creation Date : 24/09/2019 - Description : Generation of a new
-	 * account ID with the given branch ID and type of Account
-	 * 
+	 * - Function Name : calculateAccountId(Account account)  
+	 * - Input Parameters : Account account 
+	 * - Return Type : String 
+	 * - Throws : AccountException 
+	 * - Author : Aditi Singh 
+	 * - Creation Date : 24/09/2019 
+	 * - Description : Generation of a new account ID with the given branch ID and type of Account
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
-	public String calculateAccountId(Account acc) throws PecuniaException, AccountException {
+	public String calculateAccountId(Account account) throws PecuniaException, AccountException {
 		try {
 			String id = "";
-			id = id.concat(acc.getBranchId());
-			String type = acc.getAccountType();
+			id = id.concat(account.getBranchId());
+			String type = account.getAccountType();
 			switch (type) {
 			case Constants.SAVINGS:
 				id = id.concat(Constants.CODE_SAVINGS);
@@ -149,7 +158,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 				break;
 			}
 			accountDAO = new AccountManagementDAOImpl();
-			id = accountDAO.calculateAccountId(id);
+			id = accountDAO.calculateAccountId(account);
 			return id;
 		} catch (Exception e) {
 			throw new AccountException(ErrorConstants.TECH_ERROR);
@@ -158,40 +167,45 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : validateAccountId(Account acc) - Input Parameters : Account
-	 * account - Return Type : double - Throws : AccountException - Author : Aditi
-	 * Singh - Creation Date : 24/09/2019 - Description : Validation of Account ID
-	 * 
+	 * - Function Name : validateAccountId(Account account) 
+	 * - Input Parameters : Account account 
+	 * - Return Type : double 
+	 * - Throws : AccountException 
+	 * - Author : Aditi Singh 
+	 * - Creation Date : 24/09/2019 
+	 * - Description : Validation of Account ID
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
-	public boolean validateAccountId(Account acc) throws PecuniaException, AccountException {
+	public boolean validateAccountId(Account account) throws PecuniaException, AccountException {
 		boolean isValidated = false;
 		accountDAO = new AccountManagementDAOImpl();
-		isValidated = accountDAO.validateAccountId(acc);
+		isValidated = accountDAO.validateAccountId(account);
 
 		return isValidated;
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : addAccount(Customer cust, Address add,Account acc) - Input
-	 * Parameters : Customer cust, Address add,Account acc - Return Type : String -
-	 * Throws : AccountException - Author : Vidushi Razdan - Creation Date :
-	 * 24/09/2019 - Description : Addition of new Account
-	 * 
+	 * - Function Name : addAccount(Customer customer, Address address,Account account) 
+	 * - Input Parameters : Customer customer, Address address,Account account 
+	 * - Return Type : String 
+	 * - Throws : AccountException 
+	 * - Author : Vidushi Razdan 
+	 * - Creation Date : 24/09/2019 
+	 * - Description : Addition of new Account
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
-	public String addAccount(Customer cust, Address add, Account acc) throws PecuniaException, AccountException {
+	public String addAccount(Customer customer, Address address, Account account) throws PecuniaException, AccountException {
 		try {
 			accountDAO = new AccountManagementDAOImpl();
-			String custId = accountDAO.addCustomerDetails(cust, add);
+			String custId = accountDAO.addCustomerDetails(customer, address);
 
-			acc.setHolderId(custId);
-			String accountId = calculateAccountId(acc);
-			acc.setId(accountId);
+			account.setHolderId(custId);
+			String accountId = calculateAccountId(account);
+			account.setId(accountId);
 
-			String createdId = accountDAO.addAccount(acc);
+			String createdId = accountDAO.addAccount(account);
 
 			if (createdId == null) {
 				throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);

@@ -64,15 +64,15 @@ public class PecuniaMain {
 					System.out.println("Login Unsuccessful");
 					System.out.print("Do you want to continue Y / N :-");
 					String choice = br.readLine();
-					if (choice.equalsIgnoreCase("n")) {
+					if ("n".equalsIgnoreCase(choice)) {
 						break;
-					} else if (!choice.equalsIgnoreCase("y")) {
+					} else if (!"y".equalsIgnoreCase(choice)) {
 						System.out.println("Invalid choice");
 					}
 				}
 			} while (!loginFlag);
 			String option = "y";
-			while (option.equalsIgnoreCase("y")) {
+			while ("y".equalsIgnoreCase(option)) {
 				System.out.println("Enter your option: " + "\n1. Create Account" + "\n2. Update Account"
 						+ "\n3. Delete Existing Account" + "\n4. Update Passbook/ Account Summary" + "\n5. Transaction"
 						+ "\n6. Loan Management");
@@ -221,7 +221,7 @@ public class PecuniaMain {
 				while (true) {
 					System.out.println("Do you want to perform another operation (y/n)?");
 					String temp = br.readLine();
-					if (temp.equalsIgnoreCase("y") || temp.equalsIgnoreCase("n")) {
+					if ("y".equalsIgnoreCase(temp) || "n".equalsIgnoreCase(temp)) {
 						option = temp;
 						break;
 					} else {
@@ -271,22 +271,22 @@ public class PecuniaMain {
 		String branchId=null;
 		String dob=null;
 		System.out.println("Enter Customer Details:");
-		Customer cust = new Customer();
-		Address add = new Address();
-		Account acc = new Account();
-		String custName = null;
+		Customer customer = new Customer();
+		Address address = new Address();
+		Account account = new Account();
+		String customerName = null;
 		do {
 			System.out.println("Enter customer name: ");
-			custName = br.readLine();
-			if (AccountInputValidator.checkIfAlphaNumeric(custName) == true
-					|| AccountInputValidator.checkIfDigit(custName) == true
-					|| AccountInputValidator.checkIfSpecialCharacter(custName) == true) {
+			customerName = br.readLine();
+			if (AccountInputValidator.checkIfAlphaNumeric(customerName) == true
+					|| AccountInputValidator.checkIfDigit(customerName) == true
+					|| AccountInputValidator.checkIfSpecialCharacter(customerName) == true) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
 			}
 
 		} while (!isValid);
-		cust.setName(custName);
+		customer.setName(customerName);
 		isValid=true;
 		do {
 			System.out.println("Enter customer aadhar: ");
@@ -299,7 +299,7 @@ public class PecuniaMain {
 			}
 
 		} while (!isValid);
-		cust.setAadhar(aadhar);
+		customer.setAadhar(aadhar);
 		isValid=true;
 		do {
 			System.out.println("Enter customer PAN: ");
@@ -309,7 +309,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		cust.setPan(pan);
+		customer.setPan(pan);
 		isValid=true;
 		do {
 			System.out.println("Enter customer contact: ");
@@ -319,7 +319,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		cust.setContact(contact);
+		customer.setContact(contact);
 		
 		isValid=true;
 		do {
@@ -330,7 +330,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		cust.setGender(gender);
+		customer.setGender(gender);
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
 		isValid=true;
@@ -342,7 +342,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		cust.setDob(LocalDate.parse(dob, dateTimeFormatter));
+		customer.setDob(LocalDate.parse(dob, dateTimeFormatter));
 		System.out.println("Enter Customer Address Details:");
 		
 		isValid=true;
@@ -354,7 +354,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		add.setLine1(addressLine1);		
+		address.setLine1(addressLine1);		
 		isValid=true;
 		do {
 			System.out.println("Enter Address Line 2: ");
@@ -364,7 +364,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		add.setLine2(addressLine2);
+		address.setLine2(addressLine2);
 		isValid=true;
 		do {
 			System.out.println("Enter Address City: ");
@@ -374,7 +374,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		add.setCity(city);
+		address.setCity(city);
 
 		isValid=true;
 		do {
@@ -385,7 +385,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		add.setState(state);
+		address.setState(state);
 		
 		isValid=true;
 		do {
@@ -396,7 +396,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		add.setCountry(country);
+		address.setCountry(country);
 		
 		isValid=true;
 		do {
@@ -407,7 +407,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		add.setZipcode(zipcode);
+		address.setZipcode(zipcode);
 
 		
 		isValid=true;
@@ -419,7 +419,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		acc.setAccountType(accountType);
+		account.setAccountType(accountType);
 		
 		isValid=true;
 		do {
@@ -430,7 +430,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		acc.setBalance(balance);
+		account.setBalance(balance);
 		
 		isValid=true;
 		do {
@@ -441,7 +441,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		acc.setBranchId(branchId);
+		account.setBranchId(branchId);
 		
 		isValid=true;
 		do {
@@ -452,13 +452,13 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		acc.setInterest(interest);
+		account.setInterest(interest);
 		
-		acc.setStatus("ACTIVE");
+		account.setStatus("ACTIVE");
 
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
-			accountId = ams.addAccount(cust, add, acc);
+			accountId = ams.addAccount(customer, address, account);
 		} catch (PecuniaException | AccountException e) {
 			System.out.println(e.getMessage());
 		}
@@ -471,8 +471,8 @@ public class PecuniaMain {
 		boolean updated = false;
 		String accId=null;
 		String name=null;
-		Account acc = new Account();
-		Customer cust = new Customer();
+		Account account = new Account();
+		Customer customer = new Customer();
 		
 		boolean isValid=true;
 		do {
@@ -483,7 +483,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		acc.setId(accId);
+		account.setId(accId);
 		isValid=true;
 		do {
 			System.out.println("Enter the new Name: ");
@@ -496,10 +496,10 @@ public class PecuniaMain {
 			}
 
 		} while (!isValid);
-		cust.setName(name);
+		customer.setName(name);
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
-			updated = ams.updateCustomerName(acc, cust);
+			updated = ams.updateCustomerName(account, customer);
 
 		} catch (PecuniaException | AccountException e) {
 			System.out.println(e.getMessage());
@@ -521,8 +521,8 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		Account acc = new Account();
-		acc.setId(accId);
+		Account account = new Account();
+		account.setId(accId);
 		
 		isValid=true;
 		do {
@@ -533,11 +533,11 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		Customer cust = new Customer();
-		cust.setContact(contact);
+		Customer customer = new Customer();
+		customer.setContact(contact);
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
-			updated = ams.updateCustomerContact(acc, cust);
+			updated = ams.updateCustomerContact(account, customer);
 		} catch (PecuniaException | AccountException e) {
 			System.out.println(e.getMessage());
 		}
@@ -552,7 +552,7 @@ public class PecuniaMain {
 		String addressLine1 = null; String addressLine2 = null;
 		String city=null; String state=null;
 		String country=null; String zipcode=null;
-		Account acc = new Account();
+		Account account = new Account();
 		do {
 			System.out.println("Enter the Account Id: ");
 			accId = br.readLine();
@@ -561,8 +561,8 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		acc.setId(accId);
-		Address add = new Address();
+		account.setId(accId);
+		Address address = new Address();
 		System.out.println("Enter the new Address Details: ");
 		isValid=true;
 		do {
@@ -573,7 +573,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		add.setLine1(addressLine1);		
+		address.setLine1(addressLine1);		
 		isValid=true;
 		do {
 			System.out.println("Enter Address Line 2: ");
@@ -583,7 +583,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		add.setLine2(addressLine2);
+		address.setLine2(addressLine2);
 		isValid=true;
 		do {
 			System.out.println("Enter Address City: ");
@@ -593,7 +593,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		add.setCity(city);
+		address.setCity(city);
 
 		isValid=true;
 		do {
@@ -604,7 +604,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		add.setState(state);
+		address.setState(state);
 		
 		isValid=true;
 		do {
@@ -615,7 +615,7 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		add.setCountry(country);
+		address.setCountry(country);
 		
 		isValid=true;
 		do {
@@ -626,11 +626,11 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		add.setZipcode(zipcode);
+		address.setZipcode(zipcode);
 
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
-			updated = ams.updateCustomerAddress(acc, add);
+			updated = ams.updateCustomerAddress(account, address);
 		} catch (PecuniaException | AccountException e) {
 			System.out.println(e.getMessage());
 		}
@@ -642,7 +642,7 @@ public class PecuniaMain {
 		String accId=null;
 		
 		boolean updated = false;
-		Account acc = new Account();
+		Account account = new Account();
 		boolean isValid=true;
 		do {
 			System.out.println("Enter the Account Id: ");
@@ -652,10 +652,10 @@ public class PecuniaMain {
 				isValid = false;
 			}
 		} while (isValid==false);
-		acc.setId(accId);
+		account.setId(accId);
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
-			updated = ams.deleteAccount(acc);
+			updated = ams.deleteAccount(account);
 
 		} catch (PecuniaException | AccountException e) {
 			System.out.println(e.getMessage());
@@ -1174,7 +1174,7 @@ public class PecuniaMain {
 
                     try {
                         String status = loanDisbursalService.updateExistingBalance(approvedLoanRequests);
-                        if(status.equals(Constants.STATUS_CHECK[0])) {
+                        if(Constants.STATUS_CHECK[0].equals(status)) {
                             System.out.println("Amount has been deducted");
                         }
                         else {
