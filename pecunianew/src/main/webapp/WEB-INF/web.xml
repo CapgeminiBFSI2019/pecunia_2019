@@ -14,9 +14,7 @@
     <servlet-name>loginServlet</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
-
-  
-   <servlet>
+  <servlet>
     <description></description>
     <display-name>CreditUsingSlipServlet</display-name>
     <servlet-name>CreditUsingSlipServlet</servlet-name>
@@ -26,7 +24,6 @@
     <servlet-name>CreditUsingSlipServlet</servlet-name>
     <url-pattern>/creditslip</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>DebitUsingSlipServlet</display-name>
@@ -37,7 +34,6 @@
     <servlet-name>DebitUsingSlipServlet</servlet-name>
     <url-pattern>/debitslip</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>DebitUsingChequeServlet</display-name>
@@ -48,8 +44,7 @@
     <servlet-name>DebitUsingChequeServlet</servlet-name>
     <url-pattern>/debitcheque</url-pattern>
   </servlet-mapping>
-  
-   <servlet>
+  <servlet>
     <description></description>
     <display-name>CreditUsingChequeServlet</display-name>
     <servlet-name>CreditUsingChequeServlet</servlet-name>
@@ -59,8 +54,6 @@
     <servlet-name>CreditUsingChequeServlet</servlet-name>
     <url-pattern>/creditcheque</url-pattern>
   </servlet-mapping>
-  
-
   <servlet>
     <description></description>
     <display-name>LogoutServlet</display-name>
@@ -71,5 +64,34 @@
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/logout</url-pattern>
   </servlet-mapping>
-
+  <servlet>
+    <description></description>
+    <display-name>AddAccount</display-name>
+    <servlet-name>AddAccount</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.AddAccount</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddAccount</servlet-name>
+    <url-pattern>/AddAccount</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateAccount</display-name>
+    <servlet-name>UpdateAccount</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.UpdateAccount</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateAccount</servlet-name>
+    <url-pattern>/UpdateAccount</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteAccount</display-name>
+    <servlet-name>DeleteAccount</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.DeleteAccount</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteAccount</servlet-name>
+    <url-pattern>/DeleteAccount</url-pattern>
+  </servlet-mapping>
 </web-app>
