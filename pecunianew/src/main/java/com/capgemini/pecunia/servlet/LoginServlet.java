@@ -3,8 +3,8 @@ package com.capgemini.pecunia.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,24 +19,28 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	
 		String username = request.getParameter("uname");
 		String password = request.getParameter("pswd");
 		Login loginObject = new Login();
 		loginObject.setUsername(username);
 		loginObject.setPassword(password);
 		LoginService loginService = new LoginServiceImpl();
+		response.setContentType("text/html");
+		PrintWriter out =response.getWriter();
 		try {
 			boolean result = loginService.validateEmail(loginObject);
 			if(result)
 			{
-				PrintWriter out =response.getWriter();
-				out.println("<h1>Success</h1>");
+				
+				request.getRequestDispatcher("MainPage.html").forward(request, response); 
 			}
+			
 		} catch (PecuniaException | LoginException e) {
-			PrintWriter out =response.getWriter();
-			out.println("<h1>Failure</h1><br>"+e.getMessage());
-//			System.out.println(e.getMessage());
+			
+			request.getRequestDispatcher("login.html").include(request, response);
+			out.println("<br><h4 class='text-danger'>Login Failure!!! Invalid email or password.</h4><br>");
+			
 		}
 	}
 

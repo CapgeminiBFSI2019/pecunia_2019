@@ -19,7 +19,7 @@ public class LoginDAOImpl implements LoginDAO {
 	Logger logger = Logger.getRootLogger();
 
 	public LoginDAOImpl() {
-		PropertyConfigurator.configure("resources//log4j.properties");
+		//PropertyConfigurator.configure("resources//log4j.properties");
 
 	}
 	/*******************************************************************************************************

@@ -1,5 +1,6 @@
 package com.capgemini.pecunia.util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -73,8 +74,7 @@ public class DBConnection {
 
 		if (props == null) {
 			Properties newProps = new Properties();
-			String fileName = "resources/jdbc.properties";
-
+			String fileName = DBConnection.class.getClassLoader().getResource("").getPath()+"/jdbc.properties";
 			InputStream inputStream = new FileInputStream(fileName);
 			newProps.load(inputStream);
 
