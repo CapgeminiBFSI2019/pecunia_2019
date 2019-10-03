@@ -8,9 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.capgemini.pecunia.exception.PecuniaException;
-import com.capgemini.pecunia.exception.TransactionException;
-
 /**
  * Servlet implementation class AddAccount
  */
@@ -27,23 +24,25 @@ public class AddAccount extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		String name = request.getParameter("name");
 		String gender = request.getParameter("gender");
+		String dateofbirth = request.getParameter("dateofbirth");
 
-		String htmlRespone = "<html>";
+		String contact = request.getParameter("contact");
 
-		htmlRespone += "<h2>Your username is: " + name + "</h2>";
-		htmlRespone += "<h2>Your gender is: " + gender + "</h2>";
+		String addressline1 = request.getParameter("addressline1");
+		String addressline2 = request.getParameter("addressline2");
+		String city = request.getParameter("city");
+		String state = request.getParameter("state");
+		String country = request.getParameter("country");
+		String zipcode = request.getParameter("zipcode");
+		String aadhar = request.getParameter("aadhar");
+		String pan = request.getParameter("pan");
 
-		htmlRespone += "</html>";
+		String accounttype = request.getParameter("accounttype");
+		String branchid = request.getParameter("branchid");
+//		double accountbalance = request.getParameter(accountbalance);
+//
+//		double accountinterest = request.getParameter(accountinterest);
 
-		writer.println(htmlRespone);
-	}
-	try {
-		int transId = trans.debitUsingCheque(debitChequeTransaction, debitCheque);
-		PrintWriter out = response.getWriter();
-		out.println("<h1>Transaction Id is: </h1>" + transId);
-		out.println("<h1>Transaction Successful</h1>");
-	} catch (TransactionException | PecuniaException e) {
-		PrintWriter out = response.getWriter();
-		out.println("<h1>Failure</h1><br>" + e.getMessage());
-	}
+
+}
 }
