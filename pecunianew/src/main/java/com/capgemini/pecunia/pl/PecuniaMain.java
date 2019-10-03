@@ -677,9 +677,8 @@ public class PecuniaMain {
 					|| AccountInputValidator.checkLength(12, accId) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
-			}
-			else {
-				isValid=true;
+			} else {
+				isValid = true;
 			}
 		} while (!isValid);
 
@@ -726,9 +725,8 @@ public class PecuniaMain {
 					|| AccountInputValidator.checkLength(12, accId) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
-			}
-			else {
-				isValid=true;
+			} else {
+				isValid = true;
 			}
 		} while (!isValid);
 
@@ -784,9 +782,8 @@ public class PecuniaMain {
 					|| AccountInputValidator.checkLength(12, accIdDebitCheque) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
-			}
-			else {
-				isValid=true;
+			} else {
+				isValid = true;
 			}
 		} while (!isValid);
 
@@ -847,9 +844,8 @@ public class PecuniaMain {
 					|| AccountInputValidator.checkLength(12, accPayeeIdCreditCheque) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
-			}
-			else {
-				isValid=true;
+			} else {
+				isValid = true;
 			}
 		} while (!isValid);
 
@@ -863,20 +859,63 @@ public class PecuniaMain {
 					|| AccountInputValidator.checkLength(12, accBenificiaryIdCreditCheque) == false) {
 				System.out.println("Invalid. Enter again.");
 				isValid = false;
-			}
-			else {
-				isValid=true;
+			} else {
+				isValid = true;
 			}
 		} while (!isValid);
 
-		System.out.println("Enter Amount: ");
-		double amtCreditCheque = Double.parseDouble(br1.readLine());
 
+		isValid = false;
+		double amtCreditCheque = 0.0;
+		TransactionInputValidator transValidator = new TransactionInputValidator();
+		do {
+		System.out.println("Enter Amount: ");
+		amtCreditCheque = Double.parseDouble(br1.readLine());
 		System.out.println("Enter Cheque Number: ");
 		int chequeNumber = Integer.parseInt(br1.readLine());
+			if (!transValidator.transactionAmountisValid(amtCreditCheque)) {
+				System.out.println("Invalid. Enter again.");
+
+			} else {
+				isValid = true;
+			}
+		} while (!isValid);
+
+		isValid = false;
+		int chequeNumber = 0;
+		do {
+			boolean typeMatch = false;
+			do {
+				System.out.println("Enter Cheque Number: ");
+				try {
+					chequeNumber = Integer.parseInt(br1.readLine());
+					typeMatch = true;
+				} catch (NumberFormatException e) {
+					System.out.println("Wrong type entered");
+				}
+			} while (!typeMatch);
+			if (!transValidator.chequeNumberisValid(chequeNumber)) {
+				System.out.println("Invalid. Enter again.");
+			} else {
+				isValid = true;
+			}
+		} while (!isValid);
+
+		isValid = false;
+		String accPayeeCreditChequeName = null;
+		do {
+			System.out.println("Enter Account Holder Name: ");
+			accPayeeCreditChequeName = br1.readLine();
+			if (!transValidator.validateAccountName(accPayeeCreditChequeName)) {
+				System.out.println("Invalid. Enter again.");
+			} else {
+				isValid = true;
+			}
+		} while (!isValid);
 
 		System.out.println("Enter Account Payee Name: ");
-		String accPayeeCreditChequeName = br1.readLine();
+		accPayeeCreditChequeName = br1.readLine();
+
 
 		System.out.println("Enter Payee Bank Name: ");
 		String payeeBankName = br1.readLine();
@@ -1148,6 +1187,26 @@ public class PecuniaMain {
  
 
                 }
+                
+                else if (choice == 5) {
+
+                	 
+                  System.out.println("Enter the Account Number"); 
+                  String accountId = sc.next();
+                  String loans =  loanDisbursalService.numberOfLoanAccounts(approvedLoanRequests, accountId);
+                  System.out.println(loans); 
+
+                }
+                
+                else if (choice == 6) {
+
+               	 
+                    System.out.println("Enter the Account Number"); 
+                    String accountId = sc.next();
+                    double loans =  loanDisbursalService.calculateEMIToBePaid(approvedLoanRequests, accountId);
+                    System.out.println(loans); 
+
+                  }
 
  
 

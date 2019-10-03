@@ -19,24 +19,24 @@ import com.capgemini.pecunia.util.Constants;
 import com.capgemini.pecunia.util.LoggerMessage;
 
 public class LoanDisbursalServiceImpl implements LoanDisbursalService {
-	
+
 	Logger logger = Logger.getRootLogger();
+	
 
 	public LoanDisbursalServiceImpl() {
 		PropertyConfigurator.configure("resources//log4j.properties");
 
 	}
-	
-	
 
 	TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
 	ArrayList<LoanDisbursal> approvedLoanList = new ArrayList<LoanDisbursal>();
+	
 
 	/*******************************************************************************************************
 	 * - Function Name : retrieveAll() - Input Parameters : None - Return Type :
-	 * ArrayList<Loan> - Throws : PecuniaException, IOException, LoanDisbursalException -
-	 * Author : aninrana - Creation Date : 25/09/2019 - Description : Retrieves loan
-	 * requests
+	 * ArrayList<Loan> - Throws : PecuniaException, IOException,
+	 * LoanDisbursalException - Author : aninrana - Creation Date : 25/09/2019 -
+	 * Description : Retrieves loan requests
 	 ********************************************************************************************************/
 
 	public ArrayList<Loan> retrieveAll() throws PecuniaException, IOException, LoanDisbursalException {
@@ -61,8 +61,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * on condition
 	 ********************************************************************************************************/
 
-	public ArrayList<Loan> approveLoan()
-			throws IOException, PecuniaException, LoanDisbursalException {
+	public ArrayList<Loan> approveLoan() throws IOException, PecuniaException, LoanDisbursalException {
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		ArrayList<Loan> acceptedLoanRequests = new ArrayList<Loan>();
 		acceptedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveAcceptedLoanList();
@@ -71,6 +70,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
 
 		}
+		loanDisbursedDAO.releaseLoanSheet(acceptedLoanRequests);
 		logger.info(LoggerMessage.LOAN_REQUEST);
 		return acceptedLoanRequests;
 
@@ -85,7 +85,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	public ArrayList<LoanDisbursal> approvedLoanList() throws IOException, PecuniaException {
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
-        
+
 		approvedLoanList = loanDisbursedDAO.loanApprovedList();
 		logger.info(LoggerMessage.APPROVED_LOAN_REQUESTS_FETCHED);
 		return approvedLoanList;
@@ -97,11 +97,12 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * Type : ArrayList<Loan> - Throws : PecuniaException, LoanDisbursalException -
 	 * Author : aninrana - Creation Date : 25/09/2019 - Description : Retrieving the
 	 * rejected loan rejected
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 ********************************************************************************************************/
 
 	public ArrayList<Loan> rejectedLoanRequests() throws PecuniaException, LoanDisbursalException, IOException {
-		
+
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		ArrayList<Loan> rejectedLoanRequests = new ArrayList<Loan>();
 		rejectedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveRejectedLoanList();
@@ -118,8 +119,9 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * - Function Name : updateLoanAccount(ArrayList<LoanDisbursal>
 	 * updateLoanApprovals, int numberOfMonths) - Input Parameters :
 	 * ArrayList<LoanDisbursal> updateLoanApprovals, int numberOfMonths - Return
-	 * Type : void - Throws : throws PecuniaException - Author : aninrana - Creation Date
-	 * : 25/09/2019 - Description : Updating the data in loan disbursed database
+	 * Type : void - Throws : throws PecuniaException - Author : aninrana - Creation
+	 * Date : 25/09/2019 - Description : Updating the data in loan disbursed
+	 * database
 	 * 
 	 * @throws LoanDisbursalException
 	 ********************************************************************************************************/
@@ -147,19 +149,19 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 			}
 		}
-		
+
 		else {
-			status =Constants.STATUS_CHECK[1];
+			status = Constants.STATUS_CHECK[1];
 		}
-		
+
 		return status;
 	}
 
 	/*******************************************************************************************************
 	 * - Function Name : updateLoanStatus(ArrayList<Loan> rejectedLoanList) - Input
 	 * Parameters : ArrayList<Loan> rejectedLoanList - Return Type : void - Throws :
-	 * PecuniaException - Author : aninrana - Creation Date : 25/09/2019 - Description :
-	 * Updating the loan status after operation
+	 * PecuniaException - Author : aninrana - Creation Date : 25/09/2019 -
+	 * Description : Updating the loan status after operation
 	 * 
 	 * @throws LoanDisbursalException
 	 ********************************************************************************************************/
@@ -197,15 +199,14 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	/*******************************************************************************************************
 	 * - Function Name : updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
 	 * - Input Parameters : ArrayList<Loan> approvedLoanRequests - Return Type :
-	 * void - Throws : PecuniaException, TransactionException, LoanDisbursalException -
-	 * Author : aninrana - Creation Date : 25/09/2019 - Description : Updating the
-	 * Account balance of the customer
+	 * void - Throws : PecuniaException, TransactionException,
+	 * LoanDisbursalException - Author : aninrana - Creation Date : 25/09/2019 -
+	 * Description : Updating the Account balance of the customer
 	 ********************************************************************************************************/
 
 	public String updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
 			throws PecuniaException, TransactionException, LoanDisbursalException {
 		String status = Constants.STATUS_CHECK[0];
-		
 		for (int i = 0; i < approvedLoanRequests.size(); i++) {
 			Account account = new Account();
 			account.setId(approvedLoanRequests.get(i).getAccountId());
@@ -223,6 +224,53 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		}
 		logger.info(LoggerMessage.UPDATE_ACCOUNT_BALANCE);
 		return status;
+	}
+
+	/*******************************************************************************************************
+	 * - Function Name : updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
+	 * - Input Parameters : ArrayList<Loan> approvedLoanRequests - Return Type :
+	 * void - Throws : PecuniaException, TransactionException,
+	 * LoanDisbursalException - Author : aninrana - Creation Date : 25/09/2019 -
+	 * Description : Updating the Account balance of the customer
+	 ********************************************************************************************************/
+
+	public String numberOfLoanAccounts(ArrayList<Loan> approvedLoanRequests, String accountId) {
+		StringBuilder sb = new StringBuilder();
+		for (int index = 0; index < approvedLoanRequests.size(); index++) {
+			String retrievedAccountId = approvedLoanRequests.get(index).getAccountId();
+			
+			if (retrievedAccountId.equals(accountId)) {
+
+				sb.append(approvedLoanRequests.get(index).getType() + "\n");
+			
+
+			}
+		}
+
+		return sb.toString();
+
+	}
+
+	/*******************************************************************************************************
+	 * - Function Name : updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
+	 * - Input Parameters : ArrayList<Loan> approvedLoanRequests - Return Type :
+	 * void - Throws : PecuniaException, TransactionException,
+	 * LoanDisbursalException - Author : aninrana - Creation Date : 25/09/2019 -
+	 * Description : Updating the Account balance of the customer
+	 ********************************************************************************************************/
+
+	public double calculateEMIToBePaid(ArrayList<Loan> approvedLoanRequests, String accountId) {
+		double emiToBePaid = 0;
+		for (int index = 0; index < approvedLoanRequests.size(); index++) {
+			String retrievedAccountId = approvedLoanRequests.get(index).getAccountId();
+			if (retrievedAccountId.equals(accountId))
+
+				emiToBePaid = emiToBePaid + approvedLoanRequests.get(index).getEmi();
+
+		}
+
+		return emiToBePaid;
+
 	}
 
 }
