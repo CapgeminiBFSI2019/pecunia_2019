@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js "
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN "
+	crossorigin="anonymous "></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js "
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q "
+	crossorigin="anonymous "></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js "
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl "
+	crossorigin="anonymous "></script>
+<script src="main.js "></script>
+<title>Loan Request</title>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-sm bg-success navbar-light">
+		<!-- Brand/logo -->
+		<a class="navbar-brand" href="#"> <img src="MicrosoftTeams-image.png"
+			alt="logo" style="width: 40px;">
+		</a>
+
+		<!-- Links -->
+		<ul class="navbar-nav">
+			<li class="nav-item"><a class="nav-link" href="#"><b>Loan
+						Request</b></a></li>
+			<li class="nav-item "><a class="nav-link " href="# "><b>Loan
+						Disbursal</b></a></li>
+		</ul>
+	</nav>
+	<ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link"><b><center>Create Loan Request</center></b></a>
+    </ul>
+	<form id="create Loan Request form " action="LoanRequestServlet"
+		class="container transaction-form " method="POST" >
+		<div class="row ">
+			<div class="form-group col-md-8 offset-md-2">
+				<label for="Account Id">Enter Account Id</label> <input type="text"
+					class="form-control" id="AccountId" name="Account Id"
+					placeholder="Enter Customer's Account Id.." required minlength="12" maxlength="12">
+			</div>
+		</div>
+
+		<div class="row ">
+			<div class="form-group col-md-4 offset-md-2">
+				<label for="Loan Amount">Enter Loan Amount(Rs)</label> <input
+					type="number" class="form-control" id="LoanAmount"
+					name="LoanAmount" placeholder="Amount.." required min="10000">
+			</div>
+
+			<div class="form-group col-md-4 offset-md-2">
+				<label for="loantype">Type of Loan:</label> <select
+					class="form-control" id="loantype" required>
+					<option>Personal Loan</option>
+					<option>House Loan</option>
+					<option>Vehicle Loan</option>
+					<option>Jewel Loan</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="row ">
+			<div class="form-group col-md-4 offset-md-2">
+				<label for="Tenure">Enter Tenure</label> <input type="number"
+					class="form-control" id="Tenure" name="Tenure" required
+					placeholder="Enter Tenure in months.." min="1" max="240">
+			</div>
+
+			<div class="form-group col-md-4 offset-md-2">
+				<label for="roi">Enter Rate of Interest </label> <input
+					type="number" class="form-control" id="roi" name="roi"
+					placeholder="Enter Rate of Interest.." required min="4" max="15">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="form-group col-md-4 offset-md-2">
+				<label for="Credit Score">Enter Credit Score</label> <input
+					type="number" class="form-control" id="CreditScore"
+					name="CreditScore" placeholder="Enter Credit Score.." required
+					min="100" max="1000"></input>
+			</div>
+
+			<div class="form-group col-md-4 offset-md-2">
+				<label for="status">Loan Status:</label> <select
+					class="form-control" id="status" required>
+					<option>Pending</option>
+					<option>Approved</option>
+					<option>Rejected</option>
+				</select>
+			</div>
+		</div>
+
+		<button type="submit" class="btn btn-primary offset-md-6">Submit</button>
+		<button type="reset" class="btn btn-primary" > Reset </button>
+	</form>
+</body>
+
+</html>
