@@ -105,8 +105,9 @@ public class PassbookServlet extends HttpServlet {
 			}
 			}
 		catch (PecuniaException | PassbookException e) {
-			out.println("<h4 class='text-danger'>Invalid account ID. Please input correct account ID</h4>");
+			
 			request.getRequestDispatcher("passbookForm.html").include(request, response);
+			out.println("<h4 class='text-danger'>Invalid account ID. Please input correct account ID</h4>");
 		}
 	}
 }
