@@ -46,16 +46,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>CreditUsingChequeServlet</display-name>
-    <servlet-name>CreditUsingChequeServlet</servlet-name>
-    <servlet-class>com.capgemini.pecunia.servlet.CreditUsingChequeServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>CreditUsingChequeServlet</servlet-name>
-    <url-pattern>/creditcheque</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>LogoutServlet</display-name>
     <servlet-name>LogoutServlet</servlet-name>
     <servlet-class>com.capgemini.pecunia.servlet.LogoutServlet</servlet-class>
@@ -93,5 +83,15 @@
   <servlet-mapping>
     <servlet-name>DeleteAccount</servlet-name>
     <url-pattern>/DeleteAccount</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CreditUsingCheque</display-name>
+    <servlet-name>CreditUsingCheque</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.CreditUsingCheque</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreditUsingCheque</servlet-name>
+    <url-pattern>/creditcheque</url-pattern>
   </servlet-mapping>
 </web-app>
