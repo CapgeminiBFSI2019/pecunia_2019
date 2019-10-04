@@ -66,7 +66,7 @@ public class LoanRequestServlet extends HttpServlet {
 			boolean isSuccess=loanService.createLoanRequest(loan);
 			if(isSuccess) {
 				out.println("<h3 class='text-success'>Loan request data added successfully!!</h3>");
-				request.getRequestDispatcher("LoanRequest.html").include(request, response); 
+				request.getRequestDispatcher("LoanRequestServlet.html").include(request, response); 
 				
 			}
 		} catch (LoanException e) {
