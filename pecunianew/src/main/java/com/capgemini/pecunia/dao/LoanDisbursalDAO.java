@@ -21,4 +21,7 @@ public interface LoanDisbursalDAO {
 	public void updateStatus(ArrayList<Loan> loanRequests, int loanID, String Status)
 			throws IOException, PecuniaException;
 
+	public double totalEmi(String accountId) throws PecuniaException;
+	
+
 }

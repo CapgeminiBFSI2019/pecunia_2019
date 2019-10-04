@@ -24,6 +24,8 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	
 
 	public LoanDisbursalServiceImpl() {
+		PropertyConfigurator.configure("resources//log4j.properties");
+
 	}
 
 	TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
@@ -204,12 +206,14 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	public String updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
 			throws PecuniaException, TransactionException, LoanDisbursalException {
+		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 		String status = Constants.STATUS_CHECK[0];
 		for (int i = 0; i < approvedLoanRequests.size(); i++) {
 			Account account = new Account();
 			account.setId(approvedLoanRequests.get(i).getAccountId());
 			double oldBalance = transactionDAOImpl.getBalance(account);
-			double updatedBalance = oldBalance - approvedLoanRequests.get(i).getEmi();
+			double totalEMI = loanDisbursedDAO.totalEmi(approvedLoanRequests.get(i).getAccountId());
+			double updatedBalance = oldBalance - totalEMI;
 			if (updatedBalance < 0) {
 				status = Constants.STATUS_CHECK[1];
 			} else {
