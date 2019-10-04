@@ -1,89 +1,105 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Passbook Maintenance</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/usm/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <title>Passbook Maintenance</title>
+
 </head>
+
 <body>
 
-	<div class="container">
-		<div class="jumbotron bg-info text-white">
-			<h1 align="center" class="bg-info text-white">
-				<b><i>Pecunia</i></b>
-			</h1>
-		</div>
-	</div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+        <a class="navbar-brand" href="MainPage.html"><i class="fas fa-home text-light mr-2" style="font-size: 24px;"></i>Pecunia</a>
+        <a class="text-light d-block d-lg-none ">Rohan Patil</a>
+        <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+									<span class="navbar-toggler-icon"></span>
+								</button>
+        <div id="navbarNavDropdown" class="navbar-collapse collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="passbookForm.html">Passbook Form</a>
+                </li>
 
-	<h2 align="center">
-		<b>Passbook Maintenance Service</b>
-	</h2>
-	<br>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item d-none d-lg-block" href="#">
+                    <a class="nav-link disabled text-light">Rohan Patil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="bg"></div>
+    <h2 align="center">
+        <b>Passbook Maintenance Service</b>
+    </h2>
+    <br>
 
-	<div class="container">
-		<div class="row ">
-			<h2 class="col-8 offset-2">Update Passbook</h2>
-		</div>
-		<form action="PassbookServlet">
-			<div class="row ">
-				<div class="form-group col-8 offset-2">
-					<label for="accountID">Enter Account ID:</label> 
-					<input type="text" class="form-control" placeholder="Enter accountID" name="accountID" required>
-				</div>
-				<div class="offset-9 ">
-					<button type="submit" class="btn btn-primary">Submit</button>
-				</div>
-			</div>
-		</form>
-	</div>
+    <div class="container">
+        <div class="row ">
+            <h2 class="col-8 offset-2">Update Passbook</h2>
+        </div>
+        <form action="PassbookServlet">
+            <div class="row ">
+                <div class="form-group col-8 offset-2">
+                    <label for="accountID">Enter Account ID:</label>
+                    <input type="text" class="form-control" placeholder="Enter accountID" name="accountID" required>
+                </div>
+                <div class="offset-9 ">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
 
-	<div>
-		<hr>
-	</div>
+    <div>
+        <hr>
+    </div>
 
-	<div class="container">
-		<div class="row ">
-			<h2 class="col-8 offset-2">Account Summary</h2>
-		</div>
+    <div class="container">
+        <div class="row ">
+            <h2 class="col-8 offset-2">Account Summary</h2>
+        </div>
 
-		<form action="PassbookServlet">
+        <form action="PassbookServlet">
 
-			<div class="row ">
-				<div class="form-group col-8 offset-2">
-					<label for="accountID">Enter Account ID:</label> <input type="text"
-						class="form-control" placeholder="Enter accountID"
-						name="accountID" required>
-				</div>
-			</div>
+            <div class="row ">
+                <div class="form-group col-8 offset-2">
+                    <label for="accountID">Enter Account ID:</label> <input type="text" class="form-control" placeholder="Enter accountID" name="accountID" required>
+                </div>
+            </div>
 
-			<div class="row ">
-				<div class="form-group col-sm-4 offset-sm-2">
-					<label for="datetime">Enter start date:</label> <input
-						type="datetime-local" class="form-control"
-						placeholder="Enter start date" name="start date" required>
-				</div>
-				<div class="form-group col-sm-4">
-					<label for="datetime">Enter end date:</label> <input
-						type="datetime-local" class="form-control"
-						placeholder="Enter end date" name="end date" required>
-				</div>
-			</div>
-			<div class="row">
-				<div class="offset-9">
-					<button type="submit" class="btn btn-primary">Submit</button>
-				</div>
-			</div>
+            <div class="row ">
+                <div class="form-group col-sm-4 offset-sm-2">
+                    <label for="datetime">Enter start date:</label> <input type="datetime-local" class="form-control" placeholder="Enter start date" name="start date" required>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label for="datetime">Enter end date:</label> <input type="datetime-local" class="form-control" placeholder="Enter end date" name="end date" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="offset-9">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
 
-		</form>
-	</div>
+        </form>
+    </div>
 
 </body>
+
 </html>
