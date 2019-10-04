@@ -31,7 +31,6 @@ public class AddAccount extends HttpServlet {
 		doGet(request, response);
 		
 		response.setContentType("text/html");
-		PrintWriter writer = response.getWriter();
 		String name = request.getParameter("name");
 		String gender = request.getParameter("gender");
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
