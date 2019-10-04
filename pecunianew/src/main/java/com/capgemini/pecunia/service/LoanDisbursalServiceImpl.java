@@ -81,12 +81,17 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * : ArrayList<LoanDisbursal> - Throws : PecuniaException,IOException - Author :
 	 * aninrana - Creation Date : 25/09/2019 - Description : retrieving the loan
 	 * disbursed data
+	 * @throws LoanDisbursalException 
 	 ********************************************************************************************************/
 
-	public ArrayList<LoanDisbursal> approvedLoanList() throws IOException, PecuniaException {
+	public ArrayList<LoanDisbursal> approvedLoanList() throws IOException, PecuniaException, LoanDisbursalException {
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 
 		approvedLoanList = loanDisbursedDAO.loanApprovedList();
+		if(approvedLoanList.size() == 0) {
+			logger.error(ErrorConstants.NO_LOAN_REQUESTS);
+			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
+		}
 		logger.info(LoggerMessage.APPROVED_LOAN_REQUESTS_FETCHED);
 		return approvedLoanList;
 
