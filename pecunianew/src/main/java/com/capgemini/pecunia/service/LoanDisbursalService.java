@@ -16,7 +16,7 @@ public interface LoanDisbursalService {
 
 	public ArrayList<Loan> approveLoan() throws IOException, PecuniaException, LoanDisbursalException;
 
-	public ArrayList<LoanDisbursal> approvedLoanList() throws IOException, PecuniaException;
+	public ArrayList<LoanDisbursal> approvedLoanList() throws IOException, PecuniaException, LoanDisbursalException;
 
 	public String updateLoanAccount(ArrayList<LoanDisbursal> updateLoanApprovals, int numberOfMonths)
 			throws PecuniaException, LoanDisbursalException;

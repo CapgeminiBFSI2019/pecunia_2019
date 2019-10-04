@@ -28,11 +28,18 @@ public class AddAccount extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
 		
+		Account account = new Account();
+		Address address = new Address();
+		Customer customer = new Customer();
 		response.setContentType("text/html");
 		String name = request.getParameter("name");
 		String gender = request.getParameter("gender");
+		if("Female".equalsIgnoreCase(gender)) {
+			customer.setGender("F");
+		}
+		else
+			customer.setGender("M");
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String dateofbirth = request.getParameter("dateofbirth");
 
@@ -48,6 +55,7 @@ public class AddAccount extends HttpServlet {
 		String pan = request.getParameter("pan");
 
 		String accounttype = request.getParameter("accounttype");
+		System.out.println(accounttype);
 		String branchid = request.getParameter("branchid");
 		double accountbalance = Double.parseDouble(request.getParameter("accountbalance"));
 
@@ -56,9 +64,7 @@ public class AddAccount extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 
-		Account account = new Account();
-		Address address = new Address();
-		Customer customer = new Customer();
+		
 
 		address.setLine1(addressline1);
 		address.setLine2(addressline2);
@@ -66,27 +72,30 @@ public class AddAccount extends HttpServlet {
 		address.setState(state);
 		address.setCountry(country);
 		address.setZipcode(zipcode);
-		account.setAccountType(accounttype);
-		account.setBranchId(branchid);
-		account.setBalance(accountbalance);
-		account.setInterest(accountinterest);
 		customer.setAadhar(aadhar);
 		customer.setContact(contact);
 		customer.setDob(LocalDate.parse(dateofbirth, dateTimeFormatter));
-		customer.setGender(gender);
 		customer.setName(name);
 		customer.setPan(pan);
+		System.out.println("I am running");
+		account.setAccountType(accounttype);
+		System.out.println("I am probably running");
+		account.setBranchId(branchid);
+		System.out.println("mai nahi");
+		account.setBalance(accountbalance);
+		account.setInterest(accountinterest);
+		
 
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
-			String created = ams.addAccount(customer, address, account);
+			String created = ams.addAccount(customer,address, account);
 			if (created != null) {
-				out.println("<h1> Account successfully created </h1>");
-
+				out.println("<h6> Account successfully created </h6>");
+				out.println("<h6> Account Id : " + created + "</h6>");
 				request.getRequestDispatcher("addAccount.html").include(request, response);
 			}
 		} catch (PecuniaException | AccountException e) {
-			out.println("<h1>Failure</h1><br>");
+			out.println("<h6>Failure</h6><br>"+e.getMessage());
 			request.getRequestDispatcher("addAccount.html").include(request, response);
 		}
 	}

@@ -78,7 +78,7 @@ public class LoanDisbursalServlet extends HttpServlet {
 						"			</thead>");
 				out.write("<tbody>"); 
 
-				// request.getRequestDispatcher("loanDisbursal.html").include(request,
+				
 				for(Loan loanRequests: retrieveAll) 
 				{
 					out.write("<tr>");
@@ -105,6 +105,7 @@ public class LoanDisbursalServlet extends HttpServlet {
 				}
 				
 			 catch (PecuniaException | LoanDisbursalException e) {
+				 request.getRequestDispatcher("loanDisbursal.html").include(request,response);
 				out.println("<h3>Failure retrieving error</h3>");
 
 			}
@@ -185,6 +186,7 @@ public class LoanDisbursalServlet extends HttpServlet {
 				}
 				
 			 catch (PecuniaException | LoanDisbursalException e) {
+				 request.getRequestDispatcher("loanDisbursal.html").include(request,response);
 				 out.println("<h3>Failure retrieving error as no loan request is pending</h3>");
 
 			}
@@ -265,6 +267,7 @@ public class LoanDisbursalServlet extends HttpServlet {
 				}
 				
 			 catch (PecuniaException | LoanDisbursalException e) {
+				 request.getRequestDispatcher("loanDisbursal.html").include(request,response);
 				out.println("<h3>Failure retrieving error as no loan request is pending</h3>");
 
 			}
