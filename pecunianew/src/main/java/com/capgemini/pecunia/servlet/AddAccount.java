@@ -71,7 +71,6 @@ public class AddAccount extends HttpServlet {
  
 
         String accounttype = request.getParameter("accounttype");
-        System.out.println(accounttype);
         String branchid = request.getParameter("branchid");
         double accountbalance = Double.parseDouble(request.getParameter("accountbalance"));
 
@@ -101,11 +100,8 @@ public class AddAccount extends HttpServlet {
         customer.setDob(LocalDate.parse(dateofbirth, dateTimeFormatter));
         customer.setName(name);
         customer.setPan(pan);
-        System.out.println("I am running");
         account.setAccountType(accounttype);
-        System.out.println("I am probably running");
         account.setBranchId(branchid);
-        System.out.println("mai nahi");
         account.setBalance(accountbalance);
         account.setInterest(accountinterest);
         
