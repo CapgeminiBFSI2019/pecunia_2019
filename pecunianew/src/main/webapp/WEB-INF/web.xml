@@ -156,7 +156,7 @@
     <servlet-name>gjhg</servlet-name>
     <url-pattern>/gjhg</url-pattern>
   </servlet-mapping>
-</web-app>
+
 
 
 	<servlet>
