@@ -21,7 +21,7 @@ import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 public class UpdateCustomerAddressServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void service(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String accountId = request.getParameter("account-id");
 
@@ -49,8 +49,8 @@ public class UpdateCustomerAddressServlet extends HttpServlet {
 		try {
 			boolean updated = ams.updateCustomerAddress(account, address);
 			if (updated) {
-				request.getRequestDispatcher("updateAddress.html").include(request, response);
 				out.println("<h1> Customer Address Successfully Updated </h1>");
+				request.getRequestDispatcher("updateAddress.html").include(request, response);
 			}
 		} catch (PecuniaException | AccountException e) {
 			out.println("<h1>Failure</h1><br>");

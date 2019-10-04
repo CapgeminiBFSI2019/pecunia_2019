@@ -230,7 +230,6 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			if (resultSet.next()) {
 				accId = resultSet.getString(1);
 			}
-
 			preparedStatement2 = connection.prepareStatement(AccountQueryMapper.UPDATE_ADDRESS);
 			preparedStatement2.setString(1, address.getLine1());
 			preparedStatement2.setString(2, address.getLine2());
@@ -244,10 +243,9 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				logger.error(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 				throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 			}
-
+			
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
-
 			throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 		} finally {
 			try {
