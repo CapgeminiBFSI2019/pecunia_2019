@@ -363,7 +363,6 @@ public class TransactionServiceImpl implements TransactionService {
 			}
 			return transId;
 		} catch (Exception e) {
-
 			logger.error(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 			throw new TransactionException(ErrorConstants.EXCEPTION_DURING_TRANSACTION);
 		}
