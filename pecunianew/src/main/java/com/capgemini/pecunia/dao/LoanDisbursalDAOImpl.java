@@ -38,7 +38,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 	private String status;
 	private Double emi;
 	private int creditScore;
-	private int salary;
+
 
 	private int loanIdOfAccepted;
 	private String accountIdOfAccepted;
@@ -49,7 +49,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 	private String statusOfAccepted;
 	private Double emiOfAccepted;
 	private int creditScoreOfAccepted;
-	private int salaryOfAccepted;
+
 
 	private int loanIdOfRejected;
 	private String accountIdOfRejected;
@@ -60,8 +60,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 	private String statusOfRejected;
 	private Double emiOfRejected;
 	private int creditScoreOfRejected;
-	private int salaryOfRejected;
-
+	
 	private int loanDisbursedId;
 	private int loanId1;
 	private String accountId1;
@@ -110,7 +109,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				status = resultSet.getString("loan_status");
 				emi = resultSet.getDouble("emi");
 				creditScore = resultSet.getInt("credit_score");
-				salary = resultSet.getInt("salary");
+				
 
 				Loan loan = new Loan(loanId, accountId, amount, type, tenure, roi, status, emi, creditScore);
 				requestList.add(loan);
@@ -170,7 +169,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				statusOfAccepted = resultSet.getString("loan_status");
 				emiOfAccepted = resultSet.getDouble("emi");
 				creditScoreOfAccepted = resultSet.getInt("credit_score");
-				salaryOfAccepted = resultSet.getInt("salary");
+				
 				Loan loan = new Loan(loanIdOfAccepted, accountIdOfAccepted, amountOfAccepted, typeOfAccepted,
 						tenureOfAccepted, roiOfAccepted, statusOfAccepted, emiOfAccepted, creditScoreOfAccepted);
 				requestList.add(loan);
@@ -230,7 +229,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				statusOfRejected = resultSet.getString("loan_status");
 				emiOfRejected = resultSet.getDouble("emi");
 				creditScoreOfRejected = resultSet.getInt("credit_score");
-				salaryOfRejected = resultSet.getInt("salary");
+				
 				Loan loan = new Loan(loanIdOfRejected, accountIdOfRejected, amountOfRejected, typeOfRejected,
 						tenureOfRejected, roiOfRejected, statusOfRejected, emiOfRejected, creditScoreOfRejected);
 				requestList.add(loan);

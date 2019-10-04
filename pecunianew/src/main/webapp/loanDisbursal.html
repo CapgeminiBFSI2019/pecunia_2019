@@ -48,16 +48,15 @@
     <form id="Loan Disbursal Form" class="container transaction-form " method="post" action="loandisbursal">
 
 
-        <div class="form-group col-md-6 ">
-            <label for="show-Loan-requests">Show Loan Requests</label>
-            <br>
-            <select name="show-loan-requests">
+         <div class="form-group col-md-6 ">
+                <label for="show-loan-requests">Show Loan Requests</label>
+                <br>   
+                <select name="show-loan-requests">
                     <option value="" disabled selected hidden>Please Choose...</option>
                     <option value="retrieve all">Retrieve all loan requests</option>
                     <option value="retrieve approved">Retrieve approved loan requests</option>
                     <option value="retrieve rejected">Retrieve rejected loan requests</option>
                 </select>
-
                   <br><br>
                   <input type="submit">
             </div>
@@ -75,7 +74,7 @@
 
                     <option value="" disabled selected hidden>Please Choose...</option>
                     <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                    
                 </select>
 
                   <br><br>
@@ -96,7 +95,7 @@
 
                     <option value="" disabled selected hidden>Please Choose...</option>
                     <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                    
                 </select>
 
                   <br><br>
@@ -106,16 +105,31 @@
             
          </form>
         
+         <form id="Loan Disbursal Form 3" class="container transaction-form" method="post" action = "loandisbursalstatusupdation">       
+        
+           
 
 
-            <br><br>
-            <input type="submit">
+        <div class="form-group col-md-6 ">
+            <label for="update-account-balance">Update Account Balance</label>
+            <br>
+            <select name="update-loan-status">
 
-        </div>
+                    <option value="" disabled selected hidden>Please Choose...</option>
+                    <option value="Yes">Yes</option>
+                    
+                </select>
+
+                  <br><br>
+                  <input type="submit">
+             
+            </div>
+            
+         </form>
 
 
 
-    </form>
+       
 
 </body>
 
