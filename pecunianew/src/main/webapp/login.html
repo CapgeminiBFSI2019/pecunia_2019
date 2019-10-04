@@ -14,9 +14,8 @@
  
 
 <div class="container">
-  <h2>Pecunia Bank Login Page</h2>
   
-  <form action="login" class="needs-validation" method="POST" novalidate>
+ <!--  <form action="login" class="needs-validation" method="POST" novalidate>
     <div class="form-group">
       <label for="uname">Username:</label>
       <input type="text" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
@@ -37,7 +36,41 @@
       </label>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+  </form> -->
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Pecunia Bank Login</h5>
+            <form form action="login" class="needs-validation" method="POST" novalidate>
+              <div class="form-label-group">
+                <input type="email" id="inputUsername" class="form-control" name="uname" placeholder="Username" required autofocus>
+                <label for="inputUsername">username</label>
+              </div>
+
+ 
+
+              <div class="form-label-group">
+                <input type="password" id="inputPassword" class="form-control" name="pswd" placeholder="Password" required>
+                <label for="inputPassword">Password</label>
+              </div>
+
+ 
+
+              <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                <label class="custom-control-label" for="customCheck1">Remember password</label>
+              </div>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+              <hr class="my-4">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
  
