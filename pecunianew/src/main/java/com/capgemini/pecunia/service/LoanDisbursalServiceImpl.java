@@ -175,7 +175,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 			throws PecuniaException, LoanDisbursalException {
 		String status = Constants.STATUS_CHECK[0];
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
-		if (rejectedLoanList != null || approvedLoanList != null) {
+		if (rejectedLoanList != null || approvedLoanList != null ) {
 			try {
 				for (int index = 0; index < rejectedLoanList.size(); index++) {
 					int loanId = rejectedLoanList.get(index).getLoanId();
