@@ -32,8 +32,8 @@ public class DeleteAccountServlet extends HttpServlet {
 
 		AccountManagementService ams = new AccountManagementServiceImpl();
 		try {
-			boolean updated = ams.deleteAccount(account);
-			if (updated) {
+			boolean isDeleted = ams.deleteAccount(account);
+			if (isDeleted) {
 				out.println("<h1> Account Successfully Deleted </h1>");
 				request.getRequestDispatcher("deleteAccount.html").include(request, response);
 			}
