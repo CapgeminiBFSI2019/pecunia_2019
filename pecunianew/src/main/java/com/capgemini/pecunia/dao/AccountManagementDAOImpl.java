@@ -131,7 +131,6 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				preparedStatement2.close();
 				connection.close();
 			} catch (SQLException e) {
-				System.out.println(e.getMessage());
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
@@ -287,10 +286,8 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		String oldIdstr = null;
 		String id=null;
 		try {
-			System.out.println("in try block of calc acc id dao");
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.GET_RECENT_ID);
 			preparedStatement.setString(1, account.getId() + "%");
-			System.out.println(preparedStatement);
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				oldIdstr = resultSet.getString(1);
@@ -299,7 +296,6 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			}
 			oldId = Long.parseLong(oldIdstr);
 			id = Long.toString(oldId + 1);
-			System.out.println(id);
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
 
@@ -398,12 +394,9 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement.setString(4, address.getState());
 			preparedStatement.setString(5, address.getCountry());
 			preparedStatement.setString(6, address.getZipcode());
-			System.out.println("i am in address daoimpl");
-			System.out.println(preparedStatement);
 			queryResult = preparedStatement.executeUpdate();
 
 			if (queryResult == 0) {
-				System.out.println("Error in updating address");
 				logger.error(ErrorConstants.ADD_DETAILS_ERROR);
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
@@ -425,18 +418,13 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement3.setString(5, customer.getContact());
 			preparedStatement3.setString(6, customer.getGender());
 			preparedStatement3.setDate(7, java.sql.Date.valueOf(customer.getDob().plusDays(1)));
-			System.out.println("i am in customer daoimpl");
-			System.out.println(preparedStatement3);
 			queryResult = preparedStatement3.executeUpdate();
-			System.out.println("queryResult: "+queryResult);
 			if (queryResult == 0) {
-				System.out.println("customer addition failed");
 				logger.error(ErrorConstants.ADD_DETAILS_ERROR);
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
 
 			preparedStatement2 = connection.prepareStatement(AccountQueryMapper.GET_RECENT_CUSTOMER_ID);
-			System.out.println(preparedStatement2);
 			resultSet = preparedStatement2.executeQuery();
 			if (resultSet.next()) {
 				custId = resultSet.getString(1);
@@ -444,7 +432,6 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
-			System.out.println("SQL Exception: "+e.getMessage() );
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		} finally {
 			try {
@@ -456,7 +443,6 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			}
 		}
 		logger.info(LoggerMessage.ADD_CUSTOMER_DETAILS_SUCCESSFUL);
-		System.out.println("CustID created");
 		return custId;
 
 	}
@@ -476,7 +462,6 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	public String addAccount(Account account) throws PecuniaException, AccountException {
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
-		System.out.println("vaapis account daoimpl");
 		PreparedStatement preparedStatement = null;
 
 		int queryResult = 0;
@@ -490,12 +475,9 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement.setString(5, Constants.ACCOUNT_STATUS[0]);
 			preparedStatement.setDouble(6, account.getBalance());
 			preparedStatement.setDouble(7, account.getInterest());
-			System.out.println("i am in account daoimpl");
-			System.out.println(preparedStatement);
 			queryResult = preparedStatement.executeUpdate();
 			
 			if (queryResult == 0) {
-				System.out.println("queryResult=0");
 				logger.error(ErrorConstants.ADD_DETAILS_ERROR);
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			} else {

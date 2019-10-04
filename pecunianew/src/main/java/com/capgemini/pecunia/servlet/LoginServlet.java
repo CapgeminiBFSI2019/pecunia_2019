@@ -37,13 +37,14 @@ public class LoginServlet extends HttpServlet {
 				  Cookie ck=new Cookie("cookieName",name);  
 		          response.addCookie(ck);  
 				request.getRequestDispatcher("MainPage.html").forward(request, response); 
+			}else {
+				throw new PecuniaException("");
 			}
 			
 		} catch (PecuniaException | LoginException e) {
 			
 			request.getRequestDispatcher("login.html").include(request, response);
-			out.println("<br><h4 class='text-danger'>Login Failure!!! Invalid email or password.</h4><br>");
-			
+			out.println("<script>$('#my-toast').toast('show');</script>");
 		}
 		
 		out.close();

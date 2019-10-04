@@ -14,6 +14,20 @@
     <servlet-name>loginServlet</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>LogoutServlet</display-name>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  
+  
+  
   <servlet>
     <description></description>
     <display-name>CreditUsingSlipServlet</display-name>
@@ -43,16 +57,6 @@
   <servlet-mapping>
     <servlet-name>DebitUsingChequeServlet</servlet-name>
     <url-pattern>/debitcheque</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>LogoutServlet</display-name>
-    <servlet-name>LogoutServlet</servlet-name>
-    <servlet-class>com.capgemini.pecunia.servlet.LogoutServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>LogoutServlet</servlet-name>
-    <url-pattern>/logout</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -139,6 +143,31 @@
   
    <servlet>
     <description></description>
+    <display-name>LoanDisbursalData</display-name>
+    <servlet-name>LoanDisbursalData</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.LoanDisbursalDatabase</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>LoanDisbursalData</servlet-name>
+    <url-pattern>/loandisbursaldata</url-pattern>
+  </servlet-mapping>
+  
+  
+    <servlet>
+    <description></description>
+    <display-name>LoanDisbursalUpdate</display-name>
+    <servlet-name>LoanDisbursalUpdate</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.LoanDisbursedUpdate</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>LoanDisbursalUpdate</servlet-name>
+    <url-pattern>/loandisbursalupdation</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <description></description>
     <display-name>CheckingServlet</display-name>
     <servlet-name>CheckingServlet</servlet-name>
     <servlet-class>com.capgemini.pecunia.servlet.LoanDisbursalCheckingServlet</servlet-class>
@@ -147,6 +176,8 @@
     <servlet-name>CheckingServlet</servlet-name>
     <url-pattern>/loandisbursalchecking</url-pattern>
   </servlet-mapping>
+  
+ 
   
  
   <servlet>
