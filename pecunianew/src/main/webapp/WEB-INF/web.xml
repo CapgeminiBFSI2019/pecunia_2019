@@ -157,19 +157,6 @@
     <url-pattern>/gjhg</url-pattern>
   </servlet-mapping>
 
-
-
-	<servlet>
-		<description></description>
-		<display-name>PassbookServlet</display-name>
-		<servlet-name>PassbookServlet</servlet-name>
-		<servlet-class>com.capgemini.pecunia.servlet.PassbookServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>PassbookServlet</servlet-name>
-		<url-pattern>/PassbookServlet</url-pattern>
-	</servlet-mapping>
-
 </web-app>
 
 
