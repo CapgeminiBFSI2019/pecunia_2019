@@ -124,7 +124,7 @@
   <servlet-mapping>
     <servlet-name>UpdateCustomerNameServlet</servlet-name>
     <url-pattern>/UpdateCustomerName</url-pattern>
-
+  </servlet-mapping>
   
   <servlet>
     <description></description>
