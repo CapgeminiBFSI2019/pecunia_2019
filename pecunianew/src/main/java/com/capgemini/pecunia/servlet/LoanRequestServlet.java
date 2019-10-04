@@ -18,37 +18,18 @@ import com.capgemini.pecunia.service.LoanServiceImpl;
  */
 public class LoanRequestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoanRequestServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		doGet(request, response);
-		String AccountId=request.getParameter("AccountId");
-		double amount=Double.parseDouble(request.getParameter("LoanAmount"));
-		int tenure=Integer.parseInt(request.getParameter("Tenure"));
-		double roi=Double.parseDouble(request.getParameter("roi"));
-		int creditScore=Integer.parseInt(request.getParameter("CreditScore"));
-		String loanStatus=request.getParameter("status");
-		String loanType=request.getParameter("LoanType");
-		Loan loan=new Loan();
+		String AccountId = request.getParameter("Account Id");
+		double amount = Double.parseDouble(request.getParameter("LoanAmount"));
+		int tenure = Integer.parseInt(request.getParameter("Tenure"));
+		double roi = Double.parseDouble(request.getParameter("roi"));
+		int creditScore = Integer.parseInt(request.getParameter("CreditScore"));
+		String loanStatus = request.getParameter("status");
+		String loanType = request.getParameter("LoanType");
+		Loan loan = new Loan();
 		loan.setAccountId(AccountId);
 		loan.setAmount(amount);
 		loan.setTenure(tenure);
@@ -56,28 +37,23 @@ public class LoanRequestServlet extends HttpServlet {
 		loan.setLoanStatus(loanStatus);
 		loan.setRoi(roi);
 		loan.setType(loanType);
-		LoanService loanService=new LoanServiceImpl();
-		double emi=loanService.calculateEMI(amount, tenure, roi);
+		LoanService loanService = new LoanServiceImpl();
+		double emi = loanService.calculateEMI(amount, tenure, roi);
 		loan.setEmi(emi);
-		
 		response.setContentType("text/html");
-		PrintWriter out=response.getWriter();
+		PrintWriter out = response.getWriter();
 		try {
-			boolean isSuccess=loanService.createLoanRequest(loan);
-			if(isSuccess) {
+			boolean isSuccess = loanService.createLoanRequest(loan);
+			if (isSuccess) {
 				out.println("<h3 class='text-success'>Loan request data added successfully!!</h3>");
-				request.getRequestDispatcher("LoanRequestServlet.html").include(request, response); 
-				
+				request.getRequestDispatcher("LoanRequestServlet.html").include(request, response);
+
 			}
+
 		} catch (LoanException e) {
+			out.println("<h3 class='text-danger'>" + e.getMessage() + "</h3>");
 			out.println("<h3 class='text-danger'>Failure, please try again!!</h3>");
-			request.getRequestDispatcher("LoanRequest.html").include(request, response); 
-			
+			request.getRequestDispatcher("LoanRequest.html").include(request, response);
 		}
-		
-		
 	}
-
-	}
-
-
+}
