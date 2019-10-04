@@ -2,6 +2,7 @@ package com.capgemini.pecunia.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,24 +17,26 @@ import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.PassbookMaintenanceService;
 import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
 
-public class PassbookServlet extends HttpServlet {
+public class AccountSummaryServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String accountId = request.getParameter("accountID");
+		LocalDate StartDate = LocalDate.parse(request.getParameter("startDate"));
+		LocalDate EndDate = LocalDate.parse(request.getParameter("endDate"));
 		Account obj= new Account();
 		obj.setId(accountId);
-		List<Transaction> updatePassbook;
+		List<Transaction> accountSummary;
 		
 		PassbookMaintenanceService passbookService = new PassbookMaintenanceServiceImpl();
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();  
 		try {
-			updatePassbook= passbookService.updatePassbook(accountId);
+			accountSummary= passbookService.accountSummary(accountId, StartDate, EndDate);
 			out.write("<!DOCTYPE html>\r\n" + 
 					"<html>\r\n" + 
 					"<head>\r\n" + 
-					"<title>Passbook Details</title>\r\n" + 
+					"<title>Account Summary</title>\r\n" + 
 					"<meta charset=\"utf-8\">\r\n" + 
 					"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n" + 
 					"<link rel=\"stylesheet\"\r\n" + 
@@ -55,15 +58,17 @@ public class PassbookServlet extends HttpServlet {
 					"		</div>\r\n" + 
 					"	</div>\r\n" + 
 					"\r\n" + 
-					"\r\n" + 
 					"	<div class=\"container\">\r\n" + 
-					"		<h2 class=\"col-8\">Passbook Details</h2>\r\n" + 
+					"		<h2>Account Summary</h2>\r\n" + 
 					"		<table class=\"table table-bordered\">\r\n" + 
-					"			<thead class=\"thead-light\">\r\n");
-			if(updatePassbook.size()>0)
+					"			<thead class=\"thead-light\">");
+			if(accountSummary.size()>0)
 			{	
-			out.write("<th colspan=9>Account ID:" + accountId +"</th>\r\n" + 
-					"				</tr>\r\n" + 
+			out.write("<th colspan=9>Account ID:" + accountId +"</th>");
+			out.write("<tr>\r\n" + 
+					"<th colspan=5>Start Date:"+ StartDate +"</th>\r\n" + 
+					"<th colspan=5>End Date:"+ EndDate +"</th>");
+			out.write(		"		</tr>\r\n" + 
 					"				<tr>\r\n" + 
 					"					<th>Id</th>\r\n" + 
 					"					<th>Date</th>\r\n" + 
@@ -77,7 +82,7 @@ public class PassbookServlet extends HttpServlet {
 					"				</tr>\r\n" + 
 					"			</thead>");
 			out.write("<tbody>"); 
-			for(Transaction transaction: updatePassbook) 
+			for(Transaction transaction: accountSummary) 
 			{
 				out.write("<tr>");
 				out.write("<td>"+ transaction.getId()+ "</td>");
@@ -100,12 +105,12 @@ public class PassbookServlet extends HttpServlet {
 					"</html>");
 			}
 			else
-			{	out.write("No transaction to update. Passbook is up to date");
+			{	out.write("No transaction to show.");
 			
 			}
 			}
 		catch (PecuniaException | PassbookException e) {
-			out.println("<h4 class='text-danger'>Invalid account ID. Please input correct account ID</h4>");
+			out.println("<h4 class='text-danger'>Invalid input. Please input correctly.</h4>");
 			request.getRequestDispatcher("passbookForm.html").include(request, response);
 		}
 	}
