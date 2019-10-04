@@ -180,7 +180,16 @@
     <url-pattern>/gjhg</url-pattern>
   </servlet-mapping>
 
-
+  <servlet>
+    <description></description>
+    <display-name>AccountSummaryServlet</display-name>
+    <servlet-name>AccountSummaryServlet</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.AccountSummaryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AccountSummaryServlet</servlet-name>
+    <url-pattern>/AccountSummaryServlet</url-pattern>
+  </servlet-mapping>
 
 
 
