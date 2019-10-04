@@ -9,13 +9,13 @@ public class Loan {
     private String loanStatus;
     private double emi;
     private int creditScore;
-    private double salary;
-	public double getSalary() {
-		return salary;
-	}
-	public void setSalary(double salary) {
-		this.salary = salary;
-	}
+//    private double salary;
+//	public double getSalary() {
+//		return salary;
+//	}
+//	public void setSalary(double salary) {
+//		this.salary = salary;
+//	}
 	/**
 	 * @return the loanId
 	 */

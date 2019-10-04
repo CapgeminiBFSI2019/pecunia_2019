@@ -28,8 +28,9 @@ public class AddAccount extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		doGet(request, response);
+		
 		response.setContentType("text/html");
-		PrintWriter writer = response.getWriter();
 		String name = request.getParameter("name");
 		String gender = request.getParameter("gender");
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -80,8 +81,9 @@ public class AddAccount extends HttpServlet {
 		try {
 			String created = ams.addAccount(customer, address, account);
 			if (created != null) {
-				request.getRequestDispatcher("addAccount.html").include(request, response);
 				out.println("<h1> Account successfully created </h1>");
+
+				request.getRequestDispatcher("addAccount.html").include(request, response);
 			}
 		} catch (PecuniaException | AccountException e) {
 			out.println("<h1>Failure</h1><br>");

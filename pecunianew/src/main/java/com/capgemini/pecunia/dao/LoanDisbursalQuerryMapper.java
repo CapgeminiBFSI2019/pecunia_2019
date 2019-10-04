@@ -9,5 +9,6 @@ public static final String RETRIVE_ALL_QUERY_FROM_APPROVED_LOAN = "SELECT * FROM
 public static final String UPDATE_LOAN_ACCOUNT = "UPDATE loan_disbursal SET due_amount = ? , emi_to_be_paid = ? WHERE account_id = ?";
 public static final String UPDATE_LOAN_STATUS = "UPDATE loan SET loan_status = ?  WHERE loan_id = ?";
 public static final String UPDATE_AMOUNT = "UPDATE account SET balance = ? WHERE account_id = ?";
+public static final String TOTAL_EMI = "SELECT SUM(emi) FROM loan WHERE account_id = ?";
 
 }

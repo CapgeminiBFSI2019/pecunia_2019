@@ -28,7 +28,7 @@ public class DebitUsingChequeServlet extends HttpServlet {
 		int chequeNumber = Integer.parseInt(request.getParameter("chequeNumber"));
 		LocalDate issueDate = LocalDate.parse(request.getParameter("chequeIssueDate"));
 		
-		System.out.println("Servelet cheque date : "+issueDate);
+//		System.out.println("Servelet cheque date : "+issueDate);
 		
 		Transaction debitChequeTransaction = new Transaction();
 		Cheque debitCheque = new Cheque();
