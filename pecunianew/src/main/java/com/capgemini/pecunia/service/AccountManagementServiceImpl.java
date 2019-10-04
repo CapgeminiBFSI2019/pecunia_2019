@@ -25,14 +25,14 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
-	public boolean deleteAccount(Account acc) throws PecuniaException, AccountException {
+	public boolean deleteAccount(Account account) throws PecuniaException, AccountException {
 		boolean isUpdated = false;
 		try {
 
-			boolean isValidated = validateAccountId(acc);
+			boolean isValidated = validateAccountId(account);
 			if (isValidated) {
 				accountDAO = new AccountManagementDAOImpl();
-				isUpdated = accountDAO.deleteAccount(acc);
+				isUpdated = accountDAO.deleteAccount(account);
 			} else {
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}

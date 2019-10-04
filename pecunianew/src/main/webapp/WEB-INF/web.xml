@@ -128,6 +128,29 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>LoanDisbursal</display-name>
+    <servlet-name>LoanDisbursal</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.LoanDisbursalServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoanDisbursal</servlet-name>
+    <url-pattern>/loandisbursal</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <description></description>
+    <display-name>CheckingServlet</display-name>
+    <servlet-name>CheckingServlet</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.LoanDisbursalCheckingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CheckingServlet</servlet-name>
+    <url-pattern>/loandisbursalchecking</url-pattern>
+  </servlet-mapping>
+  
+ 
+  <servlet>
+    <description></description>
     <display-name>LoanRequestServlet</display-name>
     <servlet-name>LoanRequestServlet</servlet-name>
     <servlet-class>com.capgemini.pecunia.servlet.LoanRequestServlet</servlet-class>
@@ -147,6 +170,16 @@
     <url-pattern>/PassbookServlet</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <description></description>
+    <display-name>AccountSummaryServlet</display-name>
+    <servlet-name>AccountSummaryServlet</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.AccountSummaryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AccountSummaryServlet</servlet-name>
+    <url-pattern>/AccountSummaryServlet</url-pattern>
+  </servlet-mapping>
 
 
 

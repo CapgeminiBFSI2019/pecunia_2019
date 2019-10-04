@@ -9,6 +9,9 @@ public class Loan {
     private String loanStatus;
     private double emi;
     private int creditScore;
+
+  
+
 //    private double salary;
 //	public double getSalary() {
 //		return salary;
@@ -16,6 +19,7 @@ public class Loan {
 //	public void setSalary(double salary) {
 //		this.salary = salary;
 //	}
+
 	/**
 	 * @return the loanId
 	 */
