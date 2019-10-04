@@ -94,7 +94,6 @@
     <servlet-name>CreditUsingCheque</servlet-name>
     <url-pattern>/creditcheque</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <description></description>
     <display-name>UpdateCustomerContactServlet</display-name>
@@ -125,7 +124,6 @@
     <servlet-name>UpdateCustomerNameServlet</servlet-name>
     <url-pattern>/UpdateCustomerName</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>LoanRequestServlet</display-name>
@@ -135,10 +133,8 @@
   <servlet-mapping>
     <servlet-name>LoanRequestServlet</servlet-name>
     <url-pattern>/LoanRequestServlet</url-pattern>
-
   </servlet-mapping>
-  
-    <servlet>
+  <servlet>
     <description></description>
     <display-name>PassbookServlet</display-name>
     <servlet-name>PassbookServlet</servlet-name>
@@ -148,6 +144,14 @@
     <servlet-name>PassbookServlet</servlet-name>
     <url-pattern>/PassbookServlet</url-pattern>
   </servlet-mapping>
-  
+  <servlet>
+    <description></description>
+    <display-name>gjhg</display-name>
+    <servlet-name>gjhg</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.gjhg</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>gjhg</servlet-name>
+    <url-pattern>/gjhg</url-pattern>
+  </servlet-mapping>
 </web-app>
-
