@@ -25,7 +25,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 	Logger logger = Logger.getRootLogger();
 
 	public LoanDisbursalDAOImpl() {
-		PropertyConfigurator.configure("resources//log4j.properties");
+	
 
 	}
 
