@@ -26,8 +26,8 @@ public interface LoanDisbursalService {
 	public String updateExistingBalance(ArrayList<Loan> approvedLoanList)
 			throws PecuniaException, TransactionException, LoanDisbursalException;
 	
-	public String numberOfLoanAccounts(ArrayList<Loan> approvedLoanRequests, String accountId);
+	public String numberOfLoanAccounts(ArrayList<LoanDisbursal> approvedLoanRequests, String accountId);
 	
-	public double calculateEMIToBePaid(ArrayList<Loan> approvedLoanRequests, String accountId);
+
 
 }

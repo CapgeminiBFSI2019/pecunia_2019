@@ -104,32 +104,27 @@
             </div>
             
          </form>
-        
-         <form id="Loan Disbursal Form 3" class="container transaction-form" method="post" action = "loandisbursalstatusupdation">       
-        
-           
-
-
-        <div class="form-group col-md-6 ">
-            <label for="update-account-balance">Update Account Balance</label>
-            <br>
-            <select name="update-loan-status">
-
-                    <option value="" disabled selected hidden>Please Choose...</option>
-                    <option value="Yes">Yes</option>
-                    
-                </select>
-
-                  <br><br>
-                  <input type="submit">
-             
-            </div>
-            
-         </form>
-
-
-
+       <form id="Loan Disbursal Form 3" class="container transaction-form" method="post" action = "loantypes">    
        
+       
+     <div class="form-group col-md-6 ">
+                <label for="show-the-loans-taken-by-customers">Show The Loans Taken By a Customer</label>
+                <br>   
+                <input type="number " class="form-control " id="account-number  " name="AccountNumber " placeholder="Enter account number of loan customer">
+                  <br>
+                  <input type="submit">
+            </div>
+             </form>
+             
+      <form id="Loan Disbursal Form 3" class="container transaction-form" method="post" action = "totalEmi">   
+            <div class="form-group col-md-6 ">
+                <label for="total-emi-to-be-paid">Show Total EMI To Be Paid</label>
+                <br>   
+                <input type="number " class="form-control " id="account-number " name="AccountNumber " placeholder="Enter account number of loan customer">
+                  <br>
+                  <input type="submit">
+            </div>
+        </form>
 
 </body>
 

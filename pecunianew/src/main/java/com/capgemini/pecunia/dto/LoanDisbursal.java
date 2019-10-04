@@ -8,6 +8,15 @@ public class LoanDisbursal {
 	private double disbursedAmount;
 	private double dueAmount;
 	private double numberOfEmiToBePaid;
+	private String loanType;
+
+	public String getLoanType() {
+		return loanType;
+	}
+
+	public void setLoanType(String loanType) {
+		this.loanType = loanType;
+	}
 
 	public int getLoanDisbursalId() {
 		return loanDisbursalId;
@@ -58,7 +67,7 @@ public class LoanDisbursal {
 	}
 
 	public LoanDisbursal(int loanDisbursalId, int loanId, String accountId, double disbursedAmount, double dueAmount,
-			double numberOfEmiToBePaid) {
+			double numberOfEmiToBePaid, String loanType) {
 		super();
 		this.loanDisbursalId = loanDisbursalId;
 		this.loanId = loanId;
@@ -66,6 +75,7 @@ public class LoanDisbursal {
 		this.disbursedAmount = disbursedAmount;
 		this.dueAmount = dueAmount;
 		this.numberOfEmiToBePaid = numberOfEmiToBePaid;
+		this.loanType = loanType;
 	}
 
 	public LoanDisbursal() {
