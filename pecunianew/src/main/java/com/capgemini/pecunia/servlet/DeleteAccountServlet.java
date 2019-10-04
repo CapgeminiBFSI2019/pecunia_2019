@@ -24,7 +24,7 @@ public class DeleteAccountServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String accountId = request.getParameter("account-id");
 
-		response.setContentType("html/text");
+		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 
 		Account account = new Account();
@@ -34,8 +34,8 @@ public class DeleteAccountServlet extends HttpServlet {
 		try {
 			boolean updated = ams.deleteAccount(account);
 			if (updated) {
-				request.getRequestDispatcher("deleteAccount.html").include(request, response);
 				out.println("<h1> Account Successfully Deleted </h1>");
+				request.getRequestDispatcher("deleteAccount.html").include(request, response);
 			}
 		} catch (PecuniaException | AccountException e) {
 			out.println("<h1>Failure</h1><br>");

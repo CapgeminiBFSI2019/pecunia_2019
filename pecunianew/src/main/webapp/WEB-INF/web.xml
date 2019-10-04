@@ -94,4 +94,60 @@
     <servlet-name>DeleteAccount</servlet-name>
     <url-pattern>/DeleteAccount</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <description></description>
+    <display-name>UpdateCustomerContactServlet</display-name>
+    <servlet-name>UpdateCustomerContactServlet</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.UpdateCustomerContactServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateCustomerContactServlet</servlet-name>
+    <url-pattern>/UpdateCustomerContact</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateCustomerAddressServlet</display-name>
+    <servlet-name>UpdateCustomerAddressServlet</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.UpdateCustomerAddressServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateCustomerAddressServlet</servlet-name>
+    <url-pattern>/UpdateCustomerAddress</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateCustomerNameServlet</display-name>
+    <servlet-name>UpdateCustomerNameServlet</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.UpdateCustomerNameServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateCustomerNameServlet</servlet-name>
+    <url-pattern>/UpdateCustomerName</url-pattern>
+
+  
+  <servlet>
+    <description></description>
+    <display-name>LoanRequestServlet</display-name>
+    <servlet-name>LoanRequestServlet</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.LoanRequestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoanRequestServlet</servlet-name>
+    <url-pattern>/LoanRequestServlet</url-pattern>
+
+  </servlet-mapping>
+  
+    <servlet>
+    <description></description>
+    <display-name>PassbookServlet</display-name>
+    <servlet-name>PassbookServlet</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.PassbookServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PassbookServlet</servlet-name>
+    <url-pattern>/PassbookServlet</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
+

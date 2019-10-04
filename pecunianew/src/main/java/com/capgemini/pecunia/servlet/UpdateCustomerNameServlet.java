@@ -16,19 +16,20 @@ import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 
 /**
- * Servlet implementation class UpdateAccount
+ * Servlet implementation class UpdateCustomerNameServlet
  */
 public class UpdateCustomerNameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String accountId = request.getParameter("account-id");
 
 		String custName = request.getParameter("name");
 
-		response.setContentType("html/text");
+		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 
 		Account account = new Account();
@@ -40,8 +41,8 @@ public class UpdateCustomerNameServlet extends HttpServlet {
 		try {
 			boolean updated = ams.updateCustomerName(account, customer);
 			if (updated) {
-				request.getRequestDispatcher("updateName.html").include(request, response);
 				out.println("<h1> Customer Name Successfully Updated </h1>");
+				request.getRequestDispatcher("updateName.html").include(request, response);
 			}
 		} catch (PecuniaException | AccountException e) {
 			out.println("<h1>Failure</h1><br>");
