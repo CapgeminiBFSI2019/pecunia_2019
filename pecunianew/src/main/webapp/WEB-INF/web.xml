@@ -94,7 +94,6 @@
     <servlet-name>CreditUsingCheque</servlet-name>
     <url-pattern>/creditcheque</url-pattern>
   </servlet-mapping>
-</web-app>
 
   <servlet>
     <description></description>
