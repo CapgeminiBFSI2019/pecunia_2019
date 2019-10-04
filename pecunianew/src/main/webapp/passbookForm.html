@@ -3,10 +3,10 @@
 
 <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
+    <!-- <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
+    Bootstrap CSS
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
@@ -14,7 +14,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <title>Passbook Maintenance</title>
+    <title>Passbook Maintenance</title> -->
+    
+        <title>Passbook Maintenance</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -61,12 +71,21 @@
             </div>
         </form>
     </div>
-
-    <div>
-        <hr>
+    
+	<div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="min-height: 200px;">
+        <div class="toast col-sm-10 col-md-6" id="my-toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+            <div class="toast-header m-1">
+                <i class="fas fa-exclamation-triangle text-danger" style="font-size: 24px;"></i>
+                <strong class="mr-auto ml-3">Error</strong>
+                <button type="button " class="ml-2 mb-1 close " data-dismiss="toast" aria-label="Close ">
+                    <span aria-hidden="true ">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body m-1">
+                Invalid account ID. 
+            </div>
+        </div>
     </div>
-
-  
 
 </body>
 
