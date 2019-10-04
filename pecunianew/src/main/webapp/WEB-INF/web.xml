@@ -94,7 +94,6 @@
     <servlet-name>DeleteAccount</servlet-name>
     <url-pattern>/DeleteAccount</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>LoanRequestServlet</display-name>
@@ -103,6 +102,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>LoanRequestServlet</servlet-name>
-    <url-pattern>/LoanRequestServlet</url-pattern>
+    <url-pattern>/LoanRequest1</url-pattern>
   </servlet-mapping>
 </web-app>
