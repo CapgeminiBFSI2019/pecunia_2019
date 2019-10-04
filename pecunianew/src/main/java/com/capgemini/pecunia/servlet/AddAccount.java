@@ -71,7 +71,6 @@ public class AddAccount extends HttpServlet {
  
 
         String accounttype = request.getParameter("accounttype");
-        System.out.println(accounttype);
         String branchid = request.getParameter("branchid");
         double accountbalance = Double.parseDouble(request.getParameter("accountbalance"));
 
@@ -82,7 +81,7 @@ public class AddAccount extends HttpServlet {
  
 
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
+      
 
  
 
@@ -101,11 +100,8 @@ public class AddAccount extends HttpServlet {
         customer.setDob(LocalDate.parse(dateofbirth, dateTimeFormatter));
         customer.setName(name);
         customer.setPan(pan);
-        System.out.println("I am running");
         account.setAccountType(accounttype);
-        System.out.println("I am probably running");
         account.setBranchId(branchid);
-        System.out.println("mai nahi");
         account.setBalance(accountbalance);
         account.setInterest(accountinterest);
         
@@ -116,11 +112,13 @@ public class AddAccount extends HttpServlet {
         try {
             String created = ams.addAccount(customer,address, account);
             if (created != null) {
+              PrintWriter out = response.getWriter();
                 out.println("<h6> Account successfully created </h6>");
                 out.println("<h6> Account Id : " + created + "</h6>");
                 request.getRequestDispatcher("addAccount.html").include(request, response);
             }
         } catch (PecuniaException | AccountException e) {
+          PrintWriter out = response.getWriter();
             out.println("<h6>Failure</h6><br>"+e.getMessage());
             request.getRequestDispatcher("addAccount.html").include(request, response);
         }
