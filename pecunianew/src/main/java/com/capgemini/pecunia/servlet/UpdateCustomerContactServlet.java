@@ -21,7 +21,7 @@ import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 public class UpdateCustomerContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		String accountId = request.getParameter("account-id");

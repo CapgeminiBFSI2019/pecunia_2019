@@ -13,13 +13,34 @@ import com.capgemini.pecunia.exception.LoanException;
 import com.capgemini.pecunia.service.LoanService;
 import com.capgemini.pecunia.service.LoanServiceImpl;
 
-
+/**
+ * Servlet implementation class LoanRequest1
+ */
 public class LoanRequestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public LoanRequestServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		doGet(request, response);
 		String AccountId=request.getParameter("AccountId");
 		double amount=Double.parseDouble(request.getParameter("LoanAmount"));
 		int tenure=Integer.parseInt(request.getParameter("Tenure"));
@@ -44,17 +65,19 @@ public class LoanRequestServlet extends HttpServlet {
 		try {
 			boolean isSuccess=loanService.createLoanRequest(loan);
 			if(isSuccess) {
-				out.println("<h3 class='text-success'>Loan request data added successfully!!");
-				request.getRequestDispatcher(".html").include(request, response); 
+				out.println("<h3 class='text-success'>Loan request data added successfully!!</h3>");
+				request.getRequestDispatcher("LoanRequestServlet.html").include(request, response); 
 				
 			}
 		} catch (LoanException e) {
-			out.println("<h3 class='text-danger'>Failure, please try again!!");
-			request.getRequestDispatcher(".html").include(request, response); 
+			out.println("<h3 class='text-danger'>Failure, please try again!!</h3>");
+			request.getRequestDispatcher("LoanRequest.html").include(request, response); 
 			
 		}
 		
 		
 	}
 
-}
+	}
+
+

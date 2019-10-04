@@ -24,7 +24,7 @@ public class UpdateCustomerNameServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String accountId = request.getParameter("account-id");
 
 		String custName = request.getParameter("name");
