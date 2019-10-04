@@ -141,7 +141,9 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	public String calculateAccountId(Account account) throws PecuniaException, AccountException {
 		try {
 			String id = "";
+			System.out.println("In calc acc Id service Impl");
 			id = id.concat(account.getBranchId());
+			System.out.println(id);
 			String type = account.getAccountType();
 			switch (type) {
 			case Constants.SAVINGS:
@@ -157,8 +159,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 				id = id.concat(Constants.CODE_LOAN);
 				break;
 			}
+			System.out.println(id);
 			accountDAO = new AccountManagementDAOImpl();
+			account.setId(id);
 			id = accountDAO.calculateAccountId(account);
+			System.out.println("new id :" +id);
 			return id;
 		} catch (Exception e) {
 			throw new AccountException(ErrorConstants.TECH_ERROR);
@@ -199,14 +204,16 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	public String addAccount(Customer customer, Address address, Account account) throws PecuniaException, AccountException {
 		try {
 			accountDAO = new AccountManagementDAOImpl();
+			System.out.println("in account serviceimpl");
 			String custId = accountDAO.addCustomerDetails(customer, address);
-
+			System.out.println("mai hu account service impl me");
 			account.setHolderId(custId);
 			String accountId = calculateAccountId(account);
+			System.out.println(accountId + "created");
 			account.setId(accountId);
-
+			System.out.println("mai hu abhi bhi account service me");
 			String createdId = accountDAO.addAccount(account);
-
+			System.out.println("final account Id "+createdId);
 			if (createdId == null) {
 				throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 			}

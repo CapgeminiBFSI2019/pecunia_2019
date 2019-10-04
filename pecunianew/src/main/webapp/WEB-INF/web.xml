@@ -183,17 +183,17 @@
     <servlet-name>PassbookServlet</servlet-name>
     <url-pattern>/PassbookServlet</url-pattern>
   </servlet-mapping>
+
   <servlet>
     <description></description>
-    <display-name>gjhg</display-name>
-    <servlet-name>gjhg</servlet-name>
-    <servlet-class>com.capgemini.pecunia.servlet.gjhg</servlet-class>
+    <display-name>AccountSummaryServlet</display-name>
+    <servlet-name>AccountSummaryServlet</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.AccountSummaryServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>gjhg</servlet-name>
-    <url-pattern>/gjhg</url-pattern>
+    <servlet-name>AccountSummaryServlet</servlet-name>
+    <url-pattern>/AccountSummaryServlet</url-pattern>
   </servlet-mapping>
-
 
 
 

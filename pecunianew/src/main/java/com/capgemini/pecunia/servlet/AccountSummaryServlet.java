@@ -64,10 +64,10 @@ public class AccountSummaryServlet extends HttpServlet {
 					"			<thead class=\"thead-light\">");
 			if(accountSummary.size()>0)
 			{	
-			out.write("<th colspan=9>Account ID:" + accountId +"</th>");
+			out.write("<th colspan=9>Account ID: " + accountId +"</th>");
 			out.write("<tr>\r\n" + 
-					"<th colspan=5>Start Date:"+ StartDate +"</th>\r\n" + 
-					"<th colspan=5>End Date:"+ EndDate +"</th>");
+					"<th colspan=5>Start Date: "+ StartDate +"</th>\r\n" + 
+					"<th colspan=5>End Date: "+ EndDate +"</th>");
 			out.write(		"		</tr>\r\n" + 
 					"				<tr>\r\n" + 
 					"					<th>Id</th>\r\n" + 
