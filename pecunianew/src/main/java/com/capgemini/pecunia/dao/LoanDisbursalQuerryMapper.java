@@ -3,7 +3,7 @@ package com.capgemini.pecunia.dao;
 public interface LoanDisbursalQuerryMapper {
 public static final String RETRIVE_ALL_QUERY_FROM_LOAN = "SELECT * FROM loan";
 public static final String RETRIVE_LOAN_REQUESTS_WITH_ENOUGH_CREDIT_SCORE = "SELECT * FROM loan WHERE credit_score >= 670 AND loan_status = 'Pending'" ;
-public static final String RETRIVE_LOAN_REQUESTS_WITH_NOT_ENOUGH_CREDIT_SCORE = "SELECT * FROM loan where credit_score < 670 AND loan_status = 'Pending'";
+public static final String RETRIVE_LOAN_REQUESTS_WITH_NOT_ENOUGH_CREDIT_SCORE = "SELECT * FROM loan WHERE credit_score < 670 AND loan_status = 'Pending'";
 public static final String INSERT_QUERY = "INSERT INTO loan_disbursal(loan_id,account_id,disbursed_amount,due_amount,emi_to_be_paid) VALUES(?,?,?,?,?)";
 public static final String RETRIVE_ALL_QUERY_FROM_APPROVED_LOAN = "SELECT * FROM loan_disbursal";
 public static final String UPDATE_LOAN_ACCOUNT = "UPDATE loan_disbursal SET due_amount = ? , emi_to_be_paid = ? WHERE account_id = ?";
