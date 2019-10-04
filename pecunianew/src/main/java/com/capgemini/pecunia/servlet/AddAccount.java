@@ -81,7 +81,7 @@ public class AddAccount extends HttpServlet {
  
 
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
+      
 
  
 
@@ -112,11 +112,13 @@ public class AddAccount extends HttpServlet {
         try {
             String created = ams.addAccount(customer,address, account);
             if (created != null) {
+              PrintWriter out = response.getWriter();
                 out.println("<h6> Account successfully created </h6>");
                 out.println("<h6> Account Id : " + created + "</h6>");
                 request.getRequestDispatcher("addAccount.html").include(request, response);
             }
         } catch (PecuniaException | AccountException e) {
+          PrintWriter out = response.getWriter();
             out.println("<h6>Failure</h6><br>"+e.getMessage());
             request.getRequestDispatcher("addAccount.html").include(request, response);
         }
