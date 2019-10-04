@@ -18,9 +18,7 @@ import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 
-/**
- * Servlet implementation class AddAccount
- */
+
 public class AddAccount extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -54,7 +52,7 @@ public class AddAccount extends HttpServlet {
 
 		double accountinterest = Double.parseDouble(request.getParameter("accountinterest"));
 
-		response.setContentType("html/text");
+		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 
 		Account account = new Account();
