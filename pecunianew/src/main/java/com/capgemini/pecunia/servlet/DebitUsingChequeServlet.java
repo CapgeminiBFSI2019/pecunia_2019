@@ -21,6 +21,8 @@ public class DebitUsingChequeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		String accountId = request.getParameter("accountNumber");
 		double amount = Double.parseDouble(request.getParameter("debitChequeAmount"));
 		String accountHolderName = request.getParameter("accountHolderName");

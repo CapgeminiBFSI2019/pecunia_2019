@@ -24,7 +24,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	
 
 	public LoanDisbursalServiceImpl() {
-		PropertyConfigurator.configure("resources//log4j.properties");
+	
 
 	}
 
