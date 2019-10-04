@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js "
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN "
+	crossorigin="anonymous "></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js "
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q "
+	crossorigin="anonymous "></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js "
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl "
+	crossorigin="anonymous "></script>
+<script src="main.js "></script>
+<title>Delete account</title>
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-sm bg-success navbar-light">
+		<!-- Brand/logo -->
+		<a class="navbar-brand" href="accountsMenu.html"> <img
+			src="Pecunia-Logo (1).png" alt="logo" style="width: 50px;">
+		</a>
+
+
+		<ul class="navbar-nav">
+			<li class="nav-item"><a class="nav-link" href="addaccount.html"><b>Add
+						account</b></a></li>
+			<li class="nav-item"><a class=" nav-link"
+				href="updateAddress.html "><b>Update Customer Address</b></a></li>
+			<li class="nav-item"><a class=" nav-link"
+				href="updateName.html "><b>Update Customer Name</b></a></li>
+			<li class="nav-item"><a class=" nav-link"
+				href="updateContact.html "><b>Update Customer Contact</b></a></li>
+
+		</ul>
+	</nav>
+	<ul class="navbar-nav">
+		<li class="nav-item"><a class="nav-link"><b><center>Delete
+						account</center></b></a>
+	</ul>
+	<form id="delete-account-form " class="container deletion-form "
+		method="POST" action ="DeleteAccount">
+		<div class="row ">
+			<div class="form-group col-md-12 ">
+				<label for="account-id ">Account Id</label> <input type="number"
+					class="form-control " id="account-id" name="account-id "
+					placeholder="Enter Account Id " required>
+			</div>
+
+
+		</div>
+		<center>
+			<button type="submit" class="btn btn-primary ">Delete
+				account</button>
+		</center>
+
+	</form>
+</body>
+
+</html>
