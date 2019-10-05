@@ -61,6 +61,7 @@
             $('#my-toast').on('hidden.bs.toast', function() {
                 $('.toast-container').removeClass('d-flex');
                 $('.toast-container').addClass('d-none');
+                window.location.href = 'login.html';
             });
 
             $('#my-toast').on('shown.bs.toast', function() {
