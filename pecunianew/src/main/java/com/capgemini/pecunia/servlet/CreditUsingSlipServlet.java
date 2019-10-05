@@ -26,15 +26,20 @@ public class CreditUsingSlipServlet extends HttpServlet {
 		creditSlip.setAccountId(accountId);
 		creditSlip.setAmount(amount);
 		TransactionService trans = new TransactionServiceImpl();
-
+		PrintWriter out = response.getWriter();
 		try {
 			int transId = trans.creditUsingSlip(creditSlip);
-			PrintWriter out = response.getWriter();
-			out.println("<h1>Transaction Id is: </h1>" + transId);
-			out.println("<h1>Transaction Successful</h1>");
+		
+			request.getRequestDispatcher("creditUsingSlip.html").include(request, response);
+			out.println("<script>");
+			out.println("$('#success-toast-body').html('Amount has been credited. Transaction id is \t" + transId + "');");
+			out.println("$('#id-generation-success').toast('show');");
+			out.println("</script>");
 		} catch (TransactionException | PecuniaException e) {
-			PrintWriter out = response.getWriter();
-			out.println("<h1>Failure</h1><br>" + e.getMessage());
+			
+
+			request.getRequestDispatcher("creditUsingSlip.html").include(request, response);
+			out.println("<script>$('#id-generation-failure').toast('show');</script>");
 		}
 	}
 }
