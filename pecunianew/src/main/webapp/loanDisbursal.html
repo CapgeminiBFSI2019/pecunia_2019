@@ -20,7 +20,6 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-info">
         <a class="navbar-brand" href="loan.html"><i class="fas fa-home text-light mr-2" style="font-size: 24px;"></i>Pecunia</a>
-        <a class="text-light d-block d-lg-none ">Rohan Patil</a>
         <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                                     <span class="navbar-toggler-icon"></span>
                                 </button>
@@ -47,8 +46,9 @@
 
     <form id="Loan Disbursal Form" class="container transaction-form " method="post" action="loandisbursal">
 
+	<div class="d-flex justify-content-center ">
 
-         <div class="form-group col-md-6 ">
+         <div class="form-group col-md-6 offset-2 ">
                 <label for="show-loan-requests">Show Loan Requests</label>
                 <br>   
                 <select name="show-loan-requests">
@@ -58,16 +58,17 @@
                     <option value="retrieve rejected">Retrieve rejected loan requests</option>
                 </select>
                   <br><br>
-                  <input type="submit">
+                  <button type="submit" class="btn btn-primary ">Submit</button>
             </div>
+     </div>
             
                 </form>
                 
      <form id="Loan Disbursal Form 1" class="container transaction-form" method="post" action = "loandisbursaldata">           
                 
            
-        </div>
-        <div class="form-group col-md-6 ">
+     <div class="d-flex justify-content-center ">  
+        <div class="form-group col-md-6 offset-2">
             <label for="show-approved-loan-requests">Show Loan Disbursed Data</label>
             <br>
             <select name="show-loan-disbursal">
@@ -78,17 +79,18 @@
                 </select>
 
                   <br><br>
-                  <input type="submit">
+                  <button type="submit" class="btn btn-primary ">Submit</button>
             </div>
+      </div>
         
         </form>
         
       <form id="Loan Disbursal Form 2" class="container transaction-form" method="post" action = "loandisbursalupdation">       
         
            
+<div class="d-flex justify-content-center ">
 
-
-        <div class="form-group col-md-6 ">
+        <div class="form-group col-md-6 offset-2 ">
             <label for="update-account-balance">Update Account Balance</label>
             <br>
             <select name="update-account-balance">
@@ -99,9 +101,10 @@
                 </select>
 
                   <br><br>
-                  <input type="submit">
+                  <button type="submit" class="btn btn-primary ">Submit</button>
              
             </div>
+          </div>
             
          </form>
      
