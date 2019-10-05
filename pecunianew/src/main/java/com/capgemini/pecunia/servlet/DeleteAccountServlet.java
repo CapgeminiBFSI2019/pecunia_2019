@@ -34,12 +34,12 @@ public class DeleteAccountServlet extends HttpServlet {
 		try {
 			boolean isDeleted = ams.deleteAccount(account);
 			if (isDeleted) {
-				out.println("<h1> Account Successfully Deleted </h1>");
 				request.getRequestDispatcher("deleteAccount.html").include(request, response);
+				out.println("<script>$('#delete-success').toast('show');</script>");
 			}
 		} catch (PecuniaException | AccountException e) {
-			out.println("<h1>Failure. Please enter valid account id.</h1><br>");
 			request.getRequestDispatcher("deleteAccount.html").include(request, response);
+			out.println("<script>$('#delete-failure').toast('show');</script>");
 			
 		}
 
