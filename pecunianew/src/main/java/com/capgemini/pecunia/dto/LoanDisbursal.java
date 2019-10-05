@@ -9,6 +9,9 @@ public class LoanDisbursal {
 	private double dueAmount;
 	private double numberOfEmiToBePaid;
 	private String loanType;
+	
+
+	
 
 	public String getLoanType() {
 		return loanType;
@@ -76,6 +79,7 @@ public class LoanDisbursal {
 		this.dueAmount = dueAmount;
 		this.numberOfEmiToBePaid = numberOfEmiToBePaid;
 		this.loanType = loanType;
+
 	}
 
 	public LoanDisbursal() {

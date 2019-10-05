@@ -57,7 +57,6 @@ public class LoanRequestServlet extends HttpServlet {
 		} catch (LoanException e) {
 			request.getRequestDispatcher("LoanRequest.html").include(request, response);
 			out.println("<script>$('#loan-request-failure').toast('show');</script>");
-
 		}
 		out.close();
 	}

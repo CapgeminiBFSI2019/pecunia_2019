@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 			
 		} catch (PecuniaException | LoginException e) {
 			request.getRequestDispatcher("login.html").include(request, response);
-			out.println("<script>$('#my-toast').toast('show');</script>");
+			out.println("<script>$('#loan-request-toast').toast('show');</script>");
 		}
 		
 		out.close();

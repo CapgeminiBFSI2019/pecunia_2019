@@ -153,6 +153,18 @@
     <url-pattern>/loandisbursaldata</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <description></description>
+    <display-name>LoanStatus</display-name>
+    <servlet-name>LoanStatus</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.LoanDisbursalServletTypes</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>LoanStatus</servlet-name>
+    <url-pattern>/loantypes</url-pattern>
+  </servlet-mapping>
+  
   
     <servlet>
     <description></description>
