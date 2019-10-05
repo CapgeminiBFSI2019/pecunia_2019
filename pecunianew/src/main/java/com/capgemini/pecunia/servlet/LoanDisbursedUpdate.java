@@ -47,11 +47,24 @@ public class LoanDisbursedUpdate extends HttpServlet {
 		if (res.equals("Yes")) {
 			try {
 				String status = loanDisbursalService.updateLoanStatus(retrieveRejected, retrieveAccepted);
-				request.getRequestDispatcher("loanDisbursal.html").include(request,response);
-				out.write(status);
+//				request.getRequestDispatcher("loanDisbursal.html").include(request,response);
+//				out.write(status);
+				String msg = "Accounts has been updated";
+				request.getRequestDispatcher("loanDisbursal.html").include(request, response);
+				out.println("<script>");
+                out.println("$('#success-toast-body').html('" + msg + "');");
+                out.println("$('#loan-success-failure').toast('show');");
+                out.println("</script>");
 			} catch (PecuniaException | LoanDisbursalException e) {
-				request.getRequestDispatcher("loanDisbursal.html").include(request,response);
-				out.write("Not updated. Either no request is pending or connection error");
+//				request.getRequestDispatcher("loanDisbursal.html").include(request,response);
+//				out.write("Not updated. Either no request is pending or connection error");
+				
+				String msg = "No account has been updated";
+				request.getRequestDispatcher("loanDisbursal.html").include(request, response);
+				out.println("<script>");
+                out.println("$('#failure-toast-body').html('" + msg + "');");
+                out.println("$('#loan-disbursal-failure').toast('show');");
+                out.println("</script>");
 			}
 		}
 	}
