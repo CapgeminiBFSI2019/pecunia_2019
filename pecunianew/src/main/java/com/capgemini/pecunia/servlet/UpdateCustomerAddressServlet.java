@@ -49,12 +49,12 @@ public class UpdateCustomerAddressServlet extends HttpServlet {
 		try {
 			boolean updated = ams.updateCustomerAddress(account, address);
 			if (updated) {
-				out.println("<h1> Customer Address Successfully Updated </h1>");
 				request.getRequestDispatcher("updateAddress.html").include(request, response);
+				out.println("<script>$('#update-address-success').toast('show');</script>");
 			}
 		} catch (PecuniaException | AccountException e) {
-			out.println("<h1>Failure</h1><br>");
 			request.getRequestDispatcher("updateAddress.html").include(request, response);
+			out.println("<script>$('#update-address-failure').toast('show');</script>");
 		}
 	}
 

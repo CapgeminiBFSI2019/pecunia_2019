@@ -151,6 +151,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 					logger.error(e.getMessage());
 					throw new LoanDisbursalException(e.getMessage());
 				}
+				
 
 			}
 		}

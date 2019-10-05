@@ -127,7 +127,7 @@ public class PassbookServlet extends HttpServlet {
 		catch (PecuniaException | PassbookException e) {
 			
 			request.getRequestDispatcher("passbookForm.html").include(request, response);
-			out.println("<script>$('#my-toast').toast('show');</script>");
+			out.println("<script>$('#passbook-toast').toast('show');</script>");
 		}
 	}
 }
