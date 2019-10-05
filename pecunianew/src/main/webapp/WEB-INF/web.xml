@@ -80,13 +80,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>DeleteAccount</display-name>
-    <servlet-name>DeleteAccount</servlet-name>
-    <servlet-class>com.capgemini.pecunia.servlet.DeleteAccount</servlet-class>
+    <display-name>DeleteAccountServlet</display-name>
+    <servlet-name>DeleteAccountServlet</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.DeleteAccountServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>DeleteAccount</servlet-name>
-    <url-pattern>/DeleteAccount</url-pattern>
+    <servlet-name>DeleteAccountServlet</servlet-name>
+    <url-pattern>/DeleteAccountServlet</url-pattern>
   </servlet-mapping>
 
   <servlet>

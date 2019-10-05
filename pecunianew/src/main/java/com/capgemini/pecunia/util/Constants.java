@@ -28,7 +28,7 @@ public class Constants {
 
 	public static final String[] LOAN_REQUEST_STATUS = { "Pending", "Approved", "Rejected" };
 
-	public static final String[] STATUS_CHECK = { "Updated", "Not updated" };
+	public static final String[] STATUS_CHECK = { "Updated", "Not updated. Either there is connection problem or no data is present" };
 	public static final double MINIMUM_CREDIT_SLIP_AMOUNT = 100.00;
 	public static final double MAXIMUM_CREDIT_SLIP_AMOUNT = 100000.00;
 	public static final String SELF_CHEQUE = "SELF";
