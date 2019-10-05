@@ -241,14 +241,14 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * Description : Updating the Account balance of the customer
 	 ********************************************************************************************************/
 
-	public String numberOfLoanAccounts(ArrayList<Loan> approvedLoanRequests, String accountId) {
+	public String numberOfLoanAccounts(ArrayList<LoanDisbursal> approvedLoanRequests, String accountId) {
 		StringBuilder sb = new StringBuilder();
 		for (int index = 0; index < approvedLoanRequests.size(); index++) {
 			String retrievedAccountId = approvedLoanRequests.get(index).getAccountId();
 			
 			if (retrievedAccountId.equals(accountId)) {
 
-				sb.append(approvedLoanRequests.get(index).getType() + "\n");
+				sb.append(approvedLoanRequests.get(index).getLoanType() + "\n");
 			
 
 			}
@@ -258,26 +258,6 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	}
 
-	/*******************************************************************************************************
-	 * - Function Name : updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
-	 * - Input Parameters : ArrayList<Loan> approvedLoanRequests - Return Type :
-	 * void - Throws : PecuniaException, TransactionException,
-	 * LoanDisbursalException - Author : aninrana - Creation Date : 25/09/2019 -
-	 * Description : Updating the Account balance of the customer
-	 ********************************************************************************************************/
-
-	public double calculateEMIToBePaid(ArrayList<Loan> approvedLoanRequests, String accountId) {
-		double emiToBePaid = 0;
-		for (int index = 0; index < approvedLoanRequests.size(); index++) {
-			String retrievedAccountId = approvedLoanRequests.get(index).getAccountId();
-			if (retrievedAccountId.equals(accountId))
-
-				emiToBePaid = emiToBePaid + approvedLoanRequests.get(index).getEmi();
-
-		}
-
-		return emiToBePaid;
-
-	}
+	
 
 }

@@ -67,6 +67,7 @@ public class LoanDisbursalDatabase extends HttpServlet {
 						"					<th>Disbursed Amount</th>\r\n" + 
 						"					<th>Due Amount</th>\r\n" + 
 						"					<th>Number Of Emi To Be Paid</th>\r\n" + 
+						"					<th>Loan Type</th>\r\n" + 
 						"				</tr>\r\n" + 
 						"			</thead>");
 				out.write("<tbody>"); 
@@ -80,6 +81,7 @@ public class LoanDisbursalDatabase extends HttpServlet {
 					out.write("<td>"+ loanDisbursed.getDisbursedAmount()+ "</td>");
 					out.write("<td>"+ loanDisbursed.getDueAmount()+ "</td>");
 					out.write("<td>"+ loanDisbursed.getNumberOfEmiToBePaid()+ "</td>");
+					out.write("<td>"+ loanDisbursed.getLoanType()+ "</td>");
 					out.write("</tr>");
 				}
 				out.write("	</tr>\r\n" + 
@@ -92,7 +94,8 @@ public class LoanDisbursalDatabase extends HttpServlet {
 				
 			} catch (PecuniaException | LoanDisbursalException e) {
 		
-				e.printStackTrace();
+				 request.getRequestDispatcher("loanDisbursal.html").include(request,response);
+					out.println("<h3>Either no loan requests has been approved or connection error</h3>");
 			}
 		}
 		
