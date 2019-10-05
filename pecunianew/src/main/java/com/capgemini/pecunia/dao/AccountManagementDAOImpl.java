@@ -38,7 +38,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 	
-	@Override
+	
 	public boolean deleteAccount(Account account) throws PecuniaException, AccountException {
 		boolean isUpdated = false;
 		Connection connection = null;
@@ -92,7 +92,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
-	@Override
+	
 	public boolean updateCustomerName(Account account, Customer customer) throws AccountException, PecuniaException {
 		boolean isUpdated = false;
 		String accId = null;
@@ -152,7 +152,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 	
-	@Override
+	
 	public boolean updateCustomerContact(Account account, Customer customer) throws AccountException, PecuniaException {
 		boolean isUpdated = false;
 		String accId = null;
@@ -212,7 +212,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 	
-	@Override
+	
 	public boolean updateCustomerAddress(Account account, Address address) throws AccountException, PecuniaException {
 		boolean isUpdated = false;
 		Connection connection = null;
@@ -276,7 +276,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 	
-	@Override
+	
 	public String calculateAccountId(Account account) throws AccountException, PecuniaException {
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
@@ -286,6 +286,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		String oldIdstr = null;
 		String id=null;
 		try {
+			
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.GET_RECENT_ID);
 			preparedStatement.setString(1, account.getId() + "%");
 			resultSet = preparedStatement.executeQuery();
@@ -324,7 +325,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 	
-	@Override
+	
 	public boolean validateAccountId(Account account) throws PecuniaException, AccountException {
 
 		boolean isValidated = false;
@@ -371,11 +372,12 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	 * - Creation Date : 24/09/2019 
 	 * - Description : Addition of new Account by adding address, customer details and returns the generated customer ID
 	 * @throws PecuniaException
+	 * @throws SQLException 
 	 ********************************************************************************************************/
 
 	
-	@Override
-	public String addCustomerDetails(Customer customer, Address address) throws PecuniaException, AccountException {
+	
+	public String addCustomerDetails(Customer customer, Address address) throws PecuniaException, AccountException, SQLException {
 		Connection connection = null;
 		String custId = null;
 		String addId = null;
@@ -386,7 +388,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		int queryResult = 0;
 
 		try {
-
+			connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.ADD_ADDRESS);
 			preparedStatement.setString(1, address.getLine1());
 			preparedStatement.setString(2, address.getLine2());
@@ -397,6 +399,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			queryResult = preparedStatement.executeUpdate();
 
 			if (queryResult == 0) {
+				connection.rollback();
 				logger.error(ErrorConstants.ADD_DETAILS_ERROR);
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
@@ -420,6 +423,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement3.setDate(7, java.sql.Date.valueOf(customer.getDob().plusDays(1)));
 			queryResult = preparedStatement3.executeUpdate();
 			if (queryResult == 0) {
+				connection.rollback();
 				logger.error(ErrorConstants.ADD_DETAILS_ERROR);
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
@@ -429,9 +433,12 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			if (resultSet.next()) {
 				custId = resultSet.getString(1);
 			}
-
+			//connection.commit();
+			logger.info(LoggerMessage.ADD_CUSTOMER_DETAILS_SUCCESSFUL);
+			return custId;
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
+			connection.rollback();
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		} finally {
 			try {
@@ -442,8 +449,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				throw new AccountException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
-		logger.info(LoggerMessage.ADD_CUSTOMER_DETAILS_SUCCESSFUL);
-		return custId;
+		
 
 	}
 
@@ -456,17 +462,18 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	 * - Creation Date : 24/09/2019 
 	 * - Description : Addition of new Account by adding account details and returns the generated accountID
 	 * @throws PecuniaException
+	 * @throws SQLException 
 	 ********************************************************************************************************/
 	
 	@Override
-	public String addAccount(Account account) throws PecuniaException, AccountException {
+	public String addAccount(Account account) throws PecuniaException, AccountException, SQLException {
 		Connection connection = null;
 		connection = DBConnection.getInstance().getConnection();
 		PreparedStatement preparedStatement = null;
 
 		int queryResult = 0;
-
 		try {
+			connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.ADD_ACCOUNT);
 			preparedStatement.setString(1, account.getId());
 			preparedStatement.setString(2, account.getHolderId());
@@ -478,16 +485,18 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			queryResult = preparedStatement.executeUpdate();
 			
 			if (queryResult == 0) {
+				connection.rollback();
 				logger.error(ErrorConstants.ADD_DETAILS_ERROR);
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			} else {
 				logger.info(LoggerMessage.ADD_ACCOUNT_SUCCESSFUL);
-				return account.getId();
+				connection.commit();
+				return account.getId();	
 			}
-
+			
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
-
+			connection.rollback();
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		} finally {
 			try {
