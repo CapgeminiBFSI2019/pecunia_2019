@@ -1,5 +1,7 @@
 package com.capgemini.pecunia.dao;
 
+import java.sql.SQLException;
+
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Address;
 import com.capgemini.pecunia.dto.Customer;
@@ -15,9 +17,9 @@ public interface AccountManagementDAO {
 
 	public boolean updateCustomerAddress(Account account, Address address) throws PecuniaException, AccountException;
 
-	public String addCustomerDetails(Customer customer, Address address) throws PecuniaException, AccountException;
+	public String addCustomerDetails(Customer customer, Address address) throws PecuniaException, AccountException, SQLException;
 
-	public String addAccount(Account account) throws PecuniaException, AccountException;
+	public String addAccount(Account account) throws PecuniaException, AccountException, SQLException;
 
 	public String calculateAccountId(Account account) throws PecuniaException, AccountException;
 
