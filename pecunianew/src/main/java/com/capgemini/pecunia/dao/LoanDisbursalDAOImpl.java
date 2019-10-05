@@ -68,6 +68,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 	private double dueAmount;
 	private double emiToBePaid;
 	private String loanType;
+	private double emiPerMonth;
 
 	/*******************************************************************************************************
 	 * - Function Name : amountToBePaid(double emi, int tenure) - Input Parameters
@@ -326,7 +327,7 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 				dueAmount = resultSet.getDouble("due_amount");
 				emiToBePaid = resultSet.getDouble("emi_to_be_paid");
 				loanType = resultSet.getString("loan_type");
-				LoanDisbursal getDetails = new LoanDisbursal(loanDisbursedId, loanId1, accountId1, disbursedAmount,
+				LoanDisbursal getDetails = new LoanDisbursal(loanDisbursedId, loanId1, accountId, disbursedAmount,
 						dueAmount, emiToBePaid,loanType);
 				approvedLoanList.add(getDetails);
 
