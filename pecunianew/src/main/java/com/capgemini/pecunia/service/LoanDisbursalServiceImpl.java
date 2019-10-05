@@ -241,14 +241,14 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * Description : Updating the Account balance of the customer
 	 ********************************************************************************************************/
 
-	public String numberOfLoanAccounts(ArrayList<LoanDisbursal> approvedLoanRequests, String accountId) {
+	public String numberOfLoanAccounts(ArrayList<Loan> approvedLoanRequests, String accountId) {
 		StringBuilder sb = new StringBuilder();
 		for (int index = 0; index < approvedLoanRequests.size(); index++) {
 			String retrievedAccountId = approvedLoanRequests.get(index).getAccountId();
 			
 			if (retrievedAccountId.equals(accountId)) {
 
-				sb.append(approvedLoanRequests.get(index).getLoanType() + "\n");
+				sb.append(approvedLoanRequests.get(index).getType() + "\n");
 			
 
 			}
@@ -257,6 +257,10 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		return sb.toString();
 
 	}
+	
+
+
+	
 
 	
 
