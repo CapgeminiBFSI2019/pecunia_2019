@@ -96,8 +96,12 @@ public class LoanDisbursalDatabase extends HttpServlet {
 				
 			} catch (PecuniaException | LoanDisbursalException e) {
 		
-				 request.getRequestDispatcher("loanDisbursal.html").include(request,response);
-					out.println("<h3>Either no loan requests has been approved or connection error</h3>");
+				String msg = "Failure retrieving error as no loan request is rejected";
+				request.getRequestDispatcher("loanDisbursal.html").include(request, response);
+				out.println("<script>");
+                out.println("$('#failure-toast-body').html('" + msg + "');");
+                out.println("$('#loan-disbursal-failure').toast('show');");
+                out.println("</script>");
 			}
 		}
 		
