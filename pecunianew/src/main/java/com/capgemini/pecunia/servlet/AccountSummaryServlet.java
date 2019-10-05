@@ -132,7 +132,7 @@ public class AccountSummaryServlet extends HttpServlet {
 			}
 		catch (PecuniaException | PassbookException e) {
 			request.getRequestDispatcher("accountSummaryForm.html").include(request, response);
-			out.println("<script>$('#my-toast').toast('show');</script>");
+			out.println("<script>$('#accountSummary-toast').toast('show');</script>");
 		}
 	}
 }

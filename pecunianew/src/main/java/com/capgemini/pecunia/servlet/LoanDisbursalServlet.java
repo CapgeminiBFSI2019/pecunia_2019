@@ -105,8 +105,14 @@ public class LoanDisbursalServlet extends HttpServlet {
 				}
 				
 			 catch (PecuniaException | LoanDisbursalException e) {
-				 request.getRequestDispatcher("loanDisbursal.html").include(request,response);
-				out.println("<h3>Failure retrieving error</h3>");
+//				 request.getRequestDispatcher("loanDisbursal.html").include(request,response);
+//				out.println("<h3>Failure retrieving error</h3>");
+				 String msg = "Failure retrieving error as no loan request is pending";
+					request.getRequestDispatcher("loanDisbursal.html").include(request, response);
+					out.println("<script>");
+	                out.println("$('#failure-toast-body').html('" + msg + "');");
+	                out.println("$('#loan-disbursal-failure').toast('show');");
+	                out.println("</script>");
 
 			}
 
@@ -186,8 +192,14 @@ public class LoanDisbursalServlet extends HttpServlet {
 				}
 				
 			 catch (PecuniaException | LoanDisbursalException e) {
-				 request.getRequestDispatcher("loanDisbursal.html").include(request,response);
-				 out.println("<h3>Failure retrieving error as no loan request is pending</h3>");
+//				 request.getRequestDispatcher("loanDisbursal.html").include(request,response);
+//				 out.println("<h3>Failure retrieving error as no loan request is pending</h3>");
+				 String msg = "Failure retrieving error as no loan request is pending";
+					request.getRequestDispatcher("loanDisbursal.html").include(request, response);
+					out.println("<script>");
+	                out.println("$('#failure-toast-body').html('" + msg + "');");
+	                out.println("$('#loan-disbursal-failure').toast('show');");
+	                out.println("</script>");
 
 			}
 
@@ -267,8 +279,14 @@ public class LoanDisbursalServlet extends HttpServlet {
 				}
 				
 			 catch (PecuniaException | LoanDisbursalException e) {
-				 request.getRequestDispatcher("loanDisbursal.html").include(request,response);
-				out.println("<h3>Failure retrieving error as no loan request is pending</h3>");
+//				 request.getRequestDispatcher("loanDisbursal.html").include(request,response);
+//				out.println("<h3>Failure retrieving error as no loan request is pending</h3>");
+				 String msg = "Failure retrieving error as no loan request is pending";
+					request.getRequestDispatcher("loanDisbursal.html").include(request, response);
+					out.println("<script>");
+	                out.println("$('#failure-toast-body').html('" + msg + "');");
+	                out.println("$('#loan-disbursal-failure').toast('show');");
+	                out.println("</script>");
 
 			}
 
