@@ -12,6 +12,9 @@ public class ErrorConstants {
 	public static final String DELETE_ACCOUNT_ERROR = "Deletion unsuccessful.";
 	public static final String ACCOUNT_CREATION_ERROR = "Account not Created.";
 	public static final String LOGIN_ERROR = "Either Password or Email is incorrect";
+	public static final String DELETE_ADDRESS_ERROR = "Error in deleting address details";
+	public static final String DELETE_CUSTOMER_ERROR = "Error in deleting customer details";
+	public static final String DELETE_DETAILS_ERROR = "Error in deleting address and customer details";
 
 	public static final String LOAN_ADD_ERROR = "Error in adding Loan Details.";
 	public static final String FETCH_ERROR = "Error in fetching account Id";
