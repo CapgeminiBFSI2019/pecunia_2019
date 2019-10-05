@@ -63,6 +63,7 @@ public class LoanDisbursalDatabase extends HttpServlet {
 				
 				out.write(
 						"					<th>Loan Disbursal Id</th>\r\n" + 
+					    "					<th>Account Id Id</th>\r\n" + 
 						"					<th>Loan Id</th>\r\n" + 
 						"					<th>Disbursed Amount</th>\r\n" + 
 						"					<th>Due Amount</th>\r\n" + 
@@ -77,6 +78,7 @@ public class LoanDisbursalDatabase extends HttpServlet {
 				{
 					out.write("<tr>");
 					out.write("<td>"+ loanDisbursed.getLoanDisbursalId()+ "</td>");
+					out.write("<td>"+ loanDisbursed.getAccountId()+ "</td>");
 					out.write("<td>"+ loanDisbursed.getLoanId()+ "</td>");
 					out.write("<td>"+ loanDisbursed.getDisbursedAmount()+ "</td>");
 					out.write("<td>"+ loanDisbursed.getDueAmount()+ "</td>");

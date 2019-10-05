@@ -19,6 +19,6 @@ public interface AccountQueryMapper {
 	public static final String GET_RECENT_ID = "SELECT account_id FROM account WHERE account_id LIKE ? ORDER BY account_id DESC LIMIT 1";
 	public static final String VALIDATE_ID = "SELECT account_id FROM account WHERE account_id=?";
 
-	public static final String DELETE_ADDRESS_ID = "DELETE address_id FROM address";
-	public static final String DELETE_CUSTOMER_ID = "DELETE customer_id FROM customer";
+	public static final String DELETE_ADDRESS_ID = "DELETE FROM address WHERE address_id=?";
+	public static final String DELETE_CUSTOMER_ID = "DELETE FROM customer WHERE customer_id=?";
 }
