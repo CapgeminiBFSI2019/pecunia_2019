@@ -131,8 +131,8 @@ public class AccountSummaryServlet extends HttpServlet {
 			}
 			}
 		catch (PecuniaException | PassbookException e) {
-			out.println("<h4 class='text-danger'>Invalid input. Please input correctly.</h4>");
 			request.getRequestDispatcher("accountSummaryForm.html").include(request, response);
+			out.println("<script>$('#my-toast').toast('show');</script>");
 		}
 	}
 }
