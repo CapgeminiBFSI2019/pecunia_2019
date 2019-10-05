@@ -84,7 +84,7 @@ public class AddAccount extends HttpServlet {
 			
 				request.getRequestDispatcher("addAccount.html").include(request, response);
 				out.println("<script>");
-				out.println("$('#success-toast-body').html('Account created successfully. Account id is" + created + "');");
+				out.println("$('#success-toast-body').html('Account created successfully. Account id is \t" + created + "');");
 				out.println("$('#add-account-success').toast('show');");
 				out.println("</script>");
 			}
