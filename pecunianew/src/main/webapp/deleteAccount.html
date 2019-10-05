@@ -7,13 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+   
     <title>Delete account</title>
 </head>
 
@@ -57,7 +58,65 @@
         </center>
 
     </form>
-   
+    
+    <div aria-live="polite" aria-atomic="true" class="toast-container d-none justify-content-center align-items-center">
+        <div class="toast" id="delete-failure" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+            <div class="toast-header">
+                <img src="images/warning.png" class="rounded mr-2" alt="..." width="24px" height="24px">
+                <strong class="mr-auto">Account</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="toast-body">
+                Account Deletion Failed!!
+            </div>
+        </div>
+        <div class="toast" id="delete-success" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+            <div class="toast-header">
+                <img src="images/success.png" class="rounded mr-2" alt="..." width="24px" height="24px">
+                <strong class="mr-auto">Account</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="toast-body">
+                Account Deleted Successfully!!
+            </div>
+        </div>
+    </div>
+   <script>
+        // Disable form submissions if there are invalid fields
+        (function() {
+            'use strict';
+
+            $('#delete-failure').on('hidden.bs.toast', function() {
+                $('#delete-success').show();
+                $('.toast-container').removeClass('d-flex');
+                $('.toast-container').addClass('d-none');
+                window.location.href = 'deleteAccount.html';
+            });
+
+            $('#delete-failure').on('shown.bs.toast', function() {
+                $('#delete-success').hide();
+                $('.toast-container').removeClass('d-none');
+                $('.toast-container').addClass('d-flex');
+            });
+            $('#delete-success').on('hidden.bs.toast', function() {
+                $('#delete-failure').show();
+                $('.toast-container').removeClass('d-flex');
+                $('.toast-container').addClass('d-none');
+                window.location.href = 'deleteAccount.html';
+            });
+
+            $('#delete-success').on('shown.bs.toast', function() {
+                $('#delete-failure').hide();
+                $('.toast-container').removeClass('d-none');
+                $('.toast-container').addClass('d-flex');
+            });
+
+        })();
+    </script>
 
 </body>
 
