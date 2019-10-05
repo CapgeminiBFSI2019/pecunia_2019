@@ -19,7 +19,7 @@ import com.capgemini.pecunia.service.LoanServiceImpl;
 public class LoanRequestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		String AccountId = request.getParameter("Account Id");
@@ -45,15 +45,19 @@ public class LoanRequestServlet extends HttpServlet {
 		try {
 			boolean isSuccess = loanService.createLoanRequest(loan);
 			if (isSuccess) {
-				out.println("<h3 class='text-success'>Loan request data added successfully!!</h3>");
-				request.getRequestDispatcher("LoanRequestServlet.html").include(request, response);
+				request.getRequestDispatcher("LoanRequest.html").include(request, response);
+				out.println("<script>$('#loan-request-success').toast('show');</script>");
+				
+				
 
+			}else {
+				throw new LoanException("");
 			}
 
 		} catch (LoanException e) {
-			out.println("<h3 class='text-danger'>" + e.getMessage() + "</h3>");
-			out.println("<h3 class='text-danger'>Failure, please try again!!</h3>");
 			request.getRequestDispatcher("LoanRequest.html").include(request, response);
+			out.println("<script>$('#loan-request-failure').toast('show');</script>");
 		}
+		out.close();
 	}
 }
