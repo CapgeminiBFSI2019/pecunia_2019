@@ -41,12 +41,12 @@ public class UpdateCustomerNameServlet extends HttpServlet {
 		try {
 			boolean updated = ams.updateCustomerName(account, customer);
 			if (updated) {
-				out.println("<h1> Customer Name Successfully Updated </h1>");
 				request.getRequestDispatcher("updateName.html").include(request, response);
+				out.println("<script>$('#update-name-success').toast('show');</script>");
 			}
 		} catch (PecuniaException | AccountException e) {
-			out.println("<h1>Failure</h1><br>");
 			request.getRequestDispatcher("updateName.html").include(request, response);
+			out.println("<script>$('#update-name-failure').toast('show');</script>");
 
 		}
 

@@ -373,7 +373,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		int queryResult = 0;
 
 		try {
-			connection.setAutoCommit(false);
+			//connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.ADD_ADDRESS);
 			preparedStatement.setString(1, address.getLine1());
 			preparedStatement.setString(2, address.getLine2());
@@ -384,7 +384,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			queryResult = preparedStatement.executeUpdate();
 
 			if (queryResult == 0) {
-				connection.rollback();
+				//connection.rollback();
 				logger.error(ErrorConstants.ADD_DETAILS_ERROR);
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
@@ -408,7 +408,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement3.setDate(7, java.sql.Date.valueOf(customer.getDob().plusDays(1)));
 			queryResult = preparedStatement3.executeUpdate();
 			if (queryResult == 0) {
-				connection.rollback();
+				//connection.rollback();
 				logger.error(ErrorConstants.ADD_DETAILS_ERROR);
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
@@ -418,12 +418,13 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			if (resultSet.next()) {
 				custId = resultSet.getString(1);
 			}
-			connection.commit();
+			//connection.commit();
 			logger.info(LoggerMessage.ADD_CUSTOMER_DETAILS_SUCCESSFUL);
 			return custId;
 		} catch (SQLException e) {
+			
 			logger.error(e.getMessage());
-			connection.rollback();
+			//connection.rollback();
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		} finally {
 			try {
@@ -456,7 +457,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 		int queryResult = 0;
 		try {
-			connection.setAutoCommit(false);
+			//connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.ADD_ACCOUNT);
 			preparedStatement.setString(1, account.getId());
 			preparedStatement.setString(2, account.getHolderId());
@@ -468,20 +469,30 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			queryResult = preparedStatement.executeUpdate();
 
 			if (queryResult == 0) {
-				connection.rollback();
+
+				//connection.rollback();
+
 				addAccountError(account);
+
 				logger.error(ErrorConstants.ADD_DETAILS_ERROR);
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			} else {
 				logger.info(LoggerMessage.ADD_ACCOUNT_SUCCESSFUL);
-				connection.commit();
-				return account.getId();
+
+				//connection.commit();
+				return account.getId();	
+
 			}
 
 		} catch (SQLException e) {
+			
 			logger.error(e.getMessage());
-			connection.rollback();
+
+			//connection.rollback();
+
+			
 			addAccountError(account);
+
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		} finally {
 			try {
@@ -516,7 +527,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		String addrId = null;
 		int queryResult = 0;
 		try {
-			connection.setAutoCommit(false);
+			//connection.setAutoCommit(false);
 			preparedStatement1 = connection.prepareStatement(AccountQueryMapper.GET_ADDRESS_ID);
 			preparedStatement1.setString(1, account.getId());
 			ResultSet resultSet = preparedStatement1.executeQuery();
@@ -537,16 +548,16 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement3.setString(1, account.getHolderId());
 			queryResult = preparedStatement2.executeUpdate();
 			if (queryResult == 0) {
-				connection.rollback();
+				//connection.rollback();
 				logger.error(ErrorConstants.DELETE_CUSTOMER_ERROR);
 				throw new AccountException(ErrorConstants.DELETE_CUSTOMER_ERROR);
 			}
-			connection.commit();
+			//connection.commit();
 			logger.info(LoggerMessage.DELETE_DETAILS_SUCCESSFUL);
 
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
-			connection.rollback();
+			//connection.rollback();
 			throw new AccountException(ErrorConstants.DELETE_DETAILS_ERROR);
 		} finally {
 			try {
