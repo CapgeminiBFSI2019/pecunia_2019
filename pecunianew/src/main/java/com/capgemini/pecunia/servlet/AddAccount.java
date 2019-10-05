@@ -119,9 +119,12 @@ public class AddAccount extends HttpServlet {
             }
         } catch (PecuniaException | AccountException e) {
           PrintWriter out = response.getWriter();
-            out.println("<h6>Failure</h6><br>"+e.getMessage());
+          //out.println("<script>$('#my-toast').toast('show');</script>");
             request.getRequestDispatcher("addAccount.html").include(request, response);
+            out.println("<h6>Failure</h6><br>"+e.getMessage());
+            e.printStackTrace();
         }
+    
     }
 
  

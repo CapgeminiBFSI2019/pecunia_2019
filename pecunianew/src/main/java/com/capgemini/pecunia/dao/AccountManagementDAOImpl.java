@@ -388,7 +388,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		int queryResult = 0;
 
 		try {
-			connection.setAutoCommit(false);
+			//connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.ADD_ADDRESS);
 			preparedStatement.setString(1, address.getLine1());
 			preparedStatement.setString(2, address.getLine2());
@@ -399,7 +399,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			queryResult = preparedStatement.executeUpdate();
 
 			if (queryResult == 0) {
-				connection.rollback();
+				//connection.rollback();
 				logger.error(ErrorConstants.ADD_DETAILS_ERROR);
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
@@ -423,7 +423,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			preparedStatement3.setDate(7, java.sql.Date.valueOf(customer.getDob().plusDays(1)));
 			queryResult = preparedStatement3.executeUpdate();
 			if (queryResult == 0) {
-				connection.rollback();
+				//connection.rollback();
 				logger.error(ErrorConstants.ADD_DETAILS_ERROR);
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
@@ -437,8 +437,9 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			logger.info(LoggerMessage.ADD_CUSTOMER_DETAILS_SUCCESSFUL);
 			return custId;
 		} catch (SQLException e) {
+			System.out.println("Idhar :"+e.getMessage());
 			logger.error(e.getMessage());
-			connection.rollback();
+			//connection.rollback();
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		} finally {
 			try {
@@ -473,7 +474,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 		int queryResult = 0;
 		try {
-			connection.setAutoCommit(false);
+			//connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(AccountQueryMapper.ADD_ACCOUNT);
 			preparedStatement.setString(1, account.getId());
 			preparedStatement.setString(2, account.getHolderId());
@@ -485,18 +486,19 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			queryResult = preparedStatement.executeUpdate();
 			
 			if (queryResult == 0) {
-				connection.rollback();
+				//connection.rollback();
 				logger.error(ErrorConstants.ADD_DETAILS_ERROR);
 				throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 			} else {
 				logger.info(LoggerMessage.ADD_ACCOUNT_SUCCESSFUL);
-				connection.commit();
+				//connection.commit();
 				return account.getId();	
 			}
 			
 		} catch (SQLException e) {
+			System.out.println("Add account :"+e.getMessage());
 			logger.error(e.getMessage());
-			connection.rollback();
+			//connection.rollback();
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		} finally {
 			try {

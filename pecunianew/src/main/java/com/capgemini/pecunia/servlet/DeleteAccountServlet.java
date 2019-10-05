@@ -38,9 +38,9 @@ public class DeleteAccountServlet extends HttpServlet {
 				request.getRequestDispatcher("deleteAccount.html").include(request, response);
 			}
 		} catch (PecuniaException | AccountException e) {
-			out.println("<h1>Failure</h1><br>");
+			out.println("<h1>Failure. Please enter valid account id.</h1><br>");
 			request.getRequestDispatcher("deleteAccount.html").include(request, response);
-
+			
 		}
 
 	}
