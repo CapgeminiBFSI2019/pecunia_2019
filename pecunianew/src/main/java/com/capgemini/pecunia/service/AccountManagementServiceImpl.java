@@ -210,7 +210,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 			}
 			return accountId;
 		} catch (Exception e) {
-
+			System.out.println(e.getMessage());
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		}
 	}

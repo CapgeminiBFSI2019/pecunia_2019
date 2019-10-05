@@ -39,13 +39,12 @@ public class UpdateCustomerContactServlet extends HttpServlet {
 		try {
 			boolean updated = ams.updateCustomerContact(account, customer);
 			if (updated) {
-				out.println("<h1> Customer Contact Successfully Updated </h1>");
-
 				request.getRequestDispatcher("updateContact.html").include(request, response);
+				out.println("<script>$('#update-contact-success').toast('show');</script>");
 			}
 		} catch (PecuniaException | AccountException e) {
-			out.println("<h1>Failure</h1><br>");
 			request.getRequestDispatcher("updateContact.html").include(request, response);
+			out.println("<script>$('#update-contact-failure').toast('show');</script>");
 		}
 	}
 
