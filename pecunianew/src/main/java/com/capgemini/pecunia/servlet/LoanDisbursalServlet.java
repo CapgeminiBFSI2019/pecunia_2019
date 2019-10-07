@@ -32,37 +32,56 @@ public class LoanDisbursalServlet extends HttpServlet {
 		if (s.equals("retrieve all")) {
 			try {
 				retrieveAll = loanDisbursalService.retrieveAll();
-
 				out.write("<!DOCTYPE html>\r\n" + 
 						"<html>\r\n" + 
+						"\r\n" + 
 						"<head>\r\n" + 
-						"<title>Loan Request Details</title>\r\n" + 
-						"<meta charset=\"utf-8\">\r\n" + 
-						"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n" + 
-						"<link rel=\"stylesheet\"\r\n" + 
-						"	href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\">\r\n" + 
-						"<script\r\n" + 
-						"	src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js\"></script>\r\n" + 
-						"<script\r\n" + 
-						"	src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js\"></script>\r\n" + 
-						"<script\r\n" + 
-						"	src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js\"></script>\r\n" + 
+						"    <!-- Required meta tags -->\r\n" + 
+						"    <meta charset=\"utf-8\">\r\n" + 
+						"    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\r\n" + 
+						"\r\n" + 
+						"    <!-- Bootstrap CSS -->\r\n" + 
+						"    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js\"></script>\r\n" + 
+						"    <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">\r\n" + 
+						"    <link rel=\"stylesheet\" href=\"css/style.css\">\r\n" + 
+						"    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js \" integrity=\"sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q \" crossorigin=\"anonymous \"></script>\r\n" + 
+						"    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js \" integrity=\"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl \" crossorigin=\"anonymous \"></script>\r\n" + 
+						"    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n" + 
+						"    <script src=\"https://kit.fontawesome.com/a076d05399.js\"></script>\r\n" + 
+						"    <title>Account Summary</title>\r\n" + 
+						"\r\n" + 
 						"</head>\r\n" + 
+						"\r\n" + 
 						"<body>\r\n" + 
 						"\r\n" + 
-						"	<div class=\"container\">\r\n" + 
-						"		<div class=\"jumbotron bg-info text-white\">\r\n" + 
-						"			<h1 align=\"center\" class=\"bg-info text-white\">\r\n" + 
-						"				<b><i>Pecunia</i></b>\r\n" + 
-						"			</h1>\r\n" + 
-						"		</div>\r\n" + 
-						"	</div>\r\n" + 
+						"    <nav class=\"navbar navbar-expand-lg navbar-dark bg-info\">\r\n" + 
+						"        <a class=\"navbar-brand\" href=\"MainPage.html\"><i class=\"fas fa-home text-light mr-2\" style=\"font-size: 24px;\"></i>Pecunia</a>\r\n" + 
+						"        <a class=\"text-light d-block d-lg-none \">Rohan Patil</a>\r\n" + 
+						"        <button class=\"navbar-toggler \" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\" aria-controls=\"navbarNavDropdown\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n" + 
+						"									<span class=\"navbar-toggler-icon\"></span>\r\n" + 
+						"								</button>\r\n" + 
+						"        <div id=\"navbarNavDropdown\" class=\"navbar-collapse collapse\">\r\n" + 
+						"            <ul class=\"navbar-nav mr-auto\">\r\n" + 
+						"                <li class=\"nav-item\">\r\n" + 
+						"                    <a class=\"nav-link active\" href=\"loanDisbursal.html\">Loan Disbursal</a>\r\n" + 
+						"                </li>\r\n" + 
 						"\r\n" + 
-						"\r\n" + 
+						"            </ul>\r\n" + 
+						"            <ul class=\"navbar-nav\">\r\n" + 
+						"                <li class=\"nav-item d-none d-lg-block\" href=\"#\">\r\n" + 
+						"                    <a class=\"nav-link disabled text-light\"></a>\r\n" + 
+						"                </li>\r\n" + 
+						"                <li class=\"nav-item\">\r\n" + 
+						"                    <a class=\"nav-link\" href=\"#\">Logout</a>\r\n" + 
+						"                </li>\r\n" + 
+						"            </ul>\r\n" + 
+						"        </div>\r\n" + 
+						"    </nav>\r\n" + 
+						"    <div class=\"bg\"></div>" +
 						"	<div class=\"container\">\r\n" + 
-						"		<h2 class=\"col-8\">Loan Request Details</h2>\r\n" + 
+						"		<h2>Loan Requests</h2>\r\n" + 
 						"		<table class=\"table table-bordered\">\r\n" + 
-						"			<thead class=\"thead-light\">\r\n");
+						"			<thead class=\"thead-light\">");
 				
 				out.write(
 						"					<th>Loan Id</th>\r\n" + 
@@ -105,8 +124,7 @@ public class LoanDisbursalServlet extends HttpServlet {
 				}
 				
 			 catch (PecuniaException | LoanDisbursalException e) {
-//				 request.getRequestDispatcher("loanDisbursal.html").include(request,response);
-//				out.println("<h3>Failure retrieving error</h3>");
+
 				 String msg = "Failure retrieving error as no loan request is pending";
 					request.getRequestDispatcher("loanDisbursal.html").include(request, response);
 					out.println("<script>");
@@ -124,34 +142,54 @@ public class LoanDisbursalServlet extends HttpServlet {
 
 				out.write("<!DOCTYPE html>\r\n" + 
 						"<html>\r\n" + 
+						"\r\n" + 
 						"<head>\r\n" + 
-						"<title> Approved Loan Request Details </title>\r\n" + 
-						"<meta charset=\"utf-8\">\r\n" + 
-						"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n" + 
-						"<link rel=\"stylesheet\"\r\n" + 
-						"	href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\">\r\n" + 
-						"<script\r\n" + 
-						"	src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js\"></script>\r\n" + 
-						"<script\r\n" + 
-						"	src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js\"></script>\r\n" + 
-						"<script\r\n" + 
-						"	src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js\"></script>\r\n" + 
+						"    <!-- Required meta tags -->\r\n" + 
+						"    <meta charset=\"utf-8\">\r\n" + 
+						"    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\r\n" + 
+						"\r\n" + 
+						"    <!-- Bootstrap CSS -->\r\n" + 
+						"    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js\"></script>\r\n" + 
+						"    <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">\r\n" + 
+						"    <link rel=\"stylesheet\" href=\"css/style.css\">\r\n" + 
+						"    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js \" integrity=\"sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q \" crossorigin=\"anonymous \"></script>\r\n" + 
+						"    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js \" integrity=\"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl \" crossorigin=\"anonymous \"></script>\r\n" + 
+						"    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n" + 
+						"    <script src=\"https://kit.fontawesome.com/a076d05399.js\"></script>\r\n" + 
+						"    <title>Account Summary</title>\r\n" + 
+						"\r\n" + 
 						"</head>\r\n" + 
+						"\r\n" + 
 						"<body>\r\n" + 
 						"\r\n" + 
-						"	<div class=\"container\">\r\n" + 
-						"		<div class=\"jumbotron bg-info text-white\">\r\n" + 
-						"			<h1 align=\"center\" class=\"bg-info text-white\">\r\n" + 
-						"				<b><i>Pecunia</i></b>\r\n" + 
-						"			</h1>\r\n" + 
-						"		</div>\r\n" + 
-						"	</div>\r\n" + 
+						"    <nav class=\"navbar navbar-expand-lg navbar-dark bg-info\">\r\n" + 
+						"        <a class=\"navbar-brand\" href=\"MainPage.html\"><i class=\"fas fa-home text-light mr-2\" style=\"font-size: 24px;\"></i>Pecunia</a>\r\n" + 
+						"        <a class=\"text-light d-block d-lg-none \">Rohan Patil</a>\r\n" + 
+						"        <button class=\"navbar-toggler \" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\" aria-controls=\"navbarNavDropdown\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n" + 
+						"									<span class=\"navbar-toggler-icon\"></span>\r\n" + 
+						"								</button>\r\n" + 
+						"        <div id=\"navbarNavDropdown\" class=\"navbar-collapse collapse\">\r\n" + 
+						"            <ul class=\"navbar-nav mr-auto\">\r\n" + 
+						"                <li class=\"nav-item\">\r\n" + 
+						"                    <a class=\"nav-link active\" href=\"loanDisbursal.html\">Loan Disbursal</a>\r\n" + 
+						"                </li>\r\n" + 
 						"\r\n" + 
-						"\r\n" + 
+						"            </ul>\r\n" + 
+						"            <ul class=\"navbar-nav\">\r\n" + 
+						"                <li class=\"nav-item d-none d-lg-block\" href=\"#\">\r\n" + 
+						"                    <a class=\"nav-link disabled text-light\"></a>\r\n" + 
+						"                </li>\r\n" + 
+						"                <li class=\"nav-item\">\r\n" + 
+						"                    <a class=\"nav-link\" href=\"#\">Logout</a>\r\n" + 
+						"                </li>\r\n" + 
+						"            </ul>\r\n" + 
+						"        </div>\r\n" + 
+						"    </nav>\r\n" + 
+						"    <div class=\"bg\"></div>" +
 						"	<div class=\"container\">\r\n" + 
-						"		<h2 class=\"col-8\">Approved Loan Request Details</h2>\r\n" + 
+						"		<h2>Approved Loan Requests</h2>\r\n" + 
 						"		<table class=\"table table-bordered\">\r\n" + 
-						"			<thead class=\"thead-light\">\r\n");
+						"			<thead class=\"thead-light\">");
 				
 				out.write(
 						"					<th>Loan Id</th>\r\n" + 
@@ -166,7 +204,7 @@ public class LoanDisbursalServlet extends HttpServlet {
 						"			</thead>");
 				out.write("<tbody>"); 
 
-				// request.getRequestDispatcher("loanDisbursal.html").include(request,
+
 				for(Loan loanRequests: retrieveAll) 
 				{
 					out.write("<tr>");
@@ -192,8 +230,7 @@ public class LoanDisbursalServlet extends HttpServlet {
 				}
 				
 			 catch (PecuniaException | LoanDisbursalException e) {
-//				 request.getRequestDispatcher("loanDisbursal.html").include(request,response);
-//				 out.println("<h3>Failure retrieving error as no loan request is pending</h3>");
+
 				 String msg = "Failure retrieving error as no loan request is pending";
 					request.getRequestDispatcher("loanDisbursal.html").include(request, response);
 					out.println("<script>");
@@ -211,34 +248,54 @@ public class LoanDisbursalServlet extends HttpServlet {
 
 				out.write("<!DOCTYPE html>\r\n" + 
 						"<html>\r\n" + 
+						"\r\n" + 
 						"<head>\r\n" + 
-						"<title> Rejected Loan Request Details </title>\r\n" + 
-						"<meta charset=\"utf-8\">\r\n" + 
-						"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n" + 
-						"<link rel=\"stylesheet\"\r\n" + 
-						"	href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\">\r\n" + 
-						"<script\r\n" + 
-						"	src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js\"></script>\r\n" + 
-						"<script\r\n" + 
-						"	src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js\"></script>\r\n" + 
-						"<script\r\n" + 
-						"	src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js\"></script>\r\n" + 
+						"    <!-- Required meta tags -->\r\n" + 
+						"    <meta charset=\"utf-8\">\r\n" + 
+						"    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\r\n" + 
+						"\r\n" + 
+						"    <!-- Bootstrap CSS -->\r\n" + 
+						"    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js\"></script>\r\n" + 
+						"    <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">\r\n" + 
+						"    <link rel=\"stylesheet\" href=\"css/style.css\">\r\n" + 
+						"    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js \" integrity=\"sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q \" crossorigin=\"anonymous \"></script>\r\n" + 
+						"    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js \" integrity=\"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl \" crossorigin=\"anonymous \"></script>\r\n" + 
+						"    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n" + 
+						"    <script src=\"https://kit.fontawesome.com/a076d05399.js\"></script>\r\n" + 
+						"    <title>Account Summary</title>\r\n" + 
+						"\r\n" + 
 						"</head>\r\n" + 
+						"\r\n" + 
 						"<body>\r\n" + 
 						"\r\n" + 
-						"	<div class=\"container\">\r\n" + 
-						"		<div class=\"jumbotron bg-info text-white\">\r\n" + 
-						"			<h1 align=\"center\" class=\"bg-info text-white\">\r\n" + 
-						"				<b><i>Pecunia</i></b>\r\n" + 
-						"			</h1>\r\n" + 
-						"		</div>\r\n" + 
-						"	</div>\r\n" + 
+						"    <nav class=\"navbar navbar-expand-lg navbar-dark bg-info\">\r\n" + 
+						"        <a class=\"navbar-brand\" href=\"MainPage.html\"><i class=\"fas fa-home text-light mr-2\" style=\"font-size: 24px;\"></i>Pecunia</a>\r\n" + 
+						"        <a class=\"text-light d-block d-lg-none \">Rohan Patil</a>\r\n" + 
+						"        <button class=\"navbar-toggler \" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\" aria-controls=\"navbarNavDropdown\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n" + 
+						"									<span class=\"navbar-toggler-icon\"></span>\r\n" + 
+						"								</button>\r\n" + 
+						"        <div id=\"navbarNavDropdown\" class=\"navbar-collapse collapse\">\r\n" + 
+						"            <ul class=\"navbar-nav mr-auto\">\r\n" + 
+						"                <li class=\"nav-item\">\r\n" + 
+						"                    <a class=\"nav-link active\" href=\"loanDisbursal.html\">Loan Disbursal</a>\r\n" + 
+						"                </li>\r\n" + 
 						"\r\n" + 
-						"\r\n" + 
+						"            </ul>\r\n" + 
+						"            <ul class=\"navbar-nav\">\r\n" + 
+						"                <li class=\"nav-item d-none d-lg-block\" href=\"#\">\r\n" + 
+						"                    <a class=\"nav-link disabled text-light\"></a>\r\n" + 
+						"                </li>\r\n" + 
+						"                <li class=\"nav-item\">\r\n" + 
+						"                    <a class=\"nav-link\" href=\"#\">Logout</a>\r\n" + 
+						"                </li>\r\n" + 
+						"            </ul>\r\n" + 
+						"        </div>\r\n" + 
+						"    </nav>\r\n" + 
+						"    <div class=\"bg\"></div>" +
 						"	<div class=\"container\">\r\n" + 
-						"		<h2 class=\"col-8\">Rejected Loan Request Details</h2>\r\n" + 
+						"		<h2>Rejected Loan Requests</h2>\r\n" + 
 						"		<table class=\"table table-bordered\">\r\n" + 
-						"			<thead class=\"thead-light\">\r\n");
+						"			<thead class=\"thead-light\">");
 				
 				out.write(
 						"					<th>Loan Id</th>\r\n" + 
@@ -253,7 +310,7 @@ public class LoanDisbursalServlet extends HttpServlet {
 						"			</thead>");
 				out.write("<tbody>"); 
 
-				// request.getRequestDispatcher("loanDisbursal.html").include(request,
+
 				for(Loan loanRequests: retrieveAll) 
 				{
 					out.write("<tr>");
@@ -279,8 +336,7 @@ public class LoanDisbursalServlet extends HttpServlet {
 				}
 				
 			 catch (PecuniaException | LoanDisbursalException e) {
-//				 request.getRequestDispatcher("loanDisbursal.html").include(request,response);
-//				out.println("<h3>Failure retrieving error as no loan request is pending</h3>");
+
 				 String msg = "Failure retrieving error as no loan request is pending";
 					request.getRequestDispatcher("loanDisbursal.html").include(request, response);
 					out.println("<script>");
