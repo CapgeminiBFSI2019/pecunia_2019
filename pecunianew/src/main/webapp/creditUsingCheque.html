@@ -7,13 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
@@ -46,17 +45,17 @@
         <div class="row ">
             <div class="form-group col-md-6 ">
                 <label for="payee-account-number">Payee Account Number</label>
-                <input type="number" class="form-control" id="payee-account-number" name="payeeAccountNumber" placeholder="Enter payee account number " pattern="[0-9]*" title="Enter a valid payee account number"  minlength=10 maxlength=20 required>
+                <input type="text" class="form-control" id="payee-account-number" name="payeeAccountNumber" placeholder="Enter payee account number " pattern="[0-9]*" title="Enter a valid payee account number"  minlength=10 maxlength=20 required>
             </div>
             <div class="form-group col-md-6 ">
                 <label for="beneficiary-account-number">Beneficiary Account Number</label>
-                <input type="number" class="form-control" id="beneficiary-account-number" name="beneficiaryAccountNumber" placeholder="Enter beneficiary account number " pattern="[0-9]*" title="Enter a valid beneficiary account number"  minlength=12 maxlength=12  required>
+                <input type="text" class="form-control" id="beneficiary-account-number" name="beneficiaryAccountNumber" placeholder="Enter beneficiary account number " pattern="[0-9]*" title="Enter a valid beneficiary account number"  minlength=12 maxlength=12  required>
             </div>
         </div>
         <div class="row ">
             <div class="form-group col-md-6 ">
                 <label for="credit-cheque-number ">Cheque Number</label>
-                <input type="number" class="form-control" id="credit-cheque-number" name="creditChequeNumber" placeholder="Enter cheque number " pattern="[0-9]*" title="Enter a valid 6 digit cheque number"  minlength=6 maxlength=6 required>
+                <input type="text" class="form-control" id="credit-cheque-number" name="creditChequeNumber" placeholder="Enter cheque number " pattern="[0-9]*" title="Enter a valid 6 digit cheque number"  minlength=6 maxlength=6 required>
             </div>
             <div class="form-group col-md-6 ">
                 <label for="payee-name ">Payee Name</label>
@@ -88,13 +87,75 @@
             </div>
             <div class="form-group col-md-3 ">
                 <label for="payee-ifsc ">IFSC</label>
-                <input type="text" class="form-control" id="payee-ifsc" name="payeeIfsc" placeholder="Enter IFSC number " minlength="11" maxlength="11" pattern= "[A-Za-z0-9]*" title="Enter a valid 11 digit IFSC. Only alphabets and number allowed" required>
+                <input type="text" class="form-control" id="payee-ifsc" name="payeeIfsc" placeholder="Enter IFSC number " minlength="11" maxlength="11" pattern= "[A-Z]{4}[0-9]{7}" title="Enter a valid 11 digit IFSC. Only alphabets and number allowed" required>
             </div>
         </div>
         <div class="d-flex justify-content-center ">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
+    
+    <div aria-live="polite" aria-atomic="true"
+		class="toast-container d-none justify-content-center align-items-center">
+		<div class="toast" id="id-generation-failure" role="alert" aria-live="assertive"
+			aria-atomic="true" data-autohide="false">
+			<div class="toast-header">
+				<img src="images/warning.png" class="rounded mr-2" alt="..."
+					width="24px" height="24px"> <strong class="mr-auto">Error</strong>
+				<button type="button" class="ml-2 mb-1 close" data-dismiss="toast"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body">Sorry, the amount was not credited. Please try again </div>
+		</div>
+	
+	 <div class="toast" id="id-generation-success" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+            <div class="toast-header">
+                <img src="images/success.png" class="rounded mr-2" alt="..." width="24px" height="24px">
+                <strong class="mr-auto">Credited</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="toast-body" id="success-toast-body">
+              Amount credited successfully!!
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Disable form submissions if there are invalid fields
+        (function() {
+            'use strict';
+
+            $('#id-generation-failure').on('hidden.bs.toast', function() {
+                $('#id-generation-success').show();
+                $('.toast-container').removeClass('d-flex');
+                $('.toast-container').addClass('d-none');
+                window.location.href = 'creditUsingCheque.html';
+            });
+
+            $('#id-generation-failure').on('shown.bs.toast', function() {
+                $('#id-generation-success').hide();
+                $('.toast-container').removeClass('d-none');
+                $('.toast-container').addClass('d-flex');
+            });
+            $('#id-generation-success').on('hidden.bs.toast', function() {
+                $('#id-generation-failure').show();
+                $('.toast-container').removeClass('d-flex');
+                $('.toast-container').addClass('d-none');
+                window.location.href = 'creditUsingCheque.html';
+            });
+
+            $('#id-generation-success').on('shown.bs.toast', function() {
+                $('#id-generation-failure').hide();
+                $('.toast-container').removeClass('d-none');
+                $('.toast-container').addClass('d-flex');
+            });
+
+        })();
+    </script>
 </body>
 
 </html>
