@@ -107,7 +107,12 @@ public class PassbookServlet extends HttpServlet {
 				out.write("<td>"+ transaction.getTransTo()+ "</td>");
 				out.write("<td>"+ transaction.getType()+ "</td>");
 				out.write("<td>"+ transaction.getOption()+ "</td>");
-				out.write("<td>"+ transaction.getChequeId()+ "</td>");
+				if(transaction.getOption().equalsIgnoreCase("cheque")) {
+					out.write("<td>"+ transaction.getChequeId()+ "</td>");
+				}
+				else {
+					out.write("<td>-</td>");
+				}
 				out.write("<td>"+ transaction.getClosingBalance()+ "</td>");
 				out.write("</tr>");
 			}
@@ -127,7 +132,7 @@ public class PassbookServlet extends HttpServlet {
 		catch (PecuniaException | PassbookException e) {
 			
 			request.getRequestDispatcher("passbookForm.html").include(request, response);
-			out.println("<script>$('#my-toast').toast('show');</script>");
+			out.println("<script>$('#passbook-toast').toast('show');</script>");
 		}
 	}
 }

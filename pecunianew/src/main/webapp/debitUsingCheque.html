@@ -43,42 +43,42 @@
         </div>
     </nav>
     <div class="bg"></div>
-    <form id="debit-cheque-form " class="container transaction-form " method="POST" action="debitcheque">
+    <form id="debit-cheque-form " class="container transaction-form " method="POST" action="debitcheque" >
         <div class="row d-flex justify-content-center">
             <div class="form-group col-md-6 ">
                 <label for="account-number ">Account Number</label>
-                <input type="number" class="form-control " id="account-number " name="accountNumber" placeholder="Enter account number ">
+                <input type="number" class="form-control " id="account-number " name="accountNumber" placeholder="Enter account number " pattern="[0-9]*" title="Enter a valid account number"  minlength=12 maxlength=12  required>
             </div>
         </div>
         <div class="row d-flex justify-content-center ">
             <div class="form-group col-md-6 ">
                 <label for="account-holder-name ">Account Holder Name</label>
-                <input type="text" class="form-control " id="Account-holder-name " name="accountHolderName" placeholder="Enter account holder name ">
+                <input type="text" class="form-control " id="Account-holder-name " name="accountHolderName" placeholder="Enter account holder name " pattern= "[A-Za-z\s]*" title="Only alphabets allowed"  required>
             </div>
         </div>
         <div class="row d-flex justify-content-center">
             <div class="form-group col-md-6 ">
                 <label for="bank-ifsc ">IFSC</label>
-                <input type="text" class="form-control " id="bank-ifsc " name="bankIfsc" placeholder="Enter IFSC ">
+                <input type="text" class="form-control " id="bank-ifsc " name="bankIfsc" placeholder="Enter IFSC " minlength="11" maxlength="11" pattern= "[A-Za-z0-9]*" title="Enter a valid 11 digit IFSC. Only alphabets and number allowed"  required>
             </div>
         </div>
         <div class="row d-flex justify-content-center">
             <div class="form-group col-md-6 ">
                 <label for="cheque-number ">Cheque Number</label>
-                <input type="number" class="form-control " id="cheque-number " name="chequeNumber" placeholder="Enter cheque number ">
+                <input type="number" class="form-control " id="cheque-number " name="chequeNumber" placeholder="Enter cheque number" pattern="[0-9]*" title="Enter a valid 6 digit cheque number"  minlength=6 maxlength=6  required>
             </div>
         </div>
         <div class="row d-flex justify-content-center">
             <div class="form-group col-md-6 ">
                 <label for="amount ">Amount</label>
-                <input type="number" class="form-control " id="debit-cheque-amount " name="debitChequeAmount" placeholder="Enter amount ">
+                <input type="number" class="form-control " id="debit-cheque-amount " name="debitChequeAmount" placeholder="Enter amount " min="0" title= "Enter only monetary value"  required>
             </div>
         </div>
 
         <div class="row d-flex justify-content-center">
             <div class="form-group col-md-6 ">
                 <label for="issue-date">Cheque Issue Date</label>
-                <input type="date" class="form-control " id="issue-date " name="chequeIssueDate" placeholder="Enter cheque issue date ">
+                <input type="date" class="form-control " id="issue-date " name="chequeIssueDate" placeholder="Enter cheque issue date " required>
             </div>
 
 

@@ -46,38 +46,39 @@
         <div class="row ">
             <div class="form-group col-md-6 ">
                 <label for="payee-account-number">Payee Account Number</label>
-                <input type="number" class="form-control" id="payee-account-number" name="payeeAccountNumber" placeholder="Enter payee account number ">
+                <input type="number" class="form-control" id="payee-account-number" name="payeeAccountNumber" placeholder="Enter payee account number " pattern="[0-9]*" title="Enter a valid payee account number"  minlength=10 maxlength=20 required>
             </div>
             <div class="form-group col-md-6 ">
                 <label for="beneficiary-account-number">Beneficiary Account Number</label>
-                <input type="number" class="form-control" id="beneficiary-account-number" name="beneficiaryAccountNumber" placeholder="Enter beneficiary account number ">
+                <input type="number" class="form-control" id="beneficiary-account-number" name="beneficiaryAccountNumber" placeholder="Enter beneficiary account number " pattern="[0-9]*" title="Enter a valid beneficiary account number"  minlength=12 maxlength=12  required>
             </div>
         </div>
         <div class="row ">
             <div class="form-group col-md-6 ">
                 <label for="credit-cheque-number ">Cheque Number</label>
-                <input type="number" class="form-control" id="credit-cheque-number" name="creditChequeNumber" placeholder="Enter cheque number ">
+                <input type="number" class="form-control" id="credit-cheque-number" name="creditChequeNumber" placeholder="Enter cheque number " pattern="[0-9]*" title="Enter a valid 6 digit cheque number"  minlength=6 maxlength=6 required>
             </div>
             <div class="form-group col-md-6 ">
                 <label for="payee-name ">Payee Name</label>
-                <input type="text" class="form-control" id="payee-name" name="payeeName" placeholder="Enter payee name ">
+                <input type="text" class="form-control" id="payee-name" name="payeeName" placeholder="Enter payee name "  pattern= "[A-Za-z\s]*" title="Only alphabets allowed" required>
             </div>
 
         </div>
         <div class="row ">
             <div class="form-group col-md-3 ">
                 <label for="credit-cheque-amount ">Amount</label>
-                <input type="number" class="form-control" id="credit-cheque-amount" name="creditChequeAmount" placeholder="Enter cheque amount " required>
+                <input type="number" class="form-control" id="credit-cheque-amount" name="creditChequeAmount" placeholder="Enter cheque amount "
+					min="0" title= "Enter only monetary value" required>
             </div>
 
 
             <div class="form-group col-md-3 ">
                 <label for="credit-cheque-issue-date">Cheque Issue Date</label>
-                <input type="date" class="form-control" id="credit-cheque-issue-date" name="creditChequeIssueDate" placeholder="Enter cheque issue date ">
+                <input type="date" class="form-control" id="credit-cheque-issue-date" name="creditChequeIssueDate" placeholder="Enter cheque issue date " required>
             </div>
             <div class="form-group col-md-3 ">
                 <label for="inputBank">Bank</label>
-                <select id="inputBank" name="bankName" class="form-control ">
+                <select id="inputBank" name="bankName" class="form-control " required>
                             <option value="PECUNIA">PECUNIA</option>
                             <option value="ICICI">ICICI</option>
                             <option value="HDFC">HDFC</option>
@@ -87,7 +88,7 @@
             </div>
             <div class="form-group col-md-3 ">
                 <label for="payee-ifsc ">IFSC</label>
-                <input type="text" class="form-control" id="payee-ifsc" name="payeeIfsc" placeholder="Enter IFSC number ">
+                <input type="text" class="form-control" id="payee-ifsc" name="payeeIfsc" placeholder="Enter IFSC number " minlength="11" maxlength="11" pattern= "[A-Za-z0-9]*" title="Enter a valid 11 digit IFSC. Only alphabets and number allowed" required>
             </div>
         </div>
         <div class="d-flex justify-content-center ">

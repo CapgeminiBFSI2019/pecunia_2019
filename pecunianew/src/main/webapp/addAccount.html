@@ -93,7 +93,7 @@
 			<div class="form-group col-md-6">
 				<label for="contact">Contact Details</label> <input type="tel"
 					minlength="10" maxlength="10" class="form-control" id="contact"
-					name="contact" placeholder="Enter contact number"  pattern="^\d{10}$" title="10 numeric characters only" required>
+					name="contact" placeholder="Enter contact number"  pattern="^\d{10}$" title="10 digit phone number" required>
 			</div>
 
 
@@ -141,7 +141,7 @@
 			<div class="form-group col-md-6">
 				<label for="zipcode">ZIP code</label> <input type="text"
 					class="form-control" id="zipcode" name="zipcode"
-					placeholder="Enter zipcode" required minlength="6" maxlength="6"  pattern= "[0-9]*" title="Only 6 digit number allowed"required>
+					placeholder="Enter zipcode"  minlength="6" maxlength="6"  pattern= "[0-9]*" title="Only 6 digit number allowed"required>
 			</div>
 
 
@@ -150,7 +150,7 @@
 			<div class="form-group col-md-6">
 				<label for="aadhar">Aadhar number</label> <input type="text"
 					class="form-control" id="aadhar" name="aadhar"
-					placeholder="Enter aadhar number" required minlength="12"
+					placeholder="Enter aadhar number" minlength="12"
 					maxlength="12"  pattern= "[0-9]*" title="Only 12 digit number allowed" required>
 			</div>
 
@@ -158,8 +158,8 @@
 
 			<div class="form-group col-md-6">
 				<label for="pan">PAN</label> <input type="text" class="form-control"
-					id="pan" name="pan" placeholder="Enter PAN number" required
-					minlength="10" maxlength="10" pattern= "[A-Za-z0-9]*" title="Only alphabets and numbers allowed" required>
+					id="pan" name="pan" placeholder="Enter PAN number" 
+					minlength="10" maxlength="10" pattern= "[A-Za-z0-9]*" title="Enter a valid 10 digit PAN number" required>
 			</div>
 			<div class="form-group col-md-3">
 				<label for="account-type">Account type</label> <select required
@@ -176,19 +176,19 @@
 			<div class="form-group col-md-3">
 				<label for="branch-id">Branch Id</label> <input type="text"
 					class="form-control" id="branch-id" name="branchid"
-					placeholder="Enter branch id" required minlength="4" maxlength="4" pattern= "[0-9]*" title="Only 4 digit number allowed"required>
+					placeholder="Enter branch id"  minlength="4" maxlength="4" pattern= "[0-9]*" title="Only 4 digit number allowed"required>
 			</div>
 			<div class="form-group col-md-3">
 				<label for="account-balance">Account balance</label> <input
-					type="number" step= "any" class="form-control" id="account-balance"
-					name="accountbalance" placeholder="Enter account balance" required
+					type="number" step= "0.01" class="form-control" id="account-balance"
+					name="accountbalance" placeholder="Enter account balance"
 					min="0" title= "Enter only monetary value" required>
 			</div>
 			<div class="form-group col-md-3">
 				<label for="account-interest">Account interest</label> <input
-					type="number" step= "any" class="form-control" id="account-interest"
+					type="number" step= "0.01" class="form-control" id="account-interest"
 					name="accountinterest" placeholder="Enter account interest"
-					required min="2" title= "Enter valid account interest" required>
+					 min="0" title= "Enter valid account interest" required>
 			</div>
 		</div>
 		<center>

@@ -46,13 +46,13 @@
         <div class="d-flex justify-content-center ">
             <div class="form-group col-md-6 ">
                 <label for="account-number ">Account Number</label>
-                <input type="number" class="form-control " id="account-number " name="accountNumber" placeholder="Enter Account Number ">
+                <input type="number" class="form-control " id="account-number " name="accountNumber" placeholder="Enter Account Number "pattern="[0-9]" title="Enter 12 digit account id" minlength=12 maxlength=12  required>
             </div>
         </div>
         <div class="d-flex justify-content-center ">
             <div class="form-group col-md-6 ">
                 <label for="debit-slip-amount ">Amount</label>
-                <input type="number" class="form-control " id="debit-slip-amount " name="debitSlipAmount" placeholder="Enter Amount ">
+                <input type="number" class="form-control " id="debit-slip-amount " name="debitSlipAmount" placeholder="Enter Amount " min="0" title= "Enter only monetary value"  required>
 
             </div>
         </div>
