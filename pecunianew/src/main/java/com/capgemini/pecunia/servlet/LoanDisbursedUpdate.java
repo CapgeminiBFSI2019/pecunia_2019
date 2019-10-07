@@ -46,9 +46,8 @@ public class LoanDisbursedUpdate extends HttpServlet {
 		String res = request.getParameter("update-account-balance");
 		if (res.equals("Yes")) {
 			try {
-				String status = loanDisbursalService.updateLoanStatus(retrieveRejected, retrieveAccepted);
-//				request.getRequestDispatcher("loanDisbursal.html").include(request,response);
-//				out.write(status);
+				loanDisbursalService.updateLoanStatus(retrieveRejected, retrieveAccepted);
+
 				String msg = "Accounts has been updated";
 				request.getRequestDispatcher("loanDisbursal.html").include(request, response);
 				out.println("<script>");
@@ -56,8 +55,7 @@ public class LoanDisbursedUpdate extends HttpServlet {
                 out.println("$('#loan-success-failure').toast('show');");
                 out.println("</script>");
 			} catch (PecuniaException | LoanDisbursalException e) {
-//				request.getRequestDispatcher("loanDisbursal.html").include(request,response);
-//				out.write("Not updated. Either no request is pending or connection error");
+
 				
 				String msg = "No account has been updated";
 				request.getRequestDispatcher("loanDisbursal.html").include(request, response);

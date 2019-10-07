@@ -158,6 +158,8 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 		else {
 			status = Constants.STATUS_CHECK[1];
+			logger.error(ErrorConstants.NO_LOAN_REQUESTS);
+			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
 		}
 
 		return status;
@@ -197,6 +199,8 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 		} else {
 			status = Constants.STATUS_CHECK[1];
+			logger.error(ErrorConstants.NO_LOAN_REQUESTS);
+			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
 		}
 		logger.info(LoggerMessage.UPDATE_LOAN_STATUS);
 		return status;
