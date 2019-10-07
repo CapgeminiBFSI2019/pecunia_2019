@@ -42,15 +42,18 @@ public class DebitUsingChequeServlet extends HttpServlet {
 		debitCheque.setIssueDate(issueDate);
 		debitCheque.setNum(chequeNumber);
 		TransactionService trans = new TransactionServiceImpl();
-		
+		PrintWriter out = response.getWriter();
 		try {
 			int transId = trans.debitUsingCheque(debitChequeTransaction, debitCheque);
-			PrintWriter out = response.getWriter();
-			out.println("<h1>Transaction Id is: </h1>" + transId);
-			out.println("<h1>Transaction Successful</h1>");
+			request.getRequestDispatcher("debitUsingCheque.html").include(request, response);
+			out.println("<script>");
+			out.println("$('#success-toast-body').html('Amount has been debited. Transaction id is \t" + transId + "');");
+			out.println("$('#id-generation-success').toast('show');");
+			out.println("</script>");
 		} catch (TransactionException | PecuniaException e) {
-			PrintWriter out = response.getWriter();
-			out.println("<h1>Failure</h1><br>" + e.getMessage());
+			
+			request.getRequestDispatcher("debitUsingCheque.html").include(request, response);
+			out.println("<script>$('#id-generation-failure').toast('show');</script>");
 		}
 }
 }
