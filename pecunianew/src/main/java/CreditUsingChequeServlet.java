@@ -1,4 +1,4 @@
-package com.capgemini.pecunia.servlet;
+
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,14 +18,11 @@ import com.capgemini.pecunia.service.TransactionService;
 import com.capgemini.pecunia.service.TransactionServiceImpl;
 
 /**
- * Servlet implementation class CreditUsingCheque
+ * Servlet implementation class CreditUsingChequeServlet
  */
-public class CreditUsingCheque extends HttpServlet {
+public class CreditUsingChequeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public CreditUsingCheque() {
-    }
-	
+      
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession(false);
