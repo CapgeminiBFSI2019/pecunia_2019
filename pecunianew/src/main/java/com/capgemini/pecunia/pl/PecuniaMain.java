@@ -1,48 +1,7 @@
 package com.capgemini.pecunia.pl;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
-import com.capgemini.pecunia.dto.Account;
-import com.capgemini.pecunia.dto.Address;
-import com.capgemini.pecunia.dto.Cheque;
-import com.capgemini.pecunia.dto.Customer;
-import com.capgemini.pecunia.dto.Loan;
-import com.capgemini.pecunia.dto.LoanDisbursal;
-import com.capgemini.pecunia.dto.Login;
-import com.capgemini.pecunia.dto.Transaction;
-import com.capgemini.pecunia.exception.AccountException;
-import com.capgemini.pecunia.exception.ErrorConstants;
-import com.capgemini.pecunia.exception.LoanDisbursalException;
-import com.capgemini.pecunia.exception.LoanException;
-import com.capgemini.pecunia.exception.LoginException;
-import com.capgemini.pecunia.exception.PassbookException;
-import com.capgemini.pecunia.exception.PecuniaException;
-import com.capgemini.pecunia.exception.TransactionException;
-import com.capgemini.pecunia.inputvalidator.AccountInputValidator;
-import com.capgemini.pecunia.inputvalidator.TransactionInputValidator;
-import com.capgemini.pecunia.service.AccountManagementService;
-import com.capgemini.pecunia.service.AccountManagementServiceImpl;
-import com.capgemini.pecunia.service.LoanDisbursalService;
-import com.capgemini.pecunia.service.LoanDisbursalServiceImpl;
-import com.capgemini.pecunia.service.LoanService;
-import com.capgemini.pecunia.service.LoanServiceImpl;
-import com.capgemini.pecunia.service.LoginService;
-import com.capgemini.pecunia.service.LoginServiceImpl;
-import com.capgemini.pecunia.service.PassbookMaintenanceService;
-import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
-import com.capgemini.pecunia.service.TransactionService;
-import com.capgemini.pecunia.service.TransactionServiceImpl;
-import com.capgemini.pecunia.util.Constants;
-
 public class PecuniaMain {
-	public static void main(String[] args) throws IOException, LoanDisbursalException {
+/*
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int choice1 = 0, choice2 = 0, choice3 = 0;
 		System.out.println("Enter your option: " + "\n1. Login" + "\n2. Exit");
@@ -1042,7 +1001,7 @@ public class PecuniaMain {
 				}
 			}
 
-			double emi = loanServiceImpl.calculateEMI(amount, tenure, roi);
+			double emi = LoanServiceImpl.calculateEMI(amount, tenure, roi);
 			Loan loan = new Loan();
 			loan.setAmount(amount);
 			loan.setCreditScore(creditScore);
@@ -1330,4 +1289,5 @@ public class PecuniaMain {
 		}
 		
 	}
+	*/
 }
