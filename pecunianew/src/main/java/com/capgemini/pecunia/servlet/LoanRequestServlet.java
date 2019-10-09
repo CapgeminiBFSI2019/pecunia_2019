@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.exception.LoanException;
@@ -21,7 +22,11 @@ public class LoanRequestServlet extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+		    // Session is not created.
+			response.sendRedirect("session.html");
+		}
 		String AccountId = request.getParameter("Account Id");
 		double amount = Double.parseDouble(request.getParameter("LoanAmount"));
 		int tenure = Integer.parseInt(request.getParameter("Tenure"));

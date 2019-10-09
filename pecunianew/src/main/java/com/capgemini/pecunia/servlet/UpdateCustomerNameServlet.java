@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Customer;
@@ -25,6 +26,11 @@ public class UpdateCustomerNameServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+		    // Session is not created.
+			response.sendRedirect("session.html");
+		}
 		String accountId = request.getParameter("account-id");
 
 		String custName = request.getParameter("name");

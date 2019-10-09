@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
@@ -26,9 +27,15 @@ public class CreditUsingCheque extends HttpServlet {
     }
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+		    // Session is not created.
+			response.sendRedirect("session.html");
+		}
+		
 		Transaction creditTransaction = new Transaction();
 		Cheque creditCheque = new Cheque();
-		
 		String payeeAccountNumber = request.getParameter("payeeAccountNumber");
 		String beneficiaryAccountNumber = request.getParameter("beneficiaryAccountNumber");
 		String chequeNumber = request.getParameter("creditChequeNumber");
@@ -52,7 +59,6 @@ public class CreditUsingCheque extends HttpServlet {
 		
 		
 		TransactionService trans = new TransactionServiceImpl();
-		PrintWriter out = response.getWriter();
 		try {
 			int transId = trans.creditUsingCheque(creditTransaction, creditCheque);
 			

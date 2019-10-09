@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.PecuniaException;
@@ -19,6 +20,12 @@ public class DebitUsingSlipServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+		    // Session is not created.
+			response.sendRedirect("session.html");
+		}
+		
 		String accountId = request.getParameter("accountNumber");
 		double amount = Double.parseDouble(request.getParameter("debitSlipAmount"));
 

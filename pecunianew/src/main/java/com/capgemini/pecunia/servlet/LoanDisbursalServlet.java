@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.exception.LoanDisbursalException;
@@ -23,6 +24,11 @@ public class LoanDisbursalServlet extends HttpServlet {
 	private static final long serialVersionUID = -3382684550563202404L;
 
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+		    // Session is not created.
+			response.sendRedirect("session.html");
+		}
 		LoanDisbursalService loanDisbursalService = new LoanDisbursalServiceImpl();
 		PrintWriter out = response.getWriter();
 		response.setContentType("text/html");
