@@ -38,7 +38,7 @@ public class LoanRequestServlet extends HttpServlet {
 		loan.setRoi(roi);
 		loan.setType(loanType);
 		LoanService loanService = new LoanServiceImpl();
-		double emi = loanService.calculateEMI(amount, tenure, roi);
+		double emi = LoanServiceImpl.calculateEMI(amount, tenure, roi);
 		loan.setEmi(emi);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
@@ -47,10 +47,8 @@ public class LoanRequestServlet extends HttpServlet {
 			if (isSuccess) {
 				request.getRequestDispatcher("LoanRequest.html").include(request, response);
 				out.println("<script>$('#loan-request-success').toast('show');</script>");
-				
-				
 
-			}else {
+			} else {
 				throw new LoanException("");
 			}
 
