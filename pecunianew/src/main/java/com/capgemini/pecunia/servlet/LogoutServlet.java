@@ -8,6 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 public class LogoutServlet extends HttpServlet {
@@ -22,14 +23,10 @@ public class LogoutServlet extends HttpServlet {
           
         request.getRequestDispatcher("login.html").include(request, response);  
           
-        Cookie ck=new Cookie("cookieName","");  
-        ck.setMaxAge(0);  
-        response.addCookie(ck);  
-          
-        out.println("<h4 class='text-success'>You have been successfully logged out. please login again to continue.</h4>");  
-		
-	
-		
+        HttpSession session = request.getSession();
+        session.invalidate();
+        response.sendRedirect("login.html");
+        out.println("<h4 class='text-success'>You have been successfully logged out. please login again to continue.</h4>"); 
 		
 	}
 

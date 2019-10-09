@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Login;
 import com.capgemini.pecunia.exception.LoginException;
@@ -34,8 +35,8 @@ public class LoginServlet extends HttpServlet {
 			String name=request.getParameter("uname");
 			if(result)
 			{
-				  Cookie ck=new Cookie("cookieName",name);  
-		          response.addCookie(ck);  
+				HttpSession session=request.getSession();  
+		        session.setAttribute("username",username); 
 				request.getRequestDispatcher("MainPage.html").forward(request, response); 
 			}else {
 				throw new PecuniaException("");
