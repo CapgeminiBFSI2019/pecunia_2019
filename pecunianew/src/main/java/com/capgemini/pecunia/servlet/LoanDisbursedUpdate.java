@@ -30,7 +30,7 @@ public class LoanDisbursedUpdate extends HttpServlet {
 		ArrayList<Loan> retrieveRejected = new ArrayList<Loan>();
 		
 		try {
-			retrieveAccepted = loanDisbursalService.approveLoan();
+			retrieveAccepted = loanDisbursalService.approveLoanWithoutStatus();
 		} catch (PecuniaException | LoanDisbursalException e) {
 		
 			retrieveAccepted = null;
@@ -48,7 +48,7 @@ public class LoanDisbursedUpdate extends HttpServlet {
 			try {
 				loanDisbursalService.updateLoanStatus(retrieveRejected, retrieveAccepted);
 
-				String msg = "Accounts has been updated";
+				String msg = "Status has been updated";
 				request.getRequestDispatcher("loanDisbursal.html").include(request, response);
 				out.println("<script>");
                 out.println("$('#success-toast-body').html('" + msg + "');");
@@ -57,7 +57,7 @@ public class LoanDisbursedUpdate extends HttpServlet {
 			} catch (PecuniaException | LoanDisbursalException e) {
 
 				
-				String msg = "No account has been updated";
+				String msg = "Status been already updated";
 				request.getRequestDispatcher("loanDisbursal.html").include(request, response);
 				out.println("<script>");
                 out.println("$('#failure-toast-body').html('" + msg + "');");
