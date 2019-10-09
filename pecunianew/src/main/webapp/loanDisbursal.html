@@ -54,8 +54,8 @@
                 <select name="show-loan-requests">
                     <option value="" disabled selected hidden>Please Choose...</option>
                     <option value="retrieve all">Retrieve all loan requests</option>
-                    <option value="retrieve approved">Retrieve approved loan requests</option>
-                    <option value="retrieve rejected">Retrieve rejected loan requests</option>
+                    <option value="retrieve approved">Show the loan requests to be accepted</option>
+                    <option value="retrieve rejected">Show the loan requests to be rejected</option>
                 </select>
                   <br><br>
                   <button type="submit" class="btn btn-primary ">Submit</button>
@@ -92,6 +92,29 @@
 
         <div class="form-group col-md-6 offset-2 ">
             <label for="update-account-balance">Update Loan Status</label>
+            <br>
+            <select name="update-loan-status">
+
+                    <option value="" disabled selected hidden>Please Choose...</option>
+                    <option value="Yes">Yes</option>
+                    
+                </select>
+
+                  <br><br>
+                  <button type="submit" class="btn btn-primary ">Submit</button>
+             
+            </div>
+          </div>
+            
+         </form>
+         
+          <form id="Loan Disbursal Form 3" class="container transaction-form" method="post" action = "loandisbursalbalanceupdation">       
+        
+           
+<div class="d-flex justify-content-center ">
+
+        <div class="form-group col-md-6 offset-2 ">
+            <label for="update-account-balance">Update Account Balance</label>
             <br>
             <select name="update-account-balance">
 

@@ -240,7 +240,8 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	public String updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
 			throws PecuniaException, TransactionException, LoanDisbursalException {
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
-		String status = Constants.STATUS_CHECK[0];
+		StringBuilder status = new StringBuilder();
+		
 		for (int i = 0; i < approvedLoanRequests.size(); i++) {
 			Account account = new Account();
 			account.setId(approvedLoanRequests.get(i).getAccountId());
@@ -248,17 +249,17 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 			double totalEMI = loanDisbursedDAO.totalEmi(approvedLoanRequests.get(i).getAccountId());
 			double updatedBalance = oldBalance - totalEMI;
 			if (updatedBalance < 0) {
-				status = Constants.STATUS_CHECK[1];
+				status.append("Not enough balance for account number"+ approvedLoanRequests.get(i).getAccountId() + "\n");
 			} else {
 				account.setBalance(updatedBalance);
 				transactionDAOImpl.updateBalance(account);
 				updateLoanAccount(approvedLoanList, 1);
-				status = Constants.STATUS_CHECK[0];
+				status.append("Balance updated for" + approvedLoanRequests.get(i).getAccountId() + "\n");
 			}
 
 		}
 		logger.info(LoggerMessage.UPDATE_ACCOUNT_BALANCE);
-		return status;
+		return status.toString();
 	}
 
 	

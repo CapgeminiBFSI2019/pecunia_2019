@@ -15,7 +15,7 @@ import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.LoanDisbursalService;
 import com.capgemini.pecunia.service.LoanDisbursalServiceImpl;
 
-public class LoanDisbursalDatabase extends HttpServlet {
+public class LoanDisbursalDatabaseServlet extends HttpServlet {
 	
 
 	/**

@@ -16,10 +16,8 @@ import com.capgemini.pecunia.service.LoanDisbursalService;
 import com.capgemini.pecunia.service.LoanDisbursalServiceImpl;
 
 
-public class LoanDisbursedUpdate extends HttpServlet {
-	/**
-	 * 
-	 */
+public class LoanDisbursedUpdateServlet extends HttpServlet {
+
 	private static final long serialVersionUID = -5955186616558309852L;
 
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,16 +41,15 @@ public class LoanDisbursedUpdate extends HttpServlet {
 		}
 		
 		
-		String res = request.getParameter("update-account-balance");
+		String res = request.getParameter("update-loan-status");
 		if (res.equals("Yes")) {
 			try {
 				loanDisbursalService.updateLoanStatus(retrieveRejected, retrieveAccepted);
-
 				String msg = "Status has been updated";
 				request.getRequestDispatcher("loanDisbursal.html").include(request, response);
 				out.println("<script>");
                 out.println("$('#success-toast-body').html('" + msg + "');");
-                out.println("$('#loan-success-failure').toast('show');");
+                out.println("$('#loan-disbursal-success').toast('show');");
                 out.println("</script>");
 			} catch (PecuniaException | LoanDisbursalException e) {
 
