@@ -75,6 +75,29 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		return acceptedLoanRequests;
 
 	}
+	
+	/*******************************************************************************************************
+	 * - Function Name : approveLoan(ArrayList<Loan> loanRequestList) - Input
+	 * Parameters : ArrayList<Loan> loanRequestList - Return Type : void - Throws :
+	 * IOException, PecuniaException, LoanDisbursalException - Author : aninrana -
+	 * Creation Date : 25/09/2019 - Description : Aprroving the loan request based
+	 * on condition
+	 ********************************************************************************************************/
+
+	public ArrayList<Loan> approveLoanWithoutStatus() throws IOException, PecuniaException, LoanDisbursalException {
+		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
+		ArrayList<Loan> acceptedLoanRequests = new ArrayList<Loan>();
+		acceptedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveAcceptedLoanListWithoutStatus();
+		if (acceptedLoanRequests.size() == 0) {
+			logger.error(ErrorConstants.NO_LOAN_REQUESTS);
+			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
+
+		}
+		
+		logger.info(LoggerMessage.LOAN_REQUEST);
+		return acceptedLoanRequests;
+
+	}
 
 	/*******************************************************************************************************
 	 * - Function Name : approvedLoanList() - Input Parameters : None - Return Type
@@ -238,30 +261,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		return status;
 	}
 
-	/*******************************************************************************************************
-	 * - Function Name : updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
-	 * - Input Parameters : ArrayList<Loan> approvedLoanRequests - Return Type :
-	 * void - Throws : PecuniaException, TransactionException,
-	 * LoanDisbursalException - Author : aninrana - Creation Date : 25/09/2019 -
-	 * Description : Updating the Account balance of the customer
-	 ********************************************************************************************************/
-
-	public String numberOfLoanAccounts(ArrayList<Loan> approvedLoanRequests, String accountId) {
-		StringBuilder sb = new StringBuilder();
-		for (int index = 0; index < approvedLoanRequests.size(); index++) {
-			String retrievedAccountId = approvedLoanRequests.get(index).getAccountId();
-			
-			if (retrievedAccountId.equals(accountId)) {
-
-				sb.append(approvedLoanRequests.get(index).getType() + "\n");
-			
-
-			}
-		}
-
-		return sb.toString();
-
-	}
+	
 	
 
 
