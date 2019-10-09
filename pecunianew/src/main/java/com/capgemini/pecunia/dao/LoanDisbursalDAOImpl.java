@@ -199,6 +199,66 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 		return requestList;
 
 	}
+	
+	/*******************************************************************************************************
+	 * - Function Name : retrieveAcceptedLoanListWithoutStatus() - Input Parameters :none -
+	 * Return Type : List<Loan> - Throws : None - Author : IOException,
+	 * PecuniaException - Creation Date : 25/09/2019 - Description : Retrieving the
+	 * accepted loan requests from the database
+	 ********************************************************************************************************/
+
+	public List<Loan> retrieveAcceptedLoanListWithoutStatus() throws IOException, PecuniaException {
+
+		Connection connection = DBConnection.getInstance().getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		List<Loan> requestList = new ArrayList<Loan>();
+
+		try {
+			preparedStatement = connection
+					.prepareStatement(LoanDisbursalQuerryMapper.RETRIVE_LOAN_REQUESTS_WITH_ENOUGH_CREDIT_SCORE_WITHOUT_STATUS);
+
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				loanIdOfAccepted = resultSet.getInt("loan_id");
+				accountIdOfAccepted = resultSet.getString("account_id");
+				amountOfAccepted = resultSet.getDouble("amount");
+				typeOfAccepted = resultSet.getString("type");
+				tenureOfAccepted = resultSet.getInt("tenure");
+				roiOfAccepted = resultSet.getInt("roi");
+				statusOfAccepted = resultSet.getString("loan_status");
+				emiOfAccepted = resultSet.getDouble("emi");
+				creditScoreOfAccepted = resultSet.getInt("credit_score");
+				
+				Loan loan = new Loan(loanIdOfAccepted, accountIdOfAccepted, amountOfAccepted, typeOfAccepted,
+						tenureOfAccepted, roiOfAccepted, statusOfAccepted, emiOfAccepted, creditScoreOfAccepted);
+				requestList.add(loan);
+
+			}
+		}
+
+		catch (SQLException sqlException) {
+			logger.error(sqlException.getMessage());
+			throw new PecuniaException(ErrorConstants.CONNECTION_FAILURE);
+		}
+
+		finally {
+			try {
+				resultSet.close();
+				preparedStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				logger.error(e.getMessage());
+				throw new PecuniaException(ErrorConstants.FILE_CLOSING_FAILURE);
+
+			}
+		}
+		logger.info(LoggerMessage.LOAN_REQUEST);
+		return requestList;
+
+	}
 
 	/*******************************************************************************************************
 	 * - Function Name : retrieveAcceptedLoanList() - Input Parameters :none -
