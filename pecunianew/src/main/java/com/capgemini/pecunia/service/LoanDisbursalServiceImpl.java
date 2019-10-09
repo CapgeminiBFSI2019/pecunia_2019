@@ -249,12 +249,12 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 			double totalEMI = loanDisbursedDAO.totalEmi(approvedLoanRequests.get(i).getAccountId());
 			double updatedBalance = oldBalance - totalEMI;
 			if (updatedBalance < 0) {
-				status.append("Not enough balance for account number"+ approvedLoanRequests.get(i).getAccountId() + "\n");
+				status.append("*-*-*-*-*-* Not enough balance for account number "+ approvedLoanRequests.get(i).getAccountId() +"*-*-*-*-*-*" + "\n" );
 			} else {
 				account.setBalance(updatedBalance);
 				transactionDAOImpl.updateBalance(account);
 				updateLoanAccount(approvedLoanList, 1);
-				status.append("Balance updated for" + approvedLoanRequests.get(i).getAccountId() + "\n");
+				status.append("*-*-*-*-*-* Balance updated for " + approvedLoanRequests.get(i).getAccountId() + " Amount deducted " + totalEMI  +"*-*-*-*-*-*"+ "\n" );
 			}
 
 		}

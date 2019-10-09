@@ -24,11 +24,6 @@ public class LoanDisbursalServlet extends HttpServlet {
 	private static final long serialVersionUID = -3382684550563202404L;
 
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if (session == null) {
-		    // Session is not created.
-			response.sendRedirect("session.html");
-		}
 		LoanDisbursalService loanDisbursalService = new LoanDisbursalServiceImpl();
 		PrintWriter out = response.getWriter();
 		response.setContentType("text/html");
