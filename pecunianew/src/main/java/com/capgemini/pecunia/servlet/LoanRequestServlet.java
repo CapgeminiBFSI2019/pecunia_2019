@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.exception.LoanException;
@@ -21,7 +22,11 @@ public class LoanRequestServlet extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+		    // Session is not created.
+			response.sendRedirect("session.html");
+		}
 		String AccountId = request.getParameter("Account Id");
 		double amount = Double.parseDouble(request.getParameter("LoanAmount"));
 		int tenure = Integer.parseInt(request.getParameter("Tenure"));
@@ -38,7 +43,7 @@ public class LoanRequestServlet extends HttpServlet {
 		loan.setRoi(roi);
 		loan.setType(loanType);
 		LoanService loanService = new LoanServiceImpl();
-		double emi = loanService.calculateEMI(amount, tenure, roi);
+		double emi = LoanServiceImpl.calculateEMI(amount, tenure, roi);
 		loan.setEmi(emi);
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
@@ -47,10 +52,8 @@ public class LoanRequestServlet extends HttpServlet {
 			if (isSuccess) {
 				request.getRequestDispatcher("LoanRequest.html").include(request, response);
 				out.println("<script>$('#loan-request-success').toast('show');</script>");
-				
-				
 
-			}else {
+			} else {
 				throw new LoanException("");
 			}
 

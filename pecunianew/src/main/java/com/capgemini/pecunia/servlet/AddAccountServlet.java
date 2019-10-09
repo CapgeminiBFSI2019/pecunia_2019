@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Address;
@@ -18,16 +19,18 @@ import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 
-public class AddAccount extends HttpServlet {
+/**
+ * Servlet implementation class AddAccountServlet
+ */
+public class AddAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+       
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+		    // Session is not created.
+			response.sendRedirect("session.html");
+		}
 		Account account = new Account();
 		Address address = new Address();
 		Customer customer = new Customer();
@@ -94,7 +97,6 @@ public class AddAccount extends HttpServlet {
 			out.println("<script>$('#add-account-failure').toast('show');</script>");
 
 		}
-
 	}
 
 }
