@@ -83,6 +83,12 @@ public class AccountSummaryServlet extends HttpServlet {
 					"		<h2>Account Summary</h2>\r\n" + 
 					"		<table class=\"table table-bordered\">\r\n" + 
 					"			<thead class=\"thead-light\">");
+			
+			
+			
+			
+			
+			
 			if(accountSummary.size()>0)
 			{	
 			out.write("<th colspan=9>Account ID: " + accountId +"</th>");
@@ -113,12 +119,7 @@ public class AccountSummaryServlet extends HttpServlet {
 				out.write("<td>"+ transaction.getTransTo()+ "</td>");
 				out.write("<td>"+ transaction.getType()+ "</td>");
 				out.write("<td>"+ transaction.getOption()+ "</td>");
-				if(transaction.getOption().equalsIgnoreCase("cheque")) {
-					out.write("<td>"+ transaction.getChequeId()+ "</td>");
-				}
-				else {
-					out.write("<td>-</td>");
-				}
+				out.write("<td>"+ transaction.getChequeId()+ "</td>");
 				out.write("<td>"+ transaction.getClosingBalance()+ "</td>");
 				out.write("</tr>");
 			}
