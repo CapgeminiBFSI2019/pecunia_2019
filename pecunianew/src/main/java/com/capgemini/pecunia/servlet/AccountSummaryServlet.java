@@ -81,6 +81,7 @@ public class AccountSummaryServlet extends HttpServlet {
 					"    <div class=\"bg\"></div>" +
 					"	<div class=\"container\">\r\n" + 
 					"		<h2>Account Summary</h2>\r\n" + 
+					"		<div class=\"table-responsive\">\r\n" +
 					"		<table class=\"table table-bordered\">\r\n" + 
 					"			<thead class=\"thead-light\">");
 			
@@ -119,13 +120,19 @@ public class AccountSummaryServlet extends HttpServlet {
 				out.write("<td>"+ transaction.getTransTo()+ "</td>");
 				out.write("<td>"+ transaction.getType()+ "</td>");
 				out.write("<td>"+ transaction.getOption()+ "</td>");
-				out.write("<td>"+ transaction.getChequeId()+ "</td>");
+				if(transaction.getOption().equalsIgnoreCase("cheque")) {
+					out.write("<td>"+ transaction.getChequeId()+ "</td>");
+				}
+				else {
+					out.write("<td>-</td>");
+				}
 				out.write("<td>"+ transaction.getClosingBalance()+ "</td>");
 				out.write("</tr>");
 			}
 			out.write("	</tr>\r\n" + 
 					"			</tbody>\r\n" + 
-					"		</table>\r\n" + 
+					"		</table>\r\n" +
+					"	</div>\r\n" +
 					"	</div>\r\n" + 
 					"\r\n" + 
 					"</body>\r\n" + 

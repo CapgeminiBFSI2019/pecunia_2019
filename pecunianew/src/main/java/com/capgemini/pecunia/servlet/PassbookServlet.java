@@ -60,7 +60,6 @@ public class PassbookServlet extends HttpServlet {
 					"\r\n" + 
 					"    <nav class=\"navbar navbar-expand-lg navbar-dark bg-info\">\r\n" + 
 					"        <a class=\"navbar-brand\" href=\"MainPage.html\"><i class=\"fas fa-home text-light mr-2\" style=\"font-size: 24px;\"></i>Pecunia</a>\r\n" + 
-					"        <a class=\"text-light d-block d-lg-none \">Rohan Patil</a>\r\n" + 
 					"        <button class=\"navbar-toggler \" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\" aria-controls=\"navbarNavDropdown\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n" + 
 					"									<span class=\"navbar-toggler-icon\"></span>\r\n" + 
 					"								</button>\r\n" + 
@@ -84,6 +83,7 @@ public class PassbookServlet extends HttpServlet {
 					"    <div class=\"bg\"></div>" +
 					"	<div class=\"container\">\r\n" + 
 					"		<h2 class=\"col-8\">Passbook Details</h2>\r\n" + 
+					"		<div class=\"table-responsive\">\r\n" +
 					"		<table class=\"table table-bordered\">\r\n" + 
 					"			<thead class=\"thead-light\">\r\n");
 			if(updatePassbook.size()>0)
@@ -124,7 +124,8 @@ public class PassbookServlet extends HttpServlet {
 			}
 			out.write("	</tr>\r\n" + 
 					"			</tbody>\r\n" + 
-					"		</table>\r\n" + 
+					"		</table>\r\n" +
+					"        </div>\r\n" +
 					"	</div>\r\n" + 
 					"\r\n" + 
 					"</body>\r\n" + 
