@@ -71,11 +71,11 @@ public class PassbookServlet extends HttpServlet {
 					"\r\n" + 
 					"            </ul>\r\n" + 
 					"            <ul class=\"navbar-nav\">\r\n" + 
-					"                <li class=\"nav-item d-none d-lg-block\" href=\"#\">\r\n" + 
-					"                    <a class=\"nav-link disabled text-light\">Rohan Patil</a>\r\n" + 
-					"                </li>\r\n" + 
+	
 					"                <li class=\"nav-item\">\r\n" + 
-					"                    <a class=\"nav-link\" href=\"#\">Logout</a>\r\n" + 
+					"                    <form action=\"logout\" method=\"POST\">\r\n" + 
+					"                		<button type=\"submit\" class=\"btn btn-info\">logout</button>\r\n" + 
+					"                	</form> "+ 
 					"                </li>\r\n" + 
 					"            </ul>\r\n" + 
 					"        </div>\r\n" + 
