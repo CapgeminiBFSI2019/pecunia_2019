@@ -36,7 +36,8 @@ public class LoginServlet extends HttpServlet {
 			{
 				HttpSession session=request.getSession();  
 		        session.setAttribute("username",username); 
-				request.getRequestDispatcher("MainPage.html").forward(request, response); 
+		        response.sendRedirect("MainPage.html");
+//				request.getRequestDispatcher("MainPage.html").se(request, response); 
 			}else {
 				throw new PecuniaException("");
 			}
