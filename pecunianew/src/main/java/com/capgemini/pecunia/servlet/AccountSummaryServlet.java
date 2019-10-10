@@ -57,7 +57,7 @@ public class AccountSummaryServlet extends HttpServlet {
 					"\r\n" + 
 					"    <nav class=\"navbar navbar-expand-lg navbar-dark bg-info\">\r\n" + 
 					"        <a class=\"navbar-brand\" href=\"MainPage.html\"><i class=\"fas fa-home text-light mr-2\" style=\"font-size: 24px;\"></i>Pecunia</a>\r\n" + 
-					"        <a class=\"text-light d-block d-lg-none \">Rohan Patil</a>\r\n" + 
+//					"        <a class=\"text-light d-block d-lg-none \">Rohan Patil</a>\r\n" + 
 					"        <button class=\"navbar-toggler \" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\" aria-controls=\"navbarNavDropdown\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n" + 
 					"									<span class=\"navbar-toggler-icon\"></span>\r\n" + 
 					"								</button>\r\n" + 
@@ -70,7 +70,7 @@ public class AccountSummaryServlet extends HttpServlet {
 					"            </ul>\r\n" + 
 					"            <ul class=\"navbar-nav\">\r\n" + 
 					"                <li class=\"nav-item d-none d-lg-block\" href=\"#\">\r\n" + 
-					"                    <a class=\"nav-link disabled text-light\">Rohan Patil</a>\r\n" + 
+//					"                    <a class=\"nav-link disabled text-light\">Rohan Patil</a>\r\n" + 
 					"                </li>\r\n" + 
 					"                <li class=\"nav-item\">\r\n" + 
 					"                    <a class=\"nav-link\" href=\"#\">Logout</a>\r\n" + 
