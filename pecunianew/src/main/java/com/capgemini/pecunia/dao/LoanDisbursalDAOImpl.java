@@ -484,6 +484,8 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 
 		logger.info(LoggerMessage.UPDATE_LOAN_STATUS);
 	}
+	
+	
 
 	public double totalEmi(String accountId) throws PecuniaException {
 		double totalEmi = 0;
