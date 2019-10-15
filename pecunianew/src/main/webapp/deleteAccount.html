@@ -46,16 +46,20 @@
     <div class="bg"></div>
     <form id="delete-account-form" class="container deletion-form " method="POST" action="DeleteAccountServlet">
         <div class="row ">
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-6 offset 6">
                 <label for="account-id">Account Id</label> <input type="number" class="form-control" id="account-id" name="account-id" placeholder="Enter Account Id " pattern="[0-9]" title="12 digit account id" minlength=12 maxlength=12 required>
             </div>
 
 
         </div>
+        <div class="row">
+                <div class="offset-4">
         <center>
             <button type="submit" class="btn btn-info">Delete
 				account</button>
         </center>
+        </div>
+        </div>
 
     </form>
     
