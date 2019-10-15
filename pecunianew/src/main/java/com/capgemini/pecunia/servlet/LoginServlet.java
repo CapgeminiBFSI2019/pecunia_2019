@@ -19,6 +19,7 @@ import com.capgemini.pecunia.exception.LoginException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.LoginService;
 import com.capgemini.pecunia.service.LoginServiceImpl;
+import com.capgemini.pecunia.util.Constants;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeCreator;
@@ -68,7 +69,7 @@ public class LoginServlet extends HttpServlet {
 			if(result)
 			{
 				((ObjectNode) dataResponse).put("success", result);
-				((ObjectNode) dataResponse).put("message", "Login Successful!!!");
+				((ObjectNode) dataResponse).put("message",Constants.LOGIN_SUCCESSFUL);
 			}else {
 				throw new PecuniaException(ErrorConstants.LOGIN_ERROR);
 			}
@@ -84,7 +85,6 @@ public class LoginServlet extends HttpServlet {
 		
 		
 	}
-	
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		

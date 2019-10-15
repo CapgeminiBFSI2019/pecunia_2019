@@ -38,5 +38,10 @@ public class Constants {
 	public static final double CURRENT_ROI = 0.0;
 	public static final double FD_ROI = 7.0;
 	public static final String NO_LOAN_REQUEST = "No Loan request is present";
+	public static final String LOGIN_SUCCESSFUL = "Login Successful!!";
+	
+	
+	
+	
 
 }
