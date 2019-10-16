@@ -96,11 +96,11 @@ public class LoginServlet extends HttpServlet {
 			
 	}
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		resp.setContentType("application/json");
-		resp.addHeader("Access-Control-Allow-Origin", "*");
-		resp.getWriter().write("{}");
-	}
+//	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		
+//		resp.setContentType("application/json");
+//		resp.addHeader("Access-Control-Allow-Origin", "*");
+//		resp.getWriter().write("{}");
+//	}
 
 }
