@@ -1162,7 +1162,7 @@ public class PecuniaMain {
                	 
                     System.out.println("Enter the Account Number"); 
                     String accountId = sc.next();
-                    double loans =  loanDisbursalService.calculateEMIToBePaid(approvedLoanRequests, accountId);
+                    double loans =  0; //loanDisbursalService.calculateEMIToBePaid(approvedLoanRequests, accountId);
                     System.out.println(loans); 
 
                   }
