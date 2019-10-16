@@ -16,7 +16,10 @@ import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.exception.LoanException;
 import com.capgemini.pecunia.service.LoanService;
 import com.capgemini.pecunia.service.LoanServiceImpl;
+import com.capgemini.pecunia.util.Constants;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * Servlet implementation class LoanRequest1
@@ -62,6 +65,37 @@ public class LoanRequestServlet extends HttpServlet {
 		LoanService loanService = new LoanServiceImpl();
 		double emi = LoanServiceImpl.calculateEMI(amount, tenure, roi);
 		loan.setEmi(emi);
+		response.setContentType("application/json");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		
+		response.setHeader("Access-Control-Allow-Headers" ,"Content-Type, Authorization, Content-Length, X-Requested-With");
+		response.setHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST");
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode dataResponse = mapper.createObjectNode();
+		boolean result=false;
+		PrintWriter out =response.getWriter();
+		try {
+			boolean isSuccess = loanService.createLoanRequest(loan);
+			if (isSuccess) {
+//				request.getRequestDispatcher("LoanRequest.html").include(request, response);
+//				out.println("<script>$('#loan-request-success').toast('show');</script>");
+				((ObjectNode) dataResponse).put("success", result);
+				((ObjectNode) dataResponse).put("message",Constants.LOAN_REQUEST_SUCCESSFUL);
+
+			} else {
+				throw new LoanException("");
+			}
+
+		} catch (LoanException e) {
+//			request.getRequestDispatcher("LoanRequest.html").include(request, response);
+//			out.println("<script>$('#loan-request-failure').toast('show');</script>");
+			((ObjectNode) dataResponse).put("success", result);
+			((ObjectNode) dataResponse).put("message", e.getMessage());
+		}
+		finally {
+			out.print(dataResponse);
+		}
+		out.close();
 	    
 	    		
 	    
