@@ -22,9 +22,9 @@ import com.google.gson.JsonObject;
 public class UpdateCustomerNameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void service(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		System.out.println("In servlet");
 //		HttpSession session = request.getSession(false);
 //		if (session == null) {
 //		    // Session is not created.
