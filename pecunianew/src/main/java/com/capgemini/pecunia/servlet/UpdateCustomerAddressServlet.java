@@ -1,5 +1,6 @@
 package com.capgemini.pecunia.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -7,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Address;
@@ -15,31 +15,50 @@ import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
-/**
- * Servlet implementation class UpdateCustomerAddressServlet
- */
 public class UpdateCustomerAddressServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if (session == null) {
-		    // Session is not created.
-			response.sendRedirect("session.html");
-		}
-		String accountId = request.getParameter("account-id");
+//		HttpSession session = request.getSession(false);
+//		if (session == null) {
+//		    // Session is not created.
+//			response.sendRedirect("session.html");
+//		}
 
-		String line1 = request.getParameter("address-line1");
-		String line2 = request.getParameter("address-line2");
-		String city = request.getParameter("city");
-		String state = request.getParameter("state");
-		String country = request.getParameter("country");
-		String zipcode = request.getParameter("zipcode");
-
-		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		response.setContentType("application/json");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers",
+				"Content-Type, Authorization, Content-Length, X-Requested-With");
+		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
+		StringBuffer jb = new StringBuffer();
+		String line = null;
+		try {
+			BufferedReader reader = request.getReader();
+			while ((line = reader.readLine()) != null)
+				jb.append(line);
+		} catch (Exception e) {
+		}
+
+		JsonObject dataResponse = new JsonObject();
+
+		Gson gson = new Gson();
+		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
+		JsonObject jobj = jelem.getAsJsonObject();
+
+		String accountId = jobj.get("accountNumber").getAsString();
+
+		String line1 = jobj.get("address-line1").getAsString();
+		String line2 = jobj.get("address-line2").getAsString();
+		String city = jobj.get("city").getAsString();
+		String state = jobj.get("state").getAsString();
+		String country = jobj.get("country").getAsString();
+		String zipcode = jobj.get("zipcode").getAsString();
 
 		Account account = new Account();
 		Address address = new Address();
@@ -52,15 +71,27 @@ public class UpdateCustomerAddressServlet extends HttpServlet {
 		address.setZipcode(zipcode);
 
 		AccountManagementService ams = new AccountManagementServiceImpl();
+		response.setContentType("application/json");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+
+		response.setHeader("Access-Control-Allow-Headers",
+				"Content-Type, Authorization, Content-Length, X-Requested-With");
+		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
+		boolean updated = false;
 		try {
-			boolean updated = ams.updateCustomerAddress(account, address);
+			updated = ams.updateCustomerAddress(account, address);
 			if (updated) {
-				request.getRequestDispatcher("updateAddress.html").include(request, response);
-				out.println("<script>$('#update-address-success').toast('show');</script>");
+				dataResponse.addProperty("success", true);
+//				request.getRequestDispatcher("updateAddress.html").include(request, response);
+//				out.println("<script>$('#update-address-success').toast('show');</script>");
 			}
 		} catch (PecuniaException | AccountException e) {
-			request.getRequestDispatcher("updateAddress.html").include(request, response);
-			out.println("<script>$('#update-address-failure').toast('show');</script>");
+			dataResponse.addProperty("success", false);
+			dataResponse.addProperty("message", e.getMessage());
+//			request.getRequestDispatcher("updateAddress.html").include(request, response);
+//			out.println("<script>$('#update-address-failure').toast('show');</script>");
+		} finally {
+			out.print(dataResponse);
 		}
 	}
 
