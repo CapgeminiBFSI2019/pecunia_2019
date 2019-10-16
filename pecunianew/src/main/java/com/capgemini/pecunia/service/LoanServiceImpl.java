@@ -20,7 +20,7 @@ public class LoanServiceImpl implements LoanService {
 	 * -Description : Takes the Amount,tenure and Rate of Interest as parameter and returns emi for the loan
 	 ********************************************************************************************************/
 
-	public double calculateEMI(double amount, int tenure, double roi) {
+	public static double calculateEMI(double amount, int tenure, double roi) {
 		double p = amount;
 		double r = roi / 1200;
 		double a = Math.pow(1 + r, tenure);

@@ -1,4 +1,4 @@
-package com.capgemini.pecunia.servlet;
+
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
@@ -17,18 +18,21 @@ import com.capgemini.pecunia.service.TransactionService;
 import com.capgemini.pecunia.service.TransactionServiceImpl;
 
 /**
- * Servlet implementation class CreditUsingCheque
+ * Servlet implementation class CreditUsingChequeServlet
  */
-public class CreditUsingCheque extends HttpServlet {
+public class CreditUsingChequeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public CreditUsingCheque() {
-    }
-	
+      
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+		    // Session is not created.
+			response.sendRedirect("session.html");
+		}
+		
 		Transaction creditTransaction = new Transaction();
 		Cheque creditCheque = new Cheque();
-		
 		String payeeAccountNumber = request.getParameter("payeeAccountNumber");
 		String beneficiaryAccountNumber = request.getParameter("beneficiaryAccountNumber");
 		String chequeNumber = request.getParameter("creditChequeNumber");
@@ -52,15 +56,17 @@ public class CreditUsingCheque extends HttpServlet {
 		
 		
 		TransactionService trans = new TransactionServiceImpl();
-		
 		try {
 			int transId = trans.creditUsingCheque(creditTransaction, creditCheque);
-			PrintWriter out = response.getWriter();
-			out.println("<h1>Transaction Id is: </h1>" + transId);
-			out.println("<h1>Transaction Successful</h1>");
+			
+			request.getRequestDispatcher("creditUsingCheque.html").include(request, response);
+			out.println("<script>");
+			out.println("$('#success-toast-body').html('Amount has been credited. Transaction id is \t" + transId + "');");
+			out.println("$('#id-generation-success').toast('show');");
+			out.println("</script>");
 		} catch (TransactionException | PecuniaException e) {
-			PrintWriter out = response.getWriter();
-			out.println("<h1>Failure</h1><br>" + e.getMessage());
+			request.getRequestDispatcher("creditUsingCheque.html").include(request, response);
+			out.println("<script>$('#id-generation-failure').toast('show');</script>");
 		}
 	}
 

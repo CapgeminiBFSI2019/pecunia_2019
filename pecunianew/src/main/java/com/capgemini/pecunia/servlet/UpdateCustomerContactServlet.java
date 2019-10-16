@@ -1,5 +1,6 @@
 package com.capgemini.pecunia.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -14,38 +15,79 @@ import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
-/**
- * Servlet implementation class UpdateCustomerContactServlet
- */
 public class UpdateCustomerContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String accountId = request.getParameter("account-id");
-		String custContact = request.getParameter("contact");
+//		HttpSession session = request.getSession(false);
+//		if (session == null) {
+//		    // Session is not created.
+//			response.sendRedirect("session.html");
+//		}
 
-		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		response.setContentType("application/json");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers",
+				"Content-Type, Authorization, Content-Length, X-Requested-With");
+		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
+		StringBuffer jb = new StringBuffer();
+		String line = null;
+		try {
+			BufferedReader reader = request.getReader();
+			while ((line = reader.readLine()) != null)
+				jb.append(line);
+		} catch (Exception e) {
+		}
+
+		JsonObject dataResponse = new JsonObject();
+
+		Gson gson = new Gson();
+		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
+		JsonObject jobj = jelem.getAsJsonObject();
+
+		String accountId = jobj.get("accountNumber").getAsString();
+
+		String custContact = jobj.get("contact").getAsString();
 
 		Account account = new Account();
 		Customer customer = new Customer();
+
 		account.setId(accountId);
 		customer.setContact(custContact);
 
 		AccountManagementService ams = new AccountManagementServiceImpl();
+
+		response.setContentType("application/json");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+
+		response.setHeader("Access-Control-Allow-Headers",
+				"Content-Type, Authorization, Content-Length, X-Requested-With");
+		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
+		boolean updated = false;
+
 		try {
-			boolean updated = ams.updateCustomerContact(account, customer);
+			updated = ams.updateCustomerContact(account, customer);
 			if (updated) {
-				request.getRequestDispatcher("updateContact.html").include(request, response);
-				out.println("<script>$('#update-contact-success').toast('show');</script>");
+				dataResponse.addProperty("success", true);
+//				request.getRequestDispatcher("updateContact.html").include(request, response);
+//				out.println("<script>$('#update-contact-success').toast('show');</script>");
 			}
 		} catch (PecuniaException | AccountException e) {
-			request.getRequestDispatcher("updateContact.html").include(request, response);
-			out.println("<script>$('#update-contact-failure').toast('show');</script>");
+			dataResponse.addProperty("success", false);
+			dataResponse.addProperty("message", e.getMessage());
+//			request.getRequestDispatcher("updateContact.html").include(request, response);
+//			out.println("<script>$('#update-contact-failure').toast('show');</script>");
+		} finally {
+			out.print(dataResponse);
 		}
+
 	}
 
 }

@@ -31,11 +31,11 @@
 
             </ul>
             <ul class="navbar-nav">
-                <li class="nav-item d-none d-lg-block" href="#">
-                    <a class="nav-link disabled text-light">Rohan Patil</a>
-                </li>
+               
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
+                   <form action="logout" method="POST">
+                		<button type="submit" class="btn btn-info">logout</button>
+                	</form>
                 </li>
             </ul>
         </div>
@@ -54,11 +54,11 @@
                 <select name="show-loan-requests">
                     <option value="" disabled selected hidden>Please Choose...</option>
                     <option value="retrieve all">Retrieve all loan requests</option>
-                    <option value="retrieve approved">Retrieve approved loan requests</option>
-                    <option value="retrieve rejected">Retrieve rejected loan requests</option>
+                    <option value="retrieve approved">Show the loan requests to be accepted</option>
+                    <option value="retrieve rejected">Show the loan requests to be rejected</option>
                 </select>
                   <br><br>
-                  <button type="submit" class="btn btn-primary ">Submit</button>
+                  <button type="submit" class="btn btn-info">Submit</button>
             </div>
      </div>
             
@@ -79,13 +79,36 @@
                 </select>
 
                   <br><br>
-                  <button type="submit" class="btn btn-primary ">Submit</button>
+                  <button type="submit" class="btn btn-info">Submit</button>
             </div>
       </div>
         
         </form>
         
       <form id="Loan Disbursal Form 2" class="container transaction-form" method="post" action = "loandisbursalupdation">       
+        
+           
+<div class="d-flex justify-content-center ">
+
+        <div class="form-group col-md-6 offset-2 ">
+            <label for="update-account-balance">Update Loan Status</label>
+            <br>
+            <select name="update-loan-status">
+
+                    <option value="" disabled selected hidden>Please Choose...</option>
+                    <option value="Yes">Yes</option>
+                    
+                </select>
+
+                  <br><br>
+                  <button type="submit" class="btn btn-info">Submit</button>
+             
+            </div>
+          </div>
+            
+         </form>
+         
+          <form id="Loan Disbursal Form 3" class="container transaction-form" method="post" action = "loandisbursalbalanceupdation">       
         
            
 <div class="d-flex justify-content-center ">
@@ -101,7 +124,7 @@
                 </select>
 
                   <br><br>
-                  <button type="submit" class="btn btn-primary ">Submit</button>
+                  <button type="submit" class="btn btn-info">Submit</button>
              
             </div>
           </div>
@@ -150,7 +173,7 @@
                 $('.toast-container').removeClass('d-none');
                 $('.toast-container').addClass('d-flex');
             });
-            $('#loan-disbursal-failure').on('hidden.bs.toast', function() {
+            $('#loan-disbursal-success').on('hidden.bs.toast', function() {
                 $('#loan-request-failure').show();
                 $('.toast-container').removeClass('d-flex');
                 $('.toast-container').addClass('d-none');

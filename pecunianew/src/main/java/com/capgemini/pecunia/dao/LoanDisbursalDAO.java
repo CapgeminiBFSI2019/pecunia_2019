@@ -23,5 +23,7 @@ public interface LoanDisbursalDAO {
 
 	public double totalEmi(String accountId) throws PecuniaException;
 	
+	public List<Loan> retrieveAcceptedLoanListWithoutStatus() throws IOException, PecuniaException;
+	
 
 }

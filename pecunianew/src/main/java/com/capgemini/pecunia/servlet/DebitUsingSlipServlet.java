@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.PecuniaException;
@@ -19,6 +20,12 @@ public class DebitUsingSlipServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+		    // Session is not created.
+			response.sendRedirect("session.html");
+		}
+		
 		String accountId = request.getParameter("accountNumber");
 		double amount = Double.parseDouble(request.getParameter("debitSlipAmount"));
 
@@ -26,15 +33,19 @@ public class DebitUsingSlipServlet extends HttpServlet {
 		debitSlip.setAccountId(accountId);
 		debitSlip.setAmount(amount);
 		TransactionService trans = new TransactionServiceImpl();
-
+		PrintWriter out = response.getWriter();
 		try {
 			int transId = trans.debitUsingSlip(debitSlip);
-			PrintWriter out = response.getWriter();
-			out.println("<h1>Transaction Id is: </h1>" + transId);
-			out.println("<h1>Transaction Successful</h1>");
+			
+			request.getRequestDispatcher("debitUsingSlip.html").include(request, response);
+			out.println("<script>");
+			out.println("$('#success-toast-body').html('Amount has been debited. Transaction id is \t" + transId + "');");
+			out.println("$('#id-generation-success').toast('show');");
+			out.println("</script>");
+			
 		} catch (TransactionException | PecuniaException e) {
-			PrintWriter out = response.getWriter();
-			out.println("<h1>Failure</h1><br>" + e.getMessage());
+			request.getRequestDispatcher("debitUsingSlip.html").include(request, response);
+			out.println("<script>$('#id-generation-failure').toast('show');</script>");
 		}
 	}
 }

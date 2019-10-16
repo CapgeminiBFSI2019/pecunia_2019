@@ -75,6 +75,29 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		return acceptedLoanRequests;
 
 	}
+	
+	/*******************************************************************************************************
+	 * - Function Name : approveLoan(ArrayList<Loan> loanRequestList) - Input
+	 * Parameters : ArrayList<Loan> loanRequestList - Return Type : void - Throws :
+	 * IOException, PecuniaException, LoanDisbursalException - Author : aninrana -
+	 * Creation Date : 25/09/2019 - Description : Aprroving the loan request based
+	 * on condition
+	 ********************************************************************************************************/
+
+	public ArrayList<Loan> approveLoanWithoutStatus() throws IOException, PecuniaException, LoanDisbursalException {
+		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
+		ArrayList<Loan> acceptedLoanRequests = new ArrayList<Loan>();
+		acceptedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveAcceptedLoanListWithoutStatus();
+		if (acceptedLoanRequests.size() == 0) {
+			logger.error(ErrorConstants.NO_LOAN_REQUESTS);
+			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
+
+		}
+		
+		logger.info(LoggerMessage.LOAN_REQUEST);
+		return acceptedLoanRequests;
+
+	}
 
 	/*******************************************************************************************************
 	 * - Function Name : approvedLoanList() - Input Parameters : None - Return Type
@@ -158,6 +181,8 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 		else {
 			status = Constants.STATUS_CHECK[1];
+			logger.error(ErrorConstants.NO_LOAN_REQUESTS);
+			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
 		}
 
 		return status;
@@ -197,6 +222,8 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 		} else {
 			status = Constants.STATUS_CHECK[1];
+			logger.error(ErrorConstants.NO_LOAN_REQUESTS);
+			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
 		}
 		logger.info(LoggerMessage.UPDATE_LOAN_STATUS);
 		return status;
@@ -213,7 +240,8 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	public String updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
 			throws PecuniaException, TransactionException, LoanDisbursalException {
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
-		String status = Constants.STATUS_CHECK[0];
+		StringBuilder status = new StringBuilder();
+		
 		for (int i = 0; i < approvedLoanRequests.size(); i++) {
 			Account account = new Account();
 			account.setId(approvedLoanRequests.get(i).getAccountId());
@@ -221,43 +249,20 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 			double totalEMI = loanDisbursedDAO.totalEmi(approvedLoanRequests.get(i).getAccountId());
 			double updatedBalance = oldBalance - totalEMI;
 			if (updatedBalance < 0) {
-				status = Constants.STATUS_CHECK[1];
+				status.append("*-*-*-*-*-* Not enough balance for account number "+ approvedLoanRequests.get(i).getAccountId() +"*-*-*-*-*-*" + "\n" );
 			} else {
 				account.setBalance(updatedBalance);
 				transactionDAOImpl.updateBalance(account);
 				updateLoanAccount(approvedLoanList, 1);
-				status = Constants.STATUS_CHECK[0];
+				status.append("*-*-*-*-*-* Balance updated for " + approvedLoanRequests.get(i).getAccountId() + " Amount deducted " + totalEMI  +"*-*-*-*-*-*"+ "\n" );
 			}
 
 		}
 		logger.info(LoggerMessage.UPDATE_ACCOUNT_BALANCE);
-		return status;
+		return status.toString();
 	}
 
-	/*******************************************************************************************************
-	 * - Function Name : updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
-	 * - Input Parameters : ArrayList<Loan> approvedLoanRequests - Return Type :
-	 * void - Throws : PecuniaException, TransactionException,
-	 * LoanDisbursalException - Author : aninrana - Creation Date : 25/09/2019 -
-	 * Description : Updating the Account balance of the customer
-	 ********************************************************************************************************/
-
-	public String numberOfLoanAccounts(ArrayList<Loan> approvedLoanRequests, String accountId) {
-		StringBuilder sb = new StringBuilder();
-		for (int index = 0; index < approvedLoanRequests.size(); index++) {
-			String retrievedAccountId = approvedLoanRequests.get(index).getAccountId();
-			
-			if (retrievedAccountId.equals(accountId)) {
-
-				sb.append(approvedLoanRequests.get(index).getType() + "\n");
-			
-
-			}
-		}
-
-		return sb.toString();
-
-	}
+	
 	
 
 

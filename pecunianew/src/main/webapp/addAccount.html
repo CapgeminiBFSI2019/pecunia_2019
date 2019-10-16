@@ -29,7 +29,7 @@
 	<nav class="navbar navbar-expand-lg navbar-dark bg-info">
 		<a class="navbar-brand" href="accountsMenu.html"><i
 			class="fas fa-home text-light mr-2" style="font-size: 24px;"></i>Pecunia</a>
-		<a class="text-light d-block d-lg-none ">Rohan Patil</a>
+		
 		<button class="navbar-toggler " type="button" data-toggle="collapse"
 			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -44,9 +44,10 @@
 
 			</ul>
 			<ul class="navbar-nav">
-				<li class="nav-item d-none d-lg-block" href="#"><a
-					class="nav-link disabled text-light">Rohan Patil</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Logout</a></li>
+				
+				<li class="nav-item"><form action="logout" method="POST">
+                		<button type="submit" class="btn btn-info">logout</button>
+                	</form></li>
 			</ul>
 		</div>
 	</nav>
@@ -56,14 +57,14 @@
 
 
 	<form id="new-account-form" class="container account-form"
-		action="AddAccount" method="post">
+		action="AddAccountServlet" method="post">
 		<div class="row">
 			<div class="form-group col-md-6">
 				<label for="name">Name</label> <input type="text"
 					class="form-control" id="name" name="name" placeholder="Enter Name"
 					 pattern= "[A-Za-z\s]*" title="Only alphabets allowed" required>
 			</div>
-			<div class="form-group col-md-3">
+			<div class="form-group col-md-6l">
 				<label for="gender">Gender</label> <select required id="gender"
 					class="form-control">
 					<option value="Male">Male</option>
@@ -159,7 +160,7 @@
 			<div class="form-group col-md-6">
 				<label for="pan">PAN</label> <input type="text" class="form-control"
 					id="pan" name="pan" placeholder="Enter PAN number" 
-					minlength="10" maxlength="10" pattern= "[A-Za-z0-9]*" title="Enter a valid 10 digit PAN number" required>
+					minlength="10" maxlength="10" pattern= "[A-Z]{5}[0-9]{4}[A-Z]{1}" title="Enter a valid 10 digit PAN number" required>
 			</div>
 			<div class="form-group col-md-3">
 				<label for="account-type">Account type</label> <select required
@@ -192,7 +193,7 @@
 			</div>
 		</div>
 		<center>
-			<button type="submit" class="btn btn-primary">Add new
+			<button type="submit" class="btn btn-info">Add new
 				account</button>
 		</center>
 

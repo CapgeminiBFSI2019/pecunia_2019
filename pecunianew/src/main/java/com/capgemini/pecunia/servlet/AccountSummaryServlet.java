@@ -57,7 +57,7 @@ public class AccountSummaryServlet extends HttpServlet {
 					"\r\n" + 
 					"    <nav class=\"navbar navbar-expand-lg navbar-dark bg-info\">\r\n" + 
 					"        <a class=\"navbar-brand\" href=\"MainPage.html\"><i class=\"fas fa-home text-light mr-2\" style=\"font-size: 24px;\"></i>Pecunia</a>\r\n" + 
-					"        <a class=\"text-light d-block d-lg-none \">Rohan Patil</a>\r\n" + 
+
 					"        <button class=\"navbar-toggler \" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\" aria-controls=\"navbarNavDropdown\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n" + 
 					"									<span class=\"navbar-toggler-icon\"></span>\r\n" + 
 					"								</button>\r\n" + 
@@ -70,10 +70,12 @@ public class AccountSummaryServlet extends HttpServlet {
 					"            </ul>\r\n" + 
 					"            <ul class=\"navbar-nav\">\r\n" + 
 					"                <li class=\"nav-item d-none d-lg-block\" href=\"#\">\r\n" + 
-					"                    <a class=\"nav-link disabled text-light\">Rohan Patil</a>\r\n" + 
+
 					"                </li>\r\n" + 
 					"                <li class=\"nav-item\">\r\n" + 
-					"                    <a class=\"nav-link\" href=\"#\">Logout</a>\r\n" + 
+					"                    <form action=\"logout\" method=\"POST\">\r\n" + 
+					"                		<button type=\"submit\" class=\"btn btn-info\">logout</button>\r\n" + 
+					"                	</form> "+ 
 					"                </li>\r\n" + 
 					"            </ul>\r\n" + 
 					"        </div>\r\n" + 
@@ -81,8 +83,15 @@ public class AccountSummaryServlet extends HttpServlet {
 					"    <div class=\"bg\"></div>" +
 					"	<div class=\"container\">\r\n" + 
 					"		<h2>Account Summary</h2>\r\n" + 
+					"		<div class=\"table-responsive\">\r\n" +
 					"		<table class=\"table table-bordered\">\r\n" + 
 					"			<thead class=\"thead-light\">");
+			
+			
+			
+			
+			
+			
 			if(accountSummary.size()>0)
 			{	
 			out.write("<th colspan=9>Account ID: " + accountId +"</th>");
@@ -124,7 +133,8 @@ public class AccountSummaryServlet extends HttpServlet {
 			}
 			out.write("	</tr>\r\n" + 
 					"			</tbody>\r\n" + 
-					"		</table>\r\n" + 
+					"		</table>\r\n" +
+					"	</div>\r\n" +
 					"	</div>\r\n" + 
 					"\r\n" + 
 					"</body>\r\n" + 
