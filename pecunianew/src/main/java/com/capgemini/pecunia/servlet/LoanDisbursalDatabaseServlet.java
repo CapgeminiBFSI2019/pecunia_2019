@@ -30,7 +30,7 @@ public class LoanDisbursalDatabaseServlet extends HttpServlet {
 		response.setContentType("text/html");
 		ArrayList<LoanDisbursal> retrieveLoanDisbursedData = new ArrayList<LoanDisbursal>();
 		String res = request.getParameter("show-loan-disbursal");
-		
+		if(res.equals("Yes")) {
 			try {
 				retrieveLoanDisbursedData = loanDisbursalService.approvedLoanList();
 				
@@ -135,5 +135,5 @@ public class LoanDisbursalDatabaseServlet extends HttpServlet {
 	
 	
 
-
+}
 
