@@ -52,7 +52,7 @@ public class UpdateCustomerContactServlet extends HttpServlet {
 		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
 		JsonObject jobj = jelem.getAsJsonObject();
 
-		String accountId = jobj.get("accountNumber").getAsString();
+		String accountId = jobj.get("accountId").getAsString();
 
 		String custContact = jobj.get("contact").getAsString();
 

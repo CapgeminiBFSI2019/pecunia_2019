@@ -46,6 +46,24 @@ public class CreditUsingSlipServlet extends HttpServlet {
 		Gson gson = new Gson();
 		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
 		JsonObject jobj = jelem.getAsJsonObject();
+
+
+		String accountId = jobj.get("accountNumber").getAsString();
+		double amount = Double.parseDouble(jobj.get("creditSlipAmount").toString());
+
+		HttpSession session = request.getSession(false);
+
+		JsonObject dataResponse = new JsonObject();
+//		if (session == null) {
+//			// Session is not created.
+//			dataResponse.addProperty("success", false);
+//			dataResponse.addProperty("message", "Session has expired");
+//
+//			out.print(dataResponse);
+//			return;
+//		}
+
+
 		Transaction creditSlip = new Transaction();
 		
 		String accountId = jobj.get("accountId").getAsString();

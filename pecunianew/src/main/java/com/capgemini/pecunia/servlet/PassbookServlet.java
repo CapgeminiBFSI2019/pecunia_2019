@@ -19,20 +19,21 @@ import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.PassbookMaintenanceService;
 import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.sun.javafx.collections.MappingChange.Map;
 
 public class PassbookServlet extends HttpServlet {
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if (session == null) {
-			// Session is not created.
-			response.sendRedirect("session.html");
-		}
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		
+		PrintWriter out = response.getWriter();
+		response.setContentType("application/json");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers","Content-Type, Authorization, Content-Length, X-Requested-With");
+		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
 		StringBuffer jb = new StringBuffer();
 		String line = null;
 		try {
@@ -41,42 +42,54 @@ public class PassbookServlet extends HttpServlet {
 				jb.append(line);
 		} catch (Exception e) {
 		}
-		HashMap<String, String> myMap = new HashMap<String, String>();
-
-		ObjectMapper objectMapper = new ObjectMapper();
-
-		myMap = objectMapper.readValue(jb.toString(), HashMap.class);
-		String accountId = (String) myMap.get("accountID");
+		
+        JsonArray jsonArray = new JsonArray();
+		Gson gson = new Gson();
+		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
+		JsonObject jobj = jelem.getAsJsonObject();
+		System.out.println("jonj :"+jobj);
+		String accountId = jobj.get("accountID").getAsString();
+		JsonObject dataResponse = new JsonObject();
+		
+		HttpSession session = request.getSession(false);
+//		if (session == null) {
+//			// Session is not created.
+//			dataResponse.addProperty("success", false);
+//			dataResponse.addProperty("message", "Session has expired");
+//
+//			out.print(dataResponse);
+//			return;
+//		}
+		
 		Account accountObject = new Account();
 		accountObject.setId(accountId);
 		List<Transaction> updatePassbook;
-
 		PassbookMaintenanceService passbookService = new PassbookMaintenanceServiceImpl();
-		response.setContentType("application/json");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setHeader("Access-Control-Allow-Headers","Content-Type, Authorization, Content-Length, X-Requested-With");
-		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode dataResponse = mapper.createObjectNode();
-		boolean result = false;
-		PrintWriter out = response.getWriter();
+		
 		try {
 			updatePassbook = passbookService.updatePassbook(accountId);
-			String Id = request.getParameter("accountID");
-			System.out.println("Account ID - " + Id);
-			if (result) {
-				((ObjectNode) dataResponse).put("success", result);
-			} else {
-				throw new PecuniaException(ErrorConstants.UPDATE_PASSBOOK_ERROR);
+			System.out.println("number of transactions"+ updatePassbook.size());
+			if(updatePassbook.size()>0)
+			{
+			for(Transaction transaction : updatePassbook)
+			{
+//				System.out.println("Value : "+gson.toJson(transaction, Transaction.class));
+				jsonArray.add(gson.toJson(transaction, Transaction.class));
 			}
-
+			//System.out.println("jason array"+jsonArray);
+			dataResponse.addProperty("success", true);
+			dataResponse.add("data", jsonArray);
+			}
+			else
+			{
+				dataResponse.addProperty("success", true);
+				dataResponse.addProperty("message", "No transaction to update");
+			}
 		} catch (PecuniaException | PassbookException e) {
-			((ObjectNode) dataResponse).put("success", result);
-			((ObjectNode) dataResponse).put("message", e.getMessage());
-
+				dataResponse.addProperty("success", false);
+				dataResponse.addProperty("message", e.getMessage());
 		} finally {
 			out.print(dataResponse);
 		}
-
-	}
+     }
 }

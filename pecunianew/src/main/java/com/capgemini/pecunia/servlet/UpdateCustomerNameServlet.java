@@ -24,7 +24,7 @@ public class UpdateCustomerNameServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("In servlet");
+
 //		HttpSession session = request.getSession(false);
 //		if (session == null) {
 //		    // Session is not created.
@@ -52,7 +52,7 @@ public class UpdateCustomerNameServlet extends HttpServlet {
 		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
 		JsonObject jobj = jelem.getAsJsonObject();
 
-		String accountId = jobj.get("accountNumber").getAsString();
+		String accountId = jobj.get("accountId").getAsString();
 
 		String custName = jobj.get("name").getAsString();
 
