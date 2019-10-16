@@ -55,8 +55,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 			}
 
 			if (balance == -1) {
-				logger.error(ErrorConstants.BALANCE_RETRIEVAL_ERROR);
-				throw new TransactionException(ErrorConstants.BALANCE_RETRIEVAL_ERROR);
+				logger.error(ErrorConstants.NO_SUCH_ACCOUNT);
+				throw new TransactionException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
 
 		} catch (SQLException e) {

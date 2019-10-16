@@ -31,6 +31,11 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		System.out.println("Inside Login Servlet");
+		
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+		  //TODO
+		}
 
 		StringBuffer jb = new StringBuffer();
 		  String line = null;
@@ -40,8 +45,9 @@ public class LoginServlet extends HttpServlet {
 		      jb.append(line);
 		  } catch (Exception e) {  }
 		Map<String,String> myMap = new HashMap<String, String>();
-
+ 
 		ObjectMapper objectMapper = new ObjectMapper();
+		
 		
 		myMap = objectMapper.readValue(jb.toString(), HashMap.class);
 	    String username = myMap.get("uname");
@@ -50,6 +56,9 @@ public class LoginServlet extends HttpServlet {
 		Login loginObject = new Login();
 		loginObject.setUsername(username);
 		loginObject.setPassword(password);
+	    
+		
+		
 		LoginService loginService = new LoginServiceImpl();
 		response.setContentType("application/json");
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -68,6 +77,8 @@ public class LoginServlet extends HttpServlet {
 			System.out.println("name - " + name);
 			if(result)
 			{
+				//HttpSession session=request.getSession();  
+		        session.setAttribute("username",username);
 				((ObjectNode) dataResponse).put("success", result);
 				((ObjectNode) dataResponse).put("message",Constants.LOGIN_SUCCESSFUL);
 			}else {
@@ -82,8 +93,7 @@ public class LoginServlet extends HttpServlet {
 		finally {
 			out.print(dataResponse);
 		}
-		
-		
+			
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

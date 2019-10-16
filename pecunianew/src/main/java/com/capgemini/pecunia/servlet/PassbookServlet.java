@@ -1,7 +1,9 @@
 package com.capgemini.pecunia.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,16 +18,37 @@ import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.PassbookMaintenanceService;
 import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
+import com.sun.javafx.collections.MappingChange.Map;
 
 public class PassbookServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		HttpSession session = request.getSession(false);
-		if (session == null) {
-		    // Session is not created.
-			response.sendRedirect("session.html");
-		}
+//		HttpSession session = request.getSession(false);
+//		if (session == null) {
+//		    // Session is not created.
+//			response.sendRedirect("session.html");
+//		}
+		
+		
+		StringBuffer jb = new StringBuffer();
+		  String line = null;
+		  try {
+		    BufferedReader reader = request.getReader();
+		    while ((line = reader.readLine()) != null)
+		      jb.append(line);
+		  } catch (Exception e) {  }
+		Map<String,String> myMap = new HashMap<String, String>();
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		myMap = objectMapper.readValue(jb.toString(), HashMap.class);
+	    String accountId = myMap.get("accountID");
+		
+		
+		
+		
+		
 		String accountId = request.getParameter("accountID");
 		Account obj= new Account();
 		obj.setId(accountId);

@@ -41,9 +41,7 @@ public class LoanDisbursedUpdateServlet extends HttpServlet {
 			retrieveRejected = null;
 		}
 		
-		
-		String res = request.getParameter("update-loan-status");
-		if (res.equals("Yes")) {
+
 			try {
 				loanDisbursalService.updateLoanStatus(retrieveRejected, retrieveAccepted);
 				String msg = "Status has been updated";
@@ -64,4 +62,4 @@ public class LoanDisbursedUpdateServlet extends HttpServlet {
 			}
 		}
 	}
-}
+
