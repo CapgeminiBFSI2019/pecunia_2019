@@ -51,7 +51,7 @@ public class UpdateCustomerAddressServlet extends HttpServlet {
 		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
 		JsonObject jobj = jelem.getAsJsonObject();
 
-		String accountId = jobj.get("accountNumber").getAsString();
+		String accountId = jobj.get("accountId").getAsString();
 
 		String line1 = jobj.get("address-line1").getAsString();
 		String line2 = jobj.get("address-line2").getAsString();
