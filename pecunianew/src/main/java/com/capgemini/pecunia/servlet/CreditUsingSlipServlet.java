@@ -1,5 +1,6 @@
 package com.capgemini.pecunia.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -48,14 +49,14 @@ public class CreditUsingSlipServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 
 		JsonObject dataResponse = new JsonObject();
-		if (session == null) {
-			// Session is not created.
-			dataResponse.addProperty("success", false);
-			dataResponse.addProperty("message", "Session has expired");
-
-			out.print(dataResponse);
-			return;
-		}
+//		if (session == null) {
+//			// Session is not created.
+//			dataResponse.addProperty("success", false);
+//			dataResponse.addProperty("message", "Session has expired");
+//
+//			out.print(dataResponse);
+//			return;
+//		}
 
 		Transaction creditSlip = new Transaction();
 		creditSlip.setAccountId(accountId);
