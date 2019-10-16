@@ -71,19 +71,19 @@ public class UpdateCustomerNameServlet extends HttpServlet {
 		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
 		boolean updated = false;
 
-		try {
+		try{
 			updated = ams.updateCustomerName(account, customer);
 			if (updated) {
 				dataResponse.addProperty("success", true);
 //				out.println("<script>$('#update-name-success').toast('show');</script>");
 			}
-		} catch (PecuniaException | AccountException e) {
+		}catch(PecuniaException | AccountException e) {
 			dataResponse.addProperty("success", false);
 			dataResponse.addProperty("message", e.getMessage());
 //			request.getRequestDispatcher("updateName.html").include(request, response);
 //			out.println("<script>$('#update-name-failure').toast('show');</script>");
 
-		} finally {
+		}finally{
 			out.print(dataResponse);
 		}
 
