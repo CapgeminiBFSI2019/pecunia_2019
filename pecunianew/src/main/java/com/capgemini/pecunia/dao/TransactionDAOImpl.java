@@ -55,7 +55,6 @@ public class TransactionDAOImpl implements TransactionDAO {
 			}
 
 			if (balance == -1) {
-				System.out.println("Error occured in get balance");
 				logger.error(ErrorConstants.NO_SUCH_ACCOUNT);
 				throw new TransactionException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
