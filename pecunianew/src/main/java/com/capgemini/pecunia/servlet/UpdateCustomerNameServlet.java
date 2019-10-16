@@ -79,6 +79,7 @@ public class UpdateCustomerNameServlet extends HttpServlet {
 			}
 		} catch (PecuniaException | AccountException e) {
 			dataResponse.addProperty("success", false);
+			dataResponse.addProperty("message", e.getMessage());
 //			request.getRequestDispatcher("updateName.html").include(request, response);
 //			out.println("<script>$('#update-name-failure').toast('show');</script>");
 
