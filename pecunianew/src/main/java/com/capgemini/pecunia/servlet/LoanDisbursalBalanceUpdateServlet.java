@@ -42,6 +42,11 @@ public class LoanDisbursalBalanceUpdateServlet extends HttpServlet {
 			try {
 				
 				String msg = loanDisbursalService.updateExistingBalance(retrieveAccepted);
+//				request.getRequestDispatcher("loanDisbursal.html").include(request, response);
+//				out.println("<script>");
+//                out.println("$('#success-toast-body').html('" + msg + "');");
+//                out.println("$('#loan-disbursal-success').toast('show');");
+//                out.println("</script>");
 				out.write("<!DOCTYPE html>\r\n" + 
 						"<html>\r\n" + 
 						"\r\n" + 

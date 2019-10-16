@@ -1,9 +1,7 @@
 package com.capgemini.pecunia.servlet;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -24,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.javafx.collections.MappingChange.Map;
 
+
 public class PassbookServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -33,6 +32,7 @@ public class PassbookServlet extends HttpServlet {
 		    // Session is not created.
 			response.sendRedirect("session.html");
 		}
+
 		
 		
 		StringBuffer jb = new StringBuffer();
@@ -50,6 +50,10 @@ public class PassbookServlet extends HttpServlet {
 	    String accountId = (String) myMap.get("accountID");
 	    Account accountObject= new Account();
 	    accountObject.setId(accountId);
+		String accountId = request.getParameter("accountID");
+		Account obj= new Account();
+		obj.setId(accountId);
+
 		List<Transaction> updatePassbook;
 		
 		PassbookMaintenanceService passbookService = new PassbookMaintenanceServiceImpl();
