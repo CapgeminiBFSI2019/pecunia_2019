@@ -1,5 +1,6 @@
 package com.capgemini.pecunia.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
@@ -16,27 +17,51 @@ import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.service.TransactionService;
 import com.capgemini.pecunia.service.TransactionServiceImpl;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public class DebitUsingChequeServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if (session == null) {
-		    // Session is not created.
-			response.sendRedirect("session.html");
+		PrintWriter out = response.getWriter();
+
+		response.setContentType("application/json");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers",
+				"Content-Type, Authorization, Content-Length, X-Requested-With");
+		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
+		StringBuffer jb = new StringBuffer();
+		String line = null;
+		try {
+			BufferedReader reader = request.getReader();
+			while ((line = reader.readLine()) != null)
+				jb.append(line);
+		} catch (Exception e) {
 		}
-		
-		String accountId = request.getParameter("accountNumber");
-		double amount = Double.parseDouble(request.getParameter("debitChequeAmount"));
-		String accountHolderName = request.getParameter("accountHolderName");
-		String ifsc = request.getParameter("bankIfsc");
-		int chequeNumber = Integer.parseInt(request.getParameter("chequeNumber"));
-		LocalDate issueDate = LocalDate.parse(request.getParameter("chequeIssueDate"));
-		
-//		System.out.println("Servelet cheque date : "+issueDate);
-		
+
+		Gson gson = new Gson();
+		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
+		JsonObject jobj = jelem.getAsJsonObject();
+
+		String accountId = jobj.get("accountNumber").getAsString();
+		double amount = Double.parseDouble(jobj.get("debitChequeAmount").getAsString());
+		String accountHolderName = jobj.get("holderName").getAsString();
+		String ifsc = jobj.get("ifsc").getAsString();
+		int chequeNumber = Integer.parseInt(jobj.get("debitChequeNumber").getAsString());
+		LocalDate issueDate = LocalDate.parse(jobj.get("issueDate").getAsString());
+
+		HttpSession session = request.getSession(false);
+
+		JsonObject dataResponse = new JsonObject();
+		// if (session == null) {
+		// // Session is not created.
+		// response.sendRedirect("session.html");
+		// }
+		//
+
 		Transaction debitChequeTransaction = new Transaction();
 		Cheque debitCheque = new Cheque();
 		debitChequeTransaction.setAccountId(accountId);
@@ -47,18 +72,19 @@ public class DebitUsingChequeServlet extends HttpServlet {
 		debitCheque.setIssueDate(issueDate);
 		debitCheque.setNum(chequeNumber);
 		TransactionService trans = new TransactionServiceImpl();
-		PrintWriter out = response.getWriter();
+
 		try {
 			int transId = trans.debitUsingCheque(debitChequeTransaction, debitCheque);
-			request.getRequestDispatcher("debitUsingCheque.html").include(request, response);
-			out.println("<script>");
-			out.println("$('#success-toast-body').html('Amount has been debited. Transaction id is \t" + transId + "');");
-			out.println("$('#id-generation-success').toast('show');");
-			out.println("</script>");
+			dataResponse.addProperty("success", true);
+			dataResponse.addProperty("transaction_id", transId);
+			dataResponse.addProperty("message", "Amount has been debited. Transaction id is " + transId);
 		} catch (TransactionException | PecuniaException e) {
-			
-			request.getRequestDispatcher("debitUsingCheque.html").include(request, response);
-			out.println("<script>$('#id-generation-failure').toast('show');</script>");
+
+			dataResponse.addProperty("success", false);
+			dataResponse.addProperty("message", e.getMessage());
+		} finally {
+			out.print(dataResponse);
 		}
-}
+
+	}
 }
