@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		System.out.println("Inside Login Servlet");
+		//System.out.println("Inside Login Servlet");
 
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
@@ -49,8 +49,8 @@ public class LoginServlet extends HttpServlet {
 		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
 		JsonObject jobj = jelem.getAsJsonObject();
 
-		String username = jobj.get("uname").getAsString();
-		String password = jobj.get("pswd").getAsString();
+		String username = jobj.get("username").getAsString();
+		String password = jobj.get("password").getAsString();
 		System.out.println("Here : " + username + " " + password);
 		Login loginObject = new Login();
 		loginObject.setUsername(username);
@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet {
 		try {
 
 			result = loginService.validateEmail(loginObject);
-			String name = request.getParameter("uname");
+			String name = request.getParameter("username");
 			System.out.println("name - " + name);
 			if (result) {
 				dataResponse.addProperty("success", true);
