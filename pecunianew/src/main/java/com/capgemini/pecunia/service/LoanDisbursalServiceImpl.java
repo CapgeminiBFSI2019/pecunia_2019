@@ -70,6 +70,10 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
 
 		}
+		for (int index = 0; index <acceptedLoanRequests.size(); index++) {
+			int loanId = acceptedLoanRequests.get(index).getLoanId();
+			loanDisbursedDAO.updateStatus(acceptedLoanRequests, loanId, Constants.LOAN_REQUEST_STATUS[1]);
+		}
 		loanDisbursedDAO.releaseLoanSheet(acceptedLoanRequests);
 		logger.info(LoggerMessage.LOAN_REQUEST);
 		return acceptedLoanRequests;
@@ -137,7 +141,10 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		if (rejectedLoanRequests.size() == 0) {
 			logger.error(ErrorConstants.NO_LOAN_REQUESTS);
 			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
-
+		}
+		for (int index = 0; index <rejectedLoanRequests.size(); index++) {
+			int loanId = rejectedLoanRequests.get(index).getLoanId();
+			loanDisbursedDAO.updateStatus(rejectedLoanRequests, loanId, Constants.LOAN_REQUEST_STATUS[2]);
 		}
 		logger.info(LoggerMessage.LOAN_REQUEST);
 		return rejectedLoanRequests;
@@ -211,7 +218,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 				for (int index = 0; index < approvedLoanList.size(); index++) {
 					int loanId = approvedLoanList.get(index).getLoanId();
-					loanDisbursedDAO.updateStatus(rejectedLoanList, loanId, Constants.LOAN_REQUEST_STATUS[1]);
+					loanDisbursedDAO.updateStatus(approvedLoanList, loanId, Constants.LOAN_REQUEST_STATUS[1]);
 
 				}
 
