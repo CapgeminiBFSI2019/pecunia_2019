@@ -1,6 +1,7 @@
 package com.capgemini.pecunia.servlet;
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
@@ -17,6 +18,9 @@ import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.service.TransactionService;
 import com.capgemini.pecunia.service.TransactionServiceImpl;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 /**
  * Servlet implementation class CreditUsingChequeServlet
@@ -25,23 +29,49 @@ public class CreditUsingChequeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		PrintWriter out = response.getWriter();
-		HttpSession session = request.getSession(false);
-		if (session == null) {
-		    // Session is not created.
-			response.sendRedirect("session.html");
+		response.setContentType("application/json");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers",
+				"Content-Type, Authorization, Content-Length, X-Requested-With");
+		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
+		StringBuffer jb = new StringBuffer();
+		String line = null;
+		try {
+			BufferedReader reader = request.getReader();
+			while ((line = reader.readLine()) != null)
+				jb.append(line);
+		} catch (Exception e) {
 		}
+
+		JsonObject dataResponse = new JsonObject();
+
+		Gson gson = new Gson();
+		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
+		JsonObject jobj = jelem.getAsJsonObject();
 		
 		Transaction creditTransaction = new Transaction();
 		Cheque creditCheque = new Cheque();
-		String payeeAccountNumber = request.getParameter("payeeAccountNumber");
-		String beneficiaryAccountNumber = request.getParameter("beneficiaryAccountNumber");
-		String chequeNumber = request.getParameter("creditChequeNumber");
-		String payeeName = request.getParameter("payeeName");
-		double amount = Double.parseDouble(request.getParameter("creditChequeAmount"));
-		LocalDate chequeIssueDate = LocalDate.parse(request.getParameter("creditChequeIssueDate"));
-		String bankName = request.getParameter("bankName");
-		String ifsc = request.getParameter("payeeIfsc");
+		String payeeAccountNumber = jobj.get("payeeAccountNumber").getAsString();
+		String beneficiaryAccountNumber = jobj.get("beneficiaryAccountNumber").getAsString();
+		String chequeNumber = jobj.get("creditChequeNumber").getAsString();
+		String payeeName = jobj.get("payeeName").getAsString();
+		double amount = Double.parseDouble(jobj.get("creditChequeAmount").getAsString());
+		LocalDate chequeIssueDate = LocalDate.parse(jobj.get("creditChequeIssueDate").getAsString());
+		String bankName = jobj.get("bankName").getAsString();
+		String ifsc = jobj.get("payeeIfsc").getAsString();
+		
+		HttpSession session = request.getSession(false);
+
+//		if (session == null) {
+//			// Session is not created.
+//			dataResponse.addProperty("success", false);
+//			dataResponse.addProperty("message", "Session has expired");
+//
+//			out.print(dataResponse);
+//			return;
+//		}
 		
 		creditTransaction.setAmount(amount);
 		creditTransaction.setAccountId(beneficiaryAccountNumber);
@@ -59,15 +89,16 @@ public class CreditUsingChequeServlet extends HttpServlet {
 		TransactionService trans = new TransactionServiceImpl();
 		try {
 			int transId = trans.creditUsingCheque(creditTransaction, creditCheque);
+			dataResponse.addProperty("success", true);
+			dataResponse.addProperty("Transaction Id", transId);
+			dataResponse.addProperty("message", "Amount credited.Trans Id is \t" + transId);
 			
-			request.getRequestDispatcher("creditUsingCheque.html").include(request, response);
-			out.println("<script>");
-			out.println("$('#success-toast-body').html('Amount has been credited. Transaction id is \t" + transId + "');");
-			out.println("$('#id-generation-success').toast('show');");
-			out.println("</script>");
 		} catch (TransactionException | PecuniaException e) {
-			request.getRequestDispatcher("creditUsingCheque.html").include(request, response);
-			out.println("<script>$('#id-generation-failure').toast('show');</script>");
+			dataResponse.addProperty("success", false);
+			dataResponse.addProperty("message", e.getMessage());
+		}
+		finally {
+			out.print(dataResponse);
 		}
 	}
 
