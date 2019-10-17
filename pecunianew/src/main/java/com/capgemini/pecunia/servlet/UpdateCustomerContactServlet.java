@@ -15,6 +15,7 @@ import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
+import com.capgemini.pecunia.util.Constants;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -22,7 +23,7 @@ import com.google.gson.JsonObject;
 public class UpdateCustomerContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void service(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 //		HttpSession session = request.getSession(false);
@@ -76,14 +77,11 @@ public class UpdateCustomerContactServlet extends HttpServlet {
 			updated = ams.updateCustomerContact(account, customer);
 			if (updated) {
 				dataResponse.addProperty("success", true);
-//				request.getRequestDispatcher("updateContact.html").include(request, response);
-//				out.println("<script>$('#update-contact-success').toast('show');</script>");
+				dataResponse.addProperty("message", Constants.UPDATE_CONTACT_SUCCESSFUL);
 			}
 		} catch (PecuniaException | AccountException e) {
 			dataResponse.addProperty("success", false);
 			dataResponse.addProperty("message", e.getMessage());
-//			request.getRequestDispatcher("updateContact.html").include(request, response);
-//			out.println("<script>$('#update-contact-failure').toast('show');</script>");
 		} finally {
 			out.print(dataResponse);
 		}

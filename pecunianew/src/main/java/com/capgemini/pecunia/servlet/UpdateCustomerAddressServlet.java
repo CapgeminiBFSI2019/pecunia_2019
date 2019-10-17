@@ -15,6 +15,7 @@ import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
+import com.capgemini.pecunia.util.Constants;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -53,8 +54,8 @@ public class UpdateCustomerAddressServlet extends HttpServlet {
 
 		String accountId = jobj.get("accountId").getAsString();
 
-		String line1 = jobj.get("address-line1").getAsString();
-		String line2 = jobj.get("address-line2").getAsString();
+		String line1 = jobj.get("line1").getAsString();
+		String line2 = jobj.get("line2").getAsString();
 		String city = jobj.get("city").getAsString();
 		String state = jobj.get("state").getAsString();
 		String country = jobj.get("country").getAsString();
@@ -82,14 +83,11 @@ public class UpdateCustomerAddressServlet extends HttpServlet {
 			updated = ams.updateCustomerAddress(account, address);
 			if (updated) {
 				dataResponse.addProperty("success", true);
-//				request.getRequestDispatcher("updateAddress.html").include(request, response);
-//				out.println("<script>$('#update-address-success').toast('show');</script>");
+				dataResponse.addProperty("message", Constants.UPDATE_ADDRESS_SUCCESSFUL);
 			}
 		} catch (PecuniaException | AccountException e) {
 			dataResponse.addProperty("success", false);
 			dataResponse.addProperty("message", e.getMessage());
-//			request.getRequestDispatcher("updateAddress.html").include(request, response);
-//			out.println("<script>$('#update-address-failure').toast('show');</script>");
 		} finally {
 			out.print(dataResponse);
 		}

@@ -40,7 +40,9 @@ public class Constants {
 	public static final String NO_LOAN_REQUEST = "No Loan request is present";
 	public static final String LOGIN_SUCCESSFUL = "Login Successful!!";
 	public static final String LOAN_REQUEST_SUCCESSFUL="Loan Request Added Successfully" ;
-	
+	public static final String UPDATE_NAME_SUCCESSFUL = "Customer Name Updated Successfully";
+	public static final String UPDATE_CONTACT_SUCCESSFUL = "Customer Contact Updated Successfully";
+	public static final String UPDATE_ADDRESS_SUCCESSFUL = "Customer Address Updated Successfully";
 	
 	
 

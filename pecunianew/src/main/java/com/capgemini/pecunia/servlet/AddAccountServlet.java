@@ -49,6 +49,7 @@ public class AddAccountServlet extends HttpServlet {
 
 		Gson gson = new Gson();
 		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
+		System.out.println(jelem);
 		JsonObject jobj = jelem.getAsJsonObject();
 
 		Account account = new Account();
@@ -57,18 +58,22 @@ public class AddAccountServlet extends HttpServlet {
 
 		String name = jobj.get("name").getAsString();
 
+		
 		String gender = jobj.get("gender").getAsString();
 		if ("Female".equalsIgnoreCase(gender)) {
 			customer.setGender("F");
-		} else
+		} else {
 			customer.setGender("M");
+		}
+		
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String dateofbirth = jobj.get("dateofbirth").getAsString();
+
+		String dateofbirth = jobj.get("dob").getAsString();
 
 		String contact = jobj.get("contact").getAsString();
 
-		String addressline1 = jobj.get("addressline1").getAsString();
-		String addressline2 = jobj.get("addressline2").getAsString();
+		String addressline1 = jobj.get("line1").getAsString();
+		String addressline2 = jobj.get("line2").getAsString();
 		String city = jobj.get("city").getAsString();
 		String state = jobj.get("state").getAsString();
 		String country = jobj.get("country").getAsString();
@@ -76,11 +81,11 @@ public class AddAccountServlet extends HttpServlet {
 		String aadhar = jobj.get("aadhar").getAsString();
 		String pan = jobj.get("pan").getAsString();
 
-		String accounttype = jobj.get("accounttype").getAsString();
-		String branchid = jobj.get("branchid").getAsString();
-		double accountbalance = Double.parseDouble(jobj.get("accountbalance").getAsString());
+		String accounttype = jobj.get("accountType").getAsString();
+		String branchid = jobj.get("branchId").getAsString();
+		double accountbalance = Double.parseDouble(jobj.get("balance").getAsString());
 
-		double accountinterest = Double.parseDouble(jobj.get("accountinterest").getAsString());
+		double accountinterest = Double.parseDouble(jobj.get("interest").getAsString());
 
 		address.setLine1(addressline1);
 		address.setLine2(addressline2);
@@ -122,7 +127,7 @@ public class AddAccountServlet extends HttpServlet {
 			dataResponse.addProperty("success", false);
 			dataResponse.addProperty("message", e.getMessage());
 
-			String created=null;
+			String created = null;
 			dataResponse.addProperty("Account Id", created);
 			dataResponse.addProperty("message", "Account has been created. Account Id is \t" + created);
 //			request.getRequestDispatcher("addAccount.html").include(request, response);

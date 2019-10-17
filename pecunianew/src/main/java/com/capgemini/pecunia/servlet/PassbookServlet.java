@@ -47,7 +47,7 @@ public class PassbookServlet extends HttpServlet {
 		Gson gson = new Gson();
 		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
 		JsonObject jobj = jelem.getAsJsonObject();
-		System.out.println("jonj :"+jobj);
+		//System.out.println("jonj :"+jobj);
 		String accountId = jobj.get("accountID").getAsString();
 		JsonObject dataResponse = new JsonObject();
 		
@@ -68,7 +68,7 @@ public class PassbookServlet extends HttpServlet {
 		
 		try {
 			updatePassbook = passbookService.updatePassbook(accountId);
-			System.out.println("number of transactions"+ updatePassbook.size());
+			//System.out.println("number of transactions"+ updatePassbook.size());
 			if(updatePassbook.size()>0)
 			{
 			for(Transaction transaction : updatePassbook)
