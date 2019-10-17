@@ -53,7 +53,6 @@ public class CreditUsingSlipServlet extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 
-		JsonObject dataResponse = new JsonObject();
 //		if (session == null) {
 //			// Session is not created.
 //			dataResponse.addProperty("success", false);
@@ -66,8 +65,6 @@ public class CreditUsingSlipServlet extends HttpServlet {
 
 		Transaction creditSlip = new Transaction();
 		
-		String accountId = jobj.get("accountId").getAsString();
-		double amount = Double.parseDouble(jobj.get("amount").toString());
 		
 		creditSlip.setAccountId(accountId);
 		creditSlip.setAmount(amount);
