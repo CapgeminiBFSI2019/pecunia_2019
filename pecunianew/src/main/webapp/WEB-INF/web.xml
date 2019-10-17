@@ -213,7 +213,7 @@
     <description></description>
     <display-name>CreditUsingChequeServlet</display-name>
     <servlet-name>CreditUsingChequeServlet</servlet-name>
-    <servlet-class>CreditUsingChequeServlet</servlet-class>
+    <servlet-class>com.capgemini.pecunia.servlet.CreditUsingChequeServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CreditUsingChequeServlet</servlet-name>

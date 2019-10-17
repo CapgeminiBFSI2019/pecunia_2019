@@ -13,6 +13,7 @@ import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.exception.LoanException;
 import com.capgemini.pecunia.service.LoanService;
 import com.capgemini.pecunia.service.LoanServiceImpl;
+import com.capgemini.pecunia.util.Constants;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -88,7 +89,7 @@ public class LoanRequestServlet extends HttpServlet {
 			} 
 			else 
 			{
-				throw new LoanException("");
+				throw new LoanException(Constants.NO_LOAN_REQUEST);
 			}
 
 		} 
