@@ -117,6 +117,8 @@ public class AddAccountServlet extends HttpServlet {
 			String created = ams.addAccount(customer, address, account);
 			if (created != null) {
 				dataResponse.addProperty("success", true);
+				dataResponse.addProperty("Account Id", created);
+				dataResponse.addProperty("message", "Account has been created. Account Id is \t" + created);
 //				request.getRequestDispatcher("addAccount.html").include(request, response);
 //				out.println("<script>");
 //				out.println("$('#success-toast-body').html('Account created successfully. Account id is \t" + created + "');");
@@ -127,9 +129,8 @@ public class AddAccountServlet extends HttpServlet {
 			dataResponse.addProperty("success", false);
 			dataResponse.addProperty("message", e.getMessage());
 
-			String created = null;
-			dataResponse.addProperty("Account Id", created);
-			dataResponse.addProperty("message", "Account has been created. Account Id is \t" + created);
+//			String created = null;
+			
 //			request.getRequestDispatcher("addAccount.html").include(request, response);
 //			out.println("<script>$('#add-account-failure').toast('show');</script>");
 
