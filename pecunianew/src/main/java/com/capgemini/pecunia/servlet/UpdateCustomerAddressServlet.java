@@ -53,8 +53,8 @@ public class UpdateCustomerAddressServlet extends HttpServlet {
 
 		String accountId = jobj.get("accountId").getAsString();
 
-		String line1 = jobj.get("address-line1").getAsString();
-		String line2 = jobj.get("address-line2").getAsString();
+		String line1 = jobj.get("line1").getAsString();
+		String line2 = jobj.get("line2").getAsString();
 		String city = jobj.get("city").getAsString();
 		String state = jobj.get("state").getAsString();
 		String country = jobj.get("country").getAsString();
