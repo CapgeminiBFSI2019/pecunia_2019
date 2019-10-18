@@ -47,7 +47,6 @@ public class LoanDisbursalDatabaseServlet extends HttpServlet {
 		
 		try {
 			retrieveLoanDisbursedData = loanDisbursalService.approvedLoanList();
-			System.out.println("number of loan disbursal"+ retrieveLoanDisbursedData.size());
 			if(retrieveLoanDisbursedData.size()>0)
 			{
 				for(LoanDisbursal loanDisbursal : retrieveLoanDisbursedData)

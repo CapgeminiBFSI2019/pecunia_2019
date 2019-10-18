@@ -23,7 +23,7 @@ public interface LoanDisbursalService {
 
 	public String updateLoanStatus(ArrayList<Loan> rejectedLoanList, ArrayList<Loan> approvedLoanList) throws PecuniaException, LoanDisbursalException;
 
-	public String updateExistingBalance(ArrayList<Loan> approvedLoanList)
+	public ArrayList<String> updateExistingBalance(ArrayList<Loan> approvedLoanList, ArrayList<LoanDisbursal> approvedLoanLists)
 			throws PecuniaException, TransactionException, LoanDisbursalException;
 	
 	

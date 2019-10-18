@@ -88,7 +88,7 @@ public class LoanDisbursalServlet extends HttpServlet {
 				else
 				{
 					dataResponse.addProperty("success", true);
-					dataResponse.addProperty("message", "No transaction to update");
+					dataResponse.addProperty("message", "No loan requests are pending");
 				}
 			} catch (PecuniaException | LoanDisbursalException e) {
 					dataResponse.addProperty("success", false);
@@ -120,7 +120,7 @@ public class LoanDisbursalServlet extends HttpServlet {
 				else
 				{
 					dataResponse.addProperty("success", true);
-					dataResponse.addProperty("message", "No transaction to update");
+					dataResponse.addProperty("message", "No loan requests are pending");
 				}
 			} catch (PecuniaException | LoanDisbursalException e) {
 					dataResponse.addProperty("success", false);

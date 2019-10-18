@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
@@ -47,21 +46,24 @@ public class LoanDisbursalBalanceUpdateServlet extends HttpServlet {
         JsonArray jsonArray = new JsonArray();
 		Gson gson = new Gson();
 		JsonObject dataResponse = new JsonObject();
-		
+		ArrayList<LoanDisbursal> retrieveLoanDisbursedData = new ArrayList<LoanDisbursal>();
+		try {
+			retrieveLoanDisbursedData = loanDisbursalService.approvedLoanList();
+		} catch (PecuniaException | LoanDisbursalException e1) {
+			e1.printStackTrace();
+		}
 		
 		try {
-			String msg = loanDisbursalService.updateExistingBalance(retrieveAccepted);
-			
-			if(msg != null)
+			ArrayList<String> msg = loanDisbursalService.updateExistingBalance(retrieveAccepted, retrieveLoanDisbursedData);
+			if(msg.size()>0)
 			{
-				
-//					System.out.println("Value : "+gson.toJson(transaction, Transaction.class));
-//				jsonArray.add(gson.toJson(msg, LoanDisbursal.class));
-				
-				//System.out.println("jason array"+jsonArray);
+				for(String loanDisbursal : msg)
+				{
+					jsonArray.add(gson.toJson(loanDisbursal, String.class));
+				}
 				dataResponse.addProperty("success", true);
-				dataResponse.addProperty("message", msg);
-				} 
+				dataResponse.add("data", jsonArray);
+				}
 			
 		} catch (PecuniaException | LoanDisbursalException | TransactionException e) {
 				dataResponse.addProperty("success", false);

@@ -244,29 +244,30 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * Description : Updating the Account balance of the customer
 	 ********************************************************************************************************/
 
-	public String updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
+	public ArrayList<String> updateExistingBalance(ArrayList<Loan> approvedLoanRequests, ArrayList<LoanDisbursal> approvedLoanList)
 			throws PecuniaException, TransactionException, LoanDisbursalException {
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
-		StringBuilder status = new StringBuilder();
+		//StringBuilder status = new StringBuilder();
+		ArrayList<String> status = new ArrayList<String>(); 
 		
-		for (int i = 0; i < approvedLoanRequests.size(); i++) {
+		for (int i = 0; i < approvedLoanList.size(); i++) {
 			Account account = new Account();
 			account.setId(approvedLoanRequests.get(i).getAccountId());
 			double oldBalance = transactionDAOImpl.getBalance(account);
-			double totalEMI = loanDisbursedDAO.totalEmi(approvedLoanRequests.get(i).getAccountId());
+			double totalEMI = loanDisbursedDAO.totalEmi(approvedLoanList.get(i).getAccountId());
 			double updatedBalance = oldBalance - totalEMI;
 			if (updatedBalance < 0) {
-				status.append("*-*-*-*-*-* Not enough balance for account number "+ approvedLoanRequests.get(i).getAccountId() +"*-*-*-*-*-*" + "\n" );
+				status.add("Not enough balance for account number "+ approvedLoanRequests.get(i).getAccountId());
 			} else {
 				account.setBalance(updatedBalance);
 				transactionDAOImpl.updateBalance(account);
 				updateLoanAccount(approvedLoanList, 1);
-				status.append("*-*-*-*-*-* Balance updated for " + approvedLoanRequests.get(i).getAccountId() + " Amount deducted " + totalEMI  +"*-*-*-*-*-*"+ "\n" );
+				status.add("Balance updated for " + approvedLoanRequests.get(i).getAccountId() + " Amount deducted " + totalEMI);
 			}
 
 		}
 		logger.info(LoggerMessage.UPDATE_ACCOUNT_BALANCE);
-		return status.toString();
+		return status;
 	}
 
 	
