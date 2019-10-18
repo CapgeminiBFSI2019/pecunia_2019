@@ -11,5 +11,5 @@ public static final String UPDATE_LOAN_ACCOUNT = "UPDATE loan_disbursal SET due_
 public static final String UPDATE_LOAN_STATUS = "UPDATE loan SET loan_status = ?  WHERE loan_id = ?";
 public static final String UPDATE_AMOUNT = "UPDATE account SET balance = ? WHERE account_id = ?";
 public static final String TOTAL_EMI = "SELECT SUM(emi) FROM loan WHERE account_id = ?";
-
+public static final String DISTINCT_IDS = "SELECT DISTINCT account_id FROM loan_disbursal";
 }
