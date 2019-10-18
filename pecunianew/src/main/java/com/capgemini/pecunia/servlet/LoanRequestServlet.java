@@ -83,7 +83,7 @@ public class LoanRequestServlet extends HttpServlet {
 		try {
 			boolean isSuccess = loanService.createLoanRequest(loan);
 			if (isSuccess) {
-				dataResponse.addProperty("success", true);
+				dataResponse.addProperty("Loan success", true);
 
 
 			} 
