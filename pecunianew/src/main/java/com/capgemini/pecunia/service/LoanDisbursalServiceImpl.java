@@ -235,6 +235,9 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		logger.info(LoggerMessage.UPDATE_LOAN_STATUS);
 		return status;
 	}
+	
+		
+	
 
 	/*******************************************************************************************************
 	 * - Function Name : updateExistingBalance(ArrayList<Loan> approvedLoanRequests)
@@ -242,27 +245,28 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 * void - Throws : PecuniaException, TransactionException,
 	 * LoanDisbursalException - Author : aninrana - Creation Date : 25/09/2019 -
 	 * Description : Updating the Account balance of the customer
+	 * @throws IOException 
 	 ********************************************************************************************************/
 
 	public ArrayList<String> updateExistingBalance(ArrayList<Loan> approvedLoanRequests, ArrayList<LoanDisbursal> approvedLoanList)
-			throws PecuniaException, TransactionException, LoanDisbursalException {
+			throws PecuniaException, TransactionException, LoanDisbursalException, IOException {
 		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
-		//StringBuilder status = new StringBuilder();
 		ArrayList<String> status = new ArrayList<String>(); 
-		
-		for (int i = 0; i < approvedLoanList.size(); i++) {
+		ArrayList<String> accId = new ArrayList<String>();
+		accId = loanDisbursedDAO.uniqueIds();
+		for (int i = 0; i < accId.size(); i++) {
 			Account account = new Account();
-			account.setId(approvedLoanRequests.get(i).getAccountId());
+			account.setId(accId.get(i));
 			double oldBalance = transactionDAOImpl.getBalance(account);
-			double totalEMI = loanDisbursedDAO.totalEmi(approvedLoanList.get(i).getAccountId());
+			double totalEMI = loanDisbursedDAO.totalEmi(accId.get(i));
 			double updatedBalance = oldBalance - totalEMI;
 			if (updatedBalance < 0) {
-				status.add("Not enough balance for account number "+ approvedLoanRequests.get(i).getAccountId());
+				status.add("Not enough balance for account number "+ accId.get(i));
 			} else {
 				account.setBalance(updatedBalance);
 				transactionDAOImpl.updateBalance(account);
 				updateLoanAccount(approvedLoanList, 1);
-				status.add("Balance updated for " + approvedLoanRequests.get(i).getAccountId() + " Amount deducted " + totalEMI);
+				status.add("Balance updated for " +  accId.get(i) + " Amount deducted " + totalEMI);
 			}
 
 		}

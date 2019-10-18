@@ -139,6 +139,49 @@ public class LoanDisbursalDAOImpl implements LoanDisbursalDAO {
 		return requestList;
 
 	}
+	
+	/*******************************************************************************************************
+	 * - Function Name : retrieveLoanList() - Input Parameters :none - Return Type :
+	 * List<Loan> - Throws : None - Author : IOException, PecuniaException -
+	 * Creation Date : 25/09/2019 - Description : Retrieving the loan requests from
+	 * the database
+	 ********************************************************************************************************/
+
+	public ArrayList<String> uniqueIds() throws IOException, PecuniaException {
+		
+		Connection connection = DBConnection.getInstance().getConnection();
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		ArrayList<String> ids = new ArrayList<String>();
+
+		try {
+			preparedStatement = connection.prepareStatement(LoanDisbursalQuerryMapper.DISTINCT_IDS);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				accountId = resultSet.getString("account_id");
+				ids.add(accountId);
+			}
+		}
+
+		catch (SQLException sqlException) {
+			logger.error(sqlException.getMessage());
+			throw new PecuniaException(ErrorConstants.CONNECTION_FAILURE);
+		}
+
+		finally {
+			try {
+				resultSet.close();
+				preparedStatement.close();
+				connection.close();
+			} catch (SQLException e) {
+				logger.error(e.getMessage());
+				throw new PecuniaException(ErrorConstants.FILE_CLOSING_FAILURE);
+
+			}
+		}
+		logger.info(LoggerMessage.LOAN_REQUEST);
+		return ids;
+	}
 
 	/*******************************************************************************************************
 	 * - Function Name : retrieveAcceptedLoanList() - Input Parameters :none -

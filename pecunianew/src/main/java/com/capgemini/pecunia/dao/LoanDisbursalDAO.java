@@ -25,5 +25,7 @@ public interface LoanDisbursalDAO {
 	
 	public List<Loan> retrieveAcceptedLoanListWithoutStatus() throws IOException, PecuniaException;
 	
+	public ArrayList<String> uniqueIds() throws IOException, PecuniaException;
+	
 
 }
