@@ -18,6 +18,7 @@ import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
+import com.capgemini.pecunia.util.Constants;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -62,6 +63,7 @@ public class DeleteAccountServlet extends HttpServlet {
 			boolean isDeleted = ams.deleteAccount(account);
 			if (isDeleted) {
 				dataResponse.addProperty("success", true);
+				dataResponse.addProperty("message", Constants.DELETE_ACCOUNT_SUCCESSFUL);
 			}
 		} catch (PecuniaException | AccountException e) {
 			dataResponse.addProperty("success", false);
