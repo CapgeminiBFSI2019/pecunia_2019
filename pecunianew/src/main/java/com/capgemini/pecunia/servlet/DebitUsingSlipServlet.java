@@ -107,7 +107,7 @@ public class DebitUsingSlipServlet extends HttpServlet {
 			
 				dataResponse.addProperty("success", true);
 				dataResponse.addProperty("Account Id", transId);
-				dataResponse.addProperty("message", "Amount debited.Trans Id is \t" + transId);
+				dataResponse.addProperty("message", "Amount debited successfully.Trans Id is \t" + transId);
 //				request.getRequestDispatcher("addAccount.html").include(request, response);
 //				out.println("<script>");
 //				out.println("$('#success-toast-body').html('Account created successfully. Account id is \t" + created + "');");
