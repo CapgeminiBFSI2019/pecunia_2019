@@ -22,7 +22,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
- * Servlet implementation class AddAccountServlet
+ * Servlet implementation class AccountSummaryServlet
  */
 public class AccountSummaryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

@@ -43,6 +43,8 @@ public class Constants {
 	public static final String UPDATE_NAME_SUCCESSFUL = "Customer Name Updated Successfully";
 	public static final String UPDATE_CONTACT_SUCCESSFUL = "Customer Contact Updated Successfully";
 	public static final String UPDATE_ADDRESS_SUCCESSFUL = "Customer Address Updated Successfully";
+	public static final String DELETE_ACCOUNT_SUCCESSFUL = "Account Deleted Successfully";
+	
 	
 	
 
