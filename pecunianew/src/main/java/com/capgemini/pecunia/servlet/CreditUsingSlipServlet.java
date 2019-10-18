@@ -71,12 +71,12 @@ public class CreditUsingSlipServlet extends HttpServlet {
 		
 		TransactionService trans = new TransactionServiceImpl();
 		
-		response.setContentType("application/json");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-
-		response.setHeader("Access-Control-Allow-Headers",
-				"Content-Type, Authorization, Content-Length, X-Requested-With");
-		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
+//		response.setContentType("application/json");
+//		response.setHeader("Access-Control-Allow-Origin", "*");
+//
+//		response.setHeader("Access-Control-Allow-Headers",
+//				"Content-Type, Authorization, Content-Length, X-Requested-With");
+//		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
 //		Object session = null;
 //		if (session == null) {
 //			// Session is not created.
@@ -106,8 +106,8 @@ public class CreditUsingSlipServlet extends HttpServlet {
 			int transId = trans.creditUsingSlip(creditSlip);
 			
 				dataResponse.addProperty("success", true);
-				dataResponse.addProperty("Account Id", transId);
-				dataResponse.addProperty("message", "Amount credited.Trans Id is \t" + transId);
+				//dataResponse.addProperty("Account Id", transId);
+				dataResponse.addProperty("message", "Amount Credited, Transaction Id is : \t" + transId);
 //				request.getRequestDispatcher("addAccount.html").include(request, response);
 //				out.println("<script>");
 //				out.println("$('#success-toast-body').html('Account created successfully. Account id is \t" + created + "');");

@@ -3,7 +3,6 @@ package com.capgemini.pecunia.servlet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Transaction;
-import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.PassbookMaintenanceService;
@@ -23,9 +21,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.sun.javafx.collections.MappingChange.Map;
 
 public class PassbookServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		
@@ -47,11 +46,10 @@ public class PassbookServlet extends HttpServlet {
 		Gson gson = new Gson();
 		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
 		JsonObject jobj = jelem.getAsJsonObject();
-		//System.out.println("jonj :"+jobj);
 		String accountId = jobj.get("accountID").getAsString();
 		JsonObject dataResponse = new JsonObject();
 		
-		HttpSession session = request.getSession(false);
+//		HttpSession session = request.getSession(false);
 //		if (session == null) {
 //			// Session is not created.
 //			dataResponse.addProperty("success", false);
@@ -68,15 +66,12 @@ public class PassbookServlet extends HttpServlet {
 		
 		try {
 			updatePassbook = passbookService.updatePassbook(accountId);
-			//System.out.println("number of transactions"+ updatePassbook.size());
 			if(updatePassbook.size()>0)
 			{
 			for(Transaction transaction : updatePassbook)
 			{
-//				System.out.println("Value : "+gson.toJson(transaction, Transaction.class));
 				jsonArray.add(gson.toJson(transaction, Transaction.class));
 			}
-			//System.out.println("jason array"+jsonArray);
 			dataResponse.addProperty("success", true);
 			dataResponse.add("data", jsonArray);
 			}
