@@ -167,6 +167,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 		if (updateLoanApprovals != null) {
 			LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
 			for (int index = 0; index < updateLoanApprovals.size(); index++) {
+				if(updateLoanApprovals.get(index).getNumberOfEmiToBePaid()>0) {
 				double updatedDueAmount = updateLoanApprovals.get(index).getDisbursedAmount()
 						- (updateLoanApprovals.get(index).getDisbursedAmount()
 								/ updateLoanApprovals.get(index).getNumberOfEmiToBePaid()) * numberOfMonths;
@@ -183,6 +184,18 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 				}
 				
 
+			}
+				else {
+					double updatedDueAmount = updateLoanApprovals.get(index).getDisbursedAmount();
+					double updatedTenure = updateLoanApprovals.get(index).getNumberOfEmiToBePaid();
+					String accountId = updateLoanApprovals.get(index).getAccountId();
+					try {
+						loanDisbursedDAO.updateLoanAccount(updateLoanApprovals, updatedDueAmount, updatedTenure, accountId);
+					} catch (Exception e) {
+						logger.error(e.getMessage());
+						throw new LoanDisbursalException(e.getMessage());
+					}
+				}
 			}
 		}
 
@@ -261,12 +274,13 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 			double totalEMI = loanDisbursedDAO.totalEmi(accId.get(i));
 			double updatedBalance = oldBalance - totalEMI;
 			if (updatedBalance < 0) {
-				status.add("Not enough balance for account number "+ accId.get(i));
+				status.add("Not enough balance for account number "+ accId.get(i) + " Balance " + updatedBalance);
 			} else {
 				account.setBalance(updatedBalance);
 				transactionDAOImpl.updateBalance(account);
 				updateLoanAccount(approvedLoanList, 1);
-				status.add("Balance updated for " +  accId.get(i) + " Amount deducted " + totalEMI);
+				
+				status.add("Balance updated for " +  accId.get(i) + " Amount deducted " + totalEMI + " Balance " + updatedBalance);
 			}
 
 		}

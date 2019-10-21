@@ -149,6 +149,7 @@
     <servlet-name>LoanStatus</servlet-name>
     <url-pattern>/loantypes</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <description></description>
     <display-name>LoanDisbursalUpdate</display-name>
@@ -159,6 +160,9 @@
     <servlet-name>LoanDisbursalUpdate</servlet-name>
     <url-pattern>/loandisbursalupdation</url-pattern>
   </servlet-mapping>
+  
+  
+  
   <servlet>
     <description></description>
     <display-name>CheckingServlet</display-name>
@@ -169,6 +173,20 @@
     <servlet-name>CheckingServlet</servlet-name>
     <url-pattern>/loandisbursalchecking</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>UpdatingServlet</display-name>
+    <servlet-name>UpdatingServlet</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.LoanDisbursalBalanceUpdate</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdatingServlet</servlet-name>
+    <url-pattern>/loanbalance</url-pattern>
+  </servlet-mapping>
+  
+  
+  
   <servlet>
     <description></description>
     <display-name>LoanRequestServlet</display-name>
