@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Login;
 import com.capgemini.pecunia.exception.ErrorConstants;
@@ -70,6 +72,15 @@ public class LoginServlet extends HttpServlet {
 			String name = request.getParameter("username");
 			System.out.println("name - " + name);
 			if (result) {
+				
+//				Cookie loginCookie = new Cookie("userLogin",name);
+//				//setting cookie to expiry in 10 min
+//				loginCookie.setMaxAge(10*60);
+//				response.addCookie(loginCookie);
+				HttpSession session=request.getSession();  
+		        session.setAttribute("userLoggedIn",name);
+				
+			    dataResponse.addProperty("userLoggedIn", name);
 				dataResponse.addProperty("success", true);
 				dataResponse.addProperty("message", Constants.LOGIN_SUCCESSFUL);
 			} else {
