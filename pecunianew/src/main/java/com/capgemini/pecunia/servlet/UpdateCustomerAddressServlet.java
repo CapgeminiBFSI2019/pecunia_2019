@@ -66,13 +66,7 @@ public class UpdateCustomerAddressServlet extends HttpServlet {
 		address.setZipcode(zipcode);
 
 		AccountManagementService ams = new AccountManagementServiceImpl();
-		response.setContentType("application/json");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-
-		response.setHeader("Access-Control-Allow-Headers",
-				"Content-Type, Authorization, Content-Length, X-Requested-With");
-		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
-		boolean updated = false;
+				boolean updated = false;
 		try {
 			updated = ams.updateCustomerAddress(account, address);
 			if (updated) {

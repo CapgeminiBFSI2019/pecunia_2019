@@ -103,13 +103,7 @@ public class AddAccountServlet extends HttpServlet {
 		account.setInterest(accountinterest);
 
 		AccountManagementService ams = new AccountManagementServiceImpl();
-		response.setContentType("application/json");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-
-		response.setHeader("Access-Control-Allow-Headers",
-				"Content-Type, Authorization, Content-Length, X-Requested-With");
-		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
-
+		
 
 		try {
 			String created = ams.addAccount(customer, address, account);

@@ -70,13 +70,6 @@ public class LoanRequestServlet extends HttpServlet {
 
 		double emi = LoanServiceImpl.calculateEMI(amount, tenure, roi);
 		loan.setEmi(emi);
-		response.setContentType("application/json");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-
-		response.setHeader("Access-Control-Allow-Headers",
-				"Content-Type, Authorization, Content-Length, X-Requested-With");
-		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
-
 		try {
 			boolean isSuccess = loanService.createLoanRequest(loan);
 			if (isSuccess) {

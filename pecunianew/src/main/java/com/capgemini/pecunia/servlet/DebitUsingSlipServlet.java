@@ -57,13 +57,7 @@ public class DebitUsingSlipServlet extends HttpServlet {
 
 		TransactionService trans = new TransactionServiceImpl();
 
-		response.setContentType("application/json");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-
-		response.setHeader("Access-Control-Allow-Headers",
-				"Content-Type, Authorization, Content-Length, X-Requested-With");
-		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
-
+		
 		try {
 			int transId = trans.debitUsingSlip(debitSlip);
 
