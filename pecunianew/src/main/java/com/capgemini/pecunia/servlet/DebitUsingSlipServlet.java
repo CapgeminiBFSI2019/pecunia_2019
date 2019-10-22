@@ -47,7 +47,6 @@ public class DebitUsingSlipServlet extends HttpServlet {
 		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
 		JsonObject jobj = jelem.getAsJsonObject();
 
-
 		String accountId = jobj.get("accountNumber").getAsString();
 		double amount = Double.parseDouble(jobj.get("debitSlipAmount").toString());
 
@@ -62,15 +61,13 @@ public class DebitUsingSlipServlet extends HttpServlet {
 //			return;
 //		}
 
-
 		Transaction debitSlip = new Transaction();
-		
-		
+
 		debitSlip.setAccountId(accountId);
 		debitSlip.setAmount(amount);
-		
+
 		TransactionService trans = new TransactionServiceImpl();
-		
+
 		response.setContentType("application/json");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -104,21 +101,20 @@ public class DebitUsingSlipServlet extends HttpServlet {
 //}
 		try {
 			int transId = trans.debitUsingSlip(debitSlip);
-			
-				dataResponse.addProperty("success", true);
-				dataResponse.addProperty("Account Id", transId);
-				dataResponse.addProperty("message", "Amount debited successfully.Trans Id is \t" + transId);
+
+			dataResponse.addProperty("success", true);
+			dataResponse.addProperty("Account Id", transId);
+			dataResponse.addProperty("message", "Amount debited successfully.Trans Id is \t" + transId);
 //				request.getRequestDispatcher("addAccount.html").include(request, response);
 //				out.println("<script>");
 //				out.println("$('#success-toast-body').html('Account created successfully. Account id is \t" + created + "');");
 //				out.println("$('#add-account-success').toast('show');");
 //				out.println("</script>");
-			
+
 		} catch (PecuniaException | TransactionException e) {
 			dataResponse.addProperty("success", false);
 			dataResponse.addProperty("message", e.getMessage());
 
-		
 //			request.getRequestDispatcher("addAccount.html").include(request, response);
 //			out.println("<script>$('#add-account-failure').toast('show');</script>");
 
@@ -128,6 +124,19 @@ public class DebitUsingSlipServlet extends HttpServlet {
 
 	}
 
+	@Override
+	public void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		String reqOrigin = request.getHeader("Origin");
+		if (reqOrigin == null) {
+			reqOrigin = "*";
+		}
+		response.setHeader("Access-Control-Allow-Origin", reqOrigin);
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
+	}
+
 }
-
-
