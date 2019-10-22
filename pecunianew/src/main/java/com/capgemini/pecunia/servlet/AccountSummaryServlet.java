@@ -58,15 +58,7 @@ public class AccountSummaryServlet extends HttpServlet {
 		LocalDate endDate = LocalDate.parse(enDate);
 		JsonObject dataResponse = new JsonObject();
 
-		// HttpSession session = request.getSession(false);
-//		if (session == null) {
-//			// Session is not created.
-//			dataResponse.addProperty("success", false);
-//			dataResponse.addProperty("message", "Session has expired");
-//
-//			out.print(dataResponse);
-//			return;
-//		}
+		
 
 		List<Transaction> accountSummaryDetails;
 		PassbookMaintenanceService passbookService = new PassbookMaintenanceServiceImpl();
@@ -76,7 +68,6 @@ public class AccountSummaryServlet extends HttpServlet {
 			System.out.println("number of transactions" + accountSummaryDetails.size());
 			if (accountSummaryDetails.size() > 0) {
 				for (Transaction transaction : accountSummaryDetails) {
-//				System.out.println("Value : "+gson.toJson(transaction, Transaction.class));
 					jsonArray.add(gson.toJson(transaction, Transaction.class));
 				}
 				System.out.println("json array" + jsonArray);

@@ -47,10 +47,8 @@ public class LoanDisbursalServlet extends HttpServlet {
 				System.out.println("number of loan disbursal" + retrieveAll.size());
 				if (retrieveAll.size() > 0) {
 					for (Loan loanReqs : retrieveAll) {
-//						System.out.println("Value : "+gson.toJson(transaction, Transaction.class));
 						jsonArray.add(gson.toJson(loanReqs, Loan.class));
 					}
-					// System.out.println("jason array"+jsonArray);
 					dataResponse.addProperty("success", true);
 					dataResponse.add("data", jsonArray);
 				} else {
@@ -72,10 +70,8 @@ public class LoanDisbursalServlet extends HttpServlet {
 				System.out.println("number of loan disbursal" + retrieveAll.size());
 				if (retrieveAll.size() > 0) {
 					for (Loan loanReqs : retrieveAll) {
-//						System.out.println("Value : "+gson.toJson(transaction, Transaction.class));
 						jsonArray.add(gson.toJson(loanReqs, Loan.class));
 					}
-					// System.out.println("jason array"+jsonArray);
 					dataResponse.addProperty("success", true);
 					dataResponse.add("data", jsonArray);
 				} else {
@@ -89,8 +85,6 @@ public class LoanDisbursalServlet extends HttpServlet {
 				out.print(dataResponse);
 			}
 
-//			
-
 		}
 
 		if (s.equals("Show the loan requests to be rejected")) {
@@ -100,10 +94,8 @@ public class LoanDisbursalServlet extends HttpServlet {
 				System.out.println("number of loan disbursal" + retrieveAll.size());
 				if (retrieveAll.size() > 0) {
 					for (Loan loanReqs : retrieveAll) {
-//						System.out.println("Value : "+gson.toJson(transaction, Transaction.class));
 						jsonArray.add(gson.toJson(loanReqs, Loan.class));
 					}
-					// System.out.println("jason array"+jsonArray);
 					dataResponse.addProperty("success", true);
 					dataResponse.add("data", jsonArray);
 				} else {

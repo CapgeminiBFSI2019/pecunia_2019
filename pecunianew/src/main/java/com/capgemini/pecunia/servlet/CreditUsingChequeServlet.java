@@ -62,16 +62,6 @@ public class CreditUsingChequeServlet extends HttpServlet {
 		String bankName = jobj.get("bankName").getAsString();
 		String ifsc = jobj.get("payeeIfsc").getAsString();
 
-		HttpSession session = request.getSession(false);
-
-//		if (session == null) {
-//			// Session is not created.
-//			dataResponse.addProperty("success", false);
-//			dataResponse.addProperty("message", "Session has expired");
-//
-//			out.print(dataResponse);
-//			return;
-//		}
 
 		creditTransaction.setAmount(amount);
 		creditTransaction.setAccountId(beneficiaryAccountNumber);

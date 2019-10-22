@@ -50,28 +50,22 @@ public class CreditUsingSlipServlet extends HttpServlet {
 		String accountId = jobj.get("accountNumber").getAsString();
 		double amount = Double.parseDouble(jobj.get("creditSlipAmount").toString());
 
-		HttpSession session = request.getSession(false);
 		Transaction creditSlip = new Transaction();
 		creditSlip.setAccountId(accountId);
 		creditSlip.setAmount(amount);
 
 		TransactionService trans = new TransactionServiceImpl();
-		
-	
+
 		try {
 			int transId = trans.creditUsingSlip(creditSlip);
-			
-				dataResponse.addProperty("success", true);
-				
-				dataResponse.addProperty("message", "Amount Credited, Transaction Id is : \t" + transId);
 
-			
+			dataResponse.addProperty("success", true);
+
+			dataResponse.addProperty("message", "Amount Credited, Transaction Id is : \t" + transId);
+
 		} catch (PecuniaException | TransactionException e) {
 			dataResponse.addProperty("success", false);
 			dataResponse.addProperty("message", e.getMessage());
-
-		
-
 
 		} finally {
 			out.print(dataResponse);

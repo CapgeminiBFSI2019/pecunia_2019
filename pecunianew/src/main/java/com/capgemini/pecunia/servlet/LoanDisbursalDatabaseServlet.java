@@ -48,10 +48,8 @@ public class LoanDisbursalDatabaseServlet extends HttpServlet {
 			retrieveLoanDisbursedData = loanDisbursalService.approvedLoanList();
 			if (retrieveLoanDisbursedData.size() > 0) {
 				for (LoanDisbursal loanDisbursal : retrieveLoanDisbursedData) {
-//					System.out.println("Value : "+gson.toJson(transaction, Transaction.class));
 					jsonArray.add(gson.toJson(loanDisbursal, LoanDisbursal.class));
 				}
-				// System.out.println("jason array"+jsonArray);
 				dataResponse.addProperty("success", true);
 				dataResponse.add("data", jsonArray);
 			} else {
