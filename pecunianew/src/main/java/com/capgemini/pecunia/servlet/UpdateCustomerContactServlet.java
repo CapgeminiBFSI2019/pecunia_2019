@@ -26,12 +26,6 @@ public class UpdateCustomerContactServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-//		HttpSession session = request.getSession(false);
-//		if (session == null) {
-//		    // Session is not created.
-//			response.sendRedirect("session.html");
-//		}
-
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		response.setHeader("Access-Control-Allow-Origin", "*");
