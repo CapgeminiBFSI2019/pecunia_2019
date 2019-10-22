@@ -28,8 +28,6 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// System.out.println("Inside Login Servlet");
-
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -58,12 +56,6 @@ public class LoginServlet extends HttpServlet {
 		loginObject.setUsername(username);
 		loginObject.setPassword(password);
 		LoginService loginService = new LoginServiceImpl();
-		response.setContentType("application/json");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-
-		response.setHeader("Access-Control-Allow-Headers",
-				"Content-Type, Authorization, Content-Length, X-Requested-With");
-		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
 		boolean result = false;
 
 		try {
@@ -72,11 +64,6 @@ public class LoginServlet extends HttpServlet {
 			String name = request.getParameter("username");
 			System.out.println("name - " + name);
 			if (result) {
-
-//				Cookie loginCookie = new Cookie("userLogin",name);
-//				//setting cookie to expiry in 10 min
-//				loginCookie.setMaxAge(10*60);
-//				response.addCookie(loginCookie);
 				HttpSession session = request.getSession();
 				session.setAttribute("userLoggedIn", name);
 
@@ -97,12 +84,6 @@ public class LoginServlet extends HttpServlet {
 
 	}
 
-//	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		
-//		resp.setContentType("application/json");
-//		resp.addHeader("Access-Control-Allow-Origin", "*");
-//		resp.getWriter().write("{}");
-//	}
 	public void doOptions(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
