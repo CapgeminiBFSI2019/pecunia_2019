@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Transaction;
@@ -50,17 +49,6 @@ public class PassbookServlet extends HttpServlet {
 		JsonObject jobj = jelem.getAsJsonObject();
 		String accountId = jobj.get("accountID").getAsString();
 		JsonObject dataResponse = new JsonObject();
-
-//		HttpSession session = request.getSession(false);
-//		if (session == null) {
-//			// Session is not created.
-//			dataResponse.addProperty("success", false);
-//			dataResponse.addProperty("message", "Session has expired");
-//
-//			out.print(dataResponse);
-//			return;
-//		}
-
 		Account accountObject = new Account();
 		accountObject.setId(accountId);
 		List<Transaction> updatePassbook;
