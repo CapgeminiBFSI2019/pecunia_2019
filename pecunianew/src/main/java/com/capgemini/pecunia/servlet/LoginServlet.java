@@ -9,7 +9,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Login;
 import com.capgemini.pecunia.exception.ErrorConstants;
@@ -73,13 +72,10 @@ public class LoginServlet extends HttpServlet {
 			System.out.println("name - " + name);
 			if (result) {
 				
-//				Cookie loginCookie = new Cookie("userLogin",name);
-//				//setting cookie to expiry in 10 min
-//				loginCookie.setMaxAge(10*60);
-//				response.addCookie(loginCookie);
-				HttpSession session=request.getSession();  
-		        session.setAttribute("userLoggedIn",name);
-				
+				Cookie loginCookie = new Cookie("userLogin",name);
+				//setting cookie to expiry in 10 min
+				loginCookie.setMaxAge(10*60);
+				response.addCookie(loginCookie);
 			    dataResponse.addProperty("userLoggedIn", name);
 				dataResponse.addProperty("success", true);
 				dataResponse.addProperty("message", Constants.LOGIN_SUCCESSFUL);
@@ -103,17 +99,5 @@ public class LoginServlet extends HttpServlet {
 //		resp.addHeader("Access-Control-Allow-Origin", "*");
 //		resp.getWriter().write("{}");
 //	}
-	public void doOptions(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {    
-	    
-		   String reqOrigin = request.getHeader("Origin");
-		   if(reqOrigin == null) {
-			   reqOrigin = "*";
-		   }
-		    response.setHeader("Access-Control-Allow-Origin",reqOrigin);
-		    response.setHeader("Access-Control-Allow-Credentials", "true");
-		    response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-		    response.setHeader("Access-Control-Max-Age", "3600");
-		    response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
-	}
 
 }

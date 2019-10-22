@@ -31,10 +31,9 @@ public class LoanDisbursalServlet extends HttpServlet {
 		LoanDisbursalService loanDisbursalService = new LoanDisbursalServiceImpl();
 		response.setContentType("application/json");
 		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setHeader("Access-Control-Allow-Headers",
-				"Content-Type, Authorization, Content-Length, X-Requested-With");
+		response.setHeader("Access-Control-Allow-Headers","Content-Type, Authorization, Content-Length, X-Requested-With");
 		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
-		JsonArray jsonArray = new JsonArray();
+        JsonArray jsonArray = new JsonArray();
 		Gson gson = new Gson();
 		JsonObject dataResponse = new JsonObject();
 		PrintWriter out = response.getWriter();
@@ -44,94 +43,98 @@ public class LoanDisbursalServlet extends HttpServlet {
 		if (s.equals("Retrieve all loan requests")) {
 			try {
 				retrieveAll = loanDisbursalService.retrieveAll();
-				System.out.println("number of loan disbursal" + retrieveAll.size());
-				if (retrieveAll.size() > 0) {
-					for (Loan loanReqs : retrieveAll) {
+				System.out.println("number of loan disbursal"+ retrieveAll.size());
+				if(retrieveAll.size()>0)
+				{
+					for(Loan loanReqs : retrieveAll)
+					{
 //						System.out.println("Value : "+gson.toJson(transaction, Transaction.class));
 						jsonArray.add(gson.toJson(loanReqs, Loan.class));
 					}
-					// System.out.println("jason array"+jsonArray);
+					//System.out.println("jason array"+jsonArray);
 					dataResponse.addProperty("success", true);
 					dataResponse.add("data", jsonArray);
-				} else {
+					}
+				else
+				{
 					dataResponse.addProperty("success", true);
 					dataResponse.addProperty("message", "No transaction to update");
 				}
 			} catch (PecuniaException | LoanDisbursalException e) {
-				dataResponse.addProperty("success", false);
-				dataResponse.addProperty("message", e.getMessage());
+					dataResponse.addProperty("success", false);
+					dataResponse.addProperty("message", e.getMessage());
 			} finally {
 				out.print(dataResponse);
 			}
 
-		}
 
+		}
+		
 		if (s.equals("Show the loan requests to be accepted")) {
 			try {
 				retrieveAll = loanDisbursalService.approveLoan();
-				System.out.println("number of loan disbursal" + retrieveAll.size());
-				if (retrieveAll.size() > 0) {
-					for (Loan loanReqs : retrieveAll) {
+				System.out.println("number of loan disbursal"+ retrieveAll.size());
+				if(retrieveAll.size()>0)
+				{
+					for(Loan loanReqs : retrieveAll)
+					{
 //						System.out.println("Value : "+gson.toJson(transaction, Transaction.class));
 						jsonArray.add(gson.toJson(loanReqs, Loan.class));
 					}
-					// System.out.println("jason array"+jsonArray);
+					//System.out.println("jason array"+jsonArray);
 					dataResponse.addProperty("success", true);
 					dataResponse.add("data", jsonArray);
-				} else {
+					}
+				else
+				{
 					dataResponse.addProperty("success", true);
 					dataResponse.addProperty("message", "No loan requests are pending");
 				}
 			} catch (PecuniaException | LoanDisbursalException e) {
-				dataResponse.addProperty("success", false);
-				dataResponse.addProperty("message", e.getMessage());
+					dataResponse.addProperty("success", false);
+					dataResponse.addProperty("message", e.getMessage());
 			} finally {
 				out.print(dataResponse);
 			}
-
+			
 //			
 
 		}
-
+		
 		if (s.equals("Show the loan requests to be rejected")) {
-
+			
 			try {
 				retrieveAll = loanDisbursalService.rejectedLoanRequests();
-				System.out.println("number of loan disbursal" + retrieveAll.size());
-				if (retrieveAll.size() > 0) {
-					for (Loan loanReqs : retrieveAll) {
+				System.out.println("number of loan disbursal"+ retrieveAll.size());
+				if(retrieveAll.size()>0)
+				{
+					for(Loan loanReqs : retrieveAll)
+					{
 //						System.out.println("Value : "+gson.toJson(transaction, Transaction.class));
 						jsonArray.add(gson.toJson(loanReqs, Loan.class));
 					}
-					// System.out.println("jason array"+jsonArray);
+					//System.out.println("jason array"+jsonArray);
 					dataResponse.addProperty("success", true);
 					dataResponse.add("data", jsonArray);
-				} else {
+					}
+				else
+				{
 					dataResponse.addProperty("success", true);
 					dataResponse.addProperty("message", "No loan requests are pending");
 				}
 			} catch (PecuniaException | LoanDisbursalException e) {
-				dataResponse.addProperty("success", false);
-				dataResponse.addProperty("message", e.getMessage());
+					dataResponse.addProperty("success", false);
+					dataResponse.addProperty("message", e.getMessage());
 			} finally {
 				out.print(dataResponse);
 			}
+			
+
 
 		}
-
-		if (s.equals("") || s.equals(null)) {
-			try {
-				dataResponse.addProperty("success", true);
-				dataResponse.addProperty("message", "Please choose an option");
-			}
-			catch (Exception e) {
-				dataResponse.addProperty("success", false);
-				dataResponse.addProperty("message", e.getMessage());
-			} finally {
-				out.print(dataResponse);
-			}
-		}
-
+		
+		
 	}
 
 }
+
