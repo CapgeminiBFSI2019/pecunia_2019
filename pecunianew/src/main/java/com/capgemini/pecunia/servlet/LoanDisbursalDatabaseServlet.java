@@ -24,7 +24,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class LoanDisbursalDatabaseServlet extends HttpServlet {
-	
 
 	/**
 	 * 
@@ -36,38 +35,49 @@ public class LoanDisbursalDatabaseServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setHeader("Access-Control-Allow-Headers","Content-Type, Authorization, Content-Length, X-Requested-With");
+		response.setHeader("Access-Control-Allow-Headers",
+				"Content-Type, Authorization, Content-Length, X-Requested-With");
 		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
-		
-		
-        JsonArray jsonArray = new JsonArray();
+
+		JsonArray jsonArray = new JsonArray();
 		Gson gson = new Gson();
 		JsonObject dataResponse = new JsonObject();
 		ArrayList<LoanDisbursal> retrieveLoanDisbursedData = new ArrayList<LoanDisbursal>();
-		
+
 		try {
 			retrieveLoanDisbursedData = loanDisbursalService.approvedLoanList();
-			if(retrieveLoanDisbursedData.size()>0)
-			{
-				for(LoanDisbursal loanDisbursal : retrieveLoanDisbursedData)
-				{
+			if (retrieveLoanDisbursedData.size() > 0) {
+				for (LoanDisbursal loanDisbursal : retrieveLoanDisbursedData) {
 //					System.out.println("Value : "+gson.toJson(transaction, Transaction.class));
 					jsonArray.add(gson.toJson(loanDisbursal, LoanDisbursal.class));
 				}
-				//System.out.println("jason array"+jsonArray);
+				// System.out.println("jason array"+jsonArray);
 				dataResponse.addProperty("success", true);
 				dataResponse.add("data", jsonArray);
-				}
-			else
-			{
+			} else {
 				dataResponse.addProperty("success", true);
 				dataResponse.addProperty("message", "No transaction to update");
 			}
 		} catch (PecuniaException | LoanDisbursalException e) {
-				dataResponse.addProperty("success", false);
-				dataResponse.addProperty("message", e.getMessage());
+			dataResponse.addProperty("success", false);
+			dataResponse.addProperty("message", e.getMessage());
 		} finally {
 			out.print(dataResponse);
 		}
-     }
+	}
+
+	@Override
+	public void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		String reqOrigin = request.getHeader("Origin");
+		if (reqOrigin == null) {
+			reqOrigin = "*";
+		}
+		response.setHeader("Access-Control-Allow-Origin", reqOrigin);
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
+	}
 }

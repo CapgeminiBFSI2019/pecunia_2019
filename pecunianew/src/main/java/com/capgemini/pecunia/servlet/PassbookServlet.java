@@ -26,12 +26,14 @@ public class PassbookServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setHeader("Access-Control-Allow-Headers","Content-Type, Authorization, Content-Length, X-Requested-With");
+		response.setHeader("Access-Control-Allow-Headers",
+				"Content-Type, Authorization, Content-Length, X-Requested-With");
 		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
 		StringBuffer jb = new StringBuffer();
 		String line = null;
@@ -41,14 +43,14 @@ public class PassbookServlet extends HttpServlet {
 				jb.append(line);
 		} catch (Exception e) {
 		}
-		
-        JsonArray jsonArray = new JsonArray();
+
+		JsonArray jsonArray = new JsonArray();
 		Gson gson = new Gson();
 		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
 		JsonObject jobj = jelem.getAsJsonObject();
 		String accountId = jobj.get("accountID").getAsString();
 		JsonObject dataResponse = new JsonObject();
-		
+
 //		HttpSession session = request.getSession(false);
 //		if (session == null) {
 //			// Session is not created.
@@ -58,33 +60,44 @@ public class PassbookServlet extends HttpServlet {
 //			out.print(dataResponse);
 //			return;
 //		}
-		
+
 		Account accountObject = new Account();
 		accountObject.setId(accountId);
 		List<Transaction> updatePassbook;
 		PassbookMaintenanceService passbookService = new PassbookMaintenanceServiceImpl();
-		
+
 		try {
 			updatePassbook = passbookService.updatePassbook(accountId);
-			if(updatePassbook.size()>0)
-			{
-			for(Transaction transaction : updatePassbook)
-			{
-				jsonArray.add(gson.toJson(transaction, Transaction.class));
-			}
-			dataResponse.addProperty("success", true);
-			dataResponse.add("data", jsonArray);
-			}
-			else
-			{
+			if (updatePassbook.size() > 0) {
+				for (Transaction transaction : updatePassbook) {
+					jsonArray.add(gson.toJson(transaction, Transaction.class));
+				}
+				dataResponse.addProperty("success", true);
+				dataResponse.add("data", jsonArray);
+			} else {
 				dataResponse.addProperty("success", true);
 				dataResponse.addProperty("message", "No transaction to update");
 			}
 		} catch (PecuniaException | PassbookException e) {
-				dataResponse.addProperty("success", false);
-				dataResponse.addProperty("message", e.getMessage());
+			dataResponse.addProperty("success", false);
+			dataResponse.addProperty("message", e.getMessage());
 		} finally {
 			out.print(dataResponse);
 		}
-     }
+	}
+
+	@Override
+	public void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		String reqOrigin = request.getHeader("Origin");
+		if (reqOrigin == null) {
+			reqOrigin = "*";
+		}
+		response.setHeader("Access-Control-Allow-Origin", reqOrigin);
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
+	}
 }

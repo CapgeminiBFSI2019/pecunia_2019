@@ -72,20 +72,35 @@ public class UpdateCustomerNameServlet extends HttpServlet {
 		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
 		boolean updated = false;
 
-		try{
+		try {
 			updated = ams.updateCustomerName(account, customer);
 			if (updated) {
 				dataResponse.addProperty("success", true);
 				dataResponse.addProperty("message", Constants.UPDATE_NAME_SUCCESSFUL);
 			}
-		}catch(PecuniaException | AccountException e) {
+		} catch (PecuniaException | AccountException e) {
 			dataResponse.addProperty("success", false);
 			dataResponse.addProperty("message", e.getMessage());
 
-		}finally{
+		} finally {
 			out.print(dataResponse);
 		}
 
+	}
+
+	@Override
+	public void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		String reqOrigin = request.getHeader("Origin");
+		if (reqOrigin == null) {
+			reqOrigin = "*";
+		}
+		response.setHeader("Access-Control-Allow-Origin", reqOrigin);
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
 	}
 
 }
