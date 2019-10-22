@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
@@ -53,14 +52,8 @@ public class DebitUsingChequeServlet extends HttpServlet {
 		int chequeNumber = Integer.parseInt(jobj.get("debitChequeNumber").getAsString());
 		LocalDate issueDate = LocalDate.parse(jobj.get("issueDate").getAsString());
 
-		HttpSession session = request.getSession(false);
 
 		JsonObject dataResponse = new JsonObject();
-		// if (session == null) {
-		// // Session is not created.
-		// response.sendRedirect("session.html");
-		// }
-		//
 
 		Transaction debitChequeTransaction = new Transaction();
 		Cheque debitCheque = new Cheque();
@@ -87,19 +80,19 @@ public class DebitUsingChequeServlet extends HttpServlet {
 		}
 
 	}
-	
-	
+
 	@Override
-	public void doOptions(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {    
-	    
-	   String reqOrigin = request.getHeader("Origin");
-	   if(reqOrigin == null) {
-		   reqOrigin = "*";
-	   }
-	    response.setHeader("Access-Control-Allow-Origin",reqOrigin);
-	    response.setHeader("Access-Control-Allow-Credentials", "true");
-	    response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-	    response.setHeader("Access-Control-Max-Age", "3600");
-	    response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
-}
+	public void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		String reqOrigin = request.getHeader("Origin");
+		if (reqOrigin == null) {
+			reqOrigin = "*";
+		}
+		response.setHeader("Access-Control-Allow-Origin", reqOrigin);
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
+	}
 }

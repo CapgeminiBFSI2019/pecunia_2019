@@ -1,6 +1,5 @@
 package com.capgemini.pecunia.servlet;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,9 +26,10 @@ import com.google.gson.JsonObject;
  */
 public class CreditUsingChequeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-      
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -50,7 +50,7 @@ public class CreditUsingChequeServlet extends HttpServlet {
 		Gson gson = new Gson();
 		JsonElement jelem = gson.fromJson(jb.toString(), JsonElement.class);
 		JsonObject jobj = jelem.getAsJsonObject();
-		
+
 		Transaction creditTransaction = new Transaction();
 		Cheque creditCheque = new Cheque();
 		String payeeAccountNumber = jobj.get("payeeAccountNumber").getAsString();
@@ -61,45 +61,48 @@ public class CreditUsingChequeServlet extends HttpServlet {
 		LocalDate chequeIssueDate = LocalDate.parse(jobj.get("creditChequeIssueDate").getAsString());
 		String bankName = jobj.get("bankName").getAsString();
 		String ifsc = jobj.get("payeeIfsc").getAsString();
-		
-		HttpSession session = request.getSession(false);
 
-//		if (session == null) {
-//			// Session is not created.
-//			dataResponse.addProperty("success", false);
-//			dataResponse.addProperty("message", "Session has expired");
-//
-//			out.print(dataResponse);
-//			return;
-//		}
-		
+
 		creditTransaction.setAmount(amount);
 		creditTransaction.setAccountId(beneficiaryAccountNumber);
 		creditTransaction.setTransTo(beneficiaryAccountNumber);
 		creditTransaction.setTransFrom(payeeAccountNumber);
-		
+
 		creditCheque.setAccountNo(payeeAccountNumber);
 		creditCheque.setHolderName(payeeName);
 		creditCheque.setIfsc(ifsc);
 		creditCheque.setIssueDate(chequeIssueDate);
 		creditCheque.setNum(Integer.parseInt(chequeNumber));
 		creditCheque.setBankName(bankName);
-		
-		
+
 		TransactionService trans = new TransactionServiceImpl();
 		try {
 			int transId = trans.creditUsingCheque(creditTransaction, creditCheque);
 			dataResponse.addProperty("success", true);
 			dataResponse.addProperty("Transaction Id", transId);
 			dataResponse.addProperty("message", "Amount credited.Trans Id is \t" + transId);
-			
+
 		} catch (TransactionException | PecuniaException e) {
 			dataResponse.addProperty("success", false);
 			dataResponse.addProperty("message", e.getMessage());
-		}
-		finally {
+		} finally {
 			out.print(dataResponse);
 		}
+	}
+
+	@Override
+	public void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		String reqOrigin = request.getHeader("Origin");
+		if (reqOrigin == null) {
+			reqOrigin = "*";
+		}
+		response.setHeader("Access-Control-Allow-Origin", reqOrigin);
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
 	}
 
 }

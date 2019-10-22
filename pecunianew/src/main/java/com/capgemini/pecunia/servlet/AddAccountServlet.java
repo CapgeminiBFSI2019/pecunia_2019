@@ -58,14 +58,13 @@ public class AddAccountServlet extends HttpServlet {
 
 		String name = jobj.get("name").getAsString();
 
-		
 		String gender = jobj.get("gender").getAsString();
 		if ("Female".equalsIgnoreCase(gender)) {
 			customer.setGender("F");
 		} else {
 			customer.setGender("M");
 		}
-		
+
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 		String dateofbirth = jobj.get("dob").getAsString();
@@ -124,11 +123,25 @@ public class AddAccountServlet extends HttpServlet {
 			dataResponse.addProperty("success", false);
 			dataResponse.addProperty("message", e.getMessage());
 
-
 		} finally {
 			out.print(dataResponse);
 		}
 
+	}
+
+	@Override
+	public void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		String reqOrigin = request.getHeader("Origin");
+		if (reqOrigin == null) {
+			reqOrigin = "*";
+		}
+		response.setHeader("Access-Control-Allow-Origin", reqOrigin);
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
 	}
 
 }
