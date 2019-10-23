@@ -14,7 +14,9 @@ public class LoanRequestEntity {
 
 		@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "account Id")
+	@Column(name = "loan_Id")
+	private int loanId;
+	@Column(name = "account_Id")
 	private String accountId;
 	@Column(name = "amount")
 	private double amount;
@@ -26,12 +28,14 @@ public class LoanRequestEntity {
 	private double roi;
 	@Column(name = "status")
 	private String status;
-	@Column(name = "creditScore")
+	@Column(name = "credit_Score")
 	private int creditScore;
+	
 
-	public LoanRequestEntity(String accountId, double amount, String type, int tenure, double roi, String status,
+	public LoanRequestEntity(int loanId, String accountId, double amount, String type, int tenure, double roi, String status,
 			int creditScore) {
 		super();
+		this.loanId = loanId;
 		this.accountId = accountId;
 		this.amount = amount;
 		this.type = type;
@@ -39,6 +43,14 @@ public class LoanRequestEntity {
 		this.roi = roi;
 		this.status = status;
 		this.creditScore = creditScore;
+	}
+
+	public int getLoanId() {
+		return loanId;
+	}
+
+	public void setLoanId(int loanId) {
+		this.loanId = loanId;
 	}
 
 	/**
