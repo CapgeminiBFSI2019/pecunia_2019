@@ -59,12 +59,7 @@ public class UpdateCustomerContactServlet extends HttpServlet {
 
 		AccountManagementService ams = new AccountManagementServiceImpl();
 
-		response.setContentType("application/json");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-
-		response.setHeader("Access-Control-Allow-Headers",
-				"Content-Type, Authorization, Content-Length, X-Requested-With");
-		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
+		
 		boolean updated = false;
 
 		try {
@@ -80,6 +75,21 @@ public class UpdateCustomerContactServlet extends HttpServlet {
 			out.print(dataResponse);
 		}
 
+	}
+
+	@Override
+	public void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		String reqOrigin = request.getHeader("Origin");
+		if (reqOrigin == null) {
+			reqOrigin = "*";
+		}
+		response.setHeader("Access-Control-Allow-Origin", reqOrigin);
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
 	}
 
 }
