@@ -1,6 +1,15 @@
 package com.capgemini.pecunia.pl;
 
+import com.capgemini.pecunia.exception.PecuniaException;
+import com.capgemini.pecunia.exception.TransactionException;
+import com.capgemini.pecunia.hibernate.dao.TransactionDAOImpl;
+
 public class PecuniaMain {
+	
+	public static void main(String[] args) throws PecuniaException, TransactionException {
+		TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
+		transactionDAOImpl.getBalance(null);
+	}
 /*
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int choice1 = 0, choice2 = 0, choice3 = 0;
