@@ -3,6 +3,8 @@ package com.capgemini.pecunia.hibernate.dao;
 import java.sql.SQLException;
 
 import org.hibernate.Session;
+//import org.hibernate.query.Query;
+import org.hibernate.query.Query;
 
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Address;
@@ -10,8 +12,11 @@ import com.capgemini.pecunia.dto.Customer;
 import com.capgemini.pecunia.entity.AccountEntity;
 import com.capgemini.pecunia.entity.AddressEntity;
 import com.capgemini.pecunia.entity.CustomerEntity;
+import com.capgemini.pecunia.entity.TransactionEntity;
 import com.capgemini.pecunia.exception.AccountException;
+import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.PecuniaException;
+import com.capgemini.pecunia.util.HibernateUtil;
 
 public class AccountManagementDAOImpl implements AccountManagementDAO {
 
@@ -23,8 +28,32 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	@Override
 	public boolean updateCustomerName(Account account, Customer customer) throws PecuniaException, AccountException {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isUpdated = false;
+		String custId = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			System.out.println("session value : "+session);
+			String hql = "select customerId from AccountEntity where AccountEntity.accountId= :accountId";
+			Query query = session.createQuery(hql);
+			query.setParameter("accountId", account.getId());
+			query.setMaxResults(1);
+			custId = (String) query.uniqueResult();
+			System.out.println("Customer Id: "+custId);
+			String hqlUpdate = "UPDATE customer SET name=:name WHERE customerId=:customerId";
+			Query queryUpdate = session.createQuery(hqlUpdate);
+			queryUpdate.setParameter("name", customer.getName());
+			queryUpdate.setParameter("customerId", custId);
+			int rowsAffected = queryUpdate.executeUpdate();
+			System.out.println(rowsAffected);
+			if (rowsAffected > 0) {
+			    isUpdated=true;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			throw new AccountException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
+		}
+		return isUpdated;
 	}
 
 	@Override
@@ -50,7 +79,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	     cust.setName(customer.getName());
 	     cust.setGender(customer.getGender());
 	     cust.setContact(customer.getContact());
-	     cust.setDob(customer.getDob());
+//	     cust.setDob(customer.getDob());
 	     cust.setPan(customer.getPan());
 //	     cust.getAddressId();
 	  
@@ -63,7 +92,8 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	     session.save(cust);
 	     session.save(addr);
 	     session.getTransaction().commit();
-	     HibernateUtil.shutdown();
+//	     HibernateUtil.shutdown();
+		return null;
 	}
 
 	@Override
@@ -78,8 +108,8 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	     acc.setBranchId(account.getBranchId());
 	     acc.setType(account.getAccountType());
 	     acc.setStatus(account.getStatus());
-	     acc.setBalance(account.getBalance());
-	     acc.setInterest(account.getInterest());
+//	     acc.setBalance(account.getBalance());
+//	     acc.setInterest(account.getInterest());
 //	    acc.setLastUpdated(account.getLastUpdated());
 //	    acc.getAccountId();
 	      
@@ -88,7 +118,8 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	     //Commit the transaction
 	     session.getTransaction().commit();
-	     HibernateUtil.shutdown();
+//	     HibernateUtil.shutdown();
+		return null;
 	 }
 	
 
