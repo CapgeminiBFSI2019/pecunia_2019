@@ -140,16 +140,18 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	@Override
 	public String addCustomerDetails(Customer customer, Address address)
 			throws PecuniaException, AccountException, SQLException {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
-		CustomerEntity cust = new CustomerEntity(null, null, null, null, null, null, null);
-		AddressEntity addr = new AddressEntity(null, null, null, null, null, null);
-		cust.setAadhar(customer.getAadhar());
-		cust.setName(customer.getName());
-		cust.setGender(customer.getGender());
-		cust.setContact(customer.getContact());
-//	     cust.setDob(customer.getDob());
-		cust.setPan(customer.getPan());
+
+		 Session session = HibernateUtil.getSessionFactory().openSession();
+	     session.beginTransaction();
+	     CustomerEntity cust = new CustomerEntity(null, null, null, null, null, null, null);
+	     AddressEntity addr = new AddressEntity(null, null, null, null, null, null);
+	     cust.setAadhar(customer.getAadhar());
+	     cust.setName(customer.getName());
+	     cust.setGender(customer.getGender());
+	     cust.setContact(customer.getContact());
+	     cust.setDob(customer.getDob());
+	     cust.setPan(customer.getPan());
+
 //	     cust.getAddressId();
 
 		addr.setAddressLine1(address.getLine1());
@@ -168,6 +170,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	@Override
 	public String addAccount(Account account) throws PecuniaException, AccountException, SQLException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+
 		session.beginTransaction();
 
 		// Add new Employee object
@@ -187,6 +190,8 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 		// Commit the transaction
 		session.getTransaction().commit();
+
+	    
 //	     HibernateUtil.shutdown();
  
 		return null;
