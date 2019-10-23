@@ -8,11 +8,17 @@ import com.capgemini.pecunia.hibernate.dao.TransactionDAOImpl;
 public class PecuniaMain {
 	
 	public static void main(String[] args) throws PecuniaException, TransactionException {
-		TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
-		Account account = new Account();
-		account.setId("100101000001");
-		double balance = transactionDAOImpl.getBalance(account);
-		System.out.println(balance);
+		try {
+			TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
+			Account account = new Account();
+			account.setId("111111111111");
+			double balance = transactionDAOImpl.getBalance(account);
+			System.out.println(balance);
+		}
+		catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		
 	}
 /*
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

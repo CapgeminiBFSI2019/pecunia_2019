@@ -10,6 +10,7 @@ import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.entity.AccountEntity;
 import com.capgemini.pecunia.entity.TransactionEntity;
+import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.HibernateUtil;
@@ -50,7 +51,13 @@ public class TransactionDAOImpl implements TransactionDAO {
 			query.setParameter("accountId", accountId);
 			query.setMaxResults(1);
 			AccountEntity accountEntity = (AccountEntity) query.uniqueResult();
-			accountBalance = accountEntity.getBalance();
+			if(accountEntity != null) {
+				accountBalance = accountEntity.getBalance();
+			}
+			else {
+				throw new PecuniaException(ErrorConstants.NO_SUCH_ACCOUNT);
+			}
+			
 			transaction.commit();
 		}
 		catch(Exception e) {
