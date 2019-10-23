@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Loan Request")
 
-public class LoanRequest {
+public class LoanRequestEntity {
 
 		@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class LoanRequest {
 	@Column(name = "creditScore")
 	private int creditScore;
 
-	public LoanRequest(String accountId, double amount, String type, int tenure, double roi, String status,
+	public LoanRequestEntity(String accountId, double amount, String type, int tenure, double roi, String status,
 			int creditScore) {
 		super();
 		this.accountId = accountId;
