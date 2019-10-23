@@ -58,14 +58,13 @@ public class AddAccountServlet extends HttpServlet {
 
 		String name = jobj.get("name").getAsString();
 
-		
 		String gender = jobj.get("gender").getAsString();
 		if ("Female".equalsIgnoreCase(gender)) {
 			customer.setGender("F");
 		} else {
 			customer.setGender("M");
 		}
-		
+
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 		String dateofbirth = jobj.get("dob").getAsString();
@@ -104,14 +103,7 @@ public class AddAccountServlet extends HttpServlet {
 		account.setInterest(accountinterest);
 
 		AccountManagementService ams = new AccountManagementServiceImpl();
-		response.setContentType("application/json");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-
-		response.setHeader("Access-Control-Allow-Headers",
-				"Content-Type, Authorization, Content-Length, X-Requested-With");
-		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
-
-//		PrintWriter out = response.getWriter();
+		
 
 		try {
 			String created = ams.addAccount(customer, address, account);
@@ -119,25 +111,31 @@ public class AddAccountServlet extends HttpServlet {
 				dataResponse.addProperty("success", true);
 				dataResponse.addProperty("Account Id", created);
 				dataResponse.addProperty("message", "Account has been created. Account Id is \t" + created);
-//				request.getRequestDispatcher("addAccount.html").include(request, response);
-//				out.println("<script>");
-//				out.println("$('#success-toast-body').html('Account created successfully. Account id is \t" + created + "');");
-//				out.println("$('#add-account-success').toast('show');");
-//				out.println("</script>");
+
 			}
 		} catch (PecuniaException | AccountException e) {
 			dataResponse.addProperty("success", false);
 			dataResponse.addProperty("message", e.getMessage());
 
-//			String created = null;
-			
-//			request.getRequestDispatcher("addAccount.html").include(request, response);
-//			out.println("<script>$('#add-account-failure').toast('show');</script>");
-
 		} finally {
 			out.print(dataResponse);
 		}
 
+	}
+
+	@Override
+	public void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		String reqOrigin = request.getHeader("Origin");
+		if (reqOrigin == null) {
+			reqOrigin = "*";
+		}
+		response.setHeader("Access-Control-Allow-Origin", reqOrigin);
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
 	}
 
 }

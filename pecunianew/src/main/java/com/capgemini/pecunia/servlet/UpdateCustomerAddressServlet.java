@@ -25,12 +25,6 @@ public class UpdateCustomerAddressServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-//		HttpSession session = request.getSession(false);
-//		if (session == null) {
-//		    // Session is not created.
-//			response.sendRedirect("session.html");
-//		}
-
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
 		response.setHeader("Access-Control-Allow-Origin", "*");
@@ -72,13 +66,7 @@ public class UpdateCustomerAddressServlet extends HttpServlet {
 		address.setZipcode(zipcode);
 
 		AccountManagementService ams = new AccountManagementServiceImpl();
-		response.setContentType("application/json");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-
-		response.setHeader("Access-Control-Allow-Headers",
-				"Content-Type, Authorization, Content-Length, X-Requested-With");
-		response.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD, PUT, POST");
-		boolean updated = false;
+				boolean updated = false;
 		try {
 			updated = ams.updateCustomerAddress(account, address);
 			if (updated) {
@@ -91,6 +79,21 @@ public class UpdateCustomerAddressServlet extends HttpServlet {
 		} finally {
 			out.print(dataResponse);
 		}
+	}
+
+	@Override
+	public void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		String reqOrigin = request.getHeader("Origin");
+		if (reqOrigin == null) {
+			reqOrigin = "*";
+		}
+		response.setHeader("Access-Control-Allow-Origin", reqOrigin);
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
 	}
 
 }

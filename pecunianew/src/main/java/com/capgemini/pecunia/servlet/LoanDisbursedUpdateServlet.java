@@ -16,7 +16,6 @@ import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.service.LoanDisbursalService;
 import com.capgemini.pecunia.service.LoanDisbursalServiceImpl;
 
-
 public class LoanDisbursedUpdateServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -5955186616558309852L;
@@ -27,21 +26,20 @@ public class LoanDisbursedUpdateServlet extends HttpServlet {
 		response.setContentType("text/html");
 		ArrayList<Loan> retrieveAccepted = new ArrayList<Loan>();
 		ArrayList<Loan> retrieveRejected = new ArrayList<Loan>();
-		
+
 		try {
 			retrieveAccepted = loanDisbursalService.approveLoanWithoutStatus();
 		} catch (PecuniaException | LoanDisbursalException e) {
-		
+
 			retrieveAccepted = null;
 		}
-		
+
 		try {
 			retrieveRejected = loanDisbursalService.rejectedLoanRequests();
 		} catch (PecuniaException | LoanDisbursalException e) {
 			retrieveRejected = null;
 		}
-		
-		
+
 		String res = request.getParameter("update-loan-status");
 		if (res.equals("Yes")) {
 			try {
@@ -49,19 +47,33 @@ public class LoanDisbursedUpdateServlet extends HttpServlet {
 				String msg = "Status has been updated";
 				request.getRequestDispatcher("loanDisbursal.html").include(request, response);
 				out.println("<script>");
-                out.println("$('#success-toast-body').html('" + msg + "');");
-                out.println("$('#loan-disbursal-success').toast('show');");
-                out.println("</script>");
+				out.println("$('#success-toast-body').html('" + msg + "');");
+				out.println("$('#loan-disbursal-success').toast('show');");
+				out.println("</script>");
 			} catch (PecuniaException | LoanDisbursalException e) {
 
-				
 				String msg = "Status been already updated";
 				request.getRequestDispatcher("loanDisbursal.html").include(request, response);
 				out.println("<script>");
-                out.println("$('#failure-toast-body').html('" + msg + "');");
-                out.println("$('#loan-disbursal-failure').toast('show');");
-                out.println("</script>");
+				out.println("$('#failure-toast-body').html('" + msg + "');");
+				out.println("$('#loan-disbursal-failure').toast('show');");
+				out.println("</script>");
 			}
 		}
+	}
+
+	@Override
+	public void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		String reqOrigin = request.getHeader("Origin");
+		if (reqOrigin == null) {
+			reqOrigin = "*";
+		}
+		response.setHeader("Access-Control-Allow-Origin", reqOrigin);
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
 	}
 }

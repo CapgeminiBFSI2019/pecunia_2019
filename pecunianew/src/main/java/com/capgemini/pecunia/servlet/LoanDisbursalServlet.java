@@ -47,10 +47,8 @@ public class LoanDisbursalServlet extends HttpServlet {
 				System.out.println("number of loan disbursal" + retrieveAll.size());
 				if (retrieveAll.size() > 0) {
 					for (Loan loanReqs : retrieveAll) {
-//						System.out.println("Value : "+gson.toJson(transaction, Transaction.class));
 						jsonArray.add(gson.toJson(loanReqs, Loan.class));
 					}
-					// System.out.println("jason array"+jsonArray);
 					dataResponse.addProperty("success", true);
 					dataResponse.add("data", jsonArray);
 				} else {
@@ -72,10 +70,8 @@ public class LoanDisbursalServlet extends HttpServlet {
 				System.out.println("number of loan disbursal" + retrieveAll.size());
 				if (retrieveAll.size() > 0) {
 					for (Loan loanReqs : retrieveAll) {
-//						System.out.println("Value : "+gson.toJson(transaction, Transaction.class));
 						jsonArray.add(gson.toJson(loanReqs, Loan.class));
 					}
-					// System.out.println("jason array"+jsonArray);
 					dataResponse.addProperty("success", true);
 					dataResponse.add("data", jsonArray);
 				} else {
@@ -89,8 +85,6 @@ public class LoanDisbursalServlet extends HttpServlet {
 				out.print(dataResponse);
 			}
 
-//			
-
 		}
 
 		if (s.equals("Show the loan requests to be rejected")) {
@@ -100,10 +94,8 @@ public class LoanDisbursalServlet extends HttpServlet {
 				System.out.println("number of loan disbursal" + retrieveAll.size());
 				if (retrieveAll.size() > 0) {
 					for (Loan loanReqs : retrieveAll) {
-//						System.out.println("Value : "+gson.toJson(transaction, Transaction.class));
 						jsonArray.add(gson.toJson(loanReqs, Loan.class));
 					}
-					// System.out.println("jason array"+jsonArray);
 					dataResponse.addProperty("success", true);
 					dataResponse.add("data", jsonArray);
 				} else {
@@ -123,8 +115,7 @@ public class LoanDisbursalServlet extends HttpServlet {
 			try {
 				dataResponse.addProperty("success", true);
 				dataResponse.addProperty("message", "Please choose an option");
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				dataResponse.addProperty("success", false);
 				dataResponse.addProperty("message", e.getMessage());
 			} finally {
@@ -132,6 +123,21 @@ public class LoanDisbursalServlet extends HttpServlet {
 			}
 		}
 
+	}
+
+	@Override
+	public void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		String reqOrigin = request.getHeader("Origin");
+		if (reqOrigin == null) {
+			reqOrigin = "*";
+		}
+		response.setHeader("Access-Control-Allow-Origin", reqOrigin);
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
 	}
 
 }
