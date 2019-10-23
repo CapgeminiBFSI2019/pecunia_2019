@@ -49,20 +49,6 @@ public class TransactionEntity {
 
 	}
 
-	public TransactionEntity(String accountId, String type, double amount, String option, LocalDateTime transDate,
-			int chequeId, String transFrom, String transTo, double closingBalance) {
-		super();
-		this.accountId = accountId;
-		this.type = type;
-		this.amount = amount;
-		this.option = option;
-		this.transDate = transDate;
-		this.chequeId = chequeId;
-		this.transFrom = transFrom;
-		this.transTo = transTo;
-		this.closingBalance = closingBalance;
-	}
-
 	public int getId() {
 		return id;
 	}
