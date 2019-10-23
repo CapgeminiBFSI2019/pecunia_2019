@@ -14,39 +14,53 @@ import javax.persistence.Table;
 @Table(name = "transaction")
 public class TransactionEntity {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "trans_id")
-    private int id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "trans_id")
+	private int id;
+
 	@Column(name = "account_id")
 	private String accountId;
-	
+
 	@Column(name = "type")
 	private String type;
-	
+
 	@Column(name = "amount")
 	private double amount;
-	
+
 	@Column(name = "trans_option")
 	private String option;
-	
+
 	@Column(name = "date")
 	private LocalDateTime transDate;
-	
+
 	@Column(name = "cheque_id")
 	private int chequeId;
-	
+
 	@Column(name = "trans_from")
 	private String transFrom;
-	
+
 	@Column(name = "trans_to")
 	private String transTo;
-	
+
 	@Column(name = "trans_closing_balance")
 	private double closingBalance;
-	
+
 	public TransactionEntity() {
-		
+
+	}
+
+	public TransactionEntity(String accountId, String type, double amount, String option, LocalDateTime transDate,
+			int chequeId, String transFrom, String transTo, double closingBalance) {
+		super();
+		this.accountId = accountId;
+		this.type = type;
+		this.amount = amount;
+		this.option = option;
+		this.transDate = transDate;
+		this.chequeId = chequeId;
+		this.transFrom = transFrom;
+		this.transTo = transTo;
+		this.closingBalance = closingBalance;
 	}
 
 	public int getId() {
@@ -128,6 +142,5 @@ public class TransactionEntity {
 	public void setClosingBalance(double closingBalance) {
 		this.closingBalance = closingBalance;
 	}
-	
-	
+
 }
