@@ -1,8 +1,12 @@
 package com.capgemini.pecunia.pl;
 
 import com.capgemini.pecunia.dto.Account;
+import com.capgemini.pecunia.dto.Customer;
+import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
+import com.capgemini.pecunia.hibernate.dao.AccountManagementDAO;
+import com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl;
 import com.capgemini.pecunia.hibernate.dao.TransactionDAOImpl;
 
 public class PecuniaMain {
@@ -19,6 +23,19 @@ public class PecuniaMain {
 			System.out.println(e.getMessage());
 		}
 		
+//		TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
+//		transactionDAOImpl.getBalance(null);
+//		
+		AccountManagementDAO accDAO = new AccountManagementDAOImpl();
+		Account account = new Account();
+		account.setId("100102000006");
+		Customer customer = new Customer();
+		customer.setName("Aditiii");
+		try {
+			accDAO.updateCustomerName(account, customer);
+		} catch (AccountException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 /*
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
