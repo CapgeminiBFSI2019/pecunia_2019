@@ -33,21 +33,26 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			System.out.println("session value : "+session);
-			String hql = "select customerId from AccountEntity where AccountEntity.accountId= :accountId";
+			String hql = "from AccountEntity where accountId= :accountId";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountId", account.getId());
 			query.setMaxResults(1);
-			custId = (String) query.uniqueResult();
-			System.out.println("Customer Id: "+custId);
-			String hqlUpdate = "UPDATE customer SET name=:name WHERE customerId=:customerId";
-			Query queryUpdate = session.createQuery(hqlUpdate);
-			queryUpdate.setParameter("name", customer.getName());
-			queryUpdate.setParameter("customerId", custId);
-			int rowsAffected = queryUpdate.executeUpdate();
-			System.out.println(rowsAffected);
-			if (rowsAffected > 0) {
-			    isUpdated=true;
+			AccountEntity accountEntity = (AccountEntity) query.uniqueResult();
+			if(accountEntity != null)
+			{
+				System.out.println("Customer id : "+accountEntity.getCustomerId());
 			}
+//			custId = (String) query.uniqueResult();
+			System.out.println("Customer Id: "+custId);
+//			String hqlUpdate = "UPDATE customer SET name=:name WHERE customerId=:customerId";
+//			Query queryUpdate = session.createQuery(hqlUpdate);
+//			queryUpdate.setParameter("name", customer.getName());
+//			queryUpdate.setParameter("customerId", custId);
+//			int rowsAffected = queryUpdate.executeUpdate();
+//			System.out.println(rowsAffected);
+//			if (rowsAffected > 0) {
+//			    isUpdated=true;
+//			}
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
