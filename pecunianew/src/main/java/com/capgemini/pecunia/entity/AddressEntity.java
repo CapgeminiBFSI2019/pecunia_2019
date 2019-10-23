@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "address")
-public class Address {
+public class AddressEntity {
 	
 		 @Id
 		    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class Address {
 		 @Column(name = "zipcode")
 		    private String zipcode;
 		 
-		public Address(String addressLine1, String addressLine2, String city, String state, String country,
+		public AddressEntity(String addressLine1, String addressLine2, String city, String state, String country,
 				String zipcode) {
 			super();
 			this.addressLine1 = addressLine1;
