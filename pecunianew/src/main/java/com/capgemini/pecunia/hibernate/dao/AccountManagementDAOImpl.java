@@ -79,7 +79,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	     cust.setName(customer.getName());
 	     cust.setGender(customer.getGender());
 	     cust.setContact(customer.getContact());
-//	     cust.setDob(customer.getDob());
+	     cust.setDob(customer.getDob());
 	     cust.setPan(customer.getPan());
 //	     cust.getAddressId();
 	  
@@ -108,15 +108,15 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	     acc.setBranchId(account.getBranchId());
 	     acc.setType(account.getAccountType());
 	     acc.setStatus(account.getStatus());
-//	     acc.setBalance(account.getBalance());
-//	     acc.setInterest(account.getInterest());
-//	    acc.setLastUpdated(account.getLastUpdated());
+	     acc.setBalance(account.getBalance());
+	     acc.setInterest(account.getInterest());
+	    acc.setLastUpdated(account.getLastUpdated());
 //	    acc.getAccountId();
 	      
-	     //Save the employee in database
+	     
 	     session.save(acc);
 
-	     //Commit the transaction
+	 
 	     session.getTransaction().commit();
 //	     HibernateUtil.shutdown();
 		return null;
