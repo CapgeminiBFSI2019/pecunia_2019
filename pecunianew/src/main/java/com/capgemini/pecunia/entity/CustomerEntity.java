@@ -1,26 +1,36 @@
 package com.capgemini.pecunia.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "customer")
 public class CustomerEntity {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "customer_id")
 	private int customerId;
-	public String getName() {
-		return name;
-	}
+	@Column(name = "name")
+	private String name;
+	@Column(name = "address_id")
+	private String addressId;
+	@Column(name = "aadhar")
+	private String aadhar;
+	@Column(name = "pan")
+	private String pan;
+	@Column(name = "contact")
+	private String contact;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	@Column(name = "gender")
+	private String gender;
 
-	public String getAddressId() {
-		return addressId;
-	}
+	@Column(name = "dob")
+	private String dob;
 
 	public CustomerEntity(String name, String addressId, String aadhar, String pan, String contact, String gender,
 			String dob) {
@@ -32,6 +42,18 @@ public class CustomerEntity {
 		this.contact = contact;
 		this.gender = gender;
 		this.dob = dob;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAddressId() {
+		return addressId;
 	}
 
 	public void setAddressId(String addressId) {
@@ -78,23 +100,4 @@ public class CustomerEntity {
 		this.dob = dob;
 	}
 
-	@Column(name = "name")
-	private String name;
-	@Column(name = "address_id")
-	private String addressId;
-	@Column(name = "aadhar")
-	private String aadhar;
-	@Column(name = "pan")
-	private String pan;
-	@Column(name = "contact")
-	private String contact;
-
-	@Column(name = "gender")
-	private String gender;
-
-	@Column(name = "dob")
-	private String dob;
-
 }
-
-

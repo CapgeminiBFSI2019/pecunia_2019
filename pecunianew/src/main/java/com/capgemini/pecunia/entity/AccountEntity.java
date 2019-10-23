@@ -1,9 +1,33 @@
 package com.capgemini.pecunia.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "account")
 public class AccountEntity {
+	@Id
+	@Column(name = "account_id")
+	private int accountId;
+	@Column(name = "customer_id")
+	private String customerId;
+	@Column(name = "branch_id")
+	private String branchId;
+	@Column(name = "type")
+	private String type;
+	@Column(name = "status")
+	private String status;
+	@Column(name = "balance")
+	private String balance;
+
+	@Column(name = "interest")
+	private String interest;
+
+	@Column(name = "last_updated")
+
+	private String lastUpdated;
 
 	public AccountEntity(String customerId, String branchId, String type, String status, String balance,
 			String interest, String lastUpdated) {
@@ -81,23 +105,4 @@ public class AccountEntity {
 		this.lastUpdated = lastUpdated;
 	}
 
-	@Id
-	@Column(name = "account_id")
-	private int accountId;
-	@Column(name = "customer_id")
-	private String customerId;
-	@Column(name = "branch_id")
-	private String branchId;
-	@Column(name = "type")
-	private String type;
-	@Column(name = "status")
-	private String status;
-	@Column(name = "balance")
-	private String balance;
-
-	@Column(name = "interest")
-	private String interest;
-
-	@Column(name = "last_updated")
-	private String lastUpdated;
 }
