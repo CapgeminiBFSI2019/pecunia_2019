@@ -106,6 +106,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 			if(txn != null) {
 				txn.rollback();
 			}
+			System.out.println("TransDAO Error :"+e.getMessage());
+			e.printStackTrace();
 			throw new PecuniaException(ErrorConstants.TRANSACTION_INSERTION_ERROR);
 		}
 		return transactionId;
