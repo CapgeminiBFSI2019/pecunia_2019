@@ -163,7 +163,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				System.out.println("Address ID: "+addrId);
 			}
 			Transaction txn = session.beginTransaction();
-			String hqlUpdate = "update AddressEntity set addressLine1=:line1, addressLine2=:line2, city=:city, state=:state,country=:country, zipcode=:zipcode where addressId=:addressId";
+			String hqlUpdate = "update AddressEntity set addressLine1=:line1, addressLine2=:line2, city=:city, state=:state,country=:country, zipcode=:zipcode where id=:addressId";
 			Query queryUpdate = session.createQuery(hqlUpdate);
 			queryUpdate.setParameter("addressId", addrId);
 			queryUpdate.setParameter("line1", address.getLine1());
