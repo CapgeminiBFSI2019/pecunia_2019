@@ -13,7 +13,7 @@ import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
 
 class PassbookMain{
 public static void main(String[] args) throws PecuniaException, PassbookException  {
-    updatePassbook(); 	
+    //updatePassbook(); 	
 	accountSummary();
 	}
 
@@ -63,7 +63,7 @@ public static void main(String[] args) throws PecuniaException, PassbookExceptio
 		PassbookMaintenanceService accountSummaryService = new PassbookMaintenanceServiceImpl();
 
 		System.out.println("Enter accountId:");
-		String accountId1 = obj.nextLine();
+		String accountId = obj.nextLine();
 
 		System.out.println("Enter start date:");
 		String sdate1 = obj.nextLine();
@@ -71,12 +71,12 @@ public static void main(String[] args) throws PecuniaException, PassbookExceptio
 		System.out.println("Enter end date:");
 		String sdate2 = obj.nextLine();
 
-		LocalDate date1 = LocalDate.parse(sdate1);
-		LocalDate date2 = LocalDate.parse(sdate2);
+	LocalDate startDate = LocalDate.parse(sdate1);
+	LocalDate endDate = LocalDate.parse(sdate2);
 
 		List<Transaction> accountSummary = new ArrayList<Transaction>();
 		try {
-			accountSummary = accountSummaryService.accountSummary(accountId1, date1, date2);
+			accountSummary = accountSummaryService.accountSummary(accountId, startDate, endDate);
 				for (int index = 0; index < accountSummary.size(); index++) {
 					System.out.print(accountSummary.get(index).getId() + "\t");
 					System.out.print(accountSummary.get(index).getTransDate() + "\t");

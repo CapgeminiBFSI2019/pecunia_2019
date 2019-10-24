@@ -1,6 +1,7 @@
 package com.capgemini.pecunia.hibernate.dao;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.entity.LoanRequestEntity;
@@ -19,6 +20,8 @@ public class LoanDAOImpl implements LoanDAO {
 		org.hibernate.Transaction txn = null;
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
+			//begin here
+			 txn = session.beginTransaction();
 			LoanRequestEntity loanRequestEntity = new LoanRequestEntity();
 			loanRequestEntity.setAccountId(loan.getAccountId());
 			loanRequestEntity.setAmount(loan.getAmount());

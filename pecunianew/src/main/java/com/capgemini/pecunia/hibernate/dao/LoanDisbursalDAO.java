@@ -12,6 +12,10 @@ import com.capgemini.pecunia.exception.PecuniaException;
 
 public interface LoanDisbursalDAO {
 	public List<Loan> retrieveLoanList() throws IOException, PecuniaException, LoanDisbursalException;
+	
+	public List<Loan> retrieveAcceptedLoanList() throws IOException, PecuniaException, LoanDisbursalException;
+	
+	public List<Loan> retrieveRejectedLoanList() throws IOException, PecuniaException, LoanDisbursalException;
 
 	public void releaseLoanSheet(ArrayList<Loan> loanList) throws IOException, PecuniaException;
 
@@ -21,13 +25,13 @@ public interface LoanDisbursalDAO {
 			String accountId) throws IOException, PecuniaException;
 
 	public void updateStatus(ArrayList<Loan> loanRequests, int loanID, String Status)
-			throws IOException, PecuniaException;
+			throws IOException, PecuniaException, LoanDisbursalException;
 
 	public double totalEmi(String accountId) throws PecuniaException;
 	
 	public List<Loan> retrieveAcceptedLoanListWithoutStatus() throws IOException, PecuniaException;
 	
-	public ArrayList<String> uniqueIds() throws IOException, PecuniaException;
+	public ArrayList<String> uniqueIds() throws IOException, PecuniaException, LoanDisbursalException;
 	
 
 }
