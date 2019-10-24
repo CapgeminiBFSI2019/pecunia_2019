@@ -11,6 +11,7 @@ import java.util.List;
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
 import com.capgemini.pecunia.exception.LoanDisbursalException;
+import com.capgemini.pecunia.exception.LoanException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.hibernate.dao.LoanDisbursalDAOImplHibernate;
@@ -24,13 +25,14 @@ import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.hibernate.dao.AccountManagementDAO;
 import com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl;
+import com.capgemini.pecunia.hibernate.dao.LoanDAOImpl;
 import com.capgemini.pecunia.hibernate.dao.TransactionDAOImpl;
 import com.capgemini.pecunia.service.AccountManagementService;
 import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 
 public class PecuniaMain {
 
-	public static void main(String[] args) throws PecuniaException, TransactionException, IOException, LoanDisbursalException, AccountException, SQLException {
+	public static void main(String[] args) throws PecuniaException, TransactionException, IOException, LoanDisbursalException, AccountException, SQLException, LoanException {
 //		try {
 //			TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
 //			Account account = new Account();
@@ -45,6 +47,7 @@ public class PecuniaMain {
 //		TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
 //		transactionDAOImpl.getBalance(null);
 ////		
+
 		AccountManagementService accService = new AccountManagementServiceImpl();
 		Account account = new Account();
 		Customer customer = new Customer();
@@ -55,6 +58,36 @@ public class PecuniaMain {
 		} catch (AccountException e) {
 			System.out.println(e.getMessage());
 		}
+
+
+		//AccountManagementService accService = new AccountManagementServiceImpl();
+//		LoanDAOImpl loanDaoImpl=new LoanDAOImpl();
+//		Loan loan=new Loan();
+//		loan.setAccountId("100101000008");
+//		loan.setAmount(5001);
+//		loan.setCreditScore(600);
+//		loan.setRoi(9.6);
+//		loan.setTenure(36);
+//		loan.setType("House Loan");
+//		loan.setLoanStatus("Pending");
+//		loan.setEmi(896.00);
+//		loan.setLoanId(105);
+//		int loanId = loanDaoImpl.addLoanDetails(loan);
+//		System.out.println(loanId);
+//			System.out.println("Loan request added successfully.");
+
+//		AccountManagementService accService = new AccountManagementServiceImpl();
+
+//		Account account = new Account();
+//		Customer customer = new Customer();
+//		account.setId("100303000001");
+//		customer.setName("Jordi bhaiYYA");
+//		try {
+//			accService.updateCustomerName(account, customer);
+//		} catch (AccountException e) {
+//			System.out.println(e.getMessage());
+//		}
+
 		
 //		Address address = new Address();
 //		address.setLine1("Near sangam");
