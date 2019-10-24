@@ -82,7 +82,6 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 		return isUpdated;
 	}
 
-	@Override
 	public List<com.capgemini.pecunia.dto.Transaction> accountSummary(String accountId, LocalDate startDate, LocalDate endDate)
 			throws PassbookException, PecuniaException {
 		ArrayList<com.capgemini.pecunia.dto.Transaction> transList = new ArrayList<>();
@@ -91,9 +90,9 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			String hql = "from TransactionEntity where accountId= :accountId AND date BETWEEN :startDate and :endDate";
 			Query<TransactionEntity> query = session.createQuery(hql);
-			query.setParameter("accountId", accountId);
-			query.setParameter("startDate", startDate);
-			query.setParameter("endDate", endDate);
+ 			query.setParameter("accountId", accountId);
+			query.setParameter("startDate", java.sql.Date.valueOf(startDate));
+			query.setParameter("endDate", java.sql.Date.valueOf(endDate));
 			List<TransactionEntity> results = (List<TransactionEntity>)query.list();
 			System.out.println(results);
             System.out.println("****************");
@@ -128,5 +127,9 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 		return transList;
 		
 	}
+
+
+	
+	
 
 }
