@@ -314,16 +314,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		return isValidated;
 	}
 
-	@Override
-	public void addAccountError(Account account) throws PecuniaException, SQLException, AccountException {
-		// TODO Auto-generated method stub
 
-	}
 
-//	@Override
-////	public void addAccountError(Account account) throws PecuniaException, SQLException, AccountException {
-////		// TODO Auto-generated method stub
-////
-////	}
 
 }

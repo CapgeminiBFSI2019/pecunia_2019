@@ -5,7 +5,7 @@ public class ErrorConstants {
 	public static final String TECH_ERROR = "Technical problem occured.";
 
 	public static final String UPDATE_PASSBOOK_ERROR = "Passbook not updated. There is some technical error.";
-
+	
 	public static final String DB_CONNECTION_ERROR = "Error in closing database connection.";
 
 	public static final String UPDATE_ACCOUNT_ERROR = "Update unsuccessful.";
@@ -22,6 +22,7 @@ public class ErrorConstants {
 	public static final String NO_SUCH_ACCOUNT = "Account doesn't exist.";
 	public static final String CLOSED_ACCOUNT = "Account already closed";
 	public static final String ERROR_VALIDATION = "Error in validating account";
+	public static final String ACCOUNT_CLOSED = "Account already closed. Cannot perform any operation";
 	public static final String ADD_DETAILS_ERROR = "Addition unsuccessful.";
 
 	public static final String BALANCE_RETRIEVAL_ERROR = "Failed to retrieve balance";
@@ -40,7 +41,7 @@ public class ErrorConstants {
 	public static final String INSUFFICIENT_BALANCE_EXCEPTION = "Insufficient balance";
 	public static final String CHEQUE_BOUNCE_EXCEPTION = "Cheque bounce due to insufficient balance";
 	public static final String TRANSACTION_AMOUNT_ERROR = "The transaction could not take place";
-	public static final String AMOUNT_EXCEEDS_EXCEPTION = "Credit amount exceeds the maximum amount";
-	public static final String AMOUNT_LESS_EXCEPTION = "Credit amount is less than the minimum amount";
+	public static final String AMOUNT_EXCEEDS_EXCEPTION = "Maximum amount is 100000";
+	public static final String AMOUNT_LESS_EXCEPTION = "Minimum amount is 100";
 
 }
