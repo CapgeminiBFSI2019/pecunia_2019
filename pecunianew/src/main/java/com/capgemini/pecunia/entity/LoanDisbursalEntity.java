@@ -8,12 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Loan Disbursal")
+@Table(name = "loan_disbursal")
 
 public class LoanDisbursalEntity {
 	
 	 @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	 @Column(name = "loan_disbursal_id")
 	private int loanDisbursalId;	 
 	 @Column(name = "loan_id")
@@ -85,7 +85,9 @@ public class LoanDisbursalEntity {
 		this.loanType = loanType;
 	}
 	
-	
+	public LoanDisbursalEntity() {
+		
+	}
 	
 
 }

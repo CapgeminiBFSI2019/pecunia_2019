@@ -39,9 +39,9 @@ public class LoanServiceImpl implements LoanService {
 	 ********************************************************************************************************/
 
 	public int createLoanRequest(Loan loan) throws LoanException {
-		boolean isRequestSuccess = false;
+		
 		boolean isValidAccount = false;
-		LoanDAO loanDao = new LoanDAOImpl();
+		com.capgemini.pecunia.hibernate.dao.LoanDAO loanDao = new com.capgemini.pecunia.hibernate.dao.LoanDAOImpl();
 		int loanId=0;
 		try {
 			Account account = new Account();

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 public class LoanRequestEntity {
 
-		@Id
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "loan_Id")
 	private int loanId;
