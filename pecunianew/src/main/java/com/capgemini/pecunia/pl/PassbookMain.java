@@ -14,7 +14,7 @@ import com.capgemini.pecunia.service.PassbookMaintenanceServiceImpl;
 class PassbookMain{
 public static void main(String[] args) throws PecuniaException, PassbookException  {
     updatePassbook(); 	
-	accountSummary();
+	//10accountSummary();
 	}
 
 	public static void updatePassbook()
