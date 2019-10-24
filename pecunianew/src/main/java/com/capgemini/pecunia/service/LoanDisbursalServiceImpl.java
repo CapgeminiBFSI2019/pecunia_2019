@@ -63,7 +63,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 ********************************************************************************************************/
 
 	public ArrayList<Loan> approveLoan() throws IOException, PecuniaException, LoanDisbursalException {
-		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
+		LoanDisbursalDAOImplHibernate loanDisbursedDAO = new LoanDisbursalDAOImplHibernate();
 		ArrayList<Loan> acceptedLoanRequests = new ArrayList<Loan>();
 		acceptedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveAcceptedLoanList();
 		if (acceptedLoanRequests.size() == 0) {
@@ -90,7 +90,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 ********************************************************************************************************/
 
 	public ArrayList<Loan> approveLoanWithoutStatus() throws IOException, PecuniaException, LoanDisbursalException {
-		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
+		LoanDisbursalDAOImplHibernate loanDisbursedDAO = new LoanDisbursalDAOImplHibernate();
 		ArrayList<Loan> acceptedLoanRequests = new ArrayList<Loan>();
 		acceptedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveAcceptedLoanListWithoutStatus();
 		if (acceptedLoanRequests.size() == 0) {
@@ -113,7 +113,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	 ********************************************************************************************************/
 
 	public ArrayList<LoanDisbursal> approvedLoanList() throws IOException, PecuniaException, LoanDisbursalException {
-		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
+		LoanDisbursalDAOImplHibernate loanDisbursedDAO = new LoanDisbursalDAOImplHibernate();
 
 		approvedLoanList = loanDisbursedDAO.loanApprovedList();
 		if(approvedLoanList.size() == 0) {
@@ -136,7 +136,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	public ArrayList<Loan> rejectedLoanRequests() throws PecuniaException, LoanDisbursalException, IOException {
 
-		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
+		LoanDisbursalDAOImplHibernate loanDisbursedDAO = new LoanDisbursalDAOImplHibernate();
 		ArrayList<Loan> rejectedLoanRequests = new ArrayList<Loan>();
 		rejectedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveRejectedLoanList();
 		if (rejectedLoanRequests.size() == 0) {

@@ -44,7 +44,6 @@ public class LoanDisbursalServlet extends HttpServlet {
 		if (s.equals("Retrieve all loan requests")) {
 			try {
 				retrieveAll = loanDisbursalService.retrieveAll();
-				System.out.println("number of loan disbursal" + retrieveAll.size());
 				if (retrieveAll.size() > 0) {
 					for (Loan loanReqs : retrieveAll) {
 						jsonArray.add(gson.toJson(loanReqs, Loan.class));
