@@ -233,8 +233,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 			return accountId;
 		} catch (Exception e) {
 			logger.error(ErrorConstants.ACCOUNT_CREATION_ERROR);
-//			System.out.println(e.getMessage());
-//			e.printStackTrace();
+
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		}
 	}
@@ -248,7 +247,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 		accountRequested = accountDAO.showAccountDetails(account);
 		}
 		catch(AccountException|PecuniaException e){
-//			System.out.println(e.getMessage());
+
 			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 		}
 		return accountRequested;
