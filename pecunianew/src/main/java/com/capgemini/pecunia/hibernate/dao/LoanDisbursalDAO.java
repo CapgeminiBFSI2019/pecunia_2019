@@ -6,10 +6,12 @@ import java.util.List;
 
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
+import com.capgemini.pecunia.entity.LoanRequestEntity;
+import com.capgemini.pecunia.exception.LoanDisbursalException;
 import com.capgemini.pecunia.exception.PecuniaException;
 
 public interface LoanDisbursalDAO {
-	public List<Loan> retrieveLoanList() throws IOException, PecuniaException;
+	public List<Loan> retrieveLoanList() throws IOException, PecuniaException, LoanDisbursalException;
 
 	public void releaseLoanSheet(ArrayList<Loan> loanList) throws IOException, PecuniaException;
 

@@ -1,6 +1,7 @@
 package com.capgemini.pecunia.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
@@ -88,6 +89,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 			double amount = transaction.getAmount();
 
+			LocalDateTime transDate = LocalDateTime.now();
 			Account account = new Account();
 			account.setId(accId);
 			double oldBalance = transactionDAO.getBalance(account);
@@ -104,6 +106,7 @@ public class TransactionServiceImpl implements TransactionService {
 					transaction.setOption(Constants.TRANSACTION_OPTION_SLIP);
 					transaction.setTransTo(Constants.NA);
 					transaction.setTransFrom(Constants.NA);
+					transaction.setTransDate(transDate);
 					transId = transactionDAO.generateTransactionId(transaction);
 
 				}
@@ -149,7 +152,7 @@ public class TransactionServiceImpl implements TransactionService {
 			transactionDAO = new TransactionDAOImpl();
 			String accId = transaction.getAccountId();
 			double amount = transaction.getAmount();
-			LocalDate transDate = transaction.getTransDate();
+			LocalDateTime transDate = LocalDateTime.now();
 			Account account = new Account();
 			account.setId(accId);
 			double oldBalance = transactionDAO.getBalance(account);
@@ -207,7 +210,7 @@ public class TransactionServiceImpl implements TransactionService {
 			transactionDAO = new TransactionDAOImpl();
 			String accId = transaction.getAccountId();
 			double amount = transaction.getAmount();
-			LocalDate transDate = LocalDate.now();
+			LocalDateTime transDate = LocalDateTime.now();
 			LocalDate chequeissueDate = cheque.getIssueDate();
 			Account account = new Account();
 			account.setId(accId);
