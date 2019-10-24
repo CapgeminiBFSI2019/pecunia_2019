@@ -1,6 +1,7 @@
 package com.capgemini.pecunia.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Transaction {
 	private String id;
@@ -8,7 +9,7 @@ public class Transaction {
 	private String type;
 	private Double amount;
 	private String option;
-	private LocalDate transDate;
+	private LocalDateTime transDate;
 	private int chequeId;
 	private String transFrom;
 	private String transTo;
@@ -54,11 +55,11 @@ public class Transaction {
 		this.option = option;
 	}
 
-	public LocalDate getTransDate() {
+	public LocalDateTime getTransDate() {
 		return transDate;
 	}
 
-	public void setTransDate(LocalDate transDate) {
+	public void setTransDate(LocalDateTime transDate) {
 		this.transDate = transDate;
 	}
 
@@ -94,7 +95,7 @@ public class Transaction {
 		this.closingBalance = closingBalance;
 	}
 
-	public Transaction(String id, String accountId, String type, Double amount, String option, LocalDate transDate,
+	public Transaction(String id, String accountId, String type, Double amount, String option, LocalDateTime transDate,
 			int chequeId, String transFrom, String transTo, Double closingBalance) {
 		super();
 		this.id = id;
