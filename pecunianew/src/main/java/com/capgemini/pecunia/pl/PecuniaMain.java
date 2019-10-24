@@ -47,6 +47,7 @@ public class PecuniaMain {
 //		TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
 //		transactionDAOImpl.getBalance(null);
 ////		
+
 		//AccountManagementService accService = new AccountManagementServiceImpl();
 //		LoanDAOImpl loanDaoImpl=new LoanDAOImpl();
 //		Loan loan=new Loan();
@@ -62,11 +63,13 @@ public class PecuniaMain {
 //		int loanId = loanDaoImpl.addLoanDetails(loan);
 //		System.out.println(loanId);
 //			System.out.println("Loan request added successfully.");
-		
+
+//		AccountManagementService accService = new AccountManagementServiceImpl();
+
 //		Account account = new Account();
 //		Customer customer = new Customer();
 //		account.setId("100303000001");
-//		customer.setName("Jordi bhai");
+//		customer.setName("Jordi bhaiYYA");
 //		try {
 //			accService.updateCustomerName(account, customer);
 //		} catch (AccountException e) {
