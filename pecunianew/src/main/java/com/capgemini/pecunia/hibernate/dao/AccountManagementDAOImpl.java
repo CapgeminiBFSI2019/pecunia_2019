@@ -84,9 +84,9 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	     cust.setName(customer.getName());
 	     cust.setGender(customer.getGender());
 	     cust.setContact(customer.getContact());
-	     cust.setDob(customer.getDob());
+//	     cust.setDob(customer.getDob());
 	     cust.setPan(customer.getPan());
-//	     cust.getAddressId();
+
 	  
 	     addr.setAddressLine1(address.getLine1());
 	     addr.setAddressLine2(address.getLine2());
@@ -97,7 +97,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 	     session.save(cust);
 	     session.save(addr);
 	     session.getTransaction().commit();
-//	     HibernateUtil.shutdown();
+
 		return null;
 	}
 
@@ -106,8 +106,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 	     session.beginTransaction();
 	     
-	     //Add new Employee object
-	     AccountEntity acc = new  AccountEntity(null, null, null, null, null, null, null);
+	     AccountEntity acc = new  AccountEntity();
 
 	     acc.setCustomerId(account.getHolderId());
 	     acc.setBranchId(account.getBranchId());
@@ -123,11 +122,20 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	 
 	     session.getTransaction().commit();
-//	     HibernateUtil.shutdown();
+
 		return null;
 	 }
 	
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public String calculateAccountId(Account account) throws PecuniaException, AccountException {
 		// TODO Auto-generated method stub
