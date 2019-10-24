@@ -18,13 +18,13 @@ import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.HibernateUtil;
 
 public class TransactionDAOImpl implements TransactionDAO {
-	
+
 	@Override
 	public double getBalance(Account account) throws PecuniaException, TransactionException {
-		
+
 		double accountBalance = -1;
 		org.hibernate.Transaction transaction = null;
-		try{
+		try {
 			String accountId = account.getId();
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			transaction = session.beginTransaction();
@@ -33,16 +33,15 @@ public class TransactionDAOImpl implements TransactionDAO {
 			query.setParameter("accountId", accountId);
 			query.setMaxResults(1);
 			AccountEntity accountEntity = (AccountEntity) query.uniqueResult();
-			if(accountEntity != null) {
+			if (accountEntity != null) {
 				accountBalance = accountEntity.getBalance();
-			}
-			else {
+			} else {
 				throw new PecuniaException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
-			
+
 			transaction.commit();
-		}
-		catch(Exception e) {
+			session.close();
+		} catch (Exception e) {
 			throw new PecuniaException(e.getMessage());
 		}
 		return accountBalance;
