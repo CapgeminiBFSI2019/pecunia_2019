@@ -5,7 +5,7 @@ public class ErrorConstants {
 	public static final String TECH_ERROR = "Technical problem occured.";
 
 	public static final String UPDATE_PASSBOOK_ERROR = "Passbook not updated. There is some technical error.";
-
+	
 	public static final String DB_CONNECTION_ERROR = "Error in closing database connection.";
 
 	public static final String UPDATE_ACCOUNT_ERROR = "Update unsuccessful.";
@@ -20,6 +20,7 @@ public class ErrorConstants {
 	public static final String FETCH_ERROR = "Error in fetching account Id";
 
 	public static final String NO_SUCH_ACCOUNT = "Account doesn't exist.";
+	public static final String CLOSED_ACCOUNT = "Account already closed";
 	public static final String ERROR_VALIDATION = "Error in validating account";
 	public static final String ACCOUNT_CLOSED = "Account already closed. Cannot perform any operation";
 	public static final String ADD_DETAILS_ERROR = "Addition unsuccessful.";
