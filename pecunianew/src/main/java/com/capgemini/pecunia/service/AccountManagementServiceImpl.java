@@ -66,11 +66,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 				accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
 				isUpdated = accountDAO.updateCustomerName(account, customer);
 			} else {
-				throw new AccountException(ErrorConstants.INVALID_ACCOUNT_EXCEPTION);
+				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
 
 		} catch (Exception e) {
-			logger.error(ErrorConstants.NO_SUCH_ACCOUNT);
+			logger.error(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 			throw new AccountException(e.getMessage());
 		}
 		return isUpdated;
@@ -184,18 +184,13 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 		accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
 		doesExist = accountDAO.validateAccountId(account);
 		if(doesExist) {
-			System.out.println("Account exists");
 			AccountManagementService ams = new AccountManagementServiceImpl();
 			try {
-				System.out.println("in try block");
 				Account validAccount = ams.showAccountDetails(account);
-				System.out.println(validAccount.getStatus());
 				if("Active"==validAccount.getStatus()) {
-					System.out.println("Active account");
 					isValidated = true;
 				}
 				else {
-					System.out.println("Account closed. No operation can be performed.");
 					throw new AccountException(ErrorConstants.ACCOUNT_CLOSED);
 				}
 			}catch(Exception e) {
