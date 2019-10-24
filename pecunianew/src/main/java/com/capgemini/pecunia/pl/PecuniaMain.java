@@ -58,8 +58,8 @@ public class PecuniaMain {
 //		loan.setTenure(36);
 //		loan.setType("House Loan");
 //		loan.setLoanStatus("Pending");
-//		loan.setEmi(896.00);
-//		loan.setLoanId(105);
+//		//loan.setEmi(896.00);
+//		//loan.setLoanId(105);
 //		int loanId = loanDaoImpl.addLoanDetails(loan);
 //		System.out.println(loanId);
 //			System.out.println("Loan request added successfully.");
