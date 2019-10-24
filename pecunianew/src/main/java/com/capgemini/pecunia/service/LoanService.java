@@ -8,7 +8,7 @@ public interface LoanService {
 	
 
 	
-	public boolean createLoanRequest(Loan loan) throws LoanException;
+	public int createLoanRequest(Loan loan) throws LoanException;
 
 
 

@@ -1,7 +1,5 @@
 package com.capgemini.pecunia.service;
 
-import com.capgemini.pecunia.dao.AccountManagementDAO;
-import com.capgemini.pecunia.dao.AccountManagementDAOImpl;
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Address;
 import com.capgemini.pecunia.dto.Customer;
@@ -12,16 +10,14 @@ import com.capgemini.pecunia.util.Constants;
 
 public class AccountManagementServiceImpl implements AccountManagementService {
 
-	AccountManagementDAO accountDAO;
+	com.capgemini.pecunia.hibernate.dao.AccountManagementDAO accountDAO;
 
 	/*******************************************************************************************************
-	 * - Function Name : deleteAccount(Account account) 
-	 * - Input Parameters : Account account 
-	 * - Return Type : boolean 
-	 * - Throws : AccountException 
-	 * - Author : Rohit Kumar 
-	 * - Creation Date : 24/09/2019 
-	 * - Description : Deleting an account by setting account status "Closed"
+	 * - Function Name : deleteAccount(Account account) - Input Parameters : Account
+	 * account - Return Type : boolean - Throws : AccountException - Author : Rohit
+	 * Kumar - Creation Date : 24/09/2019 - Description : Deleting an account by
+	 * setting account status "Closed"
+	 * 
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
@@ -31,7 +27,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 
 			boolean isValidated = validateAccountId(account);
 			if (isValidated) {
-				accountDAO = new AccountManagementDAOImpl();
+				accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
 				isUpdated = accountDAO.deleteAccount(account);
 			} else {
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
@@ -43,13 +39,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : updateCustomerName(Account account, Customer customer) 
-	 * - Input Parameters : Account account, Customer customer 
-	 * - Return Type : boolean 
-	 * - Throws : AccountException 
-	 * - Author : Aditi Singh 
-	 * - Creation Date : 24/09/2019 -
-	 * Description : Updating customer name
+	 * - Function Name : updateCustomerName(Account account, Customer customer) -
+	 * Input Parameters : Account account, Customer customer - Return Type : boolean
+	 * - Throws : AccountException - Author : Aditi Singh - Creation Date :
+	 * 24/09/2019 - Description : Updating customer name
+	 * 
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
@@ -59,7 +53,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 
 			boolean isValidated = validateAccountId(account);
 			if (isValidated) {
-				accountDAO = new AccountManagementDAOImpl();
+				accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
 				isUpdated = accountDAO.updateCustomerName(account, customer);
 			} else {
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
@@ -72,13 +66,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : updateCustomerContact(Account account, Customer customer) 
-	 * - Input Parameters : Account account, Customer customer 
-	 * - Return Type : boolean 
-	 * - Throws : AccountException 
-	 * - Author : Aditi Singh 
-	 * - Creation Date : 24/09/2019 -
-	 * Description : Updating customer contact
+	 * - Function Name : updateCustomerContact(Account account, Customer customer) -
+	 * Input Parameters : Account account, Customer customer - Return Type : boolean
+	 * - Throws : AccountException - Author : Aditi Singh - Creation Date :
+	 * 24/09/2019 - Description : Updating customer contact
+	 * 
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
@@ -88,7 +80,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 
 			boolean isValidated = validateAccountId(account);
 			if (isValidated) {
-				accountDAO = new AccountManagementDAOImpl();
+				accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
 				isUpdated = accountDAO.updateCustomerContact(account, customer);
 			} else {
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
@@ -100,13 +92,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : updateCustomerName(Account account, Address address) 
-	 * - Input Parameters : Account account, Address address 
-	 * - Return Type : boolean 
-	 * - Throws : AccountException 
-	 * - Author : Aditi Singh 
-	 * - Creation Date : 24/09/2019 -
-	 * Description : Updating customer address
+	 * - Function Name : updateCustomerName(Account account, Address address) -
+	 * Input Parameters : Account account, Address address - Return Type : boolean -
+	 * Throws : AccountException - Author : Aditi Singh - Creation Date : 24/09/2019
+	 * - Description : Updating customer address
+	 * 
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
@@ -116,7 +106,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 		try {
 			boolean isValidated = validateAccountId(account);
 			if (isValidated) {
-				accountDAO = new AccountManagementDAOImpl();
+				accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
 				isUpdated = accountDAO.updateCustomerAddress(account, address);
 			} else {
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
@@ -128,13 +118,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : calculateAccountId(Account account)  
-	 * - Input Parameters : Account account 
-	 * - Return Type : String 
-	 * - Throws : AccountException 
-	 * - Author : Aditi Singh 
-	 * - Creation Date : 24/09/2019 
-	 * - Description : Generation of a new account ID with the given branch ID and type of Account
+	 * - Function Name : calculateAccountId(Account account) - Input Parameters :
+	 * Account account - Return Type : String - Throws : AccountException - Author :
+	 * Aditi Singh - Creation Date : 24/09/2019 - Description : Generation of a new
+	 * account ID with the given branch ID and type of Account
+	 * 
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
@@ -157,7 +145,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 				id = id.concat(Constants.CODE_LOAN);
 				break;
 			}
-			accountDAO = new AccountManagementDAOImpl();
+			accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
 			account.setId(id);
 			id = accountDAO.calculateAccountId(account);
 			return id;
@@ -168,38 +156,35 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : validateAccountId(Account account) 
-	 * - Input Parameters : Account account 
-	 * - Return Type : double 
-	 * - Throws : AccountException 
-	 * - Author : Aditi Singh 
-	 * - Creation Date : 24/09/2019 
-	 * - Description : Validation of Account ID
+	 * - Function Name : validateAccountId(Account account) - Input Parameters :
+	 * Account account - Return Type : double - Throws : AccountException - Author :
+	 * Aditi Singh - Creation Date : 24/09/2019 - Description : Validation of
+	 * Account ID
+	 * 
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
 	public boolean validateAccountId(Account account) throws PecuniaException, AccountException {
 		boolean isValidated = false;
-		accountDAO = new AccountManagementDAOImpl();
+		accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
 		isValidated = accountDAO.validateAccountId(account);
 
 		return isValidated;
 	}
 
 	/*******************************************************************************************************
-	 * - Function Name : addAccount(Customer customer, Address address,Account account) 
-	 * - Input Parameters : Customer customer, Address address,Account account 
-	 * - Return Type : String 
-	 * - Throws : AccountException 
-	 * - Author : Vidushi Razdan 
-	 * - Creation Date : 24/09/2019 
-	 * - Description : Addition of new Account
+	 * - Function Name : addAccount(Customer customer, Address address,Account
+	 * account) - Input Parameters : Customer customer, Address address,Account
+	 * account - Return Type : String - Throws : AccountException - Author : Vidushi
+	 * Razdan - Creation Date : 24/09/2019 - Description : Addition of new Account
+	 * 
 	 * @throws PecuniaException
 	 ********************************************************************************************************/
 
-	public String addAccount(Customer customer, Address address, Account account) throws PecuniaException, AccountException {
+	public String addAccount(Customer customer, Address address, Account account)
+			throws PecuniaException, AccountException {
 		try {
-			accountDAO = new AccountManagementDAOImpl();
+			accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
 			String custId = accountDAO.addCustomerDetails(customer, address);
 			account.setHolderId(custId);
 			String accountId = calculateAccountId(account);
@@ -210,7 +195,6 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 			}
 			return accountId;
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		}
 	}
