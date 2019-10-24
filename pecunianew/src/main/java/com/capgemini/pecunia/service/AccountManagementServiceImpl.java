@@ -1,5 +1,7 @@
 package com.capgemini.pecunia.service;
 
+import java.time.LocalDateTime;
+
 import org.apache.log4j.Logger;
 
 import com.capgemini.pecunia.dto.Account;
@@ -8,6 +10,8 @@ import com.capgemini.pecunia.dto.Customer;
 import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.PecuniaException;
+import com.capgemini.pecunia.hibernate.dao.AccountManagementDAO;
+import com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl;
 import com.capgemini.pecunia.util.Constants;
 
 public class AccountManagementServiceImpl implements AccountManagementService {
@@ -68,7 +72,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 			}
 
 		} catch (Exception e) {
-			logger.error(ErrorConstants.NO_SUCH_ACCOUNT);
+			logger.error(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 			throw new AccountException(e.getMessage());
 		}
 		return isUpdated;
@@ -178,9 +182,24 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 
 	public boolean validateAccountId(Account account) throws PecuniaException, AccountException {
 		boolean isValidated = false;
+		boolean doesExist = false;
 		accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
-		isValidated = accountDAO.validateAccountId(account);
-
+		doesExist = accountDAO.validateAccountId(account);
+		if(doesExist) {
+			AccountManagementService ams = new AccountManagementServiceImpl();
+			try {
+				Account validAccount = ams.showAccountDetails(account);
+				if("Active"==validAccount.getStatus()) {
+					isValidated = true;
+				}
+				else {
+					throw new AccountException(ErrorConstants.ACCOUNT_CLOSED);
+				}
+			}catch(Exception e) {
+				throw new AccountException(e.getMessage());
+			}
+			
+		}
 		return isValidated;
 	}
 
@@ -201,6 +220,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 			account.setHolderId(custId);
 			String accountId = calculateAccountId(account);
 			account.setId(accountId);
+			account.setLastUpdated(LocalDateTime.now());
 			String createdId = accountDAO.addAccount(account);
 			if (createdId == null) {
 				throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
@@ -208,6 +228,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 			return accountId;
 		} catch (Exception e) {
 			logger.error(ErrorConstants.ACCOUNT_CREATION_ERROR);
+
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		}
 	}
@@ -221,7 +242,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 		accountRequested = accountDAO.showAccountDetails(account);
 		}
 		catch(AccountException|PecuniaException e){
-			System.out.println(e.getMessage());
+
 			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 		}
 		return accountRequested;
