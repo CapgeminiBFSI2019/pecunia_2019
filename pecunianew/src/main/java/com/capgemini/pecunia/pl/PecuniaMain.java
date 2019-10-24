@@ -1,5 +1,9 @@
 package com.capgemini.pecunia.pl;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +19,7 @@ import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Address;
 import com.capgemini.pecunia.dto.Customer;
 import com.capgemini.pecunia.exception.AccountException;
+import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.hibernate.dao.AccountManagementDAO;
@@ -23,7 +28,7 @@ import com.capgemini.pecunia.hibernate.dao.TransactionDAOImpl;
 
 public class PecuniaMain {
 
-	public static void main(String[] args) throws PecuniaException, TransactionException {
+	public static void main(String[] args) throws PecuniaException, TransactionException, IOException, LoanDisbursalException, AccountException, SQLException {
 //		try {
 //			TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
 //			Account account = new Account();
@@ -38,21 +43,63 @@ public class PecuniaMain {
 //		TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
 //		transactionDAOImpl.getBalance(null);
 ////		
-		AccountManagementDAO accDAO = new AccountManagementDAOImpl();
-		Account account = new Account();
-		account.setId("100102000006");
-		Address address = new Address();
-		address.setLine1("ATP");
-		address.setLine2("Vijayanagar");
-		address.setCity("Bangalore");
-		address.setCountry("India");
-		address.setZipcode("522001");
-		try {
-			accDAO.updateCustomerAddress(account, address);
-		} catch (AccountException e) {
-			System.out.println(e.getMessage());
-		}
+//		AccountManagementDAO accDAO = new AccountManagementDAOImpl();
+//		Account account = new Account();
+//		Customer customer = new Customer();
+//		account.setId("100303000001");
+//		customer.setContact("8700012398");
+//		try {
+//			accDAO.updateCustomerContact(account, customer);
+//		} catch (AccountException e) {
+//			System.out.println(e.getMessage());
+//		}
 		
+//		Address address = new Address();
+//		address.setLine1("Near sangam");
+//		address.setLine2("mnnit");
+//		address.setCity("Allahabad");
+//		address.setState("UP");
+//		address.setCountry("Bharat");
+//		address.setZipcode("211004");
+//		customer.setAadhar("986666541237");
+//		customer.setContact("8700012398");
+//		customer.setGender("F");
+//		customer.setName("Auditi");
+//		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		customer.setDob(LocalDate.parse("1996-05-08", dateTimeFormatter));
+//		customer.setPan("MALSF6798L");
+//		account.setStatus("Active");
+//		account.setAccountType("Savings");
+//		account.setBalance(1500);
+//		account.setBranchId("1001");
+//		account.setId("100101");
+//		account.setInterest(6);
+//		account.setLastUpdated(LocalDateTime.now());
+//		String custId = accDAO.addCustomerDetails(customer, address);
+//		account.setHolderId(custId);
+//		String id= accDAO.calculateAccountId(account);
+//		account.setId(id);
+//		String accountId = accDAO.addAccount(account);
+//		if (accountId != null) {
+//			System.out.println("Account created, account Id is :" + accountId);
+//		} else {
+//			System.out.println(ErrorConstants.ACCOUNT_CREATION_ERROR);
+//		}
+//		Account account = new Account();
+//		account.setId("100303000001");
+//		Address address = new Address();
+//		address.setLine1("ATP");
+//		address.setLine2("Vijayanagar");
+//		address.setCity("Bangalore");
+//		address.setState("KTK");
+//		address.setCountry("India");
+//		address.setZipcode("522001");
+//		try {
+//			accDAO.updateCustomerAddress(account, address);
+//		} catch (AccountException e) {
+//			System.out.println(e.getMessage());
+//		}
+//		
 //		AccountManagementDAO accDAO = new AccountManagementDAOImpl();
 //		Account account = new Account();
 //		account.setId("100101000002");
@@ -68,14 +115,11 @@ public class PecuniaMain {
 //		}
 		
 		
-
-
-	public static void main(String[] args) throws PecuniaException, TransactionException, IOException, LoanDisbursalException {
-
-		LoanDisbursalDAOImplHibernate l = new LoanDisbursalDAOImplHibernate();
-		l.retrieveLoanList();
-		
-			
+//
+//		LoanDisbursalDAOImplHibernate l = new LoanDisbursalDAOImplHibernate();
+//		l.retrieveLoanList();
+//		
+//			
 	
 
 	
@@ -85,28 +129,28 @@ public class PecuniaMain {
 //		
 //		AccountManagementDAO accDAO = new AccountManagementDAOImpl();
 //		Account account = new Account();
-//		account.setId("100102000006");
+//		account.setId("100303000001");
 //		Customer customer = new Customer();
-//		customer.setName("Aditiii");
+//		customer.setName("Avinash");
 //		try {
 //			accDAO.updateCustomerName(account, customer);
 //		} catch (AccountException e) {
 //			System.out.println(e.getMessage());
 //		}
 		
-		try {
-			TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
-			Account account2 = new Account();
-			account2.setId("100102000006");
-			account2.setBalance(10000.0);
-			boolean balanceUpdated = transactionDAOImpl.updateBalance(account2);
-			System.out.println(balanceUpdated);
-		}
-		catch(Exception e){
-			System.out.println(e.getMessage());
-		}
-		
-
+//		try {
+//			TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
+//			Account account2 = new Account();
+//			account2.setId("100102000006");
+//			account2.setBalance(10000.0);
+//			boolean balanceUpdated = transactionDAOImpl.updateBalance(account2);
+//			System.out.println(balanceUpdated);
+//		}
+//		catch(Exception e){
+//			System.out.println(e.getMessage());
+//		}
+//		
+//
 
 	}
 /*

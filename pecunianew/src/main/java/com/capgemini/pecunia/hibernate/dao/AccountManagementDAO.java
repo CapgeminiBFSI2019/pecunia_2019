@@ -27,4 +27,5 @@ public interface AccountManagementDAO {
 	
 	public void addAccountError(Account account) throws PecuniaException, SQLException, AccountException;
 
+	public Account showAccountDetails(Account account) throws AccountException,PecuniaException;
 }
