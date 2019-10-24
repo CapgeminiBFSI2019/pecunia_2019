@@ -15,7 +15,6 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "transaction")
 public class TransactionEntity {
 	
 	@Id

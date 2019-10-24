@@ -43,6 +43,10 @@ public class CustomerEntity {
 		this.gender = gender;
 		this.dob = dob;
 	}
+	
+	public CustomerEntity() {
+		
+	}
 
 	public String getName() {
 		return name;
