@@ -49,7 +49,7 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		Account acc = new Account();
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
-			String hql = "select * from AccountEntity where accountId= :accountId";
+			String hql = "from AccountEntity where accountId= :accountId";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountId", account.getId());
 			query.setMaxResults(1);
@@ -65,7 +65,8 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 				acc.setLastUpdated(accountEntity.getLastUpdated());
 			}
 		} catch (Exception e) {
-			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
+			System.out.println(e.getMessage());
+			throw new AccountException(ErrorConstants.CLOSED_ACCOUNT);
 		}
 		return acc;
 	}
