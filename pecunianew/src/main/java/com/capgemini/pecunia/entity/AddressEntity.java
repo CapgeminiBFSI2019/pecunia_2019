@@ -14,7 +14,7 @@ public class AddressEntity {
 		 @Id
 		    @GeneratedValue(strategy = GenerationType.IDENTITY)
 		    @Column(name = "address_id")
-		    private int id;	
+		    private String id;	
 		 
 		 @Column(name = "address_line1")
 		    private String addressLine1;
@@ -39,10 +39,14 @@ public class AddressEntity {
 			this.country = country;
 			this.zipcode = zipcode;
 		}
-		public int getId() {
+		
+		public AddressEntity() {
+			
+		}
+		public String getId() {
 			return id;
 		}
-		public void setId(int id) {
+		public void setId(String id) {
 			this.id = id;
 		}
 		public String getAddressLine1() {
