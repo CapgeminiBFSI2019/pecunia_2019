@@ -27,7 +27,7 @@ public class LoanDAOImpl implements LoanDAO {
 	 * -Creation Date : 24/09/2019
 	 * -Description : Adding Loan details to database  
 	 ********************************************************************************************************/
-	public boolean addLoanDetails(Loan loan) throws PecuniaException, LoanException {
+	public int addLoanDetails(Loan loan) throws PecuniaException, LoanException {
 		Connection connection = DBConnection.getInstance().getConnection();
 		boolean isadditionsuccess = false;
 		PreparedStatement preparedStatement = null;
@@ -68,7 +68,7 @@ public class LoanDAOImpl implements LoanDAO {
 				throw new PecuniaException(ErrorConstants.DB_CONNECTION_ERROR);
 			}
 		}
-		return isadditionsuccess;
+		return queryResult;
 
 	}
 
