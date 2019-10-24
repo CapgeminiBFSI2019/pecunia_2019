@@ -39,7 +39,7 @@ public class ErrorConstants {
 	public static final String INSUFFICIENT_BALANCE_EXCEPTION = "Insufficient balance";
 	public static final String CHEQUE_BOUNCE_EXCEPTION = "Cheque bounce due to insufficient balance";
 	public static final String TRANSACTION_AMOUNT_ERROR = "The transaction could not take place";
-	public static final String AMOUNT_EXCEEDS_EXCEPTION = "Credit amount exceeds the maximum amount";
-	public static final String AMOUNT_LESS_EXCEPTION = "Credit amount is less than the minimum amount";
+	public static final String AMOUNT_EXCEEDS_EXCEPTION = "Maximum amount is 100000";
+	public static final String AMOUNT_LESS_EXCEPTION = "Minimum amount is 100";
 
 }
