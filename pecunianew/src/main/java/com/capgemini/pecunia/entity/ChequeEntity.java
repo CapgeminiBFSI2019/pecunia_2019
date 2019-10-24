@@ -16,7 +16,7 @@ public class ChequeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cheque_id")
-	private String id;
+	private int id;
 
 	@Column(name = "cheque_num")
 	private int num;
@@ -43,11 +43,11 @@ public class ChequeEntity {
 
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

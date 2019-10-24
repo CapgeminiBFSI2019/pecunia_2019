@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Transaction {
-	private String id;
+	private int id;
 	private String accountId;
 	private String type;
 	private Double amount;
@@ -19,11 +19,11 @@ public class Transaction {
 		this.accountId = accountId;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -95,11 +95,10 @@ public class Transaction {
 		this.closingBalance = closingBalance;
 	}
 
-	public Transaction(String id, String accountId, String type, Double amount, String option, LocalDateTime transDate,
+	public Transaction(int id, String type, Double amount, String option, LocalDateTime transDate,
 			int chequeId, String transFrom, String transTo, Double closingBalance) {
 		super();
 		this.id = id;
-		this.accountId = accountId;
 		this.type = type;
 		this.amount = amount;
 		this.option = option;
