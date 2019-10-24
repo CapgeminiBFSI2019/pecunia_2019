@@ -574,4 +574,10 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	}
 
+	@Override
+	public Account showAccountDetails(Account account) throws PecuniaException, AccountException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
