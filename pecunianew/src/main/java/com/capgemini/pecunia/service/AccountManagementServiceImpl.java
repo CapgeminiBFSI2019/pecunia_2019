@@ -8,6 +8,8 @@ import com.capgemini.pecunia.dto.Customer;
 import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.PecuniaException;
+import com.capgemini.pecunia.hibernate.dao.AccountManagementDAO;
+import com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl;
 import com.capgemini.pecunia.util.Constants;
 
 public class AccountManagementServiceImpl implements AccountManagementService {
