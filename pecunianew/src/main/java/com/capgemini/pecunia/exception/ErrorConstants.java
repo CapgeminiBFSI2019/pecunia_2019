@@ -21,6 +21,7 @@ public class ErrorConstants {
 
 	public static final String NO_SUCH_ACCOUNT = "Account doesn't exist.";
 	public static final String ERROR_VALIDATION = "Error in validating account";
+	public static final String ACCOUNT_CLOSED = "Account already closed. Cannot perform any operation";
 	public static final String ADD_DETAILS_ERROR = "Addition unsuccessful.";
 
 	public static final String BALANCE_RETRIEVAL_ERROR = "Failed to retrieve balance";
