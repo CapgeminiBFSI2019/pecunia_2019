@@ -5,7 +5,7 @@ public class ErrorConstants {
 	public static final String TECH_ERROR = "Technical problem occured.";
 
 	public static final String UPDATE_PASSBOOK_ERROR = "Passbook not updated. There is some technical error.";
-
+	
 	public static final String DB_CONNECTION_ERROR = "Error in closing database connection.";
 
 	public static final String UPDATE_ACCOUNT_ERROR = "Update unsuccessful.";
