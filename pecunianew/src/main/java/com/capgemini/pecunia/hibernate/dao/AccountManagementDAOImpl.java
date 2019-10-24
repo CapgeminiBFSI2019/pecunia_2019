@@ -43,6 +43,39 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		}
 		return isDeleted;
 	}
+	
+	
+	public Account showAccountDetails(Account account) throws AccountException,PecuniaException{
+		
+		Account acc = new Account();
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			String hql = "select * from AccountEntity where accountId= :accountId";
+			Query query = session.createQuery(hql);
+			query.setParameter("accountId",account.getId());
+			query.setMaxResults(1);
+			AccountEntity accountEntity = (AccountEntity) query.uniqueResult();
+			if (accountEntity != null) {
+				acc.setId(accountEntity.getAccountId());
+				acc.setBalance(accountEntity.getBalance());
+				acc.setAccountType(accountEntity.getType());
+				acc.setStatus(accountEntity.getStatus());
+				acc.setInterest(accountEntity.getInterest());
+				acc.setBranchId(accountEntity.getBranchId());
+				acc.setHolderId(accountEntity.getCustomerId());
+				acc.setLastUpdated(accountEntity.getLastUpdated());
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
+		}
+		return acc;
+	}
+
+	
+	
+	
 
 	@Override
 	public boolean updateCustomerName(Account account, Customer customer) throws PecuniaException, AccountException {
