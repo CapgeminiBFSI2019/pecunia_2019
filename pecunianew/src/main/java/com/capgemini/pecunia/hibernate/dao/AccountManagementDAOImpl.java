@@ -176,23 +176,26 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 			Query query = session.createQuery(hql);
 
 			query.setMaxResults(1);
-			addr = (AddressEntity) query.uniqueResult();
-			if (addr != null) {
-				addrId = addr.getId();
+			
+			if (query.uniqueResult() != null) {
+				addrId = (String) query.uniqueResult();
+				
 			} else {
 				throw new PecuniaException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
 
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			
 			throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 		}
 
+		session = HibernateUtil.getSessionFactory().openSession();
+		txn = session.beginTransaction();
 		cust.setAadhar(customer.getAadhar());
 		cust.setName(customer.getName());
 		cust.setGender(customer.getGender());
 		cust.setContact(customer.getContact());
-//		     cust.setDob(customer.getDob());
+		cust.setDob(customer.getDob());
 		cust.setPan(customer.getPan());
 		cust.setAddressId(addrId);
 		session.save(cust);
@@ -201,17 +204,17 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 			String hql1 = "SELECT MAX(customerId) FROM CustomerEntity";
 			Query query = session.createQuery(hql1);
-
+		
 			query.setMaxResults(1);
-			cust = (CustomerEntity) query.uniqueResult();
-			if (cust != null) {
-				custId = cust.getAddressId();
+			//cust = (CustomerEntity) query.uniqueResult();
+			if (query.uniqueResult() != null) {
+				custId = (String) query.uniqueResult();
+				
 			} else {
 				throw new PecuniaException(ErrorConstants.ADD_DETAILS_ERROR);
 			}
 
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			throw new AccountException(ErrorConstants.ADD_DETAILS_ERROR);
 		}
 		return custId;
@@ -220,10 +223,11 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	@Override
 	public String addAccount(Account account) throws PecuniaException, AccountException, SQLException {
-		String accId = null;
+		//String accId = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 
-		session.beginTransaction();
+		//session.beginTransaction();
+		Transaction txn = session.beginTransaction();
 
 		AccountEntity acc = new AccountEntity();
 
@@ -236,9 +240,8 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		acc.setAccountId(account.getId());
 		acc.setCustomerId(account.getHolderId());
 		session.save(acc);
-		session.getTransaction().commit();
-
-		return accId;
+		txn.commit();
+		return account.getId();
 	}
 
 	@Override
