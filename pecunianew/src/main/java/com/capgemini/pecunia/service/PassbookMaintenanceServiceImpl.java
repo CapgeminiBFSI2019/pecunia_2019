@@ -7,12 +7,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import com.capgemini.pecunia.dao.PassbookMaintenanceDAO;
-import com.capgemini.pecunia.dao.PassbookMaintenanceDAOImpl;
 import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.PecuniaException;
+import com.capgemini.pecunia.hibernate.dao.PassbookMaintenanceDAO;
+import com.capgemini.pecunia.hibernate.dao.PassbookMaintenanceDAOImpl;
 import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.util.LoggerMessage;
 
