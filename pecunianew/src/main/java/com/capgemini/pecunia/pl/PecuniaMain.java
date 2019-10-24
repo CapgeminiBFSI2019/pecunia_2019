@@ -11,6 +11,7 @@ import java.util.List;
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
 import com.capgemini.pecunia.exception.LoanDisbursalException;
+import com.capgemini.pecunia.exception.LoanException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.hibernate.dao.LoanDisbursalDAOImplHibernate;
@@ -24,11 +25,14 @@ import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.hibernate.dao.AccountManagementDAO;
 import com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl;
+import com.capgemini.pecunia.hibernate.dao.LoanDAOImpl;
 import com.capgemini.pecunia.hibernate.dao.TransactionDAOImpl;
+import com.capgemini.pecunia.service.AccountManagementService;
+import com.capgemini.pecunia.service.AccountManagementServiceImpl;
 
 public class PecuniaMain {
 
-	public static void main(String[] args) throws PecuniaException, TransactionException, IOException, LoanDisbursalException, AccountException, SQLException {
+	public static void main(String[] args) throws PecuniaException, TransactionException, IOException, LoanDisbursalException, AccountException, SQLException, LoanException {
 //		try {
 //			TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
 //			Account account = new Account();
@@ -43,13 +47,31 @@ public class PecuniaMain {
 //		TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
 //		transactionDAOImpl.getBalance(null);
 ////		
-//		AccountManagementDAO accDAO = new AccountManagementDAOImpl();
+
+		//AccountManagementService accService = new AccountManagementServiceImpl();
+//		LoanDAOImpl loanDaoImpl=new LoanDAOImpl();
+//		Loan loan=new Loan();
+//		loan.setAccountId("100101000008");
+//		loan.setAmount(5001);
+//		loan.setCreditScore(600);
+//		loan.setRoi(9.6);
+//		loan.setTenure(36);
+//		loan.setType("House Loan");
+//		loan.setLoanStatus("Pending");
+//		loan.setEmi(896.00);
+//		loan.setLoanId(105);
+//		int loanId = loanDaoImpl.addLoanDetails(loan);
+//		System.out.println(loanId);
+//			System.out.println("Loan request added successfully.");
+
+//		AccountManagementService accService = new AccountManagementServiceImpl();
+
 //		Account account = new Account();
 //		Customer customer = new Customer();
 //		account.setId("100303000001");
-//		customer.setContact("8700012398");
+//		customer.setName("Jordi bhaiYYA");
 //		try {
-//			accDAO.updateCustomerContact(account, customer);
+//			accService.updateCustomerName(account, customer);
 //		} catch (AccountException e) {
 //			System.out.println(e.getMessage());
 //		}
@@ -57,29 +79,23 @@ public class PecuniaMain {
 //		Address address = new Address();
 //		address.setLine1("Near sangam");
 //		address.setLine2("mnnit");
-//		address.setCity("Allahabad");
+//		address.setCity("Prayagraj");
 //		address.setState("UP");
 //		address.setCountry("Bharat");
 //		address.setZipcode("211004");
-//		customer.setAadhar("986666541237");
-//		customer.setContact("8700012398");
+//		customer.setAadhar("986006541237");
+//		customer.setContact("8700012888");
 //		customer.setGender("F");
-//		customer.setName("Auditi");
+//		customer.setName("linette");
 //		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 //		customer.setDob(LocalDate.parse("1996-05-08", dateTimeFormatter));
-//		customer.setPan("MALSF6798L");
-//		account.setStatus("Active");
-//		account.setAccountType("Savings");
+//		customer.setPan("MADSF6798L");
+//		account.setAccountType("FD");
 //		account.setBalance(1500);
-//		account.setBranchId("1001");
-//		account.setId("100101");
+//		account.setBranchId("1002");
 //		account.setInterest(6);
 //		account.setLastUpdated(LocalDateTime.now());
-//		String custId = accDAO.addCustomerDetails(customer, address);
-//		account.setHolderId(custId);
-//		String id= accDAO.calculateAccountId(account);
-//		account.setId(id);
-//		String accountId = accDAO.addAccount(account);
+//		String accountId = accService.addAccount(customer,address,account);
 //		if (accountId != null) {
 //			System.out.println("Account created, account Id is :" + accountId);
 //		} else {
@@ -88,23 +104,23 @@ public class PecuniaMain {
 //		Account account = new Account();
 //		account.setId("100303000001");
 //		Address address = new Address();
-//		address.setLine1("ATP");
-//		address.setLine2("Vijayanagar");
-//		address.setCity("Bangalore");
-//		address.setState("KTK");
+//		address.setLine1("yar");
+//		address.setLine2("nahi");
+//		address.setCity("hai");
+//		address.setState("new");
 //		address.setCountry("India");
 //		address.setZipcode("522001");
 //		try {
-//			accDAO.updateCustomerAddress(account, address);
+//			accService.updateCustomerAddress(account, address);
 //		} catch (AccountException e) {
 //			System.out.println(e.getMessage());
 //		}
 //		
 //		AccountManagementDAO accDAO = new AccountManagementDAOImpl();
 //		Account account = new Account();
-//		account.setId("100101000002");
+//		account.setId("100303000001");
 //		try {
-//			if(accDAO.deleteAccount(account)) {
+//			if(accService.deleteAccount(account)) {
 //				System.out.println("Deleted");
 //			}
 //			else {
@@ -113,7 +129,7 @@ public class PecuniaMain {
 //		} catch (AccountException e) {
 //			e.printStackTrace();
 //		}
-		
+//		
 		
 //
 //		LoanDisbursalDAOImplHibernate l = new LoanDisbursalDAOImplHibernate();
