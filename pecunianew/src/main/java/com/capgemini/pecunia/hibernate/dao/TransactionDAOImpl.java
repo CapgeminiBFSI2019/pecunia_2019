@@ -16,10 +16,10 @@ import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.util.HibernateUtil;
 
 public class TransactionDAOImpl implements TransactionDAO {
-	
+
 	@Override
 	public double getBalance(Account account) throws PecuniaException, TransactionException {
-		
+
 //		org.hibernate.Transaction transaction = null;
 //        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 //            // start a transaction
@@ -39,10 +39,10 @@ public class TransactionDAOImpl implements TransactionDAO {
 //            }
 //            e.printStackTrace();
 //        }
-		
+
 		double accountBalance = -1;
 		org.hibernate.Transaction transaction = null;
-		try{
+		try {
 			String accountId = account.getId();
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			transaction = session.beginTransaction();
@@ -51,16 +51,15 @@ public class TransactionDAOImpl implements TransactionDAO {
 			query.setParameter("accountId", accountId);
 			query.setMaxResults(1);
 			AccountEntity accountEntity = (AccountEntity) query.uniqueResult();
-			if(accountEntity != null) {
+			if (accountEntity != null) {
 				accountBalance = accountEntity.getBalance();
-			}
-			else {
+			} else {
 				throw new PecuniaException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
-			
+
 			transaction.commit();
-		}
-		catch(Exception e) {
+			session.close();
+		} catch (Exception e) {
 			throw new PecuniaException(e.getMessage());
 		}
 		return accountBalance;
@@ -68,8 +67,29 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 	@Override
 	public boolean updateBalance(Account account) throws PecuniaException, TransactionException {
-		// TODO Auto-generated method stub
-		return false;
+		boolean balanceUpdated = false;
+		org.hibernate.Transaction tx = null;
+		try {
+			String accountId = account.getId();
+			double newBalance = account.getBalance();
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
+			AccountEntity accountEntity = session.load(AccountEntity.class, accountId);
+			accountEntity.setBalance(newBalance);
+			session.update(accountEntity);
+			
+			if(accountEntity.getBalance()==newBalance) {
+				balanceUpdated = true;
+			}
+			else {
+				throw new TransactionException(ErrorConstants.BALANCE_UPDATE_ERROR);
+			}
+			tx.commit();
+			session.close();
+		} catch (Exception e) {
+				throw new TransactionException(e.getMessage());
+		}
+		return balanceUpdated;
 	}
 
 	@Override
