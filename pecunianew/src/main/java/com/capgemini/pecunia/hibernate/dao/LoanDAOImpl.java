@@ -12,10 +12,11 @@ import com.capgemini.pecunia.util.HibernateUtil;
 public class LoanDAOImpl implements LoanDAO {
 
 	@Override
-	public boolean addLoanDetails(Loan loan) throws PecuniaException, LoanException {
+	public int addLoanDetails(Loan loan) throws PecuniaException, LoanException {
 		// TODO Auto-generated method stub
 		// return false;
-
+		int loanId = 0;
+		org.hibernate.Transaction txn = null;
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			LoanRequestEntity loanRequestEntity = new LoanRequestEntity();
@@ -29,11 +30,20 @@ public class LoanDAOImpl implements LoanDAO {
 			loanRequestEntity.setStatus(loan.getLoanStatus());
 			loanRequestEntity.setLoanId(loan.getLoanId());
 			session.save(loanRequestEntity);
+			loanId = loanRequestEntity.getLoanId();
+			txn.commit();
+
+
 		} catch (Exception e) {
+			if(txn != null) {
+				txn.rollback();
+			}
+			System.out.println("LoanDao Error :"+e.getMessage());
+			e.printStackTrace();
 			throw new PecuniaException(ErrorConstants.LOAN_ADD_ERROR);
 
 		}
-		return false;
+		return loanId;
 
 	}
 
