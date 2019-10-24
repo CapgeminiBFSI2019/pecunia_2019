@@ -50,8 +50,29 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 	@Override
 	public boolean updateBalance(Account account) throws PecuniaException, TransactionException {
-		// TODO Auto-generated method stub
-		return false;
+		boolean balanceUpdated = false;
+        org.hibernate.Transaction tx = null;
+        try {
+            String accountId = account.getId();
+            double newBalance = account.getBalance();
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            AccountEntity accountEntity = session.load(AccountEntity.class, accountId);
+            accountEntity.setBalance(newBalance);
+            session.update(accountEntity);
+           
+            if(accountEntity.getBalance()==newBalance) {
+                balanceUpdated = true;
+            }
+            else {
+                throw new TransactionException(ErrorConstants.BALANCE_UPDATE_ERROR);
+            }
+            tx.commit();
+            session.close();
+        } catch (Exception e) {
+                throw new TransactionException(e.getMessage());
+        }
+        return balanceUpdated;
 	}
 
 	@Override
