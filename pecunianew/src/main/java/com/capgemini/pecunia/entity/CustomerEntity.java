@@ -14,7 +14,7 @@ public class CustomerEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "customer_id")
-	private int customerId;
+	private String customerId;
 	@Column(name = "name")
 	private String name;
 	@Column(name = "address_id")
@@ -42,6 +42,10 @@ public class CustomerEntity {
 		this.contact = contact;
 		this.gender = gender;
 		this.dob = dob;
+	}
+	
+	public CustomerEntity() {
+		
 	}
 
 	public String getName() {

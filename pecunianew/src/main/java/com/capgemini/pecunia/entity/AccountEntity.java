@@ -1,16 +1,22 @@
 package com.capgemini.pecunia.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
+@NamedQueries({
+		@NamedQuery(name = "AccountEntity.getBalanceById", query = "FROM AccountEntity where accountId =:accountId") })
 @Table(name = "account")
 public class AccountEntity {
 	@Id
 	@Column(name = "account_id")
-	private int accountId;
+	private String accountId;
 	@Column(name = "customer_id")
 	private String customerId;
 	@Column(name = "branch_id")
@@ -20,18 +26,20 @@ public class AccountEntity {
 	@Column(name = "status")
 	private String status;
 	@Column(name = "balance")
-	private String balance;
-
+	private double balance;
 	@Column(name = "interest")
-	private String interest;
-
+	private double interest;
 	@Column(name = "last_updated")
+	private LocalDateTime lastUpdated;
 
-	private String lastUpdated;
+	public AccountEntity() {
 
-	public AccountEntity(String customerId, String branchId, String type, String status, String balance,
-			String interest, String lastUpdated) {
+	}
+
+	public AccountEntity(String accountId, String customerId, String branchId, String type, String status, double balance,
+			double interest, LocalDateTime lastUpdated) {
 		super();
+		this.accountId = accountId;
 		this.customerId = customerId;
 		this.branchId = branchId;
 		this.type = type;
@@ -41,11 +49,11 @@ public class AccountEntity {
 		this.lastUpdated = lastUpdated;
 	}
 
-	public int getAccountId() {
+	public String getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(int accountId) {
+	public void setAccountId(String accountId) {
 		this.accountId = accountId;
 	}
 
@@ -81,27 +89,27 @@ public class AccountEntity {
 		this.status = status;
 	}
 
-	public String getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(String balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 
-	public String getInterest() {
+	public double getInterest() {
 		return interest;
 	}
 
-	public void setInterest(String interest) {
+	public void setInterest(double interest) {
 		this.interest = interest;
 	}
 
-	public String getLastUpdated() {
+	public LocalDateTime getLastUpdated() {
 		return lastUpdated;
 	}
 
-	public void setLastUpdated(String lastUpdated) {
+	public void setLastUpdated(LocalDateTime lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
 

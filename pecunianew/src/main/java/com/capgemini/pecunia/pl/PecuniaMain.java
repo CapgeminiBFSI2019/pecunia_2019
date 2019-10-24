@@ -1,5 +1,4 @@
 package com.capgemini.pecunia.pl;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +10,56 @@ import com.capgemini.pecunia.exception.LoanDisbursalException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.hibernate.dao.LoanDisbursalDAOImplHibernate;
+
+import com.capgemini.pecunia.dto.Account;
+import com.capgemini.pecunia.dto.Customer;
+import com.capgemini.pecunia.exception.AccountException;
+import com.capgemini.pecunia.exception.PecuniaException;
+import com.capgemini.pecunia.exception.TransactionException;
+import com.capgemini.pecunia.hibernate.dao.AccountManagementDAO;
+import com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl;
 import com.capgemini.pecunia.hibernate.dao.TransactionDAOImpl;
 
 public class PecuniaMain {
 	
+
 	public static void main(String[] args) throws PecuniaException, TransactionException, IOException, LoanDisbursalException {
 
 		LoanDisbursalDAOImplHibernate l = new LoanDisbursalDAOImplHibernate();
 		l.retrieveLoanList();
 		
 			
-	}
+	
+
+	
+		
+//		TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
+//		transactionDAOImpl.getBalance(null);
+//		
+//		AccountManagementDAO accDAO = new AccountManagementDAOImpl();
+//		Account account = new Account();
+//		account.setId("100102000006");
+//		Customer customer = new Customer();
+//		customer.setName("Aditiii");
+//		try {
+//			accDAO.updateCustomerName(account, customer);
+//		} catch (AccountException e) {
+//			System.out.println(e.getMessage());
+//		}
+		
+		try {
+			TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
+			Account account2 = new Account();
+			account2.setId("100102000006");
+			account2.setBalance(10000.0);
+			boolean balanceUpdated = transactionDAOImpl.updateBalance(account2);
+			System.out.println(balanceUpdated);
+		}
+		catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		
+
 	}
 /*
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -1313,3 +1351,4 @@ public class PecuniaMain {
 	}
 	*/
 
+}
