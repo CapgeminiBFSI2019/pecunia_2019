@@ -1,6 +1,7 @@
 package com.capgemini.pecunia.pl;
 
 import com.capgemini.pecunia.dto.Account;
+import com.capgemini.pecunia.dto.Address;
 import com.capgemini.pecunia.dto.Customer;
 import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.PecuniaException;
@@ -12,30 +13,50 @@ import com.capgemini.pecunia.hibernate.dao.TransactionDAOImpl;
 public class PecuniaMain {
 	
 	public static void main(String[] args) throws PecuniaException, TransactionException {
-		try {
-			TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
-			Account account = new Account();
-			account.setId("111111111111");
-			double balance = transactionDAOImpl.getBalance(account);
-			System.out.println(balance);
-		}
-		catch(Exception e){
-			System.out.println(e.getMessage());
-		}
+//		try {
+//			TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
+//			Account account = new Account();
+//			account.setId("111111111111");
+//			double balance = transactionDAOImpl.getBalance(account);
+//			System.out.println(balance);
+//		}
+//		catch(Exception e){
+//			System.out.println(e.getMessage());
+//		}
 		
 //		TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
 //		transactionDAOImpl.getBalance(null);
-//		
+////		
 		AccountManagementDAO accDAO = new AccountManagementDAOImpl();
 		Account account = new Account();
 		account.setId("100102000006");
-		Customer customer = new Customer();
-		customer.setName("Aditiii");
+		Address address = new Address();
+		address.setLine1("ATP");
+		address.setLine2("Vijayanagar");
+		address.setCity("Bangalore");
+		address.setCountry("India");
+		address.setZipcode("522001");
 		try {
-			accDAO.updateCustomerName(account, customer);
+			accDAO.updateCustomerAddress(account, address);
 		} catch (AccountException e) {
 			System.out.println(e.getMessage());
 		}
+		
+//		AccountManagementDAO accDAO = new AccountManagementDAOImpl();
+//		Account account = new Account();
+//		account.setId("100101000002");
+//		try {
+//			if(accDAO.deleteAccount(account)) {
+//				System.out.println("Deleted");
+//			}
+//			else {
+//				System.out.println("Some Error");
+//			}
+//		} catch (AccountException e) {
+//			e.printStackTrace();
+//		}
+		
+		
 	}
 /*
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

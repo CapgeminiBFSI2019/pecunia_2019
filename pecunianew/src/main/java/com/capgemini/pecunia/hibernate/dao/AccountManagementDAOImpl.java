@@ -22,8 +22,26 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	@Override
 	public boolean deleteAccount(Account account) throws PecuniaException, AccountException {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isDeleted = false;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			Transaction txn = session.beginTransaction();
+			String hql = "UPDATE AccountEntity SET status='Closed' WHERE accountId=:accountId";
+			Query query = session.createQuery(hql);
+			query.setParameter("accountId", account.getId());
+			query.setMaxResults(1);
+			int rowsAffected = query.executeUpdate();
+			if (rowsAffected > 0) {
+				isDeleted=true;
+				txn.commit();
+			}
+			else {
+				throw new PecuniaException(ErrorConstants.DELETE_ACCOUNT_ERROR);
+			}
+		}catch(Exception e) {
+			throw new AccountException(ErrorConstants.DELETE_ACCOUNT_ERROR);
+		}
+		return isDeleted;
 	}
 
 	@Override
@@ -102,17 +120,17 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		String addrId = null;
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
-			String hql = "SELECT address.address_id from customer INNER JOIN address ON address.address_id=customer.address_id"+ 
-					       "INNER JOIN account ON account.customer_id=customer.customer_id WHERE account_id=?";
+			String hql = "from CustomerEntity where customerId = (select customerId from AccountEntity where accountId= :accountId)";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountId", account.getId());
 			query.setMaxResults(1);
-			AccountEntity accountEntity = (AccountEntity) query.uniqueResult();
-			if (accountEntity != null) {
-				addrId = accountEntity.getCustomerId();
+			CustomerEntity customerEntity = (CustomerEntity) query.uniqueResult();
+			if (customerEntity != null) {
+				addrId = customerEntity.getAddressId();
+				System.out.println("Address ID: "+addrId);
 			}
 			Transaction txn = session.beginTransaction();
-			String hqlUpdate = "UPDATE AddressEntity SET address_line1=:line1, address_line2=:line2, city=:city, state=:state,country=:country, zipcode=:zipcode WHERE addressId=:addressId";
+			String hqlUpdate = "update AddressEntity set addressLine1=:line1, addressLine2=:line2, city=:city, state=:state,country=:country, zipcode=:zipcode where addressId=:addressId";
 			Query queryUpdate = session.createQuery(hqlUpdate);
 			queryUpdate.setParameter("addressId", addrId);
 			queryUpdate.setParameter("line1",address.getLine1());
@@ -199,14 +217,51 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 
 	@Override
 	public String calculateAccountId(Account account) throws PecuniaException, AccountException {
-		// TODO Auto-generated method stub
-		return null;
+		long oldId = 0;
+		String oldIdstr = null;
+		String id = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			String hql = "SELECT max(accountId) FROM AccountEntity WHERE accountId LIKE :accountId";
+			Query query = session.createQuery(hql);
+			query.setParameter("accountId", account.getId()+"%");
+			query.setMaxResults(1);
+			if (query.uniqueResult() != null) {
+				oldIdstr = (String)query.uniqueResult(); 
+			}
+			else {
+				oldIdstr = account.getId() + "000000";
+			}
+			oldId = Long.parseLong(oldIdstr);
+			id = Long.toString(oldId + 1);
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
+		}
+		return id;
 	}
 
 	@Override
 	public boolean validateAccountId(Account account) throws PecuniaException, AccountException {
-		// TODO Auto-generated method stub
-		return false;
+		boolean isValidated = false;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			String hql ="SELECT accountId FROM AccountEntity WHERE accountId=:accountId";
+			Query query = session.createQuery(hql);
+			query.setParameter("accountId", account.getId());
+			System.out.println(query);
+			query.setMaxResults(1);
+			if (query.uniqueResult() != null) {
+				isValidated = true;
+			}
+			else {
+				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
+			}
+		}catch(Exception e) {
+			throw new AccountException(ErrorConstants.ERROR_VALIDATION);
+		}
+		return isValidated;
 	}
 
 	@Override
