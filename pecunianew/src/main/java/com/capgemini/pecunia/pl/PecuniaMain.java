@@ -45,11 +45,11 @@ public class PecuniaMain {
 //		TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
 //		transactionDAOImpl.getBalance(null);
 ////		
-		AccountManagementService accService = new AccountManagementServiceImpl();
+//		AccountManagementService accService = new AccountManagementServiceImpl();
 //		Account account = new Account();
 //		Customer customer = new Customer();
 //		account.setId("100303000001");
-//		customer.setName("Jordi bhai");
+//		customer.setName("Jordi bhaiYYA");
 //		try {
 //			accService.updateCustomerName(account, customer);
 //		} catch (AccountException e) {
