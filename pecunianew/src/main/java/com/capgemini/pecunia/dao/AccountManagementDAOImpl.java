@@ -348,7 +348,9 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		logger.info(LoggerMessage.ACCOUNT_VALIDATION_SUCCESSFULL);
 		return isValidated;
 	}
-
+	
+	
+	
 	/*******************************************************************************************************
 	 * - Function Name : addCustomerDetails(Customer customer, Address address) 
 	 * - Input Parameters : Customer customer, Address address 

@@ -48,6 +48,18 @@ public class PecuniaMain {
 //		transactionDAOImpl.getBalance(null);
 ////		
 
+		AccountManagementService accService = new AccountManagementServiceImpl();
+		Account account = new Account();
+		Customer customer = new Customer();
+		account.setId("100101000003");
+		customer.setName("Anishhh");
+		try {
+			accService.updateCustomerName(account, customer);
+		} catch (AccountException e) {
+			System.out.println(e.getMessage());
+		}
+
+
 		//AccountManagementService accService = new AccountManagementServiceImpl();
 //		LoanDAOImpl loanDaoImpl=new LoanDAOImpl();
 //		Loan loan=new Loan();
@@ -58,8 +70,8 @@ public class PecuniaMain {
 //		loan.setTenure(36);
 //		loan.setType("House Loan");
 //		loan.setLoanStatus("Pending");
-//		loan.setEmi(896.00);
-//		loan.setLoanId(105);
+//		//loan.setEmi(896.00);
+//		//loan.setLoanId(105);
 //		int loanId = loanDaoImpl.addLoanDetails(loan);
 //		System.out.println(loanId);
 //			System.out.println("Loan request added successfully.");
@@ -75,6 +87,7 @@ public class PecuniaMain {
 //		} catch (AccountException e) {
 //			System.out.println(e.getMessage());
 //		}
+
 		
 //		Address address = new Address();
 //		address.setLine1("Near sangam");
