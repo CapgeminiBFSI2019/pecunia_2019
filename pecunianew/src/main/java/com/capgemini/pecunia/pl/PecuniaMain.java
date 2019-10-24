@@ -3,6 +3,7 @@ package com.capgemini.pecunia.pl;
 import java.io.IOException;
 
 import com.capgemini.pecunia.exception.LoanDisbursalException;
+import com.capgemini.pecunia.exception.LoanException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
 import com.capgemini.pecunia.hibernate.dao.LoanDisbursalDAOImplHibernate;

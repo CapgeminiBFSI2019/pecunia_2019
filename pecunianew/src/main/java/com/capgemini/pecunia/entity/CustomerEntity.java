@@ -1,5 +1,7 @@
 package com.capgemini.pecunia.entity;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,10 +32,10 @@ public class CustomerEntity {
 	private String gender;
 
 	@Column(name = "dob")
-	private String dob;
+	private LocalDate dob;
 
 	public CustomerEntity(String name, String addressId, String aadhar, String pan, String contact, String gender,
-			String dob) {
+			LocalDate dob) {
 		super();
 		this.name = name;
 		this.addressId = addressId;
@@ -96,11 +98,11 @@ public class CustomerEntity {
 		this.gender = gender;
 	}
 
-	public String getDob() {
+	public LocalDate getDob() {
 		return dob;
 	}
 
-	public void setDob(String dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
 

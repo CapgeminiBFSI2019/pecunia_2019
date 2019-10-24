@@ -8,12 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 
 @Entity
+@Table(name = "transaction")
 public class TransactionEntity {
 	
 	@Id
@@ -47,6 +49,7 @@ public class TransactionEntity {
 
 	@Column(name = "trans_closing_balance")
 	private double closingBalance;
+	
 
 	public TransactionEntity() {
 

@@ -38,10 +38,11 @@ public class LoanServiceImpl implements LoanService {
 	 * -Description : Create entry for loan Request
 	 ********************************************************************************************************/
 
-	public boolean createLoanRequest(Loan loan) throws LoanException {
-		boolean isRequestSuccess = false;
+	public int createLoanRequest(Loan loan) throws LoanException {
+		
 		boolean isValidAccount = false;
-		LoanDAO ld = new LoanDAOImpl();
+		com.capgemini.pecunia.hibernate.dao.LoanDAO loanDao = new com.capgemini.pecunia.hibernate.dao.LoanDAOImpl();
+		int loanId=0;
 		try {
 			Account account = new Account();
 			account.setId(loan.getAccountId());
@@ -49,12 +50,12 @@ public class LoanServiceImpl implements LoanService {
 			isValidAccount = accountManagementService.validateAccountId(account);
 			if(isValidAccount)
 			{
-				isRequestSuccess= ld.addLoanDetails(loan);
+				loanId= loanDao.addLoanDetails(loan);
 			}
 		} catch (Exception e) {
 			throw new LoanException(e.getMessage());
 		}
-		return isRequestSuccess;
+		return loanId;
 
 	}
 

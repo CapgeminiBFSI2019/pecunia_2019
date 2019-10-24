@@ -104,31 +104,26 @@
     <servlet-name>UpdateCustomerNameServlet</servlet-name>
     <url-pattern>/UpdateCustomerName</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <description></description>
     <display-name>LoanDisbursal</display-name>
     <servlet-name>LoanDisbursal</servlet-name>
     <servlet-class>com.capgemini.pecunia.servlet.LoanDisbursalServlet</servlet-class>
   </servlet>
-
   <servlet-mapping>
     <servlet-name>LoanDisbursal</servlet-name>
     <url-pattern>/loandisbursal</url-pattern>
   </servlet-mapping>
-
- <servlet>
+  <servlet>
     <description></description>
     <display-name>LoanDisbursalUpdateBalance</display-name>
     <servlet-name>LoanDisbursalUpdateBalance</servlet-name>
     <servlet-class>com.capgemini.pecunia.servlet.LoanDisbursalBalanceUpdateServlet</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>LoanDisbursalUpdateBalance</servlet-name>
     <url-pattern>/loandisbursalbalanceupdation</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <description></description>
     <display-name>LoanDisbursalData</display-name>
@@ -218,5 +213,15 @@
   <servlet-mapping>
     <servlet-name>CreditUsingChequeServlet</servlet-name>
     <url-pattern>/CreditUsingChequeServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AccountDetailServlet</display-name>
+    <servlet-name>AccountDetailServlet</servlet-name>
+    <servlet-class>com.capgemini.pecunia.servlet.AccountDetailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AccountDetailServlet</servlet-name>
+    <url-pattern>/AccountDetailServlet</url-pattern>
   </servlet-mapping>
 </web-app>

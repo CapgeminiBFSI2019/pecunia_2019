@@ -1,9 +1,5 @@
 package com.capgemini.pecunia.hibernate.dao;
 
-import java.time.ZoneOffset;
-
-import javax.persistence.NamedQuery;
-
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -11,6 +7,7 @@ import com.capgemini.pecunia.dto.Account;
 import com.capgemini.pecunia.dto.Cheque;
 import com.capgemini.pecunia.dto.Transaction;
 import com.capgemini.pecunia.entity.AccountEntity;
+import com.capgemini.pecunia.entity.ChequeEntity;
 import com.capgemini.pecunia.entity.TransactionEntity;
 import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.PecuniaException;
@@ -50,39 +47,60 @@ public class TransactionDAOImpl implements TransactionDAO {
 	@Override
 	public boolean updateBalance(Account account) throws PecuniaException, TransactionException {
 		boolean balanceUpdated = false;
-        org.hibernate.Transaction tx = null;
-        try {
-            String accountId = account.getId();
-            double newBalance = account.getBalance();
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            tx = session.beginTransaction();
-            AccountEntity accountEntity = session.load(AccountEntity.class, accountId);
-            accountEntity.setBalance(newBalance);
-            session.update(accountEntity);
-           
-            if(accountEntity.getBalance()==newBalance) {
-                balanceUpdated = true;
-            }
-            else {
-                throw new TransactionException(ErrorConstants.BALANCE_UPDATE_ERROR);
-            }
-            tx.commit();
-            session.close();
-        } catch (Exception e) {
-                throw new TransactionException(e.getMessage());
-        }
-        return balanceUpdated;
+		org.hibernate.Transaction tx = null;
+		try {
+			String accountId = account.getId();
+			double newBalance = account.getBalance();
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
+			AccountEntity accountEntity = session.load(AccountEntity.class, accountId);
+			accountEntity.setBalance(newBalance);
+			session.update(accountEntity);
+
+			if (accountEntity.getBalance() == newBalance) {
+				balanceUpdated = true;
+			} else {
+				throw new TransactionException(ErrorConstants.BALANCE_UPDATE_ERROR);
+			}
+			tx.commit();
+			session.close();
+		} catch (Exception e) {
+			throw new TransactionException(e.getMessage());
+		}
+		return balanceUpdated;
 	}
 
 	@Override
 	public int generateChequeId(Cheque cheque) throws PecuniaException, TransactionException {
-		// TODO Auto-generated method stub
-		return 0;
+		int chequeId = 0;
+		org.hibernate.Transaction txn = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			txn = session.beginTransaction();
+			ChequeEntity chequeEntity = new ChequeEntity();
+			chequeEntity.setNum(cheque.getNum());
+			chequeEntity.setAccountNo(cheque.getAccountNo());
+			chequeEntity.setHolderName(cheque.getHolderName());
+			chequeEntity.setBankName(cheque.getBankName());
+			chequeEntity.setIfsc(cheque.getIfsc());
+			chequeEntity.setIssueDate(cheque.getIssueDate());
+			chequeEntity.setStatus(cheque.getStatus());
+			session.save(chequeEntity);
+			chequeId = chequeEntity.getId();
+			txn.commit();
+		} catch (Exception e) {
+			if (txn != null) {
+				txn.rollback();
+			}
+			throw new PecuniaException(ErrorConstants.CHEQUE_INSERTION_ERROR);
+		}
+		return chequeId;
 	}
+
+	
 
 	@Override
 	public int generateTransactionId(Transaction transaction) throws PecuniaException, TransactionException {
-		// TODO Auto-generated method stub
 		int transactionId = 0;
 		org.hibernate.Transaction txn = null;
 		try {
@@ -101,9 +119,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 			session.save(transactionEntity);
 			transactionId = transactionEntity.getId();
 			txn.commit();
-		}
-		catch(Exception e) {
-			if(txn != null) {
+		} catch (Exception e) {
+			if (txn != null) {
 				txn.rollback();
 			}
 			throw new PecuniaException(ErrorConstants.TRANSACTION_INSERTION_ERROR);
