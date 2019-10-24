@@ -215,4 +215,19 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 		}
 	}
 
+	@Override
+	public Account showAccountDetails(Account account) throws AccountException, PecuniaException {
+		Account accountRequested = new Account();
+		try {
+		AccountManagementDAO accountDAO = new AccountManagementDAOImpl();
+		
+		accountRequested = accountDAO.showAccountDetails(account);
+		}
+		catch(AccountException|PecuniaException e){
+			System.out.println(e.getMessage());
+			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
+		}
+		return accountRequested;
+	}
+
 }
