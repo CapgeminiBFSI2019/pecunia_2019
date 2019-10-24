@@ -12,6 +12,7 @@ import com.capgemini.pecunia.entity.AddressEntity;
 import com.capgemini.pecunia.entity.CustomerEntity;
 import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.PecuniaException;
+import com.capgemini.pecunia.util.HibernateUtil;
 
 public class AccountManagementDAOImpl implements AccountManagementDAO {
 

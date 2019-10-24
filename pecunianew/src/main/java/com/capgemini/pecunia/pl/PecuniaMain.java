@@ -1,14 +1,27 @@
 package com.capgemini.pecunia.pl;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+import com.capgemini.pecunia.dto.Loan;
+import com.capgemini.pecunia.dto.LoanDisbursal;
+import com.capgemini.pecunia.exception.LoanDisbursalException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
+import com.capgemini.pecunia.hibernate.dao.LoanDisbursalDAOImplHibernate;
 import com.capgemini.pecunia.hibernate.dao.TransactionDAOImpl;
 
 public class PecuniaMain {
 	
-	public static void main(String[] args) throws PecuniaException, TransactionException {
-		TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
-		transactionDAOImpl.getBalance(null);
+	public static void main(String[] args) throws PecuniaException, TransactionException, IOException, LoanDisbursalException {
+
+		LoanDisbursalDAOImplHibernate l = new LoanDisbursalDAOImplHibernate();
+		l.retrieveLoanList();
+		
+			
+	}
 	}
 /*
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -1299,4 +1312,4 @@ public class PecuniaMain {
 		
 	}
 	*/
-}
+

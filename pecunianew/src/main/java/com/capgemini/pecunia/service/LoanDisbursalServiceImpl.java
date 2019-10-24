@@ -15,6 +15,7 @@ import com.capgemini.pecunia.exception.ErrorConstants;
 import com.capgemini.pecunia.exception.LoanDisbursalException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.exception.TransactionException;
+import com.capgemini.pecunia.hibernate.dao.LoanDisbursalDAOImplHibernate;
 import com.capgemini.pecunia.util.Constants;
 import com.capgemini.pecunia.util.LoggerMessage;
 
@@ -41,7 +42,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	public ArrayList<Loan> retrieveAll() throws PecuniaException, IOException, LoanDisbursalException {
 
-		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
+		LoanDisbursalDAOImplHibernate loanDisbursedDAO = new LoanDisbursalDAOImplHibernate();
 		ArrayList<Loan> retrievedLoanRequests = new ArrayList<Loan>();
 		retrievedLoanRequests = (ArrayList<Loan>) loanDisbursedDAO.retrieveLoanList();
 		if (retrievedLoanRequests.size() == 0) {
