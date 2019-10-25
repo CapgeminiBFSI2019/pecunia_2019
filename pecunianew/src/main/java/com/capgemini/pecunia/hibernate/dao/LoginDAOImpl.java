@@ -16,7 +16,6 @@ public class LoginDAOImpl implements LoginDAO {
 	public String validateEmail(Login login) throws PecuniaException, LoginException {
 		String secretKey = null;
 		org.hibernate.Transaction transaction = null;
-
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			transaction = session.beginTransaction();
@@ -33,28 +32,14 @@ public class LoginDAOImpl implements LoginDAO {
 				throw new PecuniaException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
 
-			transaction.commit();
-			session.close();
-		} catch (Exception e) {
-			throw new PecuniaException(e.getMessage());
-		}
-
-		String username = login.getUsername();
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		transaction = session.beginTransaction();
-		@SuppressWarnings("rawtypes")
-		Query query = session.createNamedQuery("LoginEntity.getsecret_keyByusername");
-		query.setParameter("username", username);
-		query.setMaxResults(1);
-		LoginEntity loginEntity = (LoginEntity) query.uniqueResult();
-		if (loginEntity != null) {
-			username = loginEntity.getUsername();
-			System.out.println("jordi bhai");
-
-		}
+	
+		
 		transaction.commit();
 		session.close();
-
+	}
+	catch (Exception e) {
+		throw new PecuniaException(e.getMessage());
+	}
 		return secretKey;
 
 	}
