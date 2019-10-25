@@ -27,7 +27,27 @@ public class LoanDisbursalDAOImplHibernate implements LoanDisbursalDAO {
 	private String status;
 	private Double emi;
 	private int creditScore;
-
+	
+	private int loanIdOfAccepted;
+	private String accountIdOfAccepted;
+	private Double amountOfAccepted;
+	private String typeOfAccepted;
+	private int tenureOfAccepted;
+	private double roiOfAccepted;
+	private String statusOfAccepted;
+	private Double emiOfAccepted;
+	private int creditScoreOfAccepted;
+	
+	private int loanIdOfRejected;
+	private String accountIdOfRejected;
+	private Double amountOfRejected;
+	private String typeOfRejected;
+	private int tenureOfRejected;
+	private double roiOfRejected;
+	private String statusOfRejected;
+	private Double emiOfRejected;
+	private int creditScoreOfRejected;
+	
 	private int loanDisbursedId;
 	private int loanId1;
 	private String accountId1;
@@ -35,7 +55,7 @@ public class LoanDisbursalDAOImplHibernate implements LoanDisbursalDAO {
 	private double dueAmount;
 	private double emiToBePaid;
 	private String loanType;
-	private double emiPerMonth;
+
 
 	@Override
 	public List<Loan> retrieveLoanList() throws IOException, PecuniaException, LoanDisbursalException {
@@ -226,16 +246,16 @@ public class LoanDisbursalDAOImplHibernate implements LoanDisbursalDAO {
 	private ArrayList<Loan> acceptedLoanRequests(List<LoanRequestEntity> res) {
 		ArrayList<Loan> reqList = new ArrayList<>();
 		for (LoanRequestEntity obj : res) {
-			loanId = obj.getLoanId();
-			accountId = obj.getAccountId();
-			amount = obj.getAmount();
-			type = obj.getType();
-			tenure = obj.getTenure();
-			roi = obj.getRoi();
-			status = obj.getStatus();
-			emi = obj.getEmi();
-			creditScore = obj.getCreditScore();
-			Loan loan = new Loan(loanId, accountId, amount, type, tenure, roi, status, emi, creditScore);
+			loanIdOfAccepted = obj.getLoanId();
+			accountIdOfAccepted = obj.getAccountId();
+			amountOfAccepted = obj.getAmount();
+			typeOfAccepted = obj.getType();
+			tenureOfAccepted = obj.getTenure();
+			roiOfAccepted = obj.getRoi();
+			statusOfAccepted = obj.getStatus();
+			emiOfAccepted = obj.getEmi();
+			creditScoreOfAccepted = obj.getCreditScore();
+			Loan loan = new Loan(loanIdOfAccepted, accountIdOfAccepted, amountOfAccepted, typeOfAccepted, tenureOfAccepted, roiOfAccepted, statusOfAccepted, emiOfAccepted, creditScoreOfAccepted);
 			reqList.add(loan);
 		}
 
@@ -246,16 +266,16 @@ public class LoanDisbursalDAOImplHibernate implements LoanDisbursalDAO {
 	private ArrayList<Loan> rejectedLoanRequests(List<LoanRequestEntity> res) {
 		ArrayList<Loan> reqList = new ArrayList<>();
 		for (LoanRequestEntity obj : res) {
-			loanId = obj.getLoanId();
-			accountId = obj.getAccountId();
-			amount = obj.getAmount();
-			type = obj.getType();
-			tenure = obj.getTenure();
-			roi = obj.getRoi();
-			status = obj.getStatus();
-			emi = obj.getEmi();
-			creditScore = obj.getCreditScore();
-			Loan loan = new Loan(loanId, accountId, amount, type, tenure, roi, status, emi, creditScore);
+			loanIdOfRejected = obj.getLoanId();
+			accountIdOfRejected = obj.getAccountId();
+			amountOfRejected = obj.getAmount();
+			typeOfRejected = obj.getType();
+			tenureOfRejected = obj.getTenure();
+			roiOfRejected = obj.getRoi();
+			statusOfRejected = obj.getStatus();
+			emiOfRejected = obj.getEmi();
+			creditScoreOfRejected = obj.getCreditScore();
+			Loan loan = new Loan(loanIdOfRejected, accountIdOfRejected, amountOfRejected, typeOfRejected, tenureOfRejected, roiOfRejected, statusOfRejected, emiOfRejected, creditScoreOfRejected);
 			reqList.add(loan);
 		}
 
