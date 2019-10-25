@@ -9,7 +9,8 @@ import javax.persistence.Table;
 
 @Entity
 @NamedQueries({
-		@NamedQuery(name = "LoginEntity.getsecret_keyByusername", query = "FROM LoginEntity where Username =:email") })
+		@NamedQuery(name = "LoginEntity.getsecret_keyByusername", query = "FROM LoginEntity where username =:email") ,
+		@NamedQuery(name = "LoginEntity.getpasswordByusername", query = "FROM LoginEntity where username =:email") })
 
 @Table(name = "login")
 public class LoginEntity {
