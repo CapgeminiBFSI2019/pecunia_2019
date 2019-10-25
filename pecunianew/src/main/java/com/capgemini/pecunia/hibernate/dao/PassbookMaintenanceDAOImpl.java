@@ -4,18 +4,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.Column;
-
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.hibernate.Transaction;
-import com.capgemini.pecunia.dto.Loan;
-import com.capgemini.pecunia.entity.LoanRequestEntity;
 import com.capgemini.pecunia.entity.TransactionEntity;
-import com.capgemini.pecunia.exception.AccountException;
 import com.capgemini.pecunia.exception.ErrorConstants;
-import com.capgemini.pecunia.exception.LoanDisbursalException;
 import com.capgemini.pecunia.exception.PassbookException;
 import com.capgemini.pecunia.exception.PecuniaException;
 import com.capgemini.pecunia.util.HibernateUtil;
@@ -61,23 +54,28 @@ public class PassbookMaintenanceDAOImpl implements PassbookMaintenanceDAO {
 	public boolean updateLastUpdated(String accountId) throws PecuniaException, PassbookException {
 		
 		boolean isUpdated = false;
+		System.out.println("before try");
 		try {
+			System.out.println("try update");
 			Session session = HibernateUtil.getSessionFactory().openSession();
+			Transaction txn = session.beginTransaction();
 			String hql = "UPDATE AccountEntity SET lastUpdated = :lastUpdated WHERE accountId= :accountId";
 			Query query = session.createQuery(hql);
 			query.setParameter("accountId", accountId);
-			query.setParameter("lastUpdated", java.sql.Timestamp.valueOf(LocalDateTime.now().plusMinutes(330)) );
+			query.setParameter("lastUpdated", LocalDateTime.now().plusMinutes(330));
 			int rowsAffected = query.executeUpdate();
-			Transaction txn = session.beginTransaction();
+			
 			if (rowsAffected > 0) {
 				isUpdated = true;
 				txn.commit();
 			} else {
+				System.out.println("error");
 				throw new PecuniaException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 			}
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			throw new PassbookException(ErrorConstants.UPDATE_ACCOUNT_ERROR);
+			System.out.println("catch error");
+			e.printStackTrace();
+			throw new PassbookException(e.getMessage());
 		}
 		return isUpdated;
 	}

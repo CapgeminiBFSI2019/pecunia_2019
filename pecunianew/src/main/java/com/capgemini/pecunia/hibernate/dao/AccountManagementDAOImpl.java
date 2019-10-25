@@ -314,7 +314,4 @@ public class AccountManagementDAOImpl implements AccountManagementDAO {
 		return isValidated;
 	}
 
-
-
-
 }
