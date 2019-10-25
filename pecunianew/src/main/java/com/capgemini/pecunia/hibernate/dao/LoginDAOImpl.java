@@ -21,13 +21,11 @@ public class LoginDAOImpl implements LoginDAO {
 			transaction = session.beginTransaction();
 			@SuppressWarnings("rawtypes")
 			Query query = session.createNamedQuery("LoginEntity.getsecret_keyByusername");
-			query.setParameter("secretkey", secretKey);
+			query.setParameter("email", login.getUsername());
 			query.setMaxResults(1);
 			LoginEntity loginEntity = (LoginEntity) query.uniqueResult();
 			if (loginEntity != null) {
 				secretKey = loginEntity.getSecretKey();
-				System.out.println("jordi bhai");
-
 			} else {
 				throw new PecuniaException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
@@ -55,7 +53,7 @@ public class LoginDAOImpl implements LoginDAO {
 			transaction = session.beginTransaction();
 			@SuppressWarnings("rawtypes")
 			Query query = session.createNamedQuery("LoginEntity.getpasswordByusername");
-			query.setParameter("password", password);
+			query.setParameter("email", login.getUsername());
 			query.setMaxResults(1);
 			LoginEntity loginEntity = (LoginEntity) query.uniqueResult();
 			if (loginEntity != null) {
