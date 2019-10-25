@@ -52,7 +52,7 @@ public class LoanDisbursalServlet extends HttpServlet {
 					dataResponse.add("data", jsonArray);
 				} else {
 					dataResponse.addProperty("success", true);
-					dataResponse.addProperty("message", "No transaction to update");
+					dataResponse.addProperty("message", "No loan requests are there");
 				}
 			} catch (PecuniaException | LoanDisbursalException e) {
 				dataResponse.addProperty("success", false);
