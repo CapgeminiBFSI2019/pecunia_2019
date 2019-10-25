@@ -71,13 +71,10 @@ public class LoanRequestServlet extends HttpServlet {
 		double emi = LoanServiceImpl.calculateEMI(amount, tenure, roi);
 		loan.setEmi(emi);
 		try {
-			boolean isSuccess = loanService.createLoanRequest(loan);
-			if (isSuccess) {
-				dataResponse.addProperty("Loan success", true);
-
-			} else {
-				throw new LoanException(Constants.NO_LOAN_REQUEST);
-			}
+			int loanId = loanService.createLoanRequest(loan);
+			dataResponse.addProperty("success", true);
+			dataResponse.addProperty("message", "Loan request successful");
+			dataResponse.addProperty("Loan_id", loanId);
 
 		} catch (LoanException e) {
 			dataResponse.addProperty("success", false);

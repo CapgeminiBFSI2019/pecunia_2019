@@ -1,5 +1,7 @@
 package com.capgemini.pecunia.service;
 
+import java.time.LocalDateTime;
+
 import org.apache.log4j.Logger;
 
 import com.capgemini.pecunia.dto.Account;
@@ -13,7 +15,7 @@ import com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl;
 import com.capgemini.pecunia.util.Constants;
 
 public class AccountManagementServiceImpl implements AccountManagementService {
-	
+
 	Logger logger = Logger.getRootLogger();
 
 	public AccountManagementServiceImpl() {
@@ -39,11 +41,12 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 				accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
 				isUpdated = accountDAO.deleteAccount(account);
 			} else {
+				logger.error(ErrorConstants.NO_SUCH_ACCOUNT);
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
 		} catch (Exception e) {
 			logger.error(ErrorConstants.NO_SUCH_ACCOUNT);
-			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
+			throw new AccountException(e.getMessage());
 		}
 		return isUpdated;
 	}
@@ -66,11 +69,12 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 				accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
 				isUpdated = accountDAO.updateCustomerName(account, customer);
 			} else {
-				throw new AccountException(ErrorConstants.INVALID_ACCOUNT_EXCEPTION);
+				logger.error(ErrorConstants.NO_SUCH_ACCOUNT);
+				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
 
 		} catch (Exception e) {
-			logger.error(ErrorConstants.NO_SUCH_ACCOUNT);
+			logger.error(ErrorConstants.UPDATE_ACCOUNT_ERROR);
 			throw new AccountException(e.getMessage());
 		}
 		return isUpdated;
@@ -94,6 +98,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 				accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
 				isUpdated = accountDAO.updateCustomerContact(account, customer);
 			} else {
+				logger.error(ErrorConstants.NO_SUCH_ACCOUNT);
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
 		} catch (Exception e) {
@@ -121,6 +126,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 				accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
 				isUpdated = accountDAO.updateCustomerAddress(account, address);
 			} else {
+				logger.error(ErrorConstants.NO_SUCH_ACCOUNT);
 				throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 			}
 		} catch (Exception e) {
@@ -183,25 +189,20 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 		boolean doesExist = false;
 		accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
 		doesExist = accountDAO.validateAccountId(account);
-		if(doesExist) {
-			System.out.println("Account exists");
+		if (doesExist) {
 			AccountManagementService ams = new AccountManagementServiceImpl();
 			try {
-				System.out.println("in try block");
 				Account validAccount = ams.showAccountDetails(account);
-				System.out.println(validAccount.getStatus());
-				if("Active"==validAccount.getStatus()) {
-					System.out.println("Active account");
+				if ("Active".equals(validAccount.getStatus())) {
 					isValidated = true;
-				}
-				else {
-					System.out.println("Account closed. No operation can be performed.");
+				} else {
 					throw new AccountException(ErrorConstants.ACCOUNT_CLOSED);
 				}
-			}catch(Exception e) {
+			} catch (Exception e) {
+				logger.error(ErrorConstants.ACCOUNT_CLOSED);
 				throw new AccountException(e.getMessage());
 			}
-			
+
 		}
 		return isValidated;
 	}
@@ -223,13 +224,16 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 			account.setHolderId(custId);
 			String accountId = calculateAccountId(account);
 			account.setId(accountId);
+			account.setLastUpdated(LocalDateTime.now());
 			String createdId = accountDAO.addAccount(account);
 			if (createdId == null) {
+				logger.error(ErrorConstants.ACCOUNT_CREATION_ERROR);
 				throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 			}
 			return accountId;
 		} catch (Exception e) {
 			logger.error(ErrorConstants.ACCOUNT_CREATION_ERROR);
+
 			throw new AccountException(ErrorConstants.ACCOUNT_CREATION_ERROR);
 		}
 	}
@@ -238,12 +242,11 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	public Account showAccountDetails(Account account) throws AccountException, PecuniaException {
 		Account accountRequested = new Account();
 		try {
-		AccountManagementDAO accountDAO = new AccountManagementDAOImpl();
-		
-		accountRequested = accountDAO.showAccountDetails(account);
-		}
-		catch(AccountException|PecuniaException e){
-			System.out.println(e.getMessage());
+			AccountManagementDAO accountDAO = new AccountManagementDAOImpl();
+
+			accountRequested = accountDAO.showAccountDetails(account);
+		} catch (AccountException | PecuniaException e) {
+			logger.error(ErrorConstants.NO_SUCH_ACCOUNT);
 			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 		}
 		return accountRequested;

@@ -12,6 +12,7 @@ import com.capgemini.pecunia.entity.ChequeEntity;
 import com.capgemini.pecunia.entity.CustomerEntity;
 import com.capgemini.pecunia.entity.LoanDisbursalEntity;
 import com.capgemini.pecunia.entity.LoanRequestEntity;
+import com.capgemini.pecunia.entity.LoginEntity;
 import com.capgemini.pecunia.entity.TransactionEntity;
 public class HibernateUtil {
 	private static SessionFactory sessionFactory;
@@ -35,6 +36,7 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(LoanRequestEntity.class);
                 configuration.addAnnotatedClass(TransactionEntity.class);
                 configuration.addAnnotatedClass(LoanDisbursalEntity.class);
+                configuration.addAnnotatedClass(LoginEntity.class);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
