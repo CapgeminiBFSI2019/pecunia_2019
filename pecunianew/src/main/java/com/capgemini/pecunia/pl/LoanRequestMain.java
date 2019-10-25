@@ -54,10 +54,10 @@ public class LoanRequestMain {
 				loan.setType(type);
 				loan.setAccountId(accId);
 				LoanService loaserim = new LoanServiceImpl();
-				boolean result = loaserim.createLoanRequest(loan);
-				if (result) {
+				int result = loaserim.createLoanRequest(loan);
+				
 					System.out.println("Loan request created for account id: '"+accId+"' for "+type);
-				}
+				
 
 		} catch (LoanException e) {
 			System.out.println(e.getMessage());
