@@ -166,18 +166,28 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 			throws PecuniaException, LoanDisbursalException {
 		String status = Constants.STATUS_CHECK[0];
 		if (updateLoanApprovals != null) {
-			LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
+			LoanDisbursalDAOImplHibernate loanDisbursedDAO = new LoanDisbursalDAOImplHibernate();
 			for (int index = 0; index < updateLoanApprovals.size(); index++) {
 				double updatedDueAmount = updateLoanApprovals.get(index).getDisbursedAmount()
 						- (updateLoanApprovals.get(index).getDisbursedAmount()
 								/ updateLoanApprovals.get(index).getNumberOfEmiToBePaid()) * numberOfMonths;
+				
+				System.out.println(updatedDueAmount + " from hibernate");
 
 				double updatedTenure = updateLoanApprovals.get(index).getNumberOfEmiToBePaid() - numberOfMonths;
+				
+				System.out.println(updatedTenure + " from hibernate");
 
 				String accountId = updateLoanApprovals.get(index).getAccountId();
+				int loanDisbursalId = updateLoanApprovals.get(index).getLoanDisbursalId();
+				System.out.println(accountId);
+				
+				System.out.println(updateLoanApprovals);
 
 				try {
-					loanDisbursedDAO.updateLoanAccount(updateLoanApprovals, updatedDueAmount, updatedTenure, accountId);
+					System.out.println("called");
+					loanDisbursedDAO.updateLoanAccount(updateLoanApprovals, updatedDueAmount, updatedTenure, accountId,loanDisbursalId);
+					System.out.println("updated");
 				} catch (Exception e) {
 					logger.error(e.getMessage());
 					throw new LoanDisbursalException(e.getMessage());
@@ -208,7 +218,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 	public String updateLoanStatus(ArrayList<Loan> rejectedLoanList, ArrayList<Loan> approvedLoanList)
 			throws PecuniaException, LoanDisbursalException {
 		String status = Constants.STATUS_CHECK[0];
-		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
+		LoanDisbursalDAOImplHibernate loanDisbursedDAO = new LoanDisbursalDAOImplHibernate();
 		if (rejectedLoanList != null || approvedLoanList != null ) {
 			try {
 				for (int index = 0; index < rejectedLoanList.size(); index++) {
@@ -251,7 +261,7 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 
 	public ArrayList<String> updateExistingBalance(ArrayList<Loan> approvedLoanRequests, ArrayList<LoanDisbursal> approvedLoanList)
 			throws PecuniaException, TransactionException, LoanDisbursalException, IOException {
-		LoanDisbursalDAOImpl loanDisbursedDAO = new LoanDisbursalDAOImpl();
+		LoanDisbursalDAOImplHibernate loanDisbursedDAO = new LoanDisbursalDAOImplHibernate();
 		ArrayList<String> status = new ArrayList<String>(); 
 		ArrayList<String> accId = new ArrayList<String>();
 		accId = loanDisbursedDAO.uniqueIds();
@@ -260,7 +270,9 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 			account.setId(accId.get(i));
 			double oldBalance = transactionDAOImpl.getBalance(account);
 			double totalEMI = loanDisbursedDAO.totalEmi(accId.get(i));
+			System.out.println(totalEMI);
 			double updatedBalance = oldBalance - totalEMI;
+			System.out.println("updated from service " + updatedBalance);
 			if (updatedBalance < 0) {
 				status.add("Not enough balance for account number "+ accId.get(i));
 			} else {

@@ -19,17 +19,17 @@ public interface LoanDisbursalDAO {
 
 	public void releaseLoanSheet(ArrayList<Loan> loanList) throws IOException, PecuniaException;
 
-	public ArrayList<LoanDisbursal> loanApprovedList() throws IOException, PecuniaException;
+	public ArrayList<LoanDisbursal> loanApprovedList() throws IOException, PecuniaException, LoanDisbursalException;
 
 	public void updateLoanAccount(ArrayList<LoanDisbursal> loanApprovals, double dueAmount, double tenure,
-			String accountId) throws IOException, PecuniaException;
+			String accountId, int loanDisbursalId) throws IOException, PecuniaException, LoanDisbursalException;
 
 	public void updateStatus(ArrayList<Loan> loanRequests, int loanID, String Status)
 			throws IOException, PecuniaException, LoanDisbursalException;
 
-	public double totalEmi(String accountId) throws PecuniaException;
+	public double totalEmi(String accountId) throws PecuniaException, LoanDisbursalException;
 	
-	public List<Loan> retrieveAcceptedLoanListWithoutStatus() throws IOException, PecuniaException;
+	public List<Loan> retrieveAcceptedLoanListWithoutStatus() throws IOException, PecuniaException, LoanDisbursalException;
 	
 	public ArrayList<String> uniqueIds() throws IOException, PecuniaException, LoanDisbursalException;
 	

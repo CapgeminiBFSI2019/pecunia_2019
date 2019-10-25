@@ -1,7 +1,10 @@
 package com.capgemini.pecunia.pl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import com.capgemini.pecunia.dto.Loan;
+import com.capgemini.pecunia.dto.LoanDisbursal;
 import com.capgemini.pecunia.exception.LoanDisbursalException;
 import com.capgemini.pecunia.exception.LoanException;
 import com.capgemini.pecunia.exception.PecuniaException;
@@ -14,8 +17,8 @@ public class PecuniaMain {
 	public static void main(String[] args)
 			throws PecuniaException, TransactionException, IOException, LoanDisbursalException {
 
-		LoanDisbursalServiceImpl l = new LoanDisbursalServiceImpl();
-		System.out.println(l.approveLoan());
+		LoanDisbursalServiceImpl l  = new LoanDisbursalServiceImpl();
+	    System.out.println(l.approveLoan());
 	}
 }
 /*
