@@ -15,7 +15,7 @@ import com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl;
 import com.capgemini.pecunia.util.Constants;
 
 public class AccountManagementServiceImpl implements AccountManagementService {
-	
+
 	Logger logger = Logger.getRootLogger();
 
 	public AccountManagementServiceImpl() {
@@ -46,7 +46,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 			}
 		} catch (Exception e) {
 			logger.error(ErrorConstants.NO_SUCH_ACCOUNT);
-			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
+			throw new AccountException(e.getMessage());
 		}
 		return isUpdated;
 	}
@@ -189,21 +189,20 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 		boolean doesExist = false;
 		accountDAO = new com.capgemini.pecunia.hibernate.dao.AccountManagementDAOImpl();
 		doesExist = accountDAO.validateAccountId(account);
-		if(doesExist) {
+		if (doesExist) {
 			AccountManagementService ams = new AccountManagementServiceImpl();
 			try {
 				Account validAccount = ams.showAccountDetails(account);
-				if("Active"==validAccount.getStatus()) {
+				if ("Active".equals(validAccount.getStatus())) {
 					isValidated = true;
-				}
-				else {
+				} else {
 					throw new AccountException(ErrorConstants.ACCOUNT_CLOSED);
 				}
-			}catch(Exception e) {
+			} catch (Exception e) {
 				logger.error(ErrorConstants.ACCOUNT_CLOSED);
 				throw new AccountException(e.getMessage());
 			}
-			
+
 		}
 		return isValidated;
 	}
@@ -243,11 +242,10 @@ public class AccountManagementServiceImpl implements AccountManagementService {
 	public Account showAccountDetails(Account account) throws AccountException, PecuniaException {
 		Account accountRequested = new Account();
 		try {
-		AccountManagementDAO accountDAO = new AccountManagementDAOImpl();
-		
-		accountRequested = accountDAO.showAccountDetails(account);
-		}
-		catch(AccountException|PecuniaException e){
+			AccountManagementDAO accountDAO = new AccountManagementDAOImpl();
+
+			accountRequested = accountDAO.showAccountDetails(account);
+		} catch (AccountException | PecuniaException e) {
 			logger.error(ErrorConstants.NO_SUCH_ACCOUNT);
 			throw new AccountException(ErrorConstants.NO_SUCH_ACCOUNT);
 		}

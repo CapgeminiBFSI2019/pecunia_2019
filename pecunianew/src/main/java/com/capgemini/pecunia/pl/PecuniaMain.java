@@ -29,9 +29,9 @@ public class PecuniaMain {
 
 	public static void main(String[] args)
 			throws PecuniaException, TransactionException, IOException, LoanDisbursalException {
-
-		LoanDisbursalDAOImplHibernate l = new LoanDisbursalDAOImplHibernate();
-		l.retrieveLoanList();
+//
+//		LoanDisbursalDAOImplHibernate l = new LoanDisbursalDAOImplHibernate();
+//		l.retrieveLoanList();
 //		AccountManagementService accService = new AccountManagementServiceImpl();
 
 //		Account account = new Account();
@@ -84,19 +84,19 @@ public class PecuniaMain {
 //			System.out.println(e.getMessage());
 //		}
 //		
-//		AccountManagementDAO accDAO = new AccountManagementDAOImpl();
-//		Account account = new Account();
-//		account.setId("100303000001");
-//		try {
-//			if(accService.deleteAccount(account)) {
-//				System.out.println("Deleted");
-//			}
-//			else {
-//				System.out.println("Some Error");
-//			}
-//		} catch (AccountException e) {
-//			e.printStackTrace();
-//		}
+		AccountManagementService accService = new AccountManagementServiceImpl();
+		Account account = new Account();
+		account.setId("100101000009");
+		try {
+			if(accService.deleteAccount(account)) {
+				System.out.println("Deleted");
+			}
+			else {
+				System.out.println("Some Error");
+			}
+		} catch (AccountException e) {
+			e.printStackTrace();
+		}
 //		
 //		TransactionDAOImpl transactionDAOImpl = new TransactionDAOImpl();
 //		transactionDAOImpl.getBalance(null);
