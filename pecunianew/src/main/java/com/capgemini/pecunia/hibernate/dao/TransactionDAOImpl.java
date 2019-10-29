@@ -1,5 +1,9 @@
 package com.capgemini.pecunia.hibernate.dao;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -25,10 +29,17 @@ public class TransactionDAOImpl implements TransactionDAO {
 			String accountId = account.getId();
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			transaction = session.beginTransaction();
-			@SuppressWarnings("rawtypes")
-			Query query = session.createNamedQuery("AccountEntity.getBalanceById");
-			query.setParameter("accountId", accountId);
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<AccountEntity> cr = cb.createQuery(AccountEntity.class);
+			Root<AccountEntity> root = cr.from(AccountEntity.class);
+			cr.select(root).where(cb.equal(root.get("accountId"), accountId));
+			Query<AccountEntity> query = session.createQuery(cr);
 			query.setMaxResults(1);
+//			List<AccountEntity> results = query.getResultList();
+//			@SuppressWarnings("rawtypes")
+//			Query query = session.createNamedQuery("AccountEntity.getBalanceById");
+//			query.setParameter("accountId", accountId);
+//			query.setMaxResults(1);
 			AccountEntity accountEntity = (AccountEntity) query.uniqueResult();
 			if (accountEntity != null) {
 				accountBalance = accountEntity.getBalance();
