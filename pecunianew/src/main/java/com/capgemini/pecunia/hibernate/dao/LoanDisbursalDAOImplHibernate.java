@@ -4,11 +4,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import com.capgemini.pecunia.dto.Loan;
 import com.capgemini.pecunia.dto.LoanDisbursal;
+import com.capgemini.pecunia.entity.AccountEntity;
 import com.capgemini.pecunia.entity.LoanDisbursalEntity;
 import com.capgemini.pecunia.entity.LoanRequestEntity;
 import com.capgemini.pecunia.exception.ErrorConstants;
@@ -61,8 +67,11 @@ public class LoanDisbursalDAOImplHibernate implements LoanDisbursalDAO {
 	public List<Loan> retrieveLoanList() throws IOException, PecuniaException, LoanDisbursalException {
 		ArrayList<Loan> reqList = new ArrayList<>();
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			String hql = "FROM LoanRequestEntity";
-			Query<LoanRequestEntity> query = session.createQuery(hql);
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<LoanRequestEntity> cr = cb.createQuery(LoanRequestEntity.class);
+			Root<LoanRequestEntity> root = cr.from(LoanRequestEntity.class);
+			cr.select(root);
+			Query<LoanRequestEntity> query = session.createQuery(cr);
 			List<LoanRequestEntity> results = query.list();
 			reqList = loanRequests(results);
 		} catch (Exception e) {
@@ -75,8 +84,13 @@ public class LoanDisbursalDAOImplHibernate implements LoanDisbursalDAO {
 	public List<Loan> retrieveAcceptedLoanList() throws IOException, PecuniaException, LoanDisbursalException {
 		ArrayList<Loan> reqList = new ArrayList<>();
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			String hql = "FROM LoanRequestEntity WHERE credit_score >= 670 AND loan_status='Pending'";
-			Query<LoanRequestEntity> query = session.createQuery(hql);
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<LoanRequestEntity> cr = cb.createQuery(LoanRequestEntity.class);
+			Root<LoanRequestEntity> root = cr.from(LoanRequestEntity.class);
+			Predicate greaterThanCreditScore = cb.gt(root.get("creditScore"), 670);
+			Predicate status = cb.like(root.get("status"), "Pending");
+			cr.select(root).where(cb.and(greaterThanCreditScore,status));
+			Query<LoanRequestEntity> query = session.createQuery(cr);
 			List<LoanRequestEntity> results = query.list();
 			reqList = acceptedLoanRequests(results);
 
@@ -90,8 +104,13 @@ public class LoanDisbursalDAOImplHibernate implements LoanDisbursalDAO {
 	public List<Loan> retrieveRejectedLoanList() throws IOException, PecuniaException, LoanDisbursalException {
 		ArrayList<Loan> reqList = new ArrayList<>();
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			String hql = "FROM LoanRequestEntity WHERE credit_score < 670 AND loan_status = 'Pending'";
-			Query<LoanRequestEntity> query = session.createQuery(hql);
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<LoanRequestEntity> cr = cb.createQuery(LoanRequestEntity.class);
+			Root<LoanRequestEntity> root = cr.from(LoanRequestEntity.class);
+			Predicate greaterThanCreditScore = cb.lt(root.get("creditScore"), 670);
+			Predicate status = cb.like(root.get("status"), "Pending");
+			cr.select(root).where(cb.and(greaterThanCreditScore,status));
+			Query<LoanRequestEntity> query = session.createQuery(cr);
 			List<LoanRequestEntity> results = query.list();
 			reqList = rejectedLoanRequests(results);
 		} catch (Exception e) {
@@ -123,8 +142,11 @@ public class LoanDisbursalDAOImplHibernate implements LoanDisbursalDAO {
 	public ArrayList<LoanDisbursal> loanApprovedList() throws IOException, PecuniaException, LoanDisbursalException {
 		ArrayList<LoanDisbursal> reqList = new ArrayList<>();
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			String hql = "FROM LoanDisbursalEntity";
-			Query<LoanDisbursalEntity> query = session.createQuery(hql);
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<LoanDisbursalEntity> cr = cb.createQuery(LoanDisbursalEntity.class);
+			Root<LoanDisbursalEntity> root = cr.from(LoanDisbursalEntity.class);
+			cr.select(root);
+			Query<LoanDisbursalEntity> query = session.createQuery(cr);
 			List<LoanDisbursalEntity> results = query.list();
 			System.out.println(results);
 			reqList = loanDisbursal(results);
