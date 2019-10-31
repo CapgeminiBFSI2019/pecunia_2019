@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -146,9 +147,7 @@ public class LoanDisbursalDAOImplHibernate implements LoanDisbursalDAO {
 			cr.select(root);
 			Query<LoanDisbursalEntity> query = session.createQuery(cr);
 			List<LoanDisbursalEntity> results = query.list();
-			System.out.println(results);
 			reqList = loanDisbursal(results);
-			System.out.println(reqList);
 		} catch (Exception e) {
 			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
 		}
@@ -201,10 +200,9 @@ public class LoanDisbursalDAOImplHibernate implements LoanDisbursalDAO {
 			CriteriaBuilder cb = session.getCriteriaBuilder();
 			CriteriaQuery<Double> cr = cb.createQuery(Double.class);
 			Root<LoanRequestEntity> root = cr.from(LoanRequestEntity.class);
-			cr.select(cb.sum(root.get("emi").as(Double.class))).where(cb.like(root.get("accountId"), accountId));
-			Query<Double> query = session.createQuery(cr);
-			List<Double> results = query.list();
-			totalEMI = results.get(0);
+			cr.select(cb.sum(root.get("emi"))).where(cb.like(root.get("accountId"), accountId));
+			TypedQuery<Double> query = session.createQuery(cr);
+			totalEMI = query.getSingleResult();
 		} catch (Exception e) {
 			throw new LoanDisbursalException(ErrorConstants.NO_LOAN_REQUESTS);
 		}
@@ -238,8 +236,8 @@ public class LoanDisbursalDAOImplHibernate implements LoanDisbursalDAO {
 			CriteriaQuery<String> cr = cb.createQuery(String.class);
 			Root<LoanDisbursalEntity> root = cr.from(LoanDisbursalEntity.class);
 			cr.select(root.get("accountId")).distinct(true);
-			Query<String> query = session.createQuery(cr);
-			List<String> results = query.list();
+			TypedQuery<String> query = session.createQuery(cr);
+			List<String> results = query.getResultList();
 			for (String res : results) {
 				accountId.add(res);
 			}

@@ -36,7 +36,7 @@ import com.capgemini.pecunia.service.LoginServiceImpl;
 
 public class PecuniaMain {
 
-	public static void main(String[] args) throws PecuniaException, TransactionException {
+	public static void main(String[] args) throws PecuniaException, TransactionException, IOException, LoanDisbursalException {
 
 //			throws PecuniaException, TransactionException, IOException, LoanDisbursalException {
 ////
@@ -53,17 +53,21 @@ public class PecuniaMain {
 //		}
 //		
 //
-////		LoanDisbursalDAOImplHibernate l = new LoanDisbursalDAOImplHibernate();
-////		l.retrieveLoanList();
+		LoanDisbursalDAOImplHibernate l = new LoanDisbursalDAOImplHibernate();
+		LoanDisbursalServiceImpl l3 = new LoanDisbursalServiceImpl();
+		ArrayList<LoanDisbursal> l1 = l.loanApprovedList();
+		ArrayList<Loan> l2 = (ArrayList)l.retrieveAcceptedLoanListWithoutStatus();
+		l3.updateExistingBalance(l2,l1);
 ////		AccountManagementService accService = new AccountManagementServiceImpl();
 //
 //		LoanDisbursalServiceImpl l  = new LoanDisbursalServiceImpl();
 //	    System.out.println(l.approveLoan());
 //	}
-		com.capgemini.pecunia.hibernate.dao.TransactionDAO trans = new TransactionDAOImpl();
-		Account acc = new Account();
-		acc.setId("100101000001");
-		double bal = trans.getBalance(acc);
-		System.out.println("balance:"+bal);
+//		com.capgemini.pecunia.hibernate.dao.TransactionDAO trans = new TransactionDAOImpl();
+//		Account acc = new Account();
+//		acc.setId("100101000001");
+//		double bal = trans.getBalance(acc);
+//		System.out.println("balance:"+bal);
+		
 }
 }

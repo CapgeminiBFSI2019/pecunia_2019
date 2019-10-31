@@ -170,23 +170,21 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 						- (updateLoanApprovals.get(index).getDisbursedAmount()
 								/ updateLoanApprovals.get(index).getNumberOfEmiToBePaid()) * numberOfMonths;
 
-				System.out.println(updatedDueAmount + " from hibernate");
 
 				double updatedTenure = updateLoanApprovals.get(index).getNumberOfEmiToBePaid() - numberOfMonths;
 
-				System.out.println(updatedTenure + " from hibernate");
+			
 
 				String accountId = updateLoanApprovals.get(index).getAccountId();
 				int loanDisbursalId = updateLoanApprovals.get(index).getLoanDisbursalId();
-				System.out.println(accountId);
-
-				System.out.println(updateLoanApprovals);
+			
+				
 
 				try {
-					System.out.println("called");
+				
 					loanDisbursedDAO.updateLoanAccount(updateLoanApprovals, updatedDueAmount, updatedTenure, accountId,
 							loanDisbursalId);
-					System.out.println("updated");
+					
 				} catch (Exception e) {
 					logger.error(e.getMessage());
 					throw new LoanDisbursalException(e.getMessage());
@@ -267,7 +265,6 @@ public class LoanDisbursalServiceImpl implements LoanDisbursalService {
 			account.setId(accId.get(i));
 			double oldBalance = transactionDAOImpl.getBalance(account);
 			double totalEMI = loanDisbursedDAO.totalEmi(accId.get(i));
-			System.out.println(totalEMI);
 			double updatedBalance = oldBalance - totalEMI;
 
 			if (updatedBalance < 0) {
